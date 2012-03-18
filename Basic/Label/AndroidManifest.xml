@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<manifest package="com.commonsware.android.label"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+          
+  <application android:icon="@drawable/cw">
+    <activity android:label="LabelDemo"
+              android:name=".LabelDemo">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+  </application>
+  <supports-screens android:anyDensity="true"
+                    android:largeScreens="true"
+                    android:normalScreens="true"
+                    android:smallScreens="true" />
+</manifest>

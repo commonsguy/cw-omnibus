@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
+    <RadioButton android:id="@+id/radio1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Rock" />
+
+    <RadioButton android:id="@+id/radio2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Scissors" />
+
+    <RadioButton android:id="@+id/radio3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Paper" />
+</RadioGroup>

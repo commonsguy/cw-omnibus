@@ -2,5 +2,5 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent" 
   android:layout_height="wrap_content" 
-  android:text="You were expecting something profound?"
+  android:text="@string/profound"
   />

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Pager Fragment Demo</string>
+	<string name="hint">Editor #%d</string>
+
+</resources>

@@ -9,7 +9,7 @@
 		android:smallScreens="true"/>
 
 	<uses-sdk
-		android:minSdkVersion="4"
+		android:minSdkVersion="7"
 		android:targetSdkVersion="11"/>
 
 	<application

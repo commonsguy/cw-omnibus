@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Weather Demo</string>
+  <string name="url">http://www.weather.gov/forecasts/xml/sample_products/browser_interface/ndfdXMLclient.php?&amp;lat=%1$f&amp;lon=%2$f&amp;product=time-series&amp;begin=2004-01-01T00:00:00&amp;end=2020-12-03T00:00:00&amp;temp=temp&amp;icons=icons</string>
+  <string name="error">Error fetching weather: %s</string>
+</resources>

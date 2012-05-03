@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FakePlayer</string>
+    <string name="start_the_player">Start the Player</string>
+    <string name="stop_the_player">Stop the Player</string>
+</resources>

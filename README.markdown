@@ -30,6 +30,8 @@ book's project to use your copy of the ActionBarSherlock library project.
 compliance level to be set to 1.6. You can find this in Project Properties,
 in the Java Compiler area.
 
+## Using from Ant
+
 If you wish to use this code, you should delete build.xml from the project, then run
   `android update project -p ...`  (where ... is the path to a project of interest)
 	on those projects you wish to use, so the build files are

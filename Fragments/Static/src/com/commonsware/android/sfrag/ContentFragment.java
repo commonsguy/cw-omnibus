@@ -16,13 +16,13 @@ package com.commonsware.android.sfrag;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.actionbarsherlock.app.SherlockFragment;
 
-public class ContentFragment extends Fragment implements
+public class ContentFragment extends SherlockFragment implements
     View.OnClickListener {
   @Override
   public View onCreateView(LayoutInflater inflater,

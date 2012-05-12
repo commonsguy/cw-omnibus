@@ -1,0 +1,3 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:title="Take Picture" android:id="@+id/camera" android:icon="@drawable/ic_menu_camera" android:showAsAction="ifRoom"></item>
+</menu>

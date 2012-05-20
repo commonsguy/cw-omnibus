@@ -106,7 +106,7 @@ public class ConstantsFragment extends SherlockListFragment implements
     protected Void doInBackground(Void... params) {
       constantsCursor=doQuery();
       constantsCursor.getCount();
-      
+
       return(null);
     }
 
@@ -117,7 +117,8 @@ public class ConstantsFragment extends SherlockListFragment implements
                                   constantsCursor, new String[] {
                                       DatabaseHelper.TITLE,
                                       DatabaseHelper.VALUE },
-                                  new int[] { R.id.title, R.id.value });
+                                  new int[] { R.id.title, R.id.value },
+                                  0);
 
       setListAdapter(adapter);
     }
@@ -132,6 +133,7 @@ public class ConstantsFragment extends SherlockListFragment implements
                                       DatabaseHelper.TITLE, values[0]);
 
       constantsCursor=doQuery();
+      constantsCursor.getCount();
 
       return(null);
     }

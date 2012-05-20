@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:empub="http://schemas.android.com/apk/res-auto">
+
+	<CheckBoxPreference
+		android:defaultValue="false"
+		android:key="saveLastPosition"
+		android:summary="@string/lastpositionsummary"
+		android:title="@string/lastpositiontitle"/>
+	<CheckBoxPreference
+		android:defaultValue="false"
+		android:key="keepScreenOn"
+		android:summary="@string/keepscreenon_summary"
+		android:title="@string/keepscreenon_title"/>
+
+</PreferenceScreen>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="hello">Hello World, SensorListDemoActivity!</string>
+	<string name="app_name">SensorListDemo</string>
+	<string name="toast_template">%1$.2f / %2$.2f / %3$.2f</string>
+
+</resources>

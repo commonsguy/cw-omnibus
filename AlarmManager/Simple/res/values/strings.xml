@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="hello">Alarm toasts will appear towards the bottom of the screen, every five seconds</string>
+	<string name="app_name">SimpleAlarmDemo</string>
+	<string name="toast">Well, hello there!</string>
+
+</resources>

@@ -2,7 +2,7 @@
 	xmlns:empub="http://schemas.android.com/apk/res-auto">
 
 	<CheckBoxPreference
-		android:defaultValue="true"
+		android:defaultValue="false"
 		android:key="saveLastPosition"
 		android:summary="@string/lastpositionsummary"
 		android:title="@string/lastpositiontitle"/>

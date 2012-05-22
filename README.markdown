@@ -22,8 +22,11 @@ installed. You will need to set the project build target to something that
 you have, by means of Project Properties.
 
 - Many of these projects use [ActionBarSherlock](http://actionbarsherlock.com).
-You will need to download and set up ActionBarSherlock in your Eclipse workspace
-(see Tutorial #6 in the book), then go into Project Properties and point the
+There is a copy of a compatible ActionBarSherlock in `external/`, and the 
+project files are set up to reference that copy. If you import it first, your
+imports of other sample apps should go more smoothly. Alternatively, you 
+can download and set up ActionBarSherlock yourself in your Eclipse workspace,
+then go into Project Properties and point the
 book's project to use your copy of the ActionBarSherlock library project.
 
 - Many of the book samples, and ActionBarSherlock, require your Java compiler

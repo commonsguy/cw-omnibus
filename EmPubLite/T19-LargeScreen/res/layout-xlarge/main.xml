@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:baselineAligned="false">
+
+	<RelativeLayout
+		android:id="@+id/RelativeLayout1"
+		android:layout_height="0dp"
+		android:layout_width="fill_parent"
+		android:layout_weight="7">
+
+		<ProgressBar
+			android:id="@+id/progressBar1"
+			style="?android:attr/progressBarStyleLarge"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_centerInParent="true"/>
+
+		<android.support.v4.view.ViewPager
+			android:id="@+id/pager"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:visibility="gone"/>
+	</RelativeLayout>
+
+	<View
+		android:id="@+id/divider"
+		android:layout_height="2dp"
+		android:layout_width="fill_parent"
+		android:background="#AA000000"
+		android:visibility="gone"/>
+
+	<FrameLayout
+		android:id="@+id/sidebar"
+		android:layout_height="0dp"
+		android:layout_width="fill_parent"
+		android:layout_weight="0"/>
+
+</LinearLayout>

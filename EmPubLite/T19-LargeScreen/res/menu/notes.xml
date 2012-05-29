@@ -1,0 +1,5 @@
+
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:id="@+id/share" android:title="@string/share" android:showAsAction="ifRoom|withText" android:icon="@android:drawable/ic_menu_share"></item><item android:id="@+id/delete" android:title="@string/delete" android:icon="@android:drawable/ic_menu_delete" android:showAsAction="ifRoom|withText"></item>
+        
+    </menu>

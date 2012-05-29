@@ -19,6 +19,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,15 +111,26 @@ public class ConstantsFragment extends SherlockListFragment implements
       return(null);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onPostExecute(Void arg0) {
-      SimpleCursorAdapter adapter=
-          new SimpleCursorAdapter(getActivity(), R.layout.row,
+      SimpleCursorAdapter adapter;
+      
+      if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+        adapter=new SimpleCursorAdapter(getActivity(), R.layout.row,
                                   constantsCursor, new String[] {
                                       DatabaseHelper.TITLE,
                                       DatabaseHelper.VALUE },
                                   new int[] { R.id.title, R.id.value },
                                   0);
+      }
+      else {
+        adapter=new SimpleCursorAdapter(getActivity(), R.layout.row,
+                                        constantsCursor, new String[] {
+                                            DatabaseHelper.TITLE,
+                                            DatabaseHelper.VALUE },
+                                        new int[] { R.id.title, R.id.value });
+      }
 
       setListAdapter(adapter);
     }

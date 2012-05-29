@@ -39,6 +39,9 @@ public class Downloader extends IntentService {
     try {
       File root=
           Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+      
+      root.mkdirs();
+      
       File output=new File(root, i.getData().getLastPathSegment());
 
       if (output.exists()) {

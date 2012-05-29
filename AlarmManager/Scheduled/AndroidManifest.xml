@@ -4,7 +4,11 @@
 	android:versionCode="1"
 	android:versionName="1.0">
 
-	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="11"/>
+	<uses-sdk
+		android:minSdkVersion="7"
+		android:targetSdkVersion="11"/>
+
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
 	<application
 		android:icon="@drawable/ic_launcher"
@@ -21,6 +25,9 @@
 		</activity>
 
 		<receiver android:name="PollReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"/>
+			</intent-filter>
 		</receiver>
 
 		<service android:name="ScheduledService">

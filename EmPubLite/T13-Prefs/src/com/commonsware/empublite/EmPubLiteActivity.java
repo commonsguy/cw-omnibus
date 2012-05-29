@@ -1,9 +1,7 @@
 package com.commonsware.empublite;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -18,7 +16,8 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
   private SharedPreferences prefs=null;
   private static final String MODEL="model";
   private static final String PREF_LAST_POSITION="lastPosition";
-  private static final String PREF_SAVE_LAST_POSITION="saveLastPosition";
+  private static final String PREF_SAVE_LAST_POSITION=
+      "saveLastPosition";
   private static final String PREF_KEEP_SCREEN_ON="keepScreenOn";
 
   /** Called when the activity is first created. */
@@ -35,35 +34,23 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
     setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
   }
-  
-  @TargetApi(9)
+
   @Override
   public void onPause() {
     if (prefs != null) {
       int position=pager.getCurrentItem();
-      final SharedPreferences.Editor editor=
-          prefs.edit().putInt(PREF_LAST_POSITION, position);
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-        editor.apply();
-      }
-      else {
-        new Thread() {
-          public void run() {
-            editor.commit();
-          }
-        }.start();
-      }
+      prefs.edit().putInt(PREF_LAST_POSITION, position).apply();
     }
 
     super.onPause();
   }
-  
+
   @Override
   public void onResume() {
     super.onResume();
 
-    if (prefs!=null) {
+    if (prefs != null) {
       pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
     }
   }
@@ -101,7 +88,7 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
         startActivity(i);
 
         return(true);
-        
+
       case R.id.settings:
         startActivity(new Intent(this, Preferences.class));
         return(true);
@@ -118,11 +105,11 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
 
     findViewById(R.id.progressBar1).setVisibility(View.GONE);
     findViewById(R.id.pager).setVisibility(View.VISIBLE);
-    
+
     if (prefs.getBoolean(PREF_SAVE_LAST_POSITION, false)) {
       pager.setCurrentItem(prefs.getInt(PREF_LAST_POSITION, 0));
     }
-    
+
     pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
   }
 }

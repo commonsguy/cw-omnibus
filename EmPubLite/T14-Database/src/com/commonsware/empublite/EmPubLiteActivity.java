@@ -1,9 +1,7 @@
 package com.commonsware.empublite;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -37,24 +35,12 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
     pager=(ViewPager)findViewById(R.id.pager);
   }
 
-  @TargetApi(9)
   @Override
   public void onPause() {
     if (prefs != null) {
       int position=pager.getCurrentItem();
-      final SharedPreferences.Editor editor=
-          prefs.edit().putInt(PREF_LAST_POSITION, position);
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-        editor.apply();
-      }
-      else {
-        new Thread() {
-          public void run() {
-            editor.commit();
-          }
-        }.start();
-      }
+      prefs.edit().putInt(PREF_LAST_POSITION, position).apply();
     }
 
     super.onPause();

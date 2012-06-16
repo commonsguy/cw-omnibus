@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <CheckBoxPreference
+    android:key="enabled"
+    android:summary="@string/enabled_summary"
+    android:title="@string/enabled_title"/>
+  <ListPreference
+    android:dialogTitle="@string/timeout_dialogtitle"
+    android:key="timeout"
+    android:summary="@string/timeout_summary"
+    android:title="@string/timeout_title"
+    android:entries="@array/timeout_display"
+    android:entryValues="@array/timeout_values"/>
+	
+</PreferenceScreen>

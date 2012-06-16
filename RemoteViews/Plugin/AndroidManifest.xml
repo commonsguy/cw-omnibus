@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.rv.plugin"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<uses-sdk android:minSdkVersion="7"/>
+
+	<uses-permission android:name="com.commonsware.android.rv.host.ACT_AS_PLUGIN"/>
+
+	<application
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name">
+		<receiver
+			android:name="Plugin"
+			android:permission="com.commonsware.android.rv.host.ACT_AS_HOST">
+			<intent-filter>
+				<action android:name="com.commonsware.android.rv.host.CALL_FOR_PLUGINS"/>
+				<action android:name="com.commonsware.android.rv.host.CALL_FOR_CONTENT"/>
+			</intent-filter>
+		</receiver>
+
+		<activity
+			android:name="PluginActivationActivity"
+			android:enabled="@bool/i_has_needs_activity"
+			android:excludeFromRecents="true"
+			android:theme="@android:style/Theme.NoDisplay">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+	</application>
+
+</manifest>

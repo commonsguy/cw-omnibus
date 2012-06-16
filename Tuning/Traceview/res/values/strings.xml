@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="wait">Please wait...</string>
+	<string name="app_name">StringPerf: Concat</string>
+	<string name="app_name2">StringPerf: StringBuffer</string>
+	<string name="app_name3">StringPerf: StringBuilder</string>
+	<string name="app_name4">StringPerf: Format</string>
+</resources>

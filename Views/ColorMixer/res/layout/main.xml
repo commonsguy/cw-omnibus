@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:mixer="http://schemas.android.com/apk/res/com.commonsware.android.colormixer"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+>
+  <TextView android:id="@+id/color"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+  />
+  <com.commonsware.android.colormixer.ColorMixer
+    android:id="@+id/mixer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    mixer:initialColor="#FFA4C639"
+  />
+</LinearLayout>

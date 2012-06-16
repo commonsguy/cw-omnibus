@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/app"
+    android:title="Application"
+    android:icon="@android:drawable/ic_menu_manage" />
+  <item android:id="@+id/security"
+    android:title="Security"
+    android:icon="@android:drawable/ic_menu_close_clear_cancel" />
+  <item android:id="@+id/wireless"
+    android:title="Wireless"
+    android:icon="@android:drawable/ic_menu_set_as" />
+  <item android:id="@+id/all"
+    android:title="All Settings"
+    android:icon="@android:drawable/ic_menu_preferences" />
+</menu>

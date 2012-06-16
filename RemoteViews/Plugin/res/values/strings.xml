@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="hello">This came from the plugin!</string>
+	<string name="app_name">RemoteViews Plugin</string>
+	<string name="activated">The plugin is now activated. Wonder Twin powers, not so much.</string>
+
+</resources>

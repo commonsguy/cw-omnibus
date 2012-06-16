@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FauxSender</string>
+    <string name="test_name">FauxSender Test</string>
+    <string name="share_subject">FauxSender sent this!</string>
+    <string name="share_title">Share a message via:</string>
+</resources>

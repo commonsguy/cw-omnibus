@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>Android GeoWebTwo Demo</title>
+<script language="javascript">
+	function whereami(lat, lon) {
+		document.getElementById("lat").innerHTML=lat;
+		document.getElementById("lon").innerHTML=lon;
+	}
+	
+	function pull() {
+		var location=JSON.parse(locater.getLocation());
+		
+		whereami(location.lat, location.lon);
+	}
+</script>
+</head>
+<body>
+<p>
+You are at: <br/> <span id="lat">(unknown)</span> latitude and <br/>
+<span id="lon">(unknown)</span> longitude.
+</p>
+<p><a onClick="pull()">Update Location</a></p>
+</body>
+</html>
+

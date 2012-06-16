@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Android GeoWebOne Demo</title>
+<script language="javascript">
+	function whereami() {
+		var location=JSON.parse(locater.getLocation());
+		
+		document.getElementById("lat").innerHTML=location.lat;
+		document.getElementById("lon").innerHTML=location.lon;
+	}
+</script>
+</head>
+<body>
+<p>
+You are at: <br/> <span id="lat">(unknown)</span> latitude and <br/>
+<span id="lon">(unknown)</span> longitude.
+</p>
+<p><a onClick="whereami()">Update Location</a></p>
+</body>
+</html>
+

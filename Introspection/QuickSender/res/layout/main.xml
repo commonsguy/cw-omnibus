@@ -1,0 +1,34 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:stretchColumns="1"
+  >
+  <TableRow>
+    <TextView android:text="Shortcut Name:" />
+    <EditText android:id="@+id/name" />
+  </TableRow>
+  <TableRow>
+    <TextView android:text="Address:" />
+    <EditText android:id="@+id/addr" />
+  </TableRow>
+  <TableRow>
+    <TextView android:text="Subject:" />
+    <EditText android:id="@+id/subject" />
+  </TableRow>
+  <TableRow>
+    <TextView android:text="Body:" />
+    <EditText android:id="@+id/body"
+      android:singleLine="false"
+      android:gravity="top"
+      android:lines="4"
+      android:scrollHorizontally="false"
+      android:maxLines="4"
+    />
+  </TableRow>
+  <Button android:id="@+id/save"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Create Shortcut"
+    android:onClick="save"
+  />
+</TableLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest android:versionCode="1"
+          android:versionName="1.0"
+          package="com.commonsware.android.sms.monitor"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+          
+  <supports-screens android:largeScreens="true"
+                    android:normalScreens="true"
+                    android:smallScreens="false" />
+  <uses-permission android:name="android.permission.RECEIVE_SMS" />
+  <application android:icon="@drawable/cw"
+               android:label="@string/app_name">
+    <receiver android:name="Monitor"
+              android:permission="android.permission.BROADCAST_SMS">
+              
+      <intent-filter android:priority="2">
+        <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+      </intent-filter>
+    </receiver>
+  </application>
+</manifest>

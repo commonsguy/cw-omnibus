@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<Button
+    android:id="@+id/eval"
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content"
+    android:text="Go!" 
+    />
+<EditText
+    android:id="@+id/script"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    android:singleLine="false"
+    android:gravity="top"
+    />
+</LinearLayout>

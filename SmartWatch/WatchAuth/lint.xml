@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconDuplicates">
+        <ignore path="res/drawable/icon_extension.png" />
+        <ignore path="res/drawable-ldpi/icon.png" />
+    </issue>
+    <issue id="IconLocation" severity="ignore" />
+    <issue id="PxUsage">
+        <ignore path="res/layout/main.xml" />
+    </issue>
+</lint>

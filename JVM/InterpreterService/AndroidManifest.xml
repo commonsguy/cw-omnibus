@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.abj.interp"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<uses-sdk
+		android:minSdkVersion="7"
+		android:targetSdkVersion="11"/>
+
+	<application
+		android:icon="@drawable/cw"
+		android:label="@string/app_name">
+		<service
+			android:name=".InterpreterService"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.commonsware.abj.interp.EchoInterpreter"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="com.commonsware.abj.interp.SQLiteInterpreter"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="com.commonsware.abj.interp.BshInterpreter"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="com.commonsware.abj.interp.RhinoInterpreter"/>
+			</intent-filter>
+		</service>
+	</application>
+
+</manifest>

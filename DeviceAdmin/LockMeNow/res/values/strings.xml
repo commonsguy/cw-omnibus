@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">LockMeNow</string>
+	<string name="lock_me">Lock Me, Now!</string>
+	<string name="device_admin_explanation">For experimentation purposes only</string>
+
+</resources>

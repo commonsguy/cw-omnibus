@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">WatchAuth</string>
+	<string name="header1title">General Settings</string>
+	<string name="extension_name">WatchAuth</string>
+	<string name="configuration_text">WatchAuth Settings</string>
+	<string name="timeout_dialogtitle">Choose Timeout</string>
+	<string name="timeout_title">Timeout Before Lock</string>
+	<string name="timeout_summary">Number of seconds in which you have to enter the passcode on the SmartWatch before your device locks again</string>
+	<string name="device_admin_explanation">This will be used with your SmartWatch to lock your device if you do not authenticate on the watch after unlocking your device</string>
+  <string name="enabled_title">Enable WatchAuth</string>
+  <string name="enabled_summary">Check this checkbox to enable WatchAuth security</string>
+  <string name="confirm">Confirm</string>
+	
+</resources>

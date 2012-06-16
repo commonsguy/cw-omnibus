@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest android:versionCode="1"
+          android:versionName="1.0"
+          package="com.commonsware.android.advservice"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+          
+  <uses-sdk android:minSdkVersion="3"
+            android:targetSdkVersion="6" />
+  <supports-screens android:largeScreens="false"
+                    android:normalScreens="true"
+                    android:smallScreens="false" />
+  <application android:icon="@drawable/cw"
+               android:label="@string/app_name">
+    <service android:name=".BshService">
+      <intent-filter>
+        <action android:name="com.commonsware.android.advservice.IScript" />
+      </intent-filter>
+    </service>
+  </application>
+</manifest>

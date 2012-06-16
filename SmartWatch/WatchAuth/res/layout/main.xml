@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sonyericsson.extras.liveware.extension.util.AefTextView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/confirm"
+	android:layout_width="@dimen/smart_watch_control_width"
+	android:layout_height="@dimen/smart_watch_control_height"
+	android:gravity="center_vertical"
+	android:text="@string/confirm"
+	android:textColor="@color/smart_watch_text_color_orange"
+	android:textSize="35px"
+	android:textStyle="bold"/>

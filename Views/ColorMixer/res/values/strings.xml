@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">ColorMixer</string>
+  <string name="red">R</string>
+  <string name="green">G</string>
+  <string name="blue">B</string>
+</resources>

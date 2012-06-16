@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="hello">Hello World, TrafficMonitorActivity!</string>
+	<string name="app_name">TrafficMonitor</string>
+	<string name="received">
+		<u>Received</u>
+	</string>
+	<string name="sent">
+		<u>Sent</u>
+	</string>
+	<string name="latest">Latest</string>
+	<string name="previous">Previous</string>
+	<string name="delta">Delta</string>
+	<string name="device"><i>(device)</i></string>
+</resources>

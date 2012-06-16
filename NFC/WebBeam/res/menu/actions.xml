@@ -1,0 +1,4 @@
+
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:id="@+id/beam" android:title="@string/beam" android:icon="@android:drawable/ic_menu_send" android:showAsAction="always|withText"></item>
+    </menu>

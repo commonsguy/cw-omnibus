@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="hello">Choose Refresh from the options menu!</string>
+	<string name="app_name">RemoteViews Host</string>
+	<string name="host_label">Act as Plugin Host</string>
+	<string name="host_desc">Can serve as a host for plugins for the sample app</string>
+	<string name="plugin_label">Acts as Plugin</string>
+	<string name="plugin_desc">Serves as a plugin for the sample app\'s host</string>
+	<string name="refresh">Refresh</string>
+
+</resources>

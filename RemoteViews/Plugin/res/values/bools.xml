@@ -1,0 +1,5 @@
+<resources>
+
+	<bool name="i_has_needs_activity">false</bool>
+
+</resources>

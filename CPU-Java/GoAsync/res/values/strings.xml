@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+		<string name="hello">Hello World, GoAsyncActivity!</string>
+		<string name="app_name">GoAsync</string>
+		<string name="nonasync">Send Non-Async Broadcast</string>
+		<string name="async">Send Async Broadcast</string>
+</resources>

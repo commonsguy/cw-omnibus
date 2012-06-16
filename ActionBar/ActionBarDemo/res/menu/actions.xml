@@ -3,13 +3,14 @@
 
 	<item
 		android:id="@+id/add"
+		android:actionLayout="@layout/add"
 		android:icon="@android:drawable/ic_menu_add"
 		android:showAsAction="ifRoom"
-		android:title="@string/add" android:actionLayout="@layout/add"/>
+		android:title="@string/add"/>
 	<item
 		android:id="@+id/reset"
 		android:icon="@android:drawable/ic_menu_revert"
-		android:showAsAction="never"
+		android:showAsAction="always|withText"
 		android:title="@string/reset"/>
 
 </menu>

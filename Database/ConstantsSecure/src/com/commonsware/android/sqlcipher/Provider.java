@@ -86,14 +86,8 @@ public class Provider extends ContentProvider {
       orderBy=sort;
     }
 
-    // workaround for SQLCipher 2.0.5 bug
-    // https://github.com/sqlcipher/android-database-sqlcipher/issues/56
-    
-//    Cursor c=
-//        qb.query(db.getReadableDatabase(key), projection, selection,
-//                 selectionArgs, null, null, orderBy);
     Cursor c=
-        qb.query(db.getWritableDatabase(key), projection, selection,
+        qb.query(db.getReadableDatabase(key), projection, selection,
                  selectionArgs, null, null, orderBy);
 
     c.setNotificationUri(getContext().getContentResolver(), url);

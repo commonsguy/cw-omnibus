@@ -1,0 +1,14 @@
+<resources>
+
+	<string name="app_name">DialogFragment Demo</string>
+	<string name="hello_world">Hello world!</string>
+	<string name="title_activity_main">Dialog Fragment Demo</string>
+	<string name="show_me">Show me the dialog!</string>
+	<string name="dlg_title">A Sample Dialog</string>
+	<string name="toast">Name: %1$s / Value: %2$s</string>
+	<string name="goodbye">Goodbye!</string>
+	<string name="back">You pressed BACK!</string>
+	<string name="display_name">Display Name:</string>
+	<string name="value">Value:</string>
+
+</resources>

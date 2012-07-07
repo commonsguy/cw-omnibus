@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<Button
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:text="@string/drawer_closed"/>
+
+	<SlidingDrawer
+		android:id="@+id/drawer"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:content="@+id/content"
+		android:handle="@+id/handle">
+
+		<ImageView
+			android:id="@id/handle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/tray_handle_normal"/>
+
+		<Button
+			android:id="@id/content"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:text="@string/drawer_msg"/>
+	</SlidingDrawer>
+
+</RelativeLayout>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PostDelayedDemo</string>
+    <string name="press_back">Press BACK to stop the polling</string>
+</resources>

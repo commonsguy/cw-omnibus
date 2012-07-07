@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import java.io.File;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 public class DownloadCompleteReceiver extends BroadcastReceiver {
   @Override
@@ -16,8 +15,7 @@ public class DownloadCompleteReceiver extends BroadcastReceiver {
                  DownloadCheckService.UPDATE_FILENAME);
 
     if (update.exists()) {
-      WakefulIntentService.sendWakefulWork(ctxt,
-                                           DownloadInstallService.class);
+      ctxt.startService(new Intent(ctxt, DownloadInstallService.class));
     }
   }
 }

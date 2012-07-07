@@ -27,7 +27,7 @@ public class ModelFragment extends SherlockFragment {
     setRetainInstance(true);
     deliverModel();
   }
-  
+
   synchronized private void deliverModel() {
     if (prefs != null && contents != null) {
       ((EmPubLiteActivity)getActivity()).setupPager(prefs, contents);

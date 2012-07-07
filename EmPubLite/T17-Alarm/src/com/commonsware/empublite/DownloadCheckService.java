@@ -1,25 +1,24 @@
 package com.commonsware.empublite;
 
 import android.app.DownloadManager;
+import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Comparator;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DownloadCheckService extends WakefulIntentService {
+public class DownloadCheckService extends IntentService {
+  public static final String PREF_PENDING_UPDATE="pendingUpdateDir";
   public static final String UPDATE_FILENAME="book.zip";
   private static final String UPDATE_BASEDIR="updates";
   private static final String UPDATE_URL=
@@ -30,7 +29,7 @@ public class DownloadCheckService extends WakefulIntentService {
   }
 
   @Override
-  protected void doWakefulWork(Intent intent) {
+  protected void onHandleIntent(Intent intent) {
     BufferedReader reader=null;
 
     try {
@@ -74,56 +73,16 @@ public class DownloadCheckService extends WakefulIntentService {
     return(new File(ctxt.getFilesDir(), UPDATE_BASEDIR));
   }
 
-  static File getUpdateDir(Context ctxt, boolean pruneOld) {
-    File base=DownloadCheckService.getUpdateBaseDir(ctxt);
-
-    if (!base.exists()) {
-      return(null);
-    }
-
-    File[] updates=base.listFiles(new FileFilter() {
-      public boolean accept(File f) {
-        return f.isDirectory();
-      }
-    });
-
-    Arrays.sort(updates, new Comparator<File>() {
-      @Override
-      public int compare(File lhs, File rhs) {
-        return(lhs.getName().compareTo(rhs.getName()));
-      }
-    });
-
-    if (pruneOld && updates.length > 1) {
-      deleteDir(updates[0]);
-    }
-
-    return(updates[updates.length - 1]);
-  }
-
-  private static boolean deleteDir(File dir) {
-    if (dir.isDirectory()) {
-      File[] children=dir.listFiles();
-
-      for (File child : children) {
-        boolean ok=deleteDir(child);
-
-        if (!ok) {
-          return(false);
-        }
-      }
-    }
-
-    return(dir.delete());
-  }
-
   private void checkDownloadInfo(String raw) throws JSONException {
     JSONObject json=new JSONObject(raw);
     String version=json.names().getString(0);
     File localCopy=new File(getUpdateBaseDir(this), version);
 
     if (!localCopy.exists()) {
-      localCopy.mkdirs();
+      PreferenceManager.getDefaultSharedPreferences(this)
+                       .edit()
+                       .putString(PREF_PENDING_UPDATE,
+                                  localCopy.getAbsolutePath()).commit();
 
       String url=json.getString(version);
       DownloadManager mgr=

@@ -64,7 +64,7 @@ public class SlidingPanel extends LinearLayout {
   
   Animation.AnimationListener collapseListener=new Animation.AnimationListener() {
     public void onAnimationEnd(Animation animation) {
-      setVisibility(View.GONE);
+      setVisibility(View.INVISIBLE);
     }
     
     public void onAnimationRepeat(Animation animation) {

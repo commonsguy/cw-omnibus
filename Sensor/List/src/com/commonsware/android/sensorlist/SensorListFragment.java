@@ -31,9 +31,16 @@ public class SensorListFragment extends SherlockListFragment implements
 
     setListAdapter(adapter);
   }
+  
+  @Override
+  public void onPause() {
+    mgr.unregisterListener(this);
+    super.onPause();
+  }
 
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
+    mgr.unregisterListener(this);
     mgr.registerListener(this, adapter.getItem(position),
                          SensorManager.SENSOR_DELAY_NORMAL);
   }

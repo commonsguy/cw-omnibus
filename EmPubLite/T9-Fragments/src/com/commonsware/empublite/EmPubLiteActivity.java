@@ -8,7 +8,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class EmPubLiteActivity extends SherlockFragmentActivity {
-  /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -18,7 +17,6 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     new MenuInflater(this).inflate(R.menu.options, menu);
-
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -30,19 +28,17 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
         
       case R.id.about:
         Intent i=new Intent(this, SimpleContentActivity.class);
-
         startActivity(i);
-
+        
         return(true);
         
       case R.id.help:
         i=new Intent(this, SimpleContentActivity.class);
-
         startActivity(i);
-
+        
         return(true);
     }
-
+    
     return(super.onOptionsItemSelected(item));
   }
 }

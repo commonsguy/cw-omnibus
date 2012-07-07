@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <item
-    android:id="@+id/notes"
-    android:icon="@android:drawable/ic_menu_edit"
-    android:showAsAction="ifRoom|withText"
-    android:title="@string/notes">
-  </item>
-		<item
+	<item
+		android:id="@+id/notes"
+		android:icon="@android:drawable/ic_menu_edit"
+		android:showAsAction="ifRoom|withText"
+		android:title="@string/notes">
+	</item>
+	<item
 		android:id="@+id/settings"
 		android:icon="@android:drawable/ic_menu_preferences"
 		android:showAsAction="never"

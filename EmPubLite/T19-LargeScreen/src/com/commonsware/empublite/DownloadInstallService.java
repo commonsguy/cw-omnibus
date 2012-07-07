@@ -1,7 +1,10 @@
 package com.commonsware.empublite;
 
+import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,9 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 
-public class DownloadInstallService extends WakefulIntentService {
+public class DownloadInstallService extends IntentService {
+  public static final String PREF_UPDATE_DIR="updateDir";
+  public static final String PREF_PREV_UPDATE="previousUpdateDir";
   public static final String ACTION_UPDATE_READY=
       "com.commonsware.empublite.action.UPDATE_READY";
 
@@ -23,25 +27,38 @@ public class DownloadInstallService extends WakefulIntentService {
   }
 
   @Override
-  protected void doWakefulWork(Intent intent) {
-    File update=
-        new File(
-                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                 DownloadCheckService.UPDATE_FILENAME);
+  protected void onHandleIntent(Intent intent) {
+    SharedPreferences prefs=
+        PreferenceManager.getDefaultSharedPreferences(this);
+    String prevUpdateDir=prefs.getString(PREF_UPDATE_DIR, null);
+    String pendingUpdateDir=
+        prefs.getString(DownloadCheckService.PREF_PENDING_UPDATE, null);
 
-    try {
-      unzip(update, DownloadCheckService.getUpdateDir(this, false));
+    if (pendingUpdateDir != null) {
+      File root=
+          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+      File update=new File(root, DownloadCheckService.UPDATE_FILENAME);
+
+      try {
+        unzip(update, new File(pendingUpdateDir));
+        prefs.edit().putString(PREF_PREV_UPDATE, prevUpdateDir)
+             .putString(PREF_UPDATE_DIR, pendingUpdateDir).commit();
+      }
+      catch (IOException e) {
+        Log.e(getClass().getSimpleName(), "Exception unzipping update",
+              e);
+      }
+
+      update.delete();
+
+      Intent i=new Intent(ACTION_UPDATE_READY);
+
+      i.setPackage(getPackageName());
+      sendOrderedBroadcast(i, null);
     }
-    catch (IOException e) {
-      Log.e(getClass().getSimpleName(), "Exception unzipping update", e);
+    else {
+      Log.e(getClass().getSimpleName(), "null pendingUpdateDir");
     }
-
-    update.delete();
-
-    Intent i=new Intent(ACTION_UPDATE_READY);
-
-    i.setPackage(getPackageName());
-    sendOrderedBroadcast(i, null);
   }
 
   private static void unzip(File src, File dest) throws IOException {

@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">EmPubLite</string>
+	<string name="app_name">EmPub Lite</string>
+	<string name="menu_settings">Settings</string>
+	<string name="title_activity_em_pub_lite">EmPub Lite</string>
 	<string name="help">Help</string>
 	<string name="about">About</string>
 	<string name="prefdesc">Settings for use of EmPubLite</string>
@@ -11,16 +12,16 @@
 	<string name="keepscreenon_summary">Keep the screen powered on while the reader is in the foreground</string>
 	<string name="keepscreenon_title">Keep Screen On</string>
 	<string name="settings">Settings</string>
-	<string name="hint">Enter notes here</string>
 	<string name="on_upgrade_error">This should not be called</string>
-  <string name="notes">Notes</string>
-  <string name="delete">Delete Note</string>
-  <string name="share">Share</string>
-  <string name="share_title">Share Notes</string>
-  <string name="download_update">Download Update</string>
-  <string name="update_title">EmPubLite Update</string>
-  <string name="update_description">A new edition of book content</string>
-  <string name="update_complete">EmPubLite Updated!</string>
-  <string name="update_desc">Click here to open the updated book!</string>
-  	
+	<string name="hint">Enter notes here</string>
+	<string name="notes">Notes</string>
+	<string name="delete">Delete</string>
+	<string name="share">Share</string>
+	<string name="share_title">Share Notes</string>
+	<string name="download_update">Download Update</string>
+	<string name="update_title">EmPub Lite Update</string>
+	<string name="update_description">A new edition of book content</string>
+	<string name="update_desc">Click here to open the updated book!</string>
+  <string name="update_complete">EmPub Lite Updated!</string>
+	
 </resources>

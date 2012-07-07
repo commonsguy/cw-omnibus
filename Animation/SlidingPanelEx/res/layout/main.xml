@@ -11,7 +11,7 @@
     android:orientation="horizontal"
     app:speed="250"
     app:targetHeight="75px"
-    android:visibility="gone"
+    android:visibility="invisible"
     android:background="#22FFFFFF"
     android:layout_alignParentBottom="true"
     >

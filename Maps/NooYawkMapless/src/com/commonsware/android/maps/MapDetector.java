@@ -12,7 +12,6 @@
     http://commonsware.com/AdvAndroid
 */
 
-   
 package com.commonsware.android.maps;
 
 import android.app.Activity;

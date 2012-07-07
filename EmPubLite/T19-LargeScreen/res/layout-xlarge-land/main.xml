@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="horizontal"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:baselineAligned="false">
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/foo"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
 	<RelativeLayout
-		android:id="@+id/RelativeLayout1"
 		android:layout_width="0dp"
-		android:layout_height="fill_parent"
+		android:layout_height="match_parent"
 		android:layout_weight="7">
 
 		<ProgressBar
@@ -16,7 +14,8 @@
 			style="?android:attr/progressBarStyleLarge"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_centerInParent="true"/>
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"/>
 
 		<android.support.v4.view.ViewPager
 			android:id="@+id/pager"
@@ -28,14 +27,16 @@
 	<View
 		android:id="@+id/divider"
 		android:layout_width="2dp"
-		android:layout_height="fill_parent"
+		android:layout_height="match_parent"
 		android:background="#AA000000"
 		android:visibility="gone"/>
 
 	<FrameLayout
 		android:id="@+id/sidebar"
 		android:layout_width="0dp"
-		android:layout_height="fill_parent"
-		android:layout_weight="0"/>
+		android:layout_height="match_parent"
+		android:layout_weight="3">
+
+	</FrameLayout>
 
 </LinearLayout>

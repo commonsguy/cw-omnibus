@@ -7,7 +7,7 @@
 	<Button
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
-    android:text="Scan!"
+    android:text="@string/scan"
 		android:onClick="doScan"
 	/>
 	<TextView android:id="@+id/format"

@@ -27,6 +27,6 @@ public class BrowserDemo1 extends Activity {
     setContentView(R.layout.main);
     browser=(WebView)findViewById(R.id.webkit);
     
-    browser.loadUrl("http://google.com");
+    browser.loadUrl("http://commonsware.com");
   }
 }

@@ -21,7 +21,7 @@
 	<application
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
-		android:theme="@style/AppTheme">
+		android:theme="@style/Theme.Sherlock">
 		<activity
 			android:name=".EmPubLiteActivity"
 			android:label="@string/title_activity_em_pub_lite">

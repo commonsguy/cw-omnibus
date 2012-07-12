@@ -30,7 +30,8 @@ then go into Project Properties and point the
 book's project to use your copy of the ActionBarSherlock library project.
 
 - Many of the book samples, and ActionBarSherlock, require your Java compiler
-compliance level to be set to 1.6. You can find this in Project Properties,
+compliance level to be set to 1.6, so code can use the `@Override` annotation
+on interface method implementations. You can find this in Project Properties,
 in the Java Compiler area.
 
 ## Using from Ant

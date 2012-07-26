@@ -14,7 +14,6 @@
 
 package com.commonsware.android.chrono;
 
-import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -24,6 +23,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import java.util.Calendar;
 
 public class ChronoDemo extends Activity {
   TextView dateAndTimeLabel;

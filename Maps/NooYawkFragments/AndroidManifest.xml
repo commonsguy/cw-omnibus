@@ -12,8 +12,7 @@
 		android:smallScreens="true"/>
 
 	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+	
 	<application
 		android:hardwareAccelerated="true"
 		android:icon="@drawable/ic_launcher"

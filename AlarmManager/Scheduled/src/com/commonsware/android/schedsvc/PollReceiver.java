@@ -35,7 +35,7 @@ public class PollReceiver extends BroadcastReceiver {
     Intent i=new Intent(ctxt, ScheduledService.class);
     PendingIntent pi=PendingIntent.getService(ctxt, 0, i, 0);
 
-    mgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+    mgr.setRepeating(AlarmManager.ELAPSED_REALTIME,
                      SystemClock.elapsedRealtime() + PERIOD, PERIOD, pi);
   }
 }

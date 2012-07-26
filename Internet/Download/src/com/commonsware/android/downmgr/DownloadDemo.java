@@ -30,7 +30,7 @@ public class DownloadDemo extends SherlockFragmentActivity {
                                 .penaltyLog()
                                 .build());
     
-      if (savedInstanceState == null) {
+      if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
         getSupportFragmentManager().beginTransaction()
                                    .add(android.R.id.content,
                                         new DownloadFragment()).commit();

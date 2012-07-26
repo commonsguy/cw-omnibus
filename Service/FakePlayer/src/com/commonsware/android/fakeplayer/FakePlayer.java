@@ -22,7 +22,7 @@ public class FakePlayer extends SherlockFragmentActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     
-    if (savedInstanceState == null) {
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
       getSupportFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new PlayerFragment()).commit();

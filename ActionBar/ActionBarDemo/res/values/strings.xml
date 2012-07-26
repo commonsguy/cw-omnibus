@@ -3,4 +3,5 @@
     <string name="app_name">Action Bar Demo</string>
     <string name="add">Add</string>
     <string name="reset">Reset</string>
+    <string name="about">About</string>
 </resources>

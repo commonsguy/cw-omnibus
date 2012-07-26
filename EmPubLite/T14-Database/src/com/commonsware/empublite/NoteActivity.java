@@ -11,7 +11,7 @@ public class NoteActivity extends SherlockFragmentActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (savedInstanceState == null) {
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
       int position=getIntent().getIntExtra(EXTRA_POSITION, -1);
       
       if (position>=0) {

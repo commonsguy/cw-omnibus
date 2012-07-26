@@ -11,7 +11,7 @@ public class SimpleContentActivity extends SherlockFragmentActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (savedInstanceState == null) {
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
       String file=getIntent().getStringExtra(EXTRA_FILE);
       Fragment f=SimpleContentFragment.newInstance(file);
 

@@ -25,7 +25,7 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (savedInstanceState == null) {
+    if (getSupportFragmentManager().findFragmentByTag(MODEL)==null) {
       getSupportFragmentManager().beginTransaction()
                                  .add(new ModelFragment(), MODEL)
                                  .commit();

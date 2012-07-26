@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     return(singleton);
   }
 
-  public DatabaseHelper(Context ctxt) {
+  private DatabaseHelper(Context ctxt) {
     super(ctxt, DATABASE_NAME, null, SCHEMA_VERSION);
     this.ctxt=ctxt;
   }

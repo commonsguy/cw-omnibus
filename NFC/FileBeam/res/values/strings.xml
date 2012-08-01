@@ -1,0 +1,9 @@
+<resources>
+
+	<string name="app_name">File Beam</string>
+
+	<string name="sorry">Sorry, but Android Beam is disabled</string>
+
+	<string name="over">Tell me when it\'s over!</string>
+
+</resources>

@@ -4,7 +4,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<android.support.v4.view.PagerTitleStrip
+	<android.support.v4.view.PagerTabStrip
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="top"/>

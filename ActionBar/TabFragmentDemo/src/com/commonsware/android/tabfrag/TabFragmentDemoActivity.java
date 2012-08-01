@@ -21,54 +21,55 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class TabFragmentDemoActivity extends
-    SherlockFragmentActivity implements TabListener {
+public class TabFragmentDemoActivity extends SherlockFragmentActivity
+    implements TabListener {
   private static final String KEY_MODELS="models";
   private static final String KEY_POSITION="position";
   private CharSequence[] models=new CharSequence[10];
-  
+
   @Override
   public void onCreate(Bundle state) {
     super.onCreate(state);
 
-    if (state!=null) {
+    if (state != null) {
       models=state.getCharSequenceArray(KEY_MODELS);
     }
-    
+
     ActionBar bar=getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-    for (int i=0;i<10;i++) {
-      bar.addTab(bar.newTab()
-                       .setText("Tab #"+String.valueOf(i+1))
-                       .setTabListener(this)
-                       .setTag(i));
+    for (int i=0; i < 10; i++) {
+      bar.addTab(bar.newTab().setText("Tab #" + String.valueOf(i + 1))
+                    .setTabListener(this).setTag(i));
     }
 
-    if (state!=null) {
+    if (state != null) {
       bar.setSelectedNavigationItem(state.getInt(KEY_POSITION));
     }
   }
-  
+
   @Override
   public void onSaveInstanceState(Bundle state) {
     state.putCharSequenceArray(KEY_MODELS, models);
-    state.putInt(KEY_POSITION, getSupportActionBar().getSelectedNavigationIndex());
+    state.putInt(KEY_POSITION,
+                 getSupportActionBar().getSelectedNavigationIndex());
   }
 
   @Override
   public void onTabSelected(Tab tab, FragmentTransaction ft) {
     int i=((Integer)tab.getTag()).intValue();
-    
-    ft.replace(android.R.id.content, EditorFragment.newInstance(i, models[i]));
+
+    ft.replace(android.R.id.content,
+               EditorFragment.newInstance(i, models[i]));
   }
 
   @Override
   public void onTabUnselected(Tab tab, FragmentTransaction ft) {
     int i=((Integer)tab.getTag()).intValue();
-    EditorFragment frag=(EditorFragment)getSupportFragmentManager().findFragmentById(android.R.id.content);
-    
-    if (frag!=null) {
+    EditorFragment frag=
+        (EditorFragment)getSupportFragmentManager().findFragmentById(android.R.id.content);
+
+    if (frag != null) {
       models[i]=frag.getText();
     }
   }

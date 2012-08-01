@@ -56,13 +56,18 @@ public class CountriesFragment extends SherlockListFragment {
     state.putInt(STATE_CHECKED, getListView().getCheckedItemPosition());
   }
 
-  public void enablePersistentSelection() {
-    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-    int position=getListView().getCheckedItemPosition();
-
-    if (position >= 0) {
-      ((CountryListener)getActivity()).onCountrySelected(Country.EU.get(position));
+  public void setPersistentSelection(boolean enabled) {
+    if (enabled) {
+      getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+  
+      int position=getListView().getCheckedItemPosition();
+  
+      if (position >= 0) {
+        ((CountryListener)getActivity()).onCountrySelected(Country.EU.get(position));
+      }
+    }
+    else {
+      getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
     }
   }
 

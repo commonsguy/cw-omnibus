@@ -52,16 +52,14 @@ public class EU4You extends SherlockFragmentActivity implements
   public void onResume() {
     super.onResume();
 
-    if (details != null) {
-      countries.enablePersistentSelection();
-    }
+    countries.setPersistentSelection(details!=null && details.isVisible());
   }
 
   @Override
   public void onCountrySelected(Country c) {
     String url=getString(c.url);
 
-    if (details != null) {
+    if (details!=null && details.isVisible()) {
       details.loadUrl(url);
     }
     else {

@@ -12,6 +12,11 @@
 		android:icon="@android:drawable/ic_menu_revert"
 		android:showAsAction="always|withText"
 		android:title="@string/reset"/>
-	<item android:id="@+id/about" android:showAsAction="never" android:title="@string/about" android:icon="@android:drawable/ic_menu_info_details"></item>
+	<item
+		android:id="@+id/about"
+		android:icon="@android:drawable/ic_menu_info_details"
+		android:showAsAction="never"
+		android:title="@string/about">
+	</item>
 
 </menu>

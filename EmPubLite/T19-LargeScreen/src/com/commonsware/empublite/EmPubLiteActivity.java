@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -18,12 +17,14 @@ import com.actionbarsherlock.view.MenuItem;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 public class EmPubLiteActivity extends SherlockFragmentActivity
-    implements NoteFragment.NoteListener, FragmentManager.OnBackStackChangedListener {
+    implements FragmentManager.OnBackStackChangedListener {
   private static final String FILE_HELP=
       "file:///android_asset/misc/help.html";
   private static final String FILE_ABOUT=
       "file:///android_asset/misc/about.html";
   private static final String MODEL="model";
+  private static final String HELP="help";
+  private static final String ABOUT="about";
   private static final String PREF_LAST_POSITION="lastPosition";
   private static final String PREF_SAVE_LAST_POSITION=
       "saveLastPosition";
@@ -34,6 +35,8 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
   private ModelFragment model=null;
   private View sidebar=null;
   private View divider=null;
+  private SimpleContentFragment help=null;
+  private SimpleContentFragment about=null;
 
   /** Called when the activity is first created. */
   @Override
@@ -49,6 +52,9 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
       model=
           (ModelFragment)getSupportFragmentManager().findFragmentByTag(MODEL);
     }
+    
+    help=(SimpleContentFragment)getSupportFragmentManager().findFragmentByTag(HELP);
+    about=(SimpleContentFragment)getSupportFragmentManager().findFragmentByTag(ABOUT);
 
     setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
@@ -111,7 +117,10 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
         return(true);
 
       case R.id.notes:
-        showNotes();
+        Intent i=new Intent(this, NoteActivity.class);
+
+        i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
+        startActivity(i);
         return(true);
 
       case R.id.about:
@@ -130,11 +139,6 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
     return(super.onOptionsItemSelected(item));
   }
 
-  @Override
-  public void closeNotes() {
-    getSupportFragmentManager().popBackStackImmediate();
-  }
-
   void openSidebar() {
     LinearLayout.LayoutParams p=
         (LinearLayout.LayoutParams)sidebar.getLayoutParams();
@@ -142,8 +146,9 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
     if (p.weight == 0) {
       p.weight=3;
       sidebar.setLayoutParams(p);
-      divider.setVisibility(View.VISIBLE);
     }
+    
+    divider.setVisibility(View.VISIBLE);
   }
 
   @Override
@@ -160,33 +165,17 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
     }
   }
 
-  void showNotes() {
-    if (sidebar != null) {
-      openSidebar();
-
-      Fragment f=NoteFragment.newInstance(pager.getCurrentItem());
-
-      getSupportFragmentManager().beginTransaction()
-                                 .addToBackStack(null)
-                                 .replace(R.id.sidebar, f).commit();
-    }
-    else {
-      Intent i=new Intent(this, NoteActivity.class);
-
-      i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
-      startActivity(i);
-    }
-  }
-
   void showAbout() {
     if (sidebar != null) {
       openSidebar();
 
-      Fragment f=SimpleContentFragment.newInstance(FILE_ABOUT);
+      if (about==null) {
+        about=SimpleContentFragment.newInstance(FILE_ABOUT);
+      }
 
       getSupportFragmentManager().beginTransaction()
                                  .addToBackStack(null)
-                                 .replace(R.id.sidebar, f).commit();
+                                 .replace(R.id.sidebar, about).commit();
     }
     else {
       Intent i=new Intent(this, SimpleContentActivity.class);
@@ -201,11 +190,13 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
     if (sidebar != null) {
       openSidebar();
 
-      Fragment f=SimpleContentFragment.newInstance(FILE_HELP);
+      if (help==null) {
+        help=SimpleContentFragment.newInstance(FILE_HELP);
+      }
 
       getSupportFragmentManager().beginTransaction()
                                  .addToBackStack(null)
-                                 .replace(R.id.sidebar, f).commit();
+                                 .replace(R.id.sidebar, help).commit();
     }
     else {
       Intent i=new Intent(this, SimpleContentActivity.class);

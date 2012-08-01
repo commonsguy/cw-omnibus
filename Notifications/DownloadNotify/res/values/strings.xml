@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Downloader Demo</string>
     <string name="download_complete">Download complete!</string>
-    <string name="fun">Tap me to view  the file</string>
+    <string name="fun">Tap me to view the file</string>
     <string name="exception">EXCEPTION!</string>
 </resources>

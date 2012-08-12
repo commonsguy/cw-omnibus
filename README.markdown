@@ -12,7 +12,10 @@ actual directory names.
 
 ## Using in Eclipse
 
-These projects can be imported using the normal Eclipse import process.
+These projects can be imported using the normal Eclipse import process. That
+being said, importing *all* the projects is probably a **really bad idea**, simply
+because there are so many of them. Import select projects, if and when you need
+them.
 
 Note, though, that you will have to fix some things up, particularly if you
 are getting errors:
@@ -33,6 +36,9 @@ book's project to use your copy of the ActionBarSherlock library project.
 compliance level to be set to 1.6, so code can use the `@Override` annotation
 on interface method implementations. You can find this in Project Properties,
 in the Java Compiler area.
+
+- Restarting Eclipse, for whatever reason, can clear up some undefined problems
+indicated by red exclamation marks over the project name in the Project Explorer.
 
 ## Using from Ant
 

@@ -34,4 +34,11 @@ public class GCMIntentService extends GCMBaseIntentService {
   protected void onError(Context ctxt, String errorMsg) {
     Log.d(getClass().getSimpleName(), "onError: " + errorMsg);
   }
+
+  @Override
+  protected boolean onRecoverableError(Context ctxt, String errorMsg) {
+    Log.d(getClass().getSimpleName(), "onRecoverableError: " + errorMsg);
+    
+    return(true);
+  }
 }

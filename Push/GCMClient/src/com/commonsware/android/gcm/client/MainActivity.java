@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 
 public class MainActivity extends Activity {
-  private static final String SENDER_ID="21221004115";
+  static final String SENDER_ID="this is totally fake"; // change me!
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,10 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
 
     GCMRegistrar.checkDevice(this);
-    GCMRegistrar.checkManifest(this);
+    
+    if (BuildConfig.DEBUG) {
+      GCMRegistrar.checkManifest(this);
+    }
   }
 
   public void onClick(View v) {

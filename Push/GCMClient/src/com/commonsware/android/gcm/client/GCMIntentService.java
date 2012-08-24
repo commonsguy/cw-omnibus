@@ -22,6 +22,10 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMBaseIntentService;
 
 public class GCMIntentService extends GCMBaseIntentService {
+  public GCMIntentService() {
+    super(MainActivity.SENDER_ID);
+  }
+  
   @Override
   protected void onRegistered(Context ctxt, String regId) {
     Log.d(getClass().getSimpleName(), "onRegistered: " + regId);

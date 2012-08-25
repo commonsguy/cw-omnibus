@@ -1,7 +1,7 @@
 <resources>
 
-	<string name="app_name">MultiViewPagerOne</string>
-	<string name="title_activity_main">MainActivity</string>
+	<string name="app_name">Multi ViewPager One</string>
+	<string name="title_activity_main">Multi ViewPager One</string>
 	<string name="item">Page %d</string>
 
 </resources>

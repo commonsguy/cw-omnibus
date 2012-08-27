@@ -10,7 +10,7 @@
 	
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.downloader;
 
@@ -21,8 +21,8 @@ public class DownloaderDemo extends SherlockFragmentActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
+
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
       getSupportFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new DownloadFragment()).commit();

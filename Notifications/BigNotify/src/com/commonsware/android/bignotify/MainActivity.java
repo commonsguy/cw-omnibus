@@ -21,7 +21,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import com.jakewharton.notificationcompat2.NotificationCompat2;
+import android.support.v4.app.NotificationCompat;
 
 public class MainActivity extends Activity {
   private static final int NOTIFY_ID=1337;
@@ -32,10 +32,10 @@ public class MainActivity extends Activity {
 
     NotificationManager mgr=
         (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-    NotificationCompat2.Builder normal=
+    NotificationCompat.Builder normal=
         buildNormal(getString(R.string.sample));
-    NotificationCompat2.InboxStyle big=
-        new NotificationCompat2.InboxStyle(normal);
+    NotificationCompat.InboxStyle big=
+        new NotificationCompat.InboxStyle(normal);
 
     mgr.notify(NOTIFY_ID,
                big.setSummaryText(getString(R.string.summary))
@@ -48,8 +48,8 @@ public class MainActivity extends Activity {
     finish();
   }
 
-  private NotificationCompat2.Builder buildNormal(CharSequence title) {
-    NotificationCompat2.Builder b=new NotificationCompat2.Builder(this);
+  private NotificationCompat.Builder buildNormal(CharSequence title) {
+    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
 
     b.setAutoCancel(true)
      .setDefaults(Notification.DEFAULT_ALL)

@@ -49,17 +49,10 @@ public class EU4You extends SherlockFragmentActivity implements
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
-
-    countries.setPersistentSelection(details!=null && details.isVisible());
-  }
-
-  @Override
   public void onCountrySelected(Country c) {
     String url=getString(c.url);
 
-    if (details!=null && details.isVisible()) {
+    if (details != null && details.isVisible()) {
       details.loadUrl(url);
     }
     else {
@@ -68,5 +61,10 @@ public class EU4You extends SherlockFragmentActivity implements
       i.putExtra(DetailsActivity.EXTRA_URL, url);
       startActivity(i);
     }
+  }
+
+  @Override
+  public boolean isPersistentSelection() {
+    return(details != null && details.isVisible());
   }
 }

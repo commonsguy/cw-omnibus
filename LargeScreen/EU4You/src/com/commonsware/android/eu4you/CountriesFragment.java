@@ -44,9 +44,17 @@ public class CountriesFragment extends SherlockListFragment {
 
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
-    l.setItemChecked(position, true);
+    CountryListener listener=(CountryListener)getActivity();
 
-    ((CountryListener)getActivity()).onCountrySelected(Country.EU.get(position));
+    if (listener.isPersistentSelection()) {
+      getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+      l.setItemChecked(position, true);
+    }
+    else {
+      getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
+    }
+
+    listener.onCountrySelected(Country.EU.get(position));
   }
 
   @Override
@@ -54,21 +62,6 @@ public class CountriesFragment extends SherlockListFragment {
     super.onSaveInstanceState(state);
 
     state.putInt(STATE_CHECKED, getListView().getCheckedItemPosition());
-  }
-
-  public void setPersistentSelection(boolean enabled) {
-    if (enabled) {
-      getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-  
-      int position=getListView().getCheckedItemPosition();
-  
-      if (position >= 0) {
-        ((CountryListener)getActivity()).onCountrySelected(Country.EU.get(position));
-      }
-    }
-    else {
-      getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
-    }
   }
 
   class CountryAdapter extends ArrayAdapter<Country> {

@@ -13,13 +13,13 @@ public class PostDelayedDemo extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
+    root=findViewById(android.R.id.content);
   }
   
   @Override
   public void onResume() {
     super.onResume();
     
-    root=findViewById(android.R.id.content);
     everyFiveSeconds.run();
   }
   

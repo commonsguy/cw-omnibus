@@ -1,0 +1,33 @@
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:columnCount="2">
+
+  <TextView
+    android:layout_column="0"
+    android:layout_row="0"
+    android:text="@string/name"
+    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+  <EditText
+    android:layout_column="1"
+    android:layout_row="0"
+    android:layout_gravity="fill_horizontal"
+    android:inputType="textPersonName">
+
+    <requestFocus/>
+  </EditText>
+
+  <TextView
+    android:layout_column="0"
+    android:layout_row="1"
+    android:text="@string/address"
+    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+  <EditText
+    android:layout_column="1"
+    android:layout_row="1"
+    android:layout_gravity="fill_horizontal"
+    android:inputType="textPostalAddress"/>
+
+</GridLayout>

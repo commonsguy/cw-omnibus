@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">GridLayout Sampler</string>
+	<string name="button">Button</string>
+	<string name="row">Row</string>
+	<string name="column">Column</string>
+	<string name="name">Name:</string>
+	<string name="address">Address:</string>
+	<string name="table">Table</string>
+	<string name="implicit">Implicit</string>
+	<string name="spans">Spans</string>
+	<string name="flexible_table">Flexible Table</string>
+	<string name="string_1">1</string>
+	<string name="string_2">2</string>
+	<string name="string_3">3</string>
+	<string name="string_4">4</string>
+	<string name="string_5">5</string>
+	<string name="string_6">6</string>
+
+</resources>

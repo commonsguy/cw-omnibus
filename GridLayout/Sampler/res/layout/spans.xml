@@ -1,0 +1,106 @@
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res/com.commonsware.android.gridlayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	app:columnCount="9"
+	app:orientation="horizontal"
+	app:rowCount="5">
+
+	<Button
+		app:layout_gravity="fill"
+		app:layout_columnSpan="2"
+		app:layout_rowSpan="2"
+		android:text="@string/string_1"/>
+
+	<Button
+		app:layout_gravity="fill_horizontal"
+		app:layout_columnSpan="2"
+		android:text="@string/string_2"/>
+
+	<Button
+		app:layout_gravity="fill_vertical"
+		app:layout_rowSpan="4"
+		android:text="@string/string_3"/>
+
+	<Button
+		app:layout_gravity="fill"
+		app:layout_columnSpan="3"
+		app:layout_rowSpan="2"
+		android:text="@string/string_4"/>
+
+	<Button
+		app:layout_gravity="fill_horizontal"
+		app:layout_columnSpan="3"
+		android:text="@string/string_5"/>
+
+	<Button
+		app:layout_gravity="fill_horizontal"
+		app:layout_columnSpan="2"
+		android:text="@string/string_6"/>
+
+	<android.support.v7.widget.Space
+		android:layout_width="36dp"
+		app:layout_column="0"
+		app:layout_row="4"/>
+
+	<android.support.v7.widget.Space
+		android:layout_width="36dp"
+		app:layout_column="1"
+		app:layout_row="4"/>
+
+	<android.support.v7.widget.Space
+		android:layout_width="36dp"
+		app:layout_column="2"
+		app:layout_row="4"/>
+
+	<android.support.v7.widget.Space
+		android:layout_width="36dp"
+		app:layout_column="3"
+		app:layout_row="4"/>
+
+	<android.support.v7.widget.Space
+		android:layout_width="36dp"
+		app:layout_column="4"
+		app:layout_row="4"/>
+
+	<android.support.v7.widget.Space
+		android:layout_width="36dp"
+		app:layout_column="5"
+		app:layout_row="4"/>
+
+	<android.support.v7.widget.Space
+		android:layout_width="36dp"
+		app:layout_column="6"
+		app:layout_row="4"/>
+
+	<android.support.v7.widget.Space
+		android:layout_width="36dp"
+		app:layout_column="7"
+		app:layout_row="4"/>
+
+	<android.support.v7.widget.Space
+		android:layout_height="36dp"
+		android:layout_column="8"
+		android:layout_row="0"/>
+
+	<android.support.v7.widget.Space
+		android:layout_height="36dp"
+		app:layout_column="8"
+		app:layout_row="1"/>
+
+	<android.support.v7.widget.Space
+		android:layout_height="36dp"
+		app:layout_column="8"
+		app:layout_row="2"/>
+
+	<android.support.v7.widget.Space
+		android:layout_height="36dp"
+		app:layout_column="8"
+		app:layout_row="3"/>
+
+	<android.support.v7.widget.Space
+		android:layout_height="36dp"
+		app:layout_column="8"
+		app:layout_row="4"/>
+
+</android.support.v7.widget.GridLayout>

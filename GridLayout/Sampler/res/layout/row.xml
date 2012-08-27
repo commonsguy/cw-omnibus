@@ -1,0 +1,17 @@
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res/com.commonsware.android.gridlayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	app:columnCount="2">
+
+	<Button
+		app:layout_column="0"
+		app:layout_row="0"
+		android:text="@string/button"/>
+
+	<Button
+		app:layout_column="1"
+		app:layout_row="0"
+		android:text="@string/button"/>
+
+</android.support.v7.widget.GridLayout>

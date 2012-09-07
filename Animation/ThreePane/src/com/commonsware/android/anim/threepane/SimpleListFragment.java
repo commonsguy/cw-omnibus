@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.anim.threepane;
 
@@ -43,6 +43,7 @@ public class SimpleListFragment extends ListFragment {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
+    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     setContents(getArguments().getStringArrayList(KEY_CONTENTS));
   }
 
@@ -54,7 +55,7 @@ public class SimpleListFragment extends ListFragment {
   void setContents(ArrayList<String> contents) {
     setListAdapter(new ArrayAdapter<String>(
                                             getActivity(),
-                                            android.R.layout.simple_list_item_1,
+                                            R.layout.simple_list_item_1,
                                             contents));
   }
 }

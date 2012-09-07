@@ -10,10 +10,12 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.anim.threepane;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -68,23 +70,14 @@ public class ThreePaneLayout extends LinearLayout {
       requestLayout();
     }
 
-    left.animate().translationXBy(-1 * leftWidth)
-        .setDuration(ANIM_DURATION);
-    middle.animate().translationXBy(-1 * leftWidth)
-          .setDuration(ANIM_DURATION);
-    right.animate().translationXBy(-1 * leftWidth)
-         .setDuration(ANIM_DURATION);
+    translateWidgets(-1 * leftWidth, left, middle, right);
 
     ObjectAnimator.ofInt(this, "middleWidth", middleWidthNormal,
                          leftWidth).setDuration(ANIM_DURATION).start();
   }
 
   public void showLeft() {
-    left.animate().translationXBy(leftWidth).setDuration(ANIM_DURATION);
-    middle.animate().translationXBy(leftWidth)
-          .setDuration(ANIM_DURATION);
-    right.animate().translationXBy(leftWidth)
-         .setDuration(ANIM_DURATION);
+    translateWidgets(leftWidth, left, middle, right);
 
     ObjectAnimator.ofInt(this, "middleWidth", leftWidth,
                          middleWidthNormal).setDuration(ANIM_DURATION)
@@ -94,6 +87,20 @@ public class ThreePaneLayout extends LinearLayout {
   public void setMiddleWidth(int value) {
     middle.getLayoutParams().width=value;
     requestLayout();
+  }
+
+  private void translateWidgets(int deltaX, View... views) {
+    for (final View v : views) {
+      v.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+
+      v.animate().translationXBy(deltaX).setDuration(ANIM_DURATION)
+       .setListener(new AnimatorListenerAdapter() {
+         @Override
+         public void onAnimationEnd(Animator animation) {
+           v.setLayerType(View.LAYER_TYPE_NONE, null);
+         }
+       });
+    }
   }
 
   private void resetWidget(View v, int width) {

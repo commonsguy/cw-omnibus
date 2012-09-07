@@ -11,14 +11,13 @@
 		android:layout_weight="3"/>
 
 	<FrameLayout
-    android:id="@+id/middle"
+		android:id="@+id/middle"
 		android:layout_width="0dp"
 		android:layout_height="match_parent"
 		android:layout_weight="7"/>
 
 	<Button
 		android:layout_width="0dp"
-		android:layout_height="match_parent"
-		android:text="Right"/>
+		android:layout_height="match_parent"/>
 
 </com.commonsware.android.anim.threepane.ThreePaneLayout>

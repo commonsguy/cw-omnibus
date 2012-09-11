@@ -1,0 +1,8 @@
+<resources>
+
+	<string name="app_name">Animator Fade Demo</string>
+	<string name="title_activity_main">Animator Fade Demo</string>
+	<string name="fading_out">Fading Out</string>
+  <string name="coming_back">Coming Back</string>
+	
+</resources>

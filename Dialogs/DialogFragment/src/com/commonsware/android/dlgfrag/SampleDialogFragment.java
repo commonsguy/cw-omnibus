@@ -19,6 +19,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -56,7 +57,7 @@ public class SampleDialogFragment extends DialogFragment implements
   public void onDismiss(DialogInterface unused) {
     super.onDismiss(unused);
     
-    Toast.makeText(getActivity(), R.string.goodbye, Toast.LENGTH_LONG).show();
+    Log.d(getClass().getSimpleName(), "Goodbye!");
   }
   
   @Override

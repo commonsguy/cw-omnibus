@@ -6,7 +6,7 @@
 
 	<uses-sdk
 		android:minSdkVersion="5"
-		android:targetSdkVersion="11"/>
+		android:targetSdkVersion="13"/>
 
 	<supports-screens
 		android:anyDensity="true"
@@ -19,7 +19,7 @@
 		android:label="@string/app_name">
 		<activity
 			android:name="RotationDIYDemo"
-			android:configChanges="keyboardHidden|orientation"
+			android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize"
 			android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>

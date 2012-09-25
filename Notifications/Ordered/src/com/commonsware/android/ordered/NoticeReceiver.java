@@ -43,6 +43,6 @@ public class NoticeReceiver extends BroadcastReceiver {
      .setTicker(ctxt.getString(R.string.notify_ticker))
      .setContentIntent(pi);
 
-    mgr.notify(NOTIFY_ME_ID, b.getNotification());
+    mgr.notify(NOTIFY_ME_ID, b.build());
   }
 }

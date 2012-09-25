@@ -115,6 +115,6 @@ public class Downloader extends IntentService {
     NotificationManager mgr=
         (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
-    mgr.notify(NOTIFY_ID, b.getNotification());
+    mgr.notify(NOTIFY_ID, b.build());
   }
 }

@@ -46,7 +46,7 @@ public class SillyService extends IntentService {
       .setSmallIcon(R.drawable.ic_stat_notif_small_icon)
       .setOngoing(true);
     
-    Notification notif=builder.getNotification();
+    Notification notif=builder.build();
     
     for (int i=0;i<20;i++) {
       notif.contentView.setProgressBar(android.R.id.progress,

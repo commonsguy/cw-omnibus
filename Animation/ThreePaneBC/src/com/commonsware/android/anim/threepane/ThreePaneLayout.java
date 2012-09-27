@@ -87,7 +87,8 @@ public class ThreePaneLayout extends LinearLayout {
                   .start();
   }
 
-  public void setMiddleWidth(int value) {
+  @SuppressWarnings("unused")
+  private void setMiddleWidth(int value) {
     middle.getLayoutParams().width=value;
     requestLayout();
   }

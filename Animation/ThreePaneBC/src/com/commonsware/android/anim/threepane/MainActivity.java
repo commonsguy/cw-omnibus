@@ -59,7 +59,9 @@ public class MainActivity extends FragmentActivity {
   void onListItemClick(SimpleListFragment fragment, int position) {
     if (fragment == middleFragment) {
       ((Button)root.getRightView()).setText(middleContents.get(position));
-      root.hideLeft();
+      if(isLeftShowing){
+        root.hideLeft();
+      }
       isLeftShowing=false;
     }
     else {
@@ -78,6 +80,7 @@ public class MainActivity extends FragmentActivity {
       else {
         middleFragment.setContents(middleContents);
       }
+      isLeftShowing=true;
     }
   }
 }

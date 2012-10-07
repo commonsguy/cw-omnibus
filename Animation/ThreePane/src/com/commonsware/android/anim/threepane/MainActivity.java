@@ -59,8 +59,11 @@ public class MainActivity extends Activity {
   void onListItemClick(SimpleListFragment fragment, int position) {
     if (fragment == middleFragment) {
       ((Button)root.getRightView()).setText(middleContents.get(position));
-      root.hideLeft();
-      isLeftShowing=false;
+      
+      if (isLeftShowing) {
+        root.hideLeft();
+        isLeftShowing=false;
+      }
     }
     else {
       middleContents=new ArrayList<String>();

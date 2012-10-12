@@ -60,18 +60,20 @@ public class PipeProvider extends ContentProvider {
   public ParcelFileDescriptor openFile(Uri uri, String mode)
                                                             throws FileNotFoundException {
     ParcelFileDescriptor[] pipe=null;
-    
+
     try {
       pipe=ParcelFileDescriptor.createPipe();
       AssetManager assets=getContext().getResources().getAssets();
 
-      transfer(assets.open(uri.getLastPathSegment()), new AutoCloseOutputStream(pipe[1]));
+      new TransferTask(assets.open(uri.getLastPathSegment()),
+                       new AutoCloseOutputStream(pipe[1])).start();
     }
     catch (IOException e) {
       Log.e(getClass().getSimpleName(), "Exception opening pipe", e);
-      throw new FileNotFoundException("Could not open pipe for: "+uri.toString());
+      throw new FileNotFoundException("Could not open pipe for: "
+          + uri.toString());
     }
-    
+
     return(pipe[0]);
   }
 
@@ -96,16 +98,33 @@ public class PipeProvider extends ContentProvider {
   public int delete(Uri uri, String where, String[] whereArgs) {
     throw new RuntimeException("Operation not supported");
   }
-  
-  static private void transfer(InputStream in, OutputStream out) throws IOException {
-    byte[] buf=new byte[1024];
-    int len;
 
-    while ((len=in.read(buf)) > 0) {
-      out.write(buf, 0, len);
+  static class TransferTask extends Thread {
+    InputStream in;
+    OutputStream out;
+
+    TransferTask(InputStream in, OutputStream out) {
+      this.in=in;
+      this.out=out;
     }
 
-    in.close();
-    out.close();
+    @Override
+    public void run() {
+      byte[] buf=new byte[1024];
+      int len;
+
+      try {
+        while ((len=in.read(buf)) > 0) {
+          out.write(buf, 0, len);
+        }
+
+        in.close();
+        out.close();
+      }
+      catch (IOException e) {
+        Log.e(getClass().getSimpleName(),
+              "Exception transferring file", e);
+      }
+    }
   }
 }

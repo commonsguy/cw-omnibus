@@ -1,0 +1,7 @@
+<resources>
+
+	<string name="app_name">Title Bar Progress</string>
+	<string name="hello_world">Hello world!</string>
+	<string name="title_activity_main">Title Bar Progress</string>
+
+</resources>

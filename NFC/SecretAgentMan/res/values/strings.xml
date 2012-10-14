@@ -1,0 +1,18 @@
+<resources>
+
+	<string name="app_name">Secret Agent Man</string>
+	<string name="title_activity_main">Secret Agent Man</string>
+	<string name="secret">Type in something secret</string>
+	<string name="write_tag">Write to Tag</string>
+	<string name="this_is_a_secret">This is a secret</string>
+	<string name="tag_refused_to_format">Tag refused to format</string>
+	<string name="tag_refused_to_connect">Tag refused to connect</string>
+	<string name="tag_does_not_support_ndef">Tag does not support NDEF</string>
+	<string name="tag_is_read_only">Tag is read-only</string>
+	<string name="message_is_too_big_for_tag">Message is too big for tag</string>
+	<string name="general_exception">"General exception: "</string>
+	<string name="success">Success!</string>
+	<string name="beam">Beam</string>
+	<string name="file_beam">Beam File</string>
+
+</resources>

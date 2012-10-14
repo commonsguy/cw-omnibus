@@ -1,0 +1,10 @@
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/secretMessage"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="top|left"
+	android:hint="@string/secret"
+	android:text="@string/this_is_a_secret">
+
+</EditText>

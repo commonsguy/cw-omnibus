@@ -148,7 +148,7 @@ public class MainActivity extends Activity implements
     try {
       pipe=ParcelFileDescriptor.createPipe();
 
-      new TransferTask(new AutoCloseInputStream(pipe[0]),
+      new TransferThread(new AutoCloseInputStream(pipe[0]),
                        new FileOutputStream(getOutputFile())).start();
     }
     catch (IOException e) {
@@ -162,11 +162,11 @@ public class MainActivity extends Activity implements
     return(new File(getExternalFilesDir(null), BASENAME));
   }
 
-  static class TransferTask extends Thread {
+  static class TransferThread extends Thread {
     InputStream in;
     FileOutputStream out;
 
-    TransferTask(InputStream in, FileOutputStream out) {
+    TransferThread(InputStream in, FileOutputStream out) {
       this.in=in;
       this.out=out;
     }

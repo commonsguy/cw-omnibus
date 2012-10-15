@@ -1,0 +1,13 @@
+<resources>
+
+	<string name="app_name">Audio Recording Demo</string>
+	<string name="title_activity_main">Audio Recording</string>
+	<string name="record">Record</string>
+	<string name="strange">Something strange happened</string>
+	<string name="max_duration">Maximum duration reached</string>
+	<string name="max_size">Maximum file size reached</string>
+	<string name="recording_successful">Recording successful!</string>
+	<string name="recording_failed">Recording failed!?!</string>
+	<string name="recording_copy_failed">Recording succeeded but copy failed</string>
+
+</resources>

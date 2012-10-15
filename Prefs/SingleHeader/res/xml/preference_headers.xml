@@ -1,0 +1,12 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<header
+		android:fragment="com.commonsware.android.pref1header.StockPreferenceFragment"
+		android:summary="@string/header1summary"
+		android:title="@string/header1title">
+		<extra
+			android:name="resource"
+			android:value="preferences"/>
+	</header>
+
+</preference-headers>

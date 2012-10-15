@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="value">
+		<item name="android:textSize">30sp</item>
+	</style>
+
+	<style name="label" parent="@style/value">
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingRight">5dip</item>
+	</style>
+
+</resources>

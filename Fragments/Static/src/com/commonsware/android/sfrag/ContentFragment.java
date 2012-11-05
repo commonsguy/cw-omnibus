@@ -28,7 +28,7 @@ public class ContentFragment extends SherlockFragment implements
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container,
                            Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.mainfrag, container);
+    View result=inflater.inflate(R.layout.mainfrag, container, false);
 
     result.findViewById(R.id.showOther).setOnClickListener(this);
 

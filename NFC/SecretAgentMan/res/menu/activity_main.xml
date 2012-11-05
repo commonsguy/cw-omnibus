@@ -1,6 +1,6 @@
 
     <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <item android:id="@+id/write_tag" android:title="@string/write_tag" android:showAsAction="ifRoom|withText"></item>
-        <item android:id="@+id/simple_beam" android:title="@string/beam" android:showAsAction="ifRoom|withText"></item>
-        <item android:id="@+id/file_beam" android:title="@string/file_beam" android:showAsAction="ifRoom|withText"></item>
+        <item android:id="@+id/simple_beam" android:title="@string/beam" android:showAsAction="ifRoom|withText" android:enabled="false"></item>
+        <item android:id="@+id/file_beam" android:title="@string/file_beam" android:showAsAction="ifRoom|withText" android:enabled="false"></item>
     </menu>

@@ -65,7 +65,7 @@ public class PipeProvider extends ContentProvider {
       pipe=ParcelFileDescriptor.createPipe();
       AssetManager assets=getContext().getResources().getAssets();
 
-      new TransferTask(assets.open(uri.getLastPathSegment()),
+      new TransferThread(assets.open(uri.getLastPathSegment()),
                        new AutoCloseOutputStream(pipe[1])).start();
     }
     catch (IOException e) {
@@ -99,11 +99,11 @@ public class PipeProvider extends ContentProvider {
     throw new RuntimeException("Operation not supported");
   }
 
-  static class TransferTask extends Thread {
+  static class TransferThread extends Thread {
     InputStream in;
     OutputStream out;
 
-    TransferTask(InputStream in, OutputStream out) {
+    TransferThread(InputStream in, OutputStream out) {
       this.in=in;
       this.out=out;
     }
@@ -119,6 +119,7 @@ public class PipeProvider extends ContentProvider {
         }
 
         in.close();
+        out.flush();
         out.close();
       }
       catch (IOException e) {

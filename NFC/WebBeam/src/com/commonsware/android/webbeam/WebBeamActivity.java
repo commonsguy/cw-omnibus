@@ -103,6 +103,7 @@ public class WebBeamActivity extends SherlockFragmentActivity implements
                         new NdefRecord[] {
                             uriRecord,
                             NdefRecord.createApplicationRecord("com.commonsware.android.webbeam") });
+    
     return(msg);
   }
 }

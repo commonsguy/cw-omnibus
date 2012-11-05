@@ -32,8 +32,7 @@ public class MainActivity extends Activity {
 
     NotificationManager mgr=
         (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-    NotificationCompat.Builder normal=
-        buildNormal(getString(R.string.sample));
+    NotificationCompat.Builder normal=buildNormal();
     NotificationCompat.InboxStyle big=
         new NotificationCompat.InboxStyle(normal);
 
@@ -48,7 +47,7 @@ public class MainActivity extends Activity {
     finish();
   }
 
-  private NotificationCompat.Builder buildNormal(CharSequence title) {
+  private NotificationCompat.Builder buildNormal() {
     NotificationCompat.Builder b=new NotificationCompat.Builder(this);
 
     b.setAutoCancel(true)

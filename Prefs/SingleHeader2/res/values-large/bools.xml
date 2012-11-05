@@ -1,0 +1,5 @@
+<resources>
+
+	<bool name="suppressHeader">false</bool>
+
+</resources>

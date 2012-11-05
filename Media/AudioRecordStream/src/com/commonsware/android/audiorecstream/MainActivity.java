@@ -18,7 +18,6 @@ import android.app.Activity;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.OnErrorListener;
 import android.media.MediaRecorder.OnInfoListener;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.os.ParcelFileDescriptor.AutoCloseInputStream;
@@ -35,7 +34,7 @@ import java.io.InputStream;
 
 public class MainActivity extends Activity implements
     OnCheckedChangeListener, OnErrorListener, OnInfoListener {
-  private static final String BASENAME="recording-stream.3gp";
+  private static final String BASENAME="recording-stream.amr";
   private MediaRecorder recorder=null;
 
   @Override
@@ -74,17 +73,9 @@ public class MainActivity extends Activity implements
       }
 
       recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-      recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+      recorder.setOutputFormat(MediaRecorder.OutputFormat.RAW_AMR);
       recorder.setOutputFile(getStreamFd());
-
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        recorder.setAudioEncodingBitRate(160 * 1024);
-      }
-      else {
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-      }
-
+      recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
       recorder.setAudioChannels(2);
 
       try {
@@ -149,7 +140,7 @@ public class MainActivity extends Activity implements
       pipe=ParcelFileDescriptor.createPipe();
 
       new TransferThread(new AutoCloseInputStream(pipe[0]),
-                       new FileOutputStream(getOutputFile())).start();
+                         new FileOutputStream(getOutputFile())).start();
     }
     catch (IOException e) {
       Log.e(getClass().getSimpleName(), "Exception opening pipe", e);
@@ -182,7 +173,7 @@ public class MainActivity extends Activity implements
         }
 
         in.close();
-        
+
         out.flush();
         out.getFD().sync();
         out.close();

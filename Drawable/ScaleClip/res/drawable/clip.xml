@@ -1,0 +1,4 @@
+<clip xmlns:android="http://schemas.android.com/apk/res/android"
+	android:clipOrientation="horizontal"
+	android:drawable="@drawable/btn_default_normal"
+	android:gravity="left"/>

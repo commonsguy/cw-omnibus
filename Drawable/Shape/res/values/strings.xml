@@ -1,0 +1,11 @@
+<resources>
+
+	<string name="app_name">Shape Sampler</string>
+	<string name="solid">Solid</string>
+	<string name="gradient">Gradient</string>
+	<string name="ring">Ring</string>
+	<string name="border">Border</string>
+	<string name="rounded">Rounded</string>
+	<string name="layered">Layered</string>
+
+</resources>

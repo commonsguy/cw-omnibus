@@ -8,8 +8,8 @@
   OF ANY KIND, either express or implied. See the License for the specific
   language governing permissions and limitations under the License.
   
-  From _The Busy Coder's Guide to Advanced Android Development_
-    http://commonsware.com/AdvAndroid
+  From _The Busy Coder's Guide to Android Development_
+    http://commonsware.com/Android
 */
 
 package com.commonsware.android.advservice;
@@ -18,7 +18,6 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import bsh.Interpreter;
 

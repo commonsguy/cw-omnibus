@@ -8,19 +8,20 @@
       android:orientation="horizontal"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:gravity="center_vertical"
       >
     <Button
         android:layout_width="match_parent" 
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Go via Private Broadcast!"
+        android:text="@string/private_broadcast"
         android:onClick="evalPrivateBroadcast"
         />
     <Button
         android:layout_width="match_parent" 
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Go via createPendingResult()!" 
+        android:text="@string/pending_result" 
         android:onClick="evalPendingResult"
         />
   </LinearLayout>

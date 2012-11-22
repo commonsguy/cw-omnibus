@@ -20,6 +20,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
+  private static final String KEY_MIDDLE_CONTENTS="middleContents";
   private static final String[] items= { "lorem", "ipsum", "dolor",
       "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
@@ -43,6 +44,9 @@ public class MainActivity extends FragmentActivity {
                                       SimpleListFragment.newInstance(items))
                                  .commit();
     }
+    
+    middleFragment=
+        (SimpleListFragment)getSupportFragmentManager().findFragmentById(R.id.middle);
   }
 
   @Override
@@ -54,6 +58,18 @@ public class MainActivity extends FragmentActivity {
     else {
       super.onBackPressed();
     }
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    
+    outState.putStringArrayList(KEY_MIDDLE_CONTENTS, middleContents);
+  }
+  
+  @Override
+  protected void onRestoreInstanceState(Bundle inState) {
+    middleContents=inState.getStringArrayList(KEY_MIDDLE_CONTENTS);
   }
 
   void onListItemClick(SimpleListFragment fragment, int position) {

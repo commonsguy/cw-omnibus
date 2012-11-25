@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">SQLCipher Passphrase</string>
+	<string name="ok">OK</string>
+	<string name="cancel">Cancel</string>
+	<string name="add">Add</string>
+	<string name="add_title">Add Constant</string>
+	<string name="title">Display Name:</string>
+	<string name="value">Value:</string>
+	<string name="exception_loading_data">Exception loading data</string>
+
+</resources>

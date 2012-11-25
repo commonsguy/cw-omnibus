@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Focus Sampler</string>
+	<string name="a_button">A Button</string>
+	<string name="request_focus">Sample: &lt;requestFocus&gt;</string>
+	<string name="request_focus2">Sample: requestFocus()</string>
+	<string name="first_field">The first field</string>
+	<string name="str_1st_field">1st Field</string>
+	<string name="second_field">The second field</string>
+	<string name="str_2nd_field">2nd Field</string>
+	<string name="menu_request_focus">Request Focus</string>
+	<string name="url">URL:</string>
+	<string name="cancel">Cancel</string>
+	<string name="ok">OK</string>
+	<string name="focus_order">Sample: Focus Order</string>
+	<string name="menu_focus_order">Focus Order</string>
+
+</resources>

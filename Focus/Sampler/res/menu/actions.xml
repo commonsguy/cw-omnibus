@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/request_focus"
+		android:title="@string/menu_request_focus">
+	</item>
+  <item
+    android:id="@+id/focus_order"
+    android:title="@string/menu_focus_order">
+  </item>
+  	
+</menu>

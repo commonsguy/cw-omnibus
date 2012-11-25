@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<Button
+		android:id="@+id/button1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/a_button"/>
+
+	<EditText
+		android:id="@+id/editText1"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:contentDescription="@string/first_field"
+		android:hint="@string/str_1st_field"
+		android:inputType="text"/>
+
+	<EditText
+		android:id="@+id/editText2"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:contentDescription="@string/second_field"
+		android:hint="@string/str_2nd_field"
+		android:inputType="text">
+
+		<requestFocus/>
+	</EditText>
+
+</LinearLayout>

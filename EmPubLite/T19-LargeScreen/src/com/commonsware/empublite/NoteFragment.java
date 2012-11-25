@@ -85,12 +85,13 @@ public class NoteFragment extends SherlockFragment implements
       DatabaseHelper.getInstance(getActivity())
                     .deleteNoteAsync(position);
 
-      ((NoteListener)getActivity()).closeNotes();
+      ((NoteActivity)getActivity()).closeNotes();
 
       return(true);
     }
     else if (item.getItemId() == R.id.share) {
-      NoteActivity.sendNotes(getActivity(), editor.getText().toString());
+      ((NoteActivity)getActivity()).sendNotes(editor.getText()
+                                                    .toString());
 
       return(true);
     }
@@ -101,9 +102,5 @@ public class NoteFragment extends SherlockFragment implements
   @Override
   public void setNote(String note) {
     editor.setText(note);
-  }
-  
-  interface NoteListener {
-    void closeNotes();
   }
 }

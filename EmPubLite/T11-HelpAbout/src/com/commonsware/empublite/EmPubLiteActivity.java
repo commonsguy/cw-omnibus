@@ -12,17 +12,15 @@ import com.actionbarsherlock.view.MenuItem;
 public class EmPubLiteActivity extends SherlockFragmentActivity {
   private ViewPager pager=null;
   private ContentsAdapter adapter=null;
-
-  /** Called when the activity is first created. */
+  
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
-    pager=(ViewPager)findViewById(R.id.pager);
     
+    pager=(ViewPager)findViewById(R.id.pager);
     adapter=new ContentsAdapter(this);
     pager.setAdapter(adapter);
-
     findViewById(R.id.progressBar1).setVisibility(View.GONE);
     findViewById(R.id.pager).setVisibility(View.VISIBLE);
   }
@@ -30,7 +28,6 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     new MenuInflater(this).inflate(R.menu.options, menu);
-
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -42,25 +39,23 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
         
       case R.id.about:
         Intent i=new Intent(this, SimpleContentActivity.class);
-
+        
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
-                   "file:///android_asset/misc/about.html");
-
+            "file:///android_asset/misc/about.html");
         startActivity(i);
-
+        
         return(true);
         
       case R.id.help:
         i=new Intent(this, SimpleContentActivity.class);
-
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
-                   "file:///android_asset/misc/help.html");
-
+            "file:///android_asset/misc/help.html");
+        
         startActivity(i);
-
+        
         return(true);
     }
-
+    
     return(super.onOptionsItemSelected(item));
   }
 }

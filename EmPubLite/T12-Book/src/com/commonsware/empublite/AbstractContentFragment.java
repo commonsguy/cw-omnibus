@@ -1,5 +1,6 @@
 package com.commonsware.empublite;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,10 @@ abstract public class AbstractContentFragment extends WebViewFragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setRetainInstance(true);
   }
 
+  @SuppressLint("SetJavaScriptEnabled")
   @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container,
@@ -28,11 +29,5 @@ abstract public class AbstractContentFragment extends WebViewFragment {
     getWebView().loadUrl(getPage());
 
     return(result);
-  }
-
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    setUserVisibleHint(true);
   }
 }

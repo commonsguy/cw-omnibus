@@ -18,17 +18,17 @@ import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 public class EmPubLiteActivity extends SherlockFragmentActivity
     implements FragmentManager.OnBackStackChangedListener {
-  private static final String FILE_HELP=
-      "file:///android_asset/misc/help.html";
-  private static final String FILE_ABOUT=
-      "file:///android_asset/misc/about.html";
   private static final String MODEL="model";
-  private static final String HELP="help";
-  private static final String ABOUT="about";
   private static final String PREF_LAST_POSITION="lastPosition";
   private static final String PREF_SAVE_LAST_POSITION=
       "saveLastPosition";
   private static final String PREF_KEEP_SCREEN_ON="keepScreenOn";
+  private static final String HELP="help";
+  private static final String ABOUT="about";
+  private static final String FILE_HELP=
+      "file:///android_asset/misc/help.html";
+  private static final String FILE_ABOUT=
+      "file:///android_asset/misc/about.html";
   private ViewPager pager=null;
   private ContentsAdapter adapter=null;
   private SharedPreferences prefs=null;
@@ -38,12 +38,11 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
   private SimpleContentFragment help=null;
   private SimpleContentFragment about=null;
 
-  /** Called when the activity is first created. */
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentByTag(MODEL)==null) {
+    if (getSupportFragmentManager().findFragmentByTag(MODEL) == null) {
       model=new ModelFragment();
       getSupportFragmentManager().beginTransaction().add(model, MODEL)
                                  .commit();
@@ -52,12 +51,13 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
       model=
           (ModelFragment)getSupportFragmentManager().findFragmentByTag(MODEL);
     }
-    
-    help=(SimpleContentFragment)getSupportFragmentManager().findFragmentByTag(HELP);
-    about=(SimpleContentFragment)getSupportFragmentManager().findFragmentByTag(ABOUT);
+
+    help=
+        (SimpleContentFragment)getSupportFragmentManager().findFragmentByTag(HELP);
+    about=
+        (SimpleContentFragment)getSupportFragmentManager().findFragmentByTag(ABOUT);
 
     setContentView(R.layout.main);
-    pager=(ViewPager)findViewById(R.id.pager);
     sidebar=findViewById(R.id.sidebar);
     divider=findViewById(R.id.divider);
 
@@ -67,7 +67,23 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
       openSidebar();
     }
 
+    pager=(ViewPager)findViewById(R.id.pager);
+    getSupportActionBar().setHomeButtonEnabled(true);
     UpdateReceiver.scheduleAlarm(this);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    if (prefs != null) {
+      pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
+    }
+
+    IntentFilter f=
+        new IntentFilter(DownloadInstallService.ACTION_UPDATE_READY);
+    f.setPriority(1000);
+    registerReceiver(onUpdate, f);
   }
 
   @Override
@@ -83,24 +99,8 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
-
-    if (prefs != null) {
-      pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
-    }
-
-    IntentFilter f=
-        new IntentFilter(DownloadInstallService.ACTION_UPDATE_READY);
-
-    f.setPriority(1000);
-    registerReceiver(onUpdate, f);
-  }
-
-  @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     new MenuInflater(this).inflate(R.menu.options, menu);
-
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -111,24 +111,25 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
         pager.setCurrentItem(0, false);
         return(true);
 
+      case R.id.notes:
+        Intent i=new Intent(this, NoteActivity.class);
+        i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
+        startActivity(i);
+        return(true);
+
       case R.id.update:
         WakefulIntentService.sendWakefulWork(this,
                                              DownloadCheckService.class);
         return(true);
 
-      case R.id.notes:
-        Intent i=new Intent(this, NoteActivity.class);
-
-        i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
-        startActivity(i);
-        return(true);
-
       case R.id.about:
         showAbout();
+
         return(true);
 
       case R.id.help:
         showHelp();
+
         return(true);
 
       case R.id.settings:
@@ -139,71 +140,16 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
     return(super.onOptionsItemSelected(item));
   }
 
-  void openSidebar() {
-    LinearLayout.LayoutParams p=
-        (LinearLayout.LayoutParams)sidebar.getLayoutParams();
-
-    if (p.weight == 0) {
-      p.weight=3;
-      sidebar.setLayoutParams(p);
-    }
-    
-    divider.setVisibility(View.VISIBLE);
-  }
-
   @Override
   public void onBackStackChanged() {
     if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
       LinearLayout.LayoutParams p=
           (LinearLayout.LayoutParams)sidebar.getLayoutParams();
-
       if (p.weight > 0) {
         p.weight=0;
         sidebar.setLayoutParams(p);
         divider.setVisibility(View.GONE);
       }
-    }
-  }
-
-  void showAbout() {
-    if (sidebar != null) {
-      openSidebar();
-
-      if (about==null) {
-        about=SimpleContentFragment.newInstance(FILE_ABOUT);
-      }
-
-      getSupportFragmentManager().beginTransaction()
-                                 .addToBackStack(null)
-                                 .replace(R.id.sidebar, about).commit();
-    }
-    else {
-      Intent i=new Intent(this, SimpleContentActivity.class);
-
-      i.putExtra(SimpleContentActivity.EXTRA_FILE, FILE_ABOUT);
-
-      startActivity(i);
-    }
-  }
-
-  void showHelp() {
-    if (sidebar != null) {
-      openSidebar();
-
-      if (help==null) {
-        help=SimpleContentFragment.newInstance(FILE_HELP);
-      }
-
-      getSupportFragmentManager().beginTransaction()
-                                 .addToBackStack(null)
-                                 .replace(R.id.sidebar, help).commit();
-    }
-    else {
-      Intent i=new Intent(this, SimpleContentActivity.class);
-
-      i.putExtra(SimpleContentActivity.EXTRA_FILE, FILE_HELP);
-
-      startActivity(i);
     }
   }
 
@@ -221,6 +167,56 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
     }
 
     pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
+  }
+
+  void openSidebar() {
+    LinearLayout.LayoutParams p=
+        (LinearLayout.LayoutParams)sidebar.getLayoutParams();
+    if (p.weight == 0) {
+      p.weight=3;
+      sidebar.setLayoutParams(p);
+    }
+    divider.setVisibility(View.VISIBLE);
+  }
+
+  void showAbout() {
+    if (sidebar != null) {
+      openSidebar();
+      
+      if (about == null) {
+        about=SimpleContentFragment.newInstance(FILE_ABOUT);
+      }
+      
+      getSupportFragmentManager().beginTransaction()
+                                 .addToBackStack(null)
+                                 .replace(R.id.sidebar, about).commit();
+    }
+    else {
+      Intent i=new Intent(this, SimpleContentActivity.class);
+      
+      i.putExtra(SimpleContentActivity.EXTRA_FILE, FILE_ABOUT);
+      startActivity(i);
+    }
+  }
+
+  void showHelp() {
+    if (sidebar != null) {
+      openSidebar();
+      
+      if (help == null) {
+        help=SimpleContentFragment.newInstance(FILE_HELP);
+      }
+      
+      getSupportFragmentManager().beginTransaction()
+                                 .addToBackStack(null)
+                                 .replace(R.id.sidebar, help).commit();
+    }
+    else {
+      Intent i=new Intent(this, SimpleContentActivity.class);
+      
+      i.putExtra(SimpleContentActivity.EXTRA_FILE, FILE_HELP);
+      startActivity(i);
+    }
   }
 
   private BroadcastReceiver onUpdate=new BroadcastReceiver() {

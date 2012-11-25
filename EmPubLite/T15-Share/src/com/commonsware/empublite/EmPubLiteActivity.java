@@ -19,46 +19,43 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
   private ViewPager pager=null;
   private ContentsAdapter adapter=null;
   private SharedPreferences prefs=null;
-  
-  /** Called when the activity is first created. */
+
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentByTag(MODEL)==null) {
+    if (getSupportFragmentManager().findFragmentByTag(MODEL) == null) {
       getSupportFragmentManager().beginTransaction()
                                  .add(new ModelFragment(), MODEL)
                                  .commit();
     }
 
     setContentView(R.layout.main);
+
     pager=(ViewPager)findViewById(R.id.pager);
+    getSupportActionBar().setHomeButtonEnabled(true);
   }
 
   @Override
   public void onPause() {
     if (prefs != null) {
       int position=pager.getCurrentItem();
-
       prefs.edit().putInt(PREF_LAST_POSITION, position).apply();
     }
-
     super.onPause();
   }
 
   @Override
   public void onResume() {
     super.onResume();
-
     if (prefs != null) {
       pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
     }
   }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     new MenuInflater(this).inflate(R.menu.options, menu);
-
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -71,25 +68,21 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
 
       case R.id.notes:
         Intent i=new Intent(this, NoteActivity.class);
-
         i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
-        startActivity(i);
-
+        startActivity(i); 
         return(true);
-
+        
       case R.id.about:
         i=new Intent(this, SimpleContentActivity.class);
 
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
                    "file:///android_asset/misc/about.html");
-
         startActivity(i);
 
         return(true);
 
       case R.id.help:
         i=new Intent(this, SimpleContentActivity.class);
-
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
                    "file:///android_asset/misc/help.html");
 

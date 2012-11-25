@@ -25,12 +25,11 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
   private SharedPreferences prefs=null;
   private ModelFragment model=null;
 
-  /** Called when the activity is first created. */
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentByTag(MODEL)==null) {
+    if (getSupportFragmentManager().findFragmentByTag(MODEL) == null) {
       model=new ModelFragment();
       getSupportFragmentManager().beginTransaction().add(model, MODEL)
                                  .commit();
@@ -41,8 +40,24 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
     }
 
     setContentView(R.layout.main);
+
     pager=(ViewPager)findViewById(R.id.pager);
+    getSupportActionBar().setHomeButtonEnabled(true);
     UpdateReceiver.scheduleAlarm(this);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    if (prefs != null) {
+      pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
+    }
+
+    IntentFilter f=
+        new IntentFilter(DownloadInstallService.ACTION_UPDATE_READY);
+    f.setPriority(1000);
+    registerReceiver(onUpdate, f);
   }
 
   @Override
@@ -58,24 +73,8 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
-
-    if (prefs != null) {
-      pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
-    }
-
-    IntentFilter f=
-        new IntentFilter(DownloadInstallService.ACTION_UPDATE_READY);
-
-    f.setPriority(1000);
-    registerReceiver(onUpdate, f);
-  }
-
-  @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     new MenuInflater(this).inflate(R.menu.options, menu);
-
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -86,17 +85,15 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
         pager.setCurrentItem(0, false);
         return(true);
 
+      case R.id.notes:
+        Intent i=new Intent(this, NoteActivity.class);
+        i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
+        startActivity(i);
+        return(true);
+
       case R.id.update:
         WakefulIntentService.sendWakefulWork(this,
                                              DownloadCheckService.class);
-        return(true);
-
-      case R.id.notes:
-        Intent i=new Intent(this, NoteActivity.class);
-
-        i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
-        startActivity(i);
-
         return(true);
 
       case R.id.about:
@@ -104,14 +101,12 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
 
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
                    "file:///android_asset/misc/about.html");
-
         startActivity(i);
 
         return(true);
 
       case R.id.help:
         i=new Intent(this, SimpleContentActivity.class);
-
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
                    "file:///android_asset/misc/help.html");
 

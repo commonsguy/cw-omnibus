@@ -10,29 +10,29 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class EmPubLiteActivity extends SherlockFragmentActivity {
+  private static final String MODEL="model";
   private ViewPager pager=null;
   private ContentsAdapter adapter=null;
-  private static final String MODEL="model";
 
-  /** Called when the activity is first created. */
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentByTag(MODEL)==null) {
+    if (getSupportFragmentManager().findFragmentByTag(MODEL) == null) {
       getSupportFragmentManager().beginTransaction()
                                  .add(new ModelFragment(), MODEL)
                                  .commit();
     }
 
     setContentView(R.layout.main);
+
     pager=(ViewPager)findViewById(R.id.pager);
+    getSupportActionBar().setHomeButtonEnabled(true);
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     new MenuInflater(this).inflate(R.menu.options, menu);
-
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -48,14 +48,12 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
 
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
                    "file:///android_asset/misc/about.html");
-
         startActivity(i);
 
         return(true);
 
       case R.id.help:
         i=new Intent(this, SimpleContentActivity.class);
-
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
                    "file:///android_asset/misc/help.html");
 

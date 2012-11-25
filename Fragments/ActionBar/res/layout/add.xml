@@ -12,13 +12,14 @@
 
 	<EditText
 		android:id="@+id/title"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="4dip"
-		android:layout_marginTop="4dip"
-		android:imeActionId="1337"
-		android:imeOptions="actionDone"
-		android:inputType="text"
-		android:width="160sp"/>
+		android:layout_width="0px"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4dip"
+    android:layout_marginTop="4dip"
+    android:imeActionId="1337"
+    android:imeOptions="actionDone"
+    android:inputType="text"
+    android:width="100sp"/>
 
 </LinearLayout>

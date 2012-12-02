@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_gravity="center_vertical"
+	android:orientation="vertical">
+
+	<EditText
+		android:id="@+id/passphrase"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:hint="@string/passphrase"
+		android:inputType="textPassword">
+
+		<requestFocus/>
+	</EditText>
+
+	<EditText
+		android:id="@+id/confirm"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:hint="@string/confirm"
+		android:inputType="textPassword"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<CheckBox
+			android:id="@+id/show_passphrase"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/show_passphrase"/>
+
+		<Button
+			android:id="@+id/ok"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:enabled="false"
+			android:text="@string/ok"/>
+	</LinearLayout>
+
+</LinearLayout>

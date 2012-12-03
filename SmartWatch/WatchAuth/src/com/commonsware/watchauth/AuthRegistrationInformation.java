@@ -17,7 +17,6 @@ package com.commonsware.watchauth;
 import com.sonyericsson.extras.liveware.aef.registration.Registration;
 import com.sonyericsson.extras.liveware.extension.util.ExtensionUtils;
 import com.sonyericsson.extras.liveware.extension.util.registration.RegistrationInformation;
-import com.sonyericsson.extras.liveware.sdk.R;
 import android.content.ContentValues;
 import android.content.Context;
 

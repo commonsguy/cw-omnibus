@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">SmartWatch Demo</string>
+	<string name="extension_name">SmartWatch Demo</string>
+	<string name="ready">The app is ready for use!</string>
+	<string name="beep">Beep!</string>
+
+</resources>

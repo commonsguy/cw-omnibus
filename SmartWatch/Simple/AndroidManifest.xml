@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.smartwatch"
+	android:versionCode="1"
+	android:versionName="1.0" xmlns:tools="http://schemas.android.com/tools">
+
+	<uses-sdk
+		android:minSdkVersion="11"
+		android:targetSdkVersion="14"
+		tools:ignore="OldTargetApi"/>
+
+	<uses-permission android:name="com.sonyericsson.extras.liveware.aef.EXTENSION_PERMISSION"/>
+
+	<application
+		android:allowBackup="false"
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name">
+		<activity android:name="MainActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+
+		<service android:name="DemoExtensionService"/>
+
+		<receiver
+			android:name="DemoExtensionReceiver"
+			tools:ignore="ExportedReceiver">
+
+			<intent-filter>
+				<action android:name="com.sonyericsson.extras.liveware.aef.registration.EXTENSION_REGISTER_REQUEST"/>
+				<action android:name="com.sonyericsson.extras.liveware.aef.registration.ACCESSORY_CONNECTION"/>
+				<action android:name="android.intent.action.LOCALE_CHANGED"/>
+				<action android:name="com.sonyericsson.extras.aef.control.START"/>
+				<action android:name="com.sonyericsson.extras.aef.control.STOP"/>
+				<action android:name="com.sonyericsson.extras.aef.control.PAUSE"/>
+				<action android:name="com.sonyericsson.extras.aef.control.RESUME"/>
+				<action android:name="com.sonyericsson.extras.aef.control.ERROR"/>
+				<action android:name="com.sonyericsson.extras.aef.control.KEY_EVENT"/>
+				<action android:name="com.sonyericsson.extras.aef.control.TOUCH_EVENT"/>
+				<action android:name="com.sonyericsson.extras.aef.control.SWIPE_EVENT"/>
+			</intent-filter>
+		</receiver>
+	</application>
+
+</manifest>

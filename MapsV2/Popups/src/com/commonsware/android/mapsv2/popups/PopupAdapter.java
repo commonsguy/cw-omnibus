@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
-class PopupAdapter implements InfoWindowAdapter {
+public class PopupAdapter implements InfoWindowAdapter {
   LayoutInflater inflater=null;
 
   PopupAdapter(LayoutInflater inflater) {

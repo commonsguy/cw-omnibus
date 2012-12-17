@@ -1,0 +1,26 @@
+[
+ {
+  "lat": 40.748963847316034,
+  "lon": -73.96807193756104,
+  "title": "UN",
+  "snippet": "United Nations"
+ },
+ {
+  "lat": 40.76866299974387,
+  "lon": -73.98268461227417,
+  "title": "Lincoln Center",
+  "snippet": "Home of Jazz at Lincoln Center"
+ },
+ {
+  "lat": 40.765136435316755,
+  "lon": -73.97989511489868,
+  "title": "Carnegie Hall",
+  "snippet": "Where you go with practice, practice, practice"
+ },  
+ {
+  "lat": 40.70686417491799,
+  "lon": -74.01572942733765,
+  "title": "The Downtown Club",
+  "snippet": "Original home of the Heisman Trophy"
+ }
+]  

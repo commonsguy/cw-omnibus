@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">MapsV2 Drag</string>
+	<string name="legal">Legal Notices</string>
+	<string name="no_maps">Google Maps V2 not available!</string>
+	<string name="normal">Normal</string>
+	<string name="hybrid">Hybrid</string>
+	<string name="satellite">Satellite</string>
+	<string name="terrain">Terrain</string>
+	<string name="un">UN</string>
+	<string name="united_nations">United Nations</string>
+	<string name="lincoln_center">Lincoln Center</string>
+	<string name="lincoln_center_snippet">Home of Jazz at Lincoln Center</string>
+	<string name="carnegie_hall">Carnegie Hall</string>
+	<string name="practice_x3">Where you go with practice, practice, practice</string>
+	<string name="downtown_club">The Downtown Club</string>
+	<string name="heisman_trophy">Original home of the Heisman Trophy</string>
+  <string name="icon">CommonsWare logo</string>
+	
+</resources>

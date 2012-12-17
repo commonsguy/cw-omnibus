@@ -3,5 +3,6 @@
 
 	<string name="app_name">MapsV2 Basic Demo</string>
 	<string name="legal">Legal Notices</string>
-
+  <string name="no_maps">Google Maps V2 not available!</string>
+	
 </resources>

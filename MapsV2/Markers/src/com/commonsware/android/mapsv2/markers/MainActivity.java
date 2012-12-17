@@ -14,17 +14,12 @@
 
 package com.commonsware.android.mapsv2.markers;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 import java.util.ArrayList;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,7 +27,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MainActivity extends SherlockFragmentActivity implements
+public class MainActivity extends AbstractMapActivity implements
     OnNavigationListener {
   private static final int[] MAP_TYPE_NAMES= { R.string.normal,
       R.string.hybrid, R.string.satellite, R.string.terrain };
@@ -44,20 +39,17 @@ public class MainActivity extends SherlockFragmentActivity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
 
-    SupportMapFragment mapFrag=
-        (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+    if (readyToGo()) {
+      setContentView(R.layout.activity_main);
 
-    initListNav();
+      SupportMapFragment mapFrag=
+          (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
 
-    map=mapFrag.getMap();
+      initListNav();
 
-    if (map == null) {
-      Toast.makeText(this, R.string.no_maps, Toast.LENGTH_LONG).show();
-      finish();
-    }
-    else {
+      map=mapFrag.getMap();
+
       CameraUpdate center=
           CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
                                                    -73.98180484771729));
@@ -76,24 +68,6 @@ public class MainActivity extends SherlockFragmentActivity implements
       addMarker(map, 40.70686417491799, -74.01572942733765,
                 R.string.downtown_club, R.string.heisman_trophy);
     }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.activity_main, menu);
-
-    return(super.onCreateOptionsMenu(menu));
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.legal) {
-      startActivity(new Intent(this, LegalNoticesActivity.class));
-
-      return(true);
-    }
-
-    return super.onOptionsItemSelected(item);
   }
 
   @Override

@@ -14,34 +14,15 @@
 
 package com.commonsware.android.mapsv2.basic;
 
-import android.content.Intent;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends AbstractMapActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.activity_main, menu);
-
-    return(super.onCreateOptionsMenu(menu));
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.legal) {
-      startActivity(new Intent(this, LegalNoticesActivity.class));
-
-      return(true);
+    
+    if (readyToGo()) {
+      setContentView(R.layout.activity_main);
     }
-
-    return super.onOptionsItemSelected(item);
   }
 }

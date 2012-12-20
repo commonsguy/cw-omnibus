@@ -85,23 +85,10 @@ public class MainActivity extends AbstractMapActivity implements
 
       map.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
       map.setOnInfoWindowClickListener(this);
-      map.setLocationSource(this);
       map.setMyLocationEnabled(true);
+      map.getUiSettings().setMyLocationButtonEnabled(false);
+      map.setLocationSource(this);
     }
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-
-    locMgr.requestLocationUpdates(0L, 0.0f, crit, this, null);
-  }
-
-  @Override
-  public void onPause() {
-    locMgr.removeUpdates(this);
-
-    super.onPause();
   }
 
   @Override
@@ -119,10 +106,12 @@ public class MainActivity extends AbstractMapActivity implements
   @Override
   public void activate(OnLocationChangedListener listener) {
     this.mapLocationListener=listener;
+    locMgr.requestLocationUpdates(0L, 0.0f, crit, this, null);
   }
 
   @Override
   public void deactivate() {
+    locMgr.removeUpdates(this);
     this.mapLocationListener=null;
   }
 
@@ -130,29 +119,28 @@ public class MainActivity extends AbstractMapActivity implements
   public void onLocationChanged(Location location) {
     if (mapLocationListener != null) {
       mapLocationListener.onLocationChanged(location);
-      map.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(
-                                                                 location.getLatitude(),
-                                                                 location.getLongitude())));
 
+      LatLng latlng=
+          new LatLng(location.getLatitude(), location.getLongitude());
+      CameraUpdate cu=CameraUpdateFactory.newLatLng(latlng);
+
+      map.animateCamera(cu);
     }
   }
 
   @Override
   public void onProviderDisabled(String provider) {
-    // TODO Auto-generated method stub
-
+    // unused
   }
 
   @Override
   public void onProviderEnabled(String provider) {
-    // TODO Auto-generated method stub
-
+    // unused
   }
 
   @Override
   public void onStatusChanged(String provider, int status, Bundle extras) {
-    // TODO Auto-generated method stub
-
+    // unused
   }
 
   private void initListNav() {

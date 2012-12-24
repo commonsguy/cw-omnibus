@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AbstractMapActivity implements
     OnNavigationListener, OnInfoWindowClickListener {
+  private static final String STATE_NAV="nav";
   private static final int[] MAP_TYPE_NAMES= { R.string.normal,
       R.string.hybrid, R.string.satellite, R.string.terrain };
   private static final int[] MAP_TYPES= { GoogleMap.MAP_TYPE_NORMAL,
@@ -53,13 +54,15 @@ public class MainActivity extends AbstractMapActivity implements
 
       map=mapFrag.getMap();
 
-      CameraUpdate center=
-          CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
-                                                   -73.98180484771729));
-      CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+      if (savedInstanceState == null) {
+        CameraUpdate center=
+            CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
+                                                     -73.98180484771729));
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
 
-      map.moveCamera(center);
-      map.animateCamera(zoom);
+        map.moveCamera(center);
+        map.animateCamera(zoom);
+      }
 
       addMarker(map, 40.748963847316034, -73.96807193756104,
                 R.string.un, R.string.united_nations);
@@ -81,6 +84,21 @@ public class MainActivity extends AbstractMapActivity implements
     map.setMapType(MAP_TYPES[itemPosition]);
 
     return(true);
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle savedInstanceState) {
+    super.onSaveInstanceState(savedInstanceState);
+    
+    savedInstanceState.putInt(STATE_NAV,
+                              getSupportActionBar().getSelectedNavigationIndex());
+  }
+  
+  @Override
+  public void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    
+    getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
   }
 
   @Override

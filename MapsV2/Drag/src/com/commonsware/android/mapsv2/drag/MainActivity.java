@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AbstractMapActivity implements
     OnNavigationListener, OnInfoWindowClickListener,
     OnMarkerDragListener {
+  private static final String STATE_NAV="nav";
   private static final int[] MAP_TYPE_NAMES= { R.string.normal,
       R.string.hybrid, R.string.satellite, R.string.terrain };
   private static final int[] MAP_TYPES= { GoogleMap.MAP_TYPE_NORMAL,
@@ -52,27 +53,30 @@ public class MainActivity extends AbstractMapActivity implements
       SupportMapFragment mapFrag=
           (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
 
+      mapFrag.setRetainInstance(true);
       initListNav();
 
       map=mapFrag.getMap();
 
-      CameraUpdate center=
-          CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
-                                                   -73.98180484771729));
-      CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+      if (savedInstanceState == null) {
+        CameraUpdate center=
+            CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
+                                                     -73.98180484771729));
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
 
-      map.moveCamera(center);
-      map.animateCamera(zoom);
+        map.moveCamera(center);
+        map.animateCamera(zoom);
 
-      addMarker(map, 40.748963847316034, -73.96807193756104,
-                R.string.un, R.string.united_nations);
-      addMarker(map, 40.76866299974387, -73.98268461227417,
-                R.string.lincoln_center,
-                R.string.lincoln_center_snippet);
-      addMarker(map, 40.765136435316755, -73.97989511489868,
-                R.string.carnegie_hall, R.string.practice_x3);
-      addMarker(map, 40.70686417491799, -74.01572942733765,
-                R.string.downtown_club, R.string.heisman_trophy);
+        addMarker(map, 40.748963847316034, -73.96807193756104,
+                  R.string.un, R.string.united_nations);
+        addMarker(map, 40.76866299974387, -73.98268461227417,
+                  R.string.lincoln_center,
+                  R.string.lincoln_center_snippet);
+        addMarker(map, 40.765136435316755, -73.97989511489868,
+                  R.string.carnegie_hall, R.string.practice_x3);
+        addMarker(map, 40.70686417491799, -74.01572942733765,
+                  R.string.downtown_club, R.string.heisman_trophy);
+      }
 
       map.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
       map.setOnInfoWindowClickListener(this);
@@ -85,6 +89,21 @@ public class MainActivity extends AbstractMapActivity implements
     map.setMapType(MAP_TYPES[itemPosition]);
 
     return(true);
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle savedInstanceState) {
+    super.onSaveInstanceState(savedInstanceState);
+    
+    savedInstanceState.putInt(STATE_NAV,
+                              getSupportActionBar().getSelectedNavigationIndex());
+  }
+  
+  @Override
+  public void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    
+    getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
   }
 
   @Override

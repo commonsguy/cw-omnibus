@@ -4,7 +4,7 @@
 
 	<uses-sdk
 		android:minSdkVersion="11"
-		android:targetSdkVersion="11"/>
+		android:targetSdkVersion="14"/>
 
 	<supports-screens
 		android:largeScreens="true"
@@ -12,7 +12,7 @@
 		android:smallScreens="true"/>
 
 	<uses-permission android:name="android.permission.INTERNET"/>
-	
+
 	<application
 		android:hardwareAccelerated="true"
 		android:icon="@drawable/ic_launcher"

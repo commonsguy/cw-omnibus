@@ -4,7 +4,7 @@
 
 	<uses-sdk
 		android:minSdkVersion="4"
-		android:targetSdkVersion="11"/>
+		android:targetSdkVersion="14"/>
 
 	<supports-screens
 		android:anyDensity="true"

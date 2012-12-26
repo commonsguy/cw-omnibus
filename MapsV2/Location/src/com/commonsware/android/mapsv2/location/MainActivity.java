@@ -63,9 +63,6 @@ public class MainActivity extends AbstractMapActivity implements
 
       map=mapFrag.getMap();
 
-      locMgr=(LocationManager)getSystemService(LOCATION_SERVICE);
-      crit.setAccuracy(Criteria.ACCURACY_FINE);
-
       if (savedInstanceState == null) {
         CameraUpdate center=
             CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
@@ -88,24 +85,28 @@ public class MainActivity extends AbstractMapActivity implements
 
       map.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
       map.setOnInfoWindowClickListener(this);
+
+      locMgr=(LocationManager)getSystemService(LOCATION_SERVICE);
+      crit.setAccuracy(Criteria.ACCURACY_FINE);
+
       map.setMyLocationEnabled(true);
       map.getUiSettings().setMyLocationButtonEnabled(false);
     }
   }
-  
+
   @Override
   public void onResume() {
     super.onResume();
-    
+
     locMgr.requestLocationUpdates(0L, 0.0f, crit, this, null);
     map.setLocationSource(this);
   }
-  
+
   @Override
   public void onPause() {
     map.setLocationSource(null);
     locMgr.removeUpdates(this);
-    
+
     super.onPause();
   }
 
@@ -119,15 +120,15 @@ public class MainActivity extends AbstractMapActivity implements
   @Override
   public void onSaveInstanceState(Bundle savedInstanceState) {
     super.onSaveInstanceState(savedInstanceState);
-    
+
     savedInstanceState.putInt(STATE_NAV,
                               getSupportActionBar().getSelectedNavigationIndex());
   }
-  
+
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
-    
+
     getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
   }
 

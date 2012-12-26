@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">MapsV2 Popups</string>
+	<string name="app_name">MapsV2 Location</string>
 	<string name="legal">Legal Notices</string>
 	<string name="no_maps">Google Maps V2 not available!</string>
 	<string name="normal">Normal</string>

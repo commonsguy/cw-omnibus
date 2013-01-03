@@ -70,18 +70,18 @@ public class MainActivity extends AbstractMapActivity implements
   }
 
   @Override
-  public void onSaveInstanceState(Bundle savedInstanceState) {
-    super.onSaveInstanceState(savedInstanceState);
-    
-    savedInstanceState.putInt(STATE_NAV,
-                              getSupportActionBar().getSelectedNavigationIndex());
+  public void onSaveInstanceState(Bundle state) {
+    super.onSaveInstanceState(state);
+
+    state.putInt(STATE_NAV,
+                 getSupportActionBar().getSelectedNavigationIndex());
   }
-  
+
   @Override
-  public void onRestoreInstanceState(Bundle savedInstanceState) {
-    super.onRestoreInstanceState(savedInstanceState);
-    
-    getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
+  public void onRestoreInstanceState(Bundle state) {
+    super.onRestoreInstanceState(state);
+
+    getSupportActionBar().setSelectedNavigationItem(state.getInt(STATE_NAV));
   }
 
   private void initListNav() {

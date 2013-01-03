@@ -3,7 +3,15 @@
 
 	<string name="app_name">MapsV2 Pager Demo</string>
 	<string name="legal">Legal Notices</string>
-  <string name="no_maps">Google Maps V2 not available!</string>
-  <string name="map_page_title">Map #</string>
-	
+	<string name="no_maps">Google Maps V2 not available!</string>
+	<string name="map_page_title">Map #</string>
+	<string name="un">UN</string>
+	<string name="united_nations">United Nations</string>
+	<string name="lincoln_center">Lincoln Center</string>
+	<string name="lincoln_center_snippet">Home of Jazz at Lincoln Center</string>
+	<string name="carnegie_hall">Carnegie Hall</string>
+	<string name="practice_x3">Where you go with practice, practice, practice</string>
+	<string name="downtown_club">The Downtown Club</string>
+	<string name="heisman_trophy">Original home of the Heisman Trophy</string>
+
 </resources>

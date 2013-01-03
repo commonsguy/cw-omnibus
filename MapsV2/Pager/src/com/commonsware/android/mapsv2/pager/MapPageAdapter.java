@@ -17,10 +17,9 @@ package com.commonsware.android.mapsv2.pager;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import com.google.android.gms.maps.SupportMapFragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class MapPageAdapter extends FragmentPagerAdapter {
+public class MapPageAdapter extends FragmentStatePagerAdapter {
   Context ctxt=null;
 
   public MapPageAdapter(Context ctxt, FragmentManager mgr) {
@@ -35,7 +34,7 @@ public class MapPageAdapter extends FragmentPagerAdapter {
 
   @Override
   public Fragment getItem(int position) {
-    return(new SupportMapFragment());
+    return(new PageMapFragment());
   }
 
   @Override

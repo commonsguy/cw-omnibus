@@ -1,4 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <menu xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:id="@+id/tiles" android:icon="@drawable/ic_menu_mapmode" android:showAsAction="ifRoom|withText" android:title="@string/tiles"></item>
-    </menu>
+	<item
+		android:id="@+id/tiles"
+		android:icon="@drawable/ic_menu_mapmode"
+		android:showAsAction="ifRoom|withText"
+		android:title="@string/tiles">
+	</item>
+
+</menu>

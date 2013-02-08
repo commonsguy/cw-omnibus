@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	package="com.commonsware.android.cp.perms"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<uses-sdk
+		android:minSdkVersion="7"
+		android:targetSdkVersion="11"/>
+
+	<supports-screens
+		android:largeScreens="true"
+		android:normalScreens="true"
+		android:smallScreens="true"/>
+
+	<permission
+		android:name="com.commonsware.android.cp.perms.READ"
+		android:description="@string/perm_read"
+		android:label="@string/perm_read_label"/>
+
+	<uses-permission android:name="com.commonsware.android.cp.perms.READ"/>
+
+	<application
+		android:allowBackup="false"
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name">
+		<activity
+			android:name="FilesCPDemo"
+			android:label="@string/app_name"
+			android:theme="@android:style/Theme.NoDisplay">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+
+		<provider
+			android:name="FileProvider"
+			android:authorities="com.commonsware.android.cp.files"
+			android:exported="true"
+			android:grantUriPermissions="false"
+			android:readPermission="com.commonsware.android.cp.perms.READ"
+			tools:ignore="ExportedContentProvider">
+			<grant-uri-permission android:path="/test.pdf"/>
+		</provider>
+	</application>
+
+</manifest>

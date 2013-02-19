@@ -1,0 +1,7 @@
+<resources>
+
+	<style name="AppTheme" parent="android:Theme.Light"/>
+
+	<style name="activated" parent="AppTheme"/>
+
+</resources>

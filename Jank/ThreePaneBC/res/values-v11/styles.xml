@@ -1,0 +1,9 @@
+<resources>
+
+	<style name="AppTheme" parent="android:Theme.Holo.Light"></style>
+
+	<style name="activated" parent="AppTheme">
+		<item name="android:background">?android:attr/activatedBackgroundIndicator</item>
+	</style>
+
+</resources>

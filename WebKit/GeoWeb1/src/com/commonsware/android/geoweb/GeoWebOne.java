@@ -14,12 +14,14 @@
 
 package com.commonsware.android.geoweb;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ public class GeoWebOne extends Activity {
   private WebView browser;
   private LocationManager myLocationManager=null;
   
+  @SuppressLint("SetJavaScriptEnabled")
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
@@ -77,6 +80,7 @@ public class GeoWebOne extends Activity {
   };
   
   public class Locater {
+    @JavascriptInterface
     public String getLocation() throws JSONException {
       Location loc=myLocationManager.getLastKnownLocation(PROVIDER);
       

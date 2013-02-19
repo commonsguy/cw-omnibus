@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:versionCode="1"
-          android:versionName="1.0"
-          package="com.commonsware.android.urlhandler"
-          xmlns:android="http://schemas.android.com/apk/res/android">
-          
-  <supports-screens android:largeScreens="true"
-                    android:normalScreens="true"
-                    android:smallScreens="false" />
-  <application android:icon="@drawable/cw"
-               android:label="@string/app_name">
-    <activity android:label="@string/app_name"
-              android:name="URLHandler">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:mimeType="application/pdf" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="http" android:host="www.this-so-does-not-exist.com" android:path="/something" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="com.commonsware.android.MY_ACTION" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-      </intent-filter>
-    </activity>
-  </application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.urlhandler"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<supports-screens
+		android:largeScreens="true"
+		android:normalScreens="true"
+		android:smallScreens="false"/>
+
+	<application
+		android:icon="@drawable/cw"
+		android:label="@string/app_name">
+		<activity
+			android:name="URLHandler"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+
+				<data android:mimeType="application/pdf"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+
+				<data
+					android:host="www.this-so-does-not-exist.com"
+					android:path="/something"
+					android:scheme="http"/>
+			</intent-filter>
+			<intent-filter>
+				<action android:name="com.commonsware.android.MY_ACTION"/>
+
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+			</intent-filter>
+		</activity>
+	</application>
+
 </manifest>

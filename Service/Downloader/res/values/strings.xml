@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Downloader Demo</string>
     <string name="download_complete">Download complete!</string>
+    <string name="do_the_download">Do the Download</string>
 </resources>

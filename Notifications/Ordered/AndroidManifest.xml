@@ -12,6 +12,7 @@
 	<uses-sdk
 		android:minSdkVersion="7"
 		android:targetSdkVersion="11"/>
+	<uses-permission android:name="android.permission.VIBRATE"/>
 
 	<application
 		android:icon="@drawable/ic_launcher"

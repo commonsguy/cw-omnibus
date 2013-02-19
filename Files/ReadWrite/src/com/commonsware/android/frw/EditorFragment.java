@@ -86,7 +86,7 @@ public class EditorFragment extends SherlockFragment {
   private File getTarget() {
     File root=null;
 
-    if (external.isChecked()) {
+    if (external!=null && external.isChecked()) {
       root=getActivity().getExternalFilesDir(null);
     }
     else {

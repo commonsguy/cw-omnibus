@@ -10,11 +10,12 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.appwidget.lorem;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -22,15 +23,19 @@ public class LoremActivity extends Activity {
   @Override
   public void onCreate(Bundle state) {
     super.onCreate(state);
-    
+
     String word=getIntent().getStringExtra(WidgetProvider.EXTRA_WORD);
-    
-    if (word==null) {
+
+    if (word == null) {
       word="We did not get a word!";
     }
-    
-    Toast.makeText(this, word, Toast.LENGTH_LONG).show();
-    
+
+    Toast.makeText(this,
+                   String.format("#%d: %s",
+                                 getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                                                         AppWidgetManager.INVALID_APPWIDGET_ID),
+                                 word), Toast.LENGTH_LONG).show();
+
     finish();
   }
 }

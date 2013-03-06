@@ -1,7 +1,6 @@
 package com.commonsware.empublite;
 
 import android.app.DownloadManager;
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,10 +13,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import com.commonsware.cwac.wakeful.WakefulIntentService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DownloadCheckService extends IntentService {
+public class DownloadCheckService extends WakefulIntentService {
   public static final String PREF_PENDING_UPDATE="pendingUpdateDir";
   public static final String UPDATE_FILENAME="book.zip";
   private static final String UPDATE_BASEDIR="updates";
@@ -29,7 +29,7 @@ public class DownloadCheckService extends IntentService {
   }
 
   @Override
-  protected void onHandleIntent(Intent intent) {
+  protected void doWakefulWork(Intent intent) {
     BufferedReader reader=null;
 
     try {

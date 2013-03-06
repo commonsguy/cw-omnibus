@@ -1,6 +1,5 @@
 package com.commonsware.empublite;
 
-import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
@@ -15,8 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import com.commonsware.cwac.wakeful.WakefulIntentService;
 
-public class DownloadInstallService extends IntentService {
+public class DownloadInstallService extends WakefulIntentService {
   public static final String PREF_UPDATE_DIR="updateDir";
   public static final String PREF_PREV_UPDATE="previousUpdateDir";
   public static final String ACTION_UPDATE_READY=
@@ -27,7 +27,7 @@ public class DownloadInstallService extends IntentService {
   }
 
   @Override
-  protected void onHandleIntent(Intent intent) {
+  protected void doWakefulWork(Intent intent) {
     SharedPreferences prefs=
         PreferenceManager.getDefaultSharedPreferences(this);
     String prevUpdateDir=prefs.getString(PREF_UPDATE_DIR, null);

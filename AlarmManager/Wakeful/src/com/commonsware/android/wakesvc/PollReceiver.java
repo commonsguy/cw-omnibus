@@ -23,7 +23,8 @@ import android.os.SystemClock;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 public class PollReceiver extends BroadcastReceiver {
-  private static final int PERIOD=5000;
+  private static final int PERIOD=900000; // 15 minutes
+  private static final int INITIAL_DELAY=5000; // 5 seconds
 
   @Override
   public void onReceive(Context ctxt, Intent i) {
@@ -42,7 +43,8 @@ public class PollReceiver extends BroadcastReceiver {
     PendingIntent pi=PendingIntent.getBroadcast(ctxt, 0, i, 0);
 
     mgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                     SystemClock.elapsedRealtime() + PERIOD, PERIOD, pi);
+                     SystemClock.elapsedRealtime() + INITIAL_DELAY,
+                     PERIOD, pi);
 
   }
 }

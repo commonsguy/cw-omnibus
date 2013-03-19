@@ -1,0 +1,9 @@
+<resources>
+
+	<string name="app_name">tileMode Sampler</string>
+	<string name="clamp">Clamp</string>
+	<string name="repeat">Repeat</string>
+	<string name="mirror">Mirror</string>
+	<string name="_default">Default</string>
+
+</resources>

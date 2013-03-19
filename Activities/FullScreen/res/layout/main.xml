@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<RadioGroup
+		android:id="@+id/screenStyle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<RadioButton
+			android:id="@+id/normal"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:checked="true"
+			android:text="@string/display_normal"/>
+
+		<RadioButton
+			android:id="@+id/lowProfile"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/display_low_profile"/>
+
+		<RadioButton
+			android:id="@+id/hideNav"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/display_hide_navigation"/>
+	</RadioGroup>
+
+	<Button
+		android:id="@+id/button"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:text="@string/something_at_the_bottom"/>
+
+</RelativeLayout>

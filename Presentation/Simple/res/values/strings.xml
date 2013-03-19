@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Simple Presentation Demo</string>
+	<string name="hello_world">You should see a Web page on the secondary display!</string>
+
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Fragment Presentation Demo</string>
+	<string name="secondary">You should see a Web page on the secondary display!</string>
+	<string name="primary">You should see a Web page to the right!</string>
+
+</resources>

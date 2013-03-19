@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.qsender;
 
@@ -27,37 +27,38 @@ public class QuickSender extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
   }
-  
+
   public void save(View v) {
     Intent shortcut=new Intent(Intent.ACTION_SEND);
     TextView addr=(TextView)findViewById(R.id.addr);
     TextView subject=(TextView)findViewById(R.id.subject);
     TextView body=(TextView)findViewById(R.id.body);
     TextView name=(TextView)findViewById(R.id.name);
-    
+
     if (!TextUtils.isEmpty(addr.getText())) {
-      shortcut.putExtra(Intent.EXTRA_EMAIL, addr.getText().toString());
+      shortcut.putExtra(Intent.EXTRA_EMAIL,
+                        new String[] { addr.getText().toString() });
     }
-    
+
     if (!TextUtils.isEmpty(subject.getText())) {
-      shortcut.putExtra(Intent.EXTRA_SUBJECT, subject.getText().toString());
+      shortcut.putExtra(Intent.EXTRA_SUBJECT, subject.getText()
+                                                     .toString());
     }
-    
+
     if (!TextUtils.isEmpty(body.getText())) {
       shortcut.putExtra(Intent.EXTRA_TEXT, body.getText().toString());
     }
-    
+
     shortcut.setType("text/plain");
-    
+
     Intent result=new Intent();
-    
+
     result.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcut);
-    result.putExtra(Intent.EXTRA_SHORTCUT_NAME,
-                    name.getText().toString());
+    result.putExtra(Intent.EXTRA_SHORTCUT_NAME, name.getText()
+                                                    .toString());
     result.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    Intent.ShortcutIconResource.fromContext(
-                                            this,
-                                            R.drawable.icon));
+                    Intent.ShortcutIconResource.fromContext(this,
+                                                            R.drawable.icon));
 
     setResult(RESULT_OK, result);
     finish();

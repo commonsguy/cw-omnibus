@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Pager Action Bar Demo</string>
+	<string name="hint">Editor #%d</string>
+	<string name="something">Something</string>
+
+</resources>

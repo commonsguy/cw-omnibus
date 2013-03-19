@@ -51,9 +51,9 @@ public class PreferenceContentsFragment extends SherlockFragment {
     SharedPreferences prefs=
         PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-    checkbox.setText(new Boolean(prefs.getBoolean("checkbox", false)).toString());
+    checkbox.setText(Boolean.valueOf(prefs.getBoolean("checkbox", false)).toString());
     ringtone.setText(prefs.getString("ringtone", "<unset>"));
-    checkbox2.setText(new Boolean(prefs.getBoolean("checkbox2", false)).toString());
+    checkbox2.setText(Boolean.valueOf(prefs.getBoolean("checkbox2", false)).toString());
     text.setText(prefs.getString("text", "<unset>"));
     list.setText(prefs.getString("list", "<unset>"));
   }

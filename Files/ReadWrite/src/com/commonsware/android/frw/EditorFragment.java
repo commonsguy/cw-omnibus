@@ -86,7 +86,7 @@ public class EditorFragment extends SherlockFragment {
   private File getTarget() {
     File root=null;
 
-    if (external!=null && external.isChecked()) {
+    if (external != null && external.isChecked()) {
       root=getActivity().getExternalFilesDir(null);
     }
     else {
@@ -119,17 +119,22 @@ public class EditorFragment extends SherlockFragment {
       InputStream in=new FileInputStream(target);
 
       if (in != null) {
-        InputStreamReader tmp=new InputStreamReader(in);
-        BufferedReader reader=new BufferedReader(tmp);
-        String str;
-        StringBuilder buf=new StringBuilder();
+        try {
+          InputStreamReader tmp=new InputStreamReader(in);
+          BufferedReader reader=new BufferedReader(tmp);
+          String str;
+          StringBuilder buf=new StringBuilder();
 
-        while ((str=reader.readLine()) != null) {
-          buf.append(str + "\n");
+          while ((str=reader.readLine()) != null) {
+            buf.append(str);
+            buf.append("\n");
+          }
+
+          result=buf.toString();
         }
-
-        in.close();
-        result=buf.toString();
+        finally {
+          in.close();
+        }
       }
     }
     catch (java.io.FileNotFoundException e) {

@@ -20,9 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.actionbarsherlock.app.SherlockListFragment;
 
-public class CountriesFragment extends SherlockListFragment {
+public class CountriesFragment extends
+    ContractListFragment<CountriesFragment.Contract> {
   static private final String STATE_CHECKED=
       "com.commonsware.android.eu4you.STATE_CHECKED";
 
@@ -30,7 +30,6 @@ public class CountriesFragment extends SherlockListFragment {
   public void onActivityCreated(Bundle state) {
     super.onActivityCreated(state);
 
-    setRetainInstance(true);
     setListAdapter(new CountryAdapter());
 
     if (state != null) {
@@ -44,9 +43,7 @@ public class CountriesFragment extends SherlockListFragment {
 
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
-    CountryListener listener=(CountryListener)getActivity();
-
-    if (listener.isPersistentSelection()) {
+    if (getContract().isPersistentSelection()) {
       getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
       l.setItemChecked(position, true);
     }
@@ -54,7 +51,7 @@ public class CountriesFragment extends SherlockListFragment {
       getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
     }
 
-    listener.onCountrySelected(Country.EU.get(position));
+    getContract().onCountrySelected(Country.EU.get(position));
   }
 
   @Override
@@ -88,5 +85,11 @@ public class CountriesFragment extends SherlockListFragment {
 
       return(convertView);
     }
+  }
+
+  interface Contract {
+    void onCountrySelected(Country c);
+
+    boolean isPersistentSelection();
   }
 }

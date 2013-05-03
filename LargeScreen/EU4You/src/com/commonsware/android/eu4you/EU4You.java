@@ -19,7 +19,7 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class EU4You extends SherlockFragmentActivity implements
-    CountryListener {
+    CountriesFragment.Contract {
   private CountriesFragment countries=null;
   private DetailsFragment details=null;
 

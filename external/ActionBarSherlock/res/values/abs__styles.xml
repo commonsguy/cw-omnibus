@@ -302,25 +302,6 @@
 
 
 
-    <style name="DialogWindowTitle.Sherlock" parent="Widget">
-        <item name="android:maxLines">1</item>
-        <item name="android:scrollHorizontally">true</item>
-        <item name="android:textAppearance">@style/TextAppearance.Sherlock.DialogWindowTitle</item>
-        <item name="android:minHeight">@dimen/abs__alert_dialog_title_height</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
-    </style>
-    <style name="DialogWindowTitle.Sherlock.Light" parent="Widget">
-        <item name="android:maxLines">1</item>
-        <item name="android:scrollHorizontally">true</item>
-        <item name="android:textAppearance">@style/TextAppearance.Sherlock.Light.DialogWindowTitle</item>
-        <item name="android:minHeight">@dimen/abs__alert_dialog_title_height</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
-    </style>
-
-
-
     <style name="TextAppearance.Sherlock.Widget.ActionBar.Menu" parent="Widget">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
@@ -387,15 +368,6 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="TextAppearance.Sherlock.DialogWindowTitle" parent="Widget">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/abs__holo_blue_light</item>
-    </style>
-    <style name="TextAppearance.Sherlock.Light.DialogWindowTitle" parent="Widget">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/abs__holo_blue_light</item>
-    </style>
-
     <style name="Sherlock.__TextAppearance.Small" parent="Widget">
       <item name="android:textSize">14sp</item>
       <item name="android:textColor">?android:attr/textColorSecondary</item>
@@ -408,5 +380,33 @@
     <style name="TextAppearance.Sherlock.Widget.DropDownHint" parent="Widget">
         <item name="android:textColor">?textColorPrimary</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Sherlock" parent="@android:style/TextAppearance"/>
+
+    <style name="TextAppearance.Sherlock.SearchResult">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColorHint">?android:attr/textColorHint</item>
+    </style>
+
+    <style name="TextAppearance.Sherlock.SearchResult.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.Sherlock.SearchResult.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="TextAppearance.Sherlock.Light.SearchResult" parent="TextAppearance.Sherlock.SearchResult"/>
+
+    <style name="TextAppearance.Sherlock.Light.SearchResult.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.Sherlock.Light.SearchResult.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 </resources>

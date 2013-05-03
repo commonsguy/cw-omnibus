@@ -181,7 +181,7 @@
         <!-- Drawable used as a background for activated items. -->
         <attr name="activatedBackgroundIndicator" format="reference" />
 
-        <attr name="android:windowIsFloating" />
+        <attr name="dropDownHintAppearance" format="reference" />
     </declare-styleable>
 
 

@@ -20,12 +20,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.widget.ShareActionProvider;
 
-public class MainActivity extends SherlockFragmentActivity implements
+public class MainActivity extends SherlockActivity implements
     ShareActionProvider.OnShareTargetSelectedListener, TextWatcher {
   private ShareActionProvider share=null;
   private Intent shareIntent=new Intent(Intent.ACTION_SEND);

@@ -12,7 +12,7 @@
     http://commonsware.com/Android
 */
 
-package com.commonsware.android.perloc;
+package com.commonsware.android.progloc;
 
 import android.app.Activity;
 import android.content.Intent;

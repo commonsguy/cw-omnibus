@@ -10,9 +10,9 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
-package com.commonsware.android.perloc;
+package com.commonsware.android.progloc;
 
 import android.app.Service;
 import android.content.Intent;
@@ -26,18 +26,14 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class LocationService extends Service implements
-    LocationListener, Runnable {
+    LocationListener {
   private static final int PERIOD_SECONDS=15;
   private LocationManager mgr=null;
-  private ScheduledThreadPoolExecutor executor=
-      new ScheduledThreadPoolExecutor(1);
-  private boolean isScheduled=false;
+  private Location lastLocation=null;
 
   @Override
   public void onCreate() {
     super.onCreate();
-
-    executor.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
 
     mgr=(LocationManager)getSystemService(LOCATION_SERVICE);
     mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
@@ -48,7 +44,6 @@ public class LocationService extends Service implements
   @Override
   public void onDestroy() {
     mgr.removeUpdates(this);
-    executor.shutdown();
 
     super.onDestroy();
   }
@@ -59,11 +54,19 @@ public class LocationService extends Service implements
   }
 
   @Override
-  public void onLocationChanged(Location location) {
-    if (!isScheduled) {
-      isScheduled=true;
-      executor.scheduleAtFixedRate(this, 0, PERIOD_SECONDS,
-                                   TimeUnit.SECONDS);
+  public void onLocationChanged(Location loc) {
+    Location bestLocation=getBestLocation(loc);
+
+    if (bestLocation != lastLocation) {
+      lastLocation=bestLocation;
+
+      Log.i(getClass().getSimpleName(),
+            String.format("%s @ %d %f:%f (%f meters)",
+                          bestLocation.getProvider(),
+                          bestLocation.getTime(),
+                          bestLocation.getLatitude(),
+                          bestLocation.getLongitude(),
+                          bestLocation.getAccuracy()));
     }
   }
 
@@ -85,39 +88,17 @@ public class LocationService extends Service implements
 
   }
 
-  @Override
-  public void run() {
-    Location loc=getBestLocation();
-
-    if (loc == null) {
-      Log.wtf(getClass().getSimpleName(),
-              "Got null for getBestLocation()");
-    }
-    else {
-      Log.i(getClass().getSimpleName(),
-            String.format("%s %f:%f (%f meters)", loc.getProvider(),
-                          loc.getLatitude(), loc.getLongitude(),
-                          loc.getAccuracy()));
-    }
-  }
-
-  private Location getBestLocation() {
-    Location gps=mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    Location network=
-        mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
+  private Location getBestLocation(Location location) {
     // start off by handling cases where we only have one
 
-    if (gps == null) {
-      return(network);
+    if (lastLocation == null) {
+      return(location);
     }
 
-    if (network == null) {
-      return(gps);
-    }
-
-    Location older=(gps.getTime() < network.getTime() ? gps : network);
-    Location newer=(gps == older ? network : gps);
+    Location older=
+        (lastLocation.getTime() < location.getTime() ? lastLocation
+            : location);
+    Location newer=(lastLocation == older ? location : lastLocation);
 
     // older and less accurate fixes suck
 
@@ -134,8 +115,8 @@ public class LocationService extends Service implements
     // the older being within the error radius of the
     // newer are higher than 50%", taking into account
     // the older one's accuracy as well -- the
-    // implementation
-    // of this is left as an exercise for the reader
+    // implementation of this is left as an exercise for the
+    // reader
 
     if (newer.distanceTo(older) < newer.getAccuracy()) {
       return(older);

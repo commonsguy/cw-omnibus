@@ -17,12 +17,11 @@ package com.commonsware.android.abf.test;
 import android.test.AndroidTestCase;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import com.commonsware.android.abf.R;
 
 public class DemoContextTest extends AndroidTestCase {
   private View field=null;
-  private ViewGroup root=null;
+  private View root=null;
 
   @Override
   protected void setUp() throws Exception {
@@ -30,7 +29,7 @@ public class DemoContextTest extends AndroidTestCase {
 
     LayoutInflater inflater=LayoutInflater.from(getContext());
 
-    root=(ViewGroup)inflater.inflate(R.layout.add, null);
+    root=inflater.inflate(R.layout.add, null);
     root.measure(800, 480);
     root.layout(0, 0, 800, 480);
 
@@ -42,7 +41,7 @@ public class DemoContextTest extends AndroidTestCase {
   }
 
   public void testPosition() {
-    assertTrue(field.getTop() == 6);
-    assertTrue(field.getLeft() > 0);
+    assertEquals(0, field.getTop());
+    assertEquals(0, field.getLeft());
   }
 }

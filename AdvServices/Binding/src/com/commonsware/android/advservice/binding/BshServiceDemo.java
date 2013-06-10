@@ -14,18 +14,39 @@
 
 package com.commonsware.android.advservice.binding;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
-public class BshServiceDemo extends FragmentActivity {
+public class BshServiceDemo extends SherlockFragmentActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
       getSupportFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new BshFragment()).commit();
     }
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getSupportMenuInflater().inflate(R.menu.actions, menu);
+
+    return(super.onCreateOptionsMenu(menu));
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.add) {
+      startActivity(new Intent(this, this.getClass()));
+
+      return(true);
+    }
+    
+    return(super.onOptionsItemSelected(item));
   }
 }

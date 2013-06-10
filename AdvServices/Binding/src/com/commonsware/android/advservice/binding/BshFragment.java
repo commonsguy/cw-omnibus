@@ -6,16 +6,16 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import com.actionbarsherlock.app.SherlockFragment;
 
-public class BshFragment extends Fragment implements OnClickListener,
-    ServiceConnection {
+public class BshFragment extends SherlockFragment implements
+    OnClickListener, ServiceConnection {
   private IScript service=null;
   private Button btn=null;
 
@@ -26,8 +26,8 @@ public class BshFragment extends Fragment implements OnClickListener,
 
     btn=(Button)result.findViewById(R.id.eval);
     btn.setOnClickListener(this);
-    btn.setEnabled(false);
-    
+    btn.setEnabled(service!=null);
+
     setRetainInstance(true);
 
     return(result);
@@ -69,7 +69,7 @@ public class BshFragment extends Fragment implements OnClickListener,
   public void onServiceDisconnected(ComponentName className) {
     disconnect();
   }
-  
+
   private void disconnect() {
     service=null;
     btn.setEnabled(false);

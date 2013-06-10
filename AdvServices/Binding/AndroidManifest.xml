@@ -6,7 +6,7 @@
 
 	<uses-sdk
 		android:minSdkVersion="7"
-		android:targetSdkVersion="11"/>
+		android:targetSdkVersion="14"/>
 
 	<supports-screens
 		android:largeScreens="true"
@@ -15,7 +15,7 @@
 
 	<application
 		android:icon="@drawable/cw"
-		android:label="@string/app_name">
+		android:label="@string/app_name" android:theme="@style/Theme.Sherlock.Light.DarkActionBar">
 		<activity
 			android:name=".BshServiceDemo"
 			android:label="@string/app_name">

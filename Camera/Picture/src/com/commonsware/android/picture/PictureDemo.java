@@ -14,6 +14,7 @@
 
 package com.commonsware.android.picture;
 
+import android.annotation.TargetApi;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.AsyncTask;
@@ -53,6 +54,7 @@ public class PictureDemo extends SherlockActivity {
     previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
   }
 
+  @TargetApi(Build.VERSION_CODES.GINGERBREAD)
   @Override
   public void onResume() {
     super.onResume();

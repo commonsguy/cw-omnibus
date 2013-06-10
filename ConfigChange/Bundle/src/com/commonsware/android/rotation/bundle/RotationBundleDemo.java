@@ -73,7 +73,7 @@ public class RotationBundleDemo extends Activity {
 
     if (contactUri != null) {
       contact=Uri.parse(contactUri);
-      viewButton.setEnabled(contact != null);
+      viewButton.setEnabled(true);
     }
   }
 }

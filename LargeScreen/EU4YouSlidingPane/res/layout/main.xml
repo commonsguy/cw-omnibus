@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/panes"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<fragment
+		android:id="@+id/countries"
+		android:name="com.commonsware.android.eu4you4.CountriesFragment"
+		android:layout_width="300sp"
+		android:layout_height="match_parent"/>
+
+	<fragment
+		android:id="@+id/details"
+		android:name="com.commonsware.android.eu4you4.DetailsFragment"
+		android:layout_width="400dp"
+		android:layout_height="match_parent"
+		android:layout_weight="1"/>
+
+</android.support.v4.widget.SlidingPaneLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="activated" parent="android:Theme.Holo">
+    <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
+  </style>
+</resources>

@@ -16,6 +16,7 @@ package com.commonsware.android.actionmodemc;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -37,12 +38,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActionModeDemo extends ListActivity {
-  private static final String[] items=
-      { "lorem", "ipsum", "dolor", "sit", "amet", "consectetuer",
-          "adipiscing", "elit", "morbi", "vel", "ligula", "vitae",
-          "arcu", "aliquet", "mollis", "etiam", "vel", "erat",
-          "placerat", "ante", "porttitor", "sodales", "pellentesque",
-          "augue", "purus" };
+  private static final String[] items= { "lorem", "ipsum", "dolor",
+      "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
+      "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
+      "vel", "erat", "placerat", "ante", "porttitor", "sodales",
+      "pellentesque", "augue", "purus" };
   private ArrayList<String> words=null;
 
   @TargetApi(11)
@@ -51,22 +51,24 @@ public class ActionModeDemo extends ListActivity {
     super.onCreate(icicle);
 
     initAdapter();
-    
-    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
       getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-      getListView()
-        .setMultiChoiceModeListener(new HCMultiChoiceModeListener(this,
-                                                                  getListView()));
+      getListView().setMultiChoiceModeListener(new HCMultiChoiceModeListener(
+                                                                             this,
+                                                                             getListView()));
     }
     else {
       getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
       registerForContextMenu(getListView());
     }
   }
-  
+
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
-    l.setItemChecked(position, true);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+      l.setItemChecked(position, true);
+    }
   }
 
   @Override
@@ -75,15 +77,15 @@ public class ActionModeDemo extends ListActivity {
 
     EditText add=null;
 
-    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
       View v=menu.findItem(R.id.add).getActionView();
 
-      if (v!=null) {
+      if (v != null) {
         add=(EditText)v.findViewById(R.id.title);
       }
     }
 
-    if (add!=null) {
+    if (add != null) {
       add.setOnEditorActionListener(onSearch);
     }
 
@@ -109,8 +111,7 @@ public class ActionModeDemo extends ListActivity {
 
       case R.id.about:
       case android.R.id.home:
-        Toast
-             .makeText(this, "Action Bar Sample App", Toast.LENGTH_LONG)
+        Toast.makeText(this, "Action Bar Sample App", Toast.LENGTH_LONG)
              .show();
         return(true);
     }
@@ -125,7 +126,7 @@ public class ActionModeDemo extends ListActivity {
     if (!result) {
       result=super.onContextItemSelected(item);
     }
-    
+
     return(result);
   }
 
@@ -133,15 +134,15 @@ public class ActionModeDemo extends ListActivity {
   public boolean performActions(MenuItem item) {
     ArrayAdapter<String> adapter=(ArrayAdapter<String>)getListAdapter();
     SparseBooleanArray checked=getListView().getCheckedItemPositions();
-    
+
     switch (item.getItemId()) {
       case R.id.cap:
-        for (int i=0;i<checked.size();i++) {
+        for (int i=0; i < checked.size(); i++) {
           if (checked.valueAt(i)) {
             int position=checked.keyAt(i);
             String word=words.get(position);
 
-            word=word.toUpperCase();
+            word=word.toUpperCase(Locale.ENGLISH);
 
             adapter.remove(words.get(position));
             adapter.insert(word, position);
@@ -152,19 +153,19 @@ public class ActionModeDemo extends ListActivity {
 
       case R.id.remove:
         ArrayList<Integer> positions=new ArrayList<Integer>();
-        
-        for (int i=0;i<checked.size();i++) {
+
+        for (int i=0; i < checked.size(); i++) {
           if (checked.valueAt(i)) {
             positions.add(checked.keyAt(i));
           }
         }
-        
+
         Collections.sort(positions, Collections.reverseOrder());
-        
+
         for (int position : positions) {
           adapter.remove(words.get(position));
         }
-        
+
         getListView().clearChoices();
 
         return(true);
@@ -189,17 +190,13 @@ public class ActionModeDemo extends ListActivity {
   private void add() {
     final View addView=getLayoutInflater().inflate(R.layout.add, null);
 
-    new AlertDialog.Builder(this)
-                                 .setTitle("Add a Word")
+    new AlertDialog.Builder(this).setTitle("Add a Word")
                                  .setView(addView)
-                                 .setPositiveButton(
-                                                    "OK",
+                                 .setPositiveButton("OK",
                                                     new DialogInterface.OnClickListener() {
-                                                      public void onClick(
-                                                                          DialogInterface dialog,
+                                                      public void onClick(DialogInterface dialog,
                                                                           int whichButton) {
-                                                        addWord((TextView)addView
-                                                                                 .findViewById(R.id.title));
+                                                        addWord((TextView)addView.findViewById(R.id.title));
                                                       }
                                                     })
                                  .setNegativeButton("Cancel", null)
@@ -217,7 +214,7 @@ public class ActionModeDemo extends ListActivity {
       new TextView.OnEditorActionListener() {
         public boolean onEditorAction(TextView v, int actionId,
                                       KeyEvent event) {
-          if (event==null||event.getAction()==KeyEvent.ACTION_UP) {
+          if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
             addWord(v);
 
             InputMethodManager imm=

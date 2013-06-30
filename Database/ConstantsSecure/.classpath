@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="libs/commons-codec.jar"/>
 	<classpathentry kind="lib" path="libs/guava-r09.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

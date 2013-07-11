@@ -86,7 +86,23 @@
          In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
          in order to avoid having your file be overridden by tools such as "android update project"
     -->
-    <!-- version-tag: VERSION_TAG -->
+    <!-- version-tag: custom -->
     <import file="${sdk.dir}/tools/ant/uibuild.xml" />
+
+<target name="uiautomator" depends="build">
+  <exec executable="adb">
+    <arg value="push"/>
+    <arg value="bin/SampleTests.jar"/>
+    <arg value="/data/local/tmp/"/>
+  </exec>
+  <exec executable="adb">
+    <arg value="shell"/>
+    <arg value="uiautomator"/>
+    <arg value="runtest"/>
+    <arg value="SampleTests.jar"/>
+    <arg value="-c"/>
+    <arg value="com.commonsware.android.abf.uiautomator.ListTests"/>
+  </exec>
+</target>
 
 </project>

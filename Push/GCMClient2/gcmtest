@@ -1,0 +1,2 @@
+#!/bin/bash
+curl --header "Authorization: key=$1" --header Content-Type:"application/json" https://android.googleapis.com/gcm/send -d "{\"registration_ids\":[\"THISISSOFAKE\"]}"

@@ -22,8 +22,8 @@ import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-  static final String SENDER_ID="21221004115"; // change
-                                                        // me!
+  static final String SENDER_ID="this is so fake"; // change
+                                                   // me!
 
   @Override
   public void onCreate(Bundle savedInstanceState) {

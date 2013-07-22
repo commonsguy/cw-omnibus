@@ -2,8 +2,8 @@
 <RadioGroup
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
   >
     <RadioButton android:id="@+id/radio1"
       android:layout_width="wrap_content"

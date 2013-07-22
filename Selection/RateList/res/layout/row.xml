@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
+  android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="horizontal"
 >
@@ -16,6 +16,6 @@
     android:padding="2dip"
     android:textSize="18sp"
     android:layout_gravity="left|center_vertical"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
 </LinearLayout>

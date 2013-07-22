@@ -44,7 +44,8 @@ public class GCMRegistrarCompat {
   private static final String PREFERENCES="com.google.android.gcm";
   private static final String PROPERTY_ON_SERVER_EXPIRATION_TIME=
       "onServerExpirationTime";
-  private static final long REGISTRATION_EXPIRY_TIME_MS = 1000 * 3600 * 24 * 7;
+  private static final long REGISTRATION_EXPIRY_TIME_MS=
+      1000 * 3600 * 24 * 7;
 
   public static void checkDevice(Context context) {
     int version=Build.VERSION.SDK_INT;
@@ -163,14 +164,15 @@ public class GCMRegistrarCompat {
     final SharedPreferences prefs=getGCMPreferences(context);
     String oldRegistrationId=prefs.getString(PROPERTY_REG_ID, "");
     int appVersion=getAppVersion(context);
-    long expirationTime = System.currentTimeMillis() + REGISTRATION_EXPIRY_TIME_MS;
+    long expirationTime=
+        System.currentTimeMillis() + REGISTRATION_EXPIRY_TIME_MS;
     Editor editor=prefs.edit();
 
     editor.putString(PROPERTY_REG_ID, regId);
     editor.putInt(PROPERTY_APP_VERSION, appVersion);
     editor.putLong(PROPERTY_ON_SERVER_EXPIRATION_TIME, expirationTime);
     editor.commit();
-    
+
     return oldRegistrationId;
   }
 
@@ -234,6 +236,14 @@ public class GCMRegistrarCompat {
     protected void sendRegistrationIdToServer(String regid) {
       // no-op -- subclasses should override and send
       // registration id to server by some means
+    }
+
+    // override this to do something more, note that it
+    // is called on a background thread!
+    
+    protected void onError(IOException e) {
+      Log.e(getClass().getSimpleName(),
+            "Exception registering for GCM", e);
     }
   }
 }

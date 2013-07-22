@@ -15,7 +15,9 @@
 package com.commonsware.android.sensor.monitor;
 
 import android.annotation.SuppressLint;
+import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class SensorLogFragment extends SherlockListFragment {
+public class SensorLogFragment extends SherlockListFragment implements
+    SensorEventListener {
   private SensorLogAdapter adapter=null;
   private boolean isXYZ=false;
 
@@ -36,20 +39,26 @@ public class SensorLogFragment extends SherlockListFragment {
     getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
   }
 
-  void init(boolean isXYZ) {
-    this.isXYZ=isXYZ;
-    adapter=new SensorLogAdapter(this);
-    setListAdapter(adapter);
+  @Override
+  public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    // unused
   }
 
-  void add(SensorEvent e) {
+  @Override
+  public void onSensorChanged(SensorEvent e) {
     Float[] values=new Float[3];
 
     values[0]=e.values[0];
     values[1]=e.values[1];
     values[2]=e.values[2];
-    
+
     adapter.add(values);
+  }
+
+  void init(boolean isXYZ) {
+    this.isXYZ=isXYZ;
+    adapter=new SensorLogAdapter(this);
+    setListAdapter(adapter);
   }
 
   class SensorLogAdapter extends ArrayAdapter<Float[]> {

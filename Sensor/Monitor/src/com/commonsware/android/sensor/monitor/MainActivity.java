@@ -16,8 +16,6 @@ package com.commonsware.android.sensor.monitor;
 
 import android.content.Context;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -28,7 +26,7 @@ import java.util.List;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class MainActivity extends SherlockFragmentActivity implements
-    SensorsFragment.Contract, SensorEventListener {
+    SensorsFragment.Contract {
   private SensorManager mgr=null;
   private SensorLogFragment log=null;
   private SlidingPaneLayout panes=null;
@@ -48,7 +46,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
   @Override
   public void onPause() {
-    mgr.unregisterListener(this);
+    mgr.unregisterListener(log);
     super.onPause();
   }
 
@@ -79,20 +77,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 
   @Override
   public void onSensorSelected(Sensor s) {
-    mgr.unregisterListener(this);
-    mgr.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
+    mgr.unregisterListener(log);
+    mgr.registerListener(log, s, SensorManager.SENSOR_DELAY_NORMAL);
     log.init(isXYZ(s));
     panes.closePane();
-  }
-
-  @Override
-  public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    // unused
-  }
-
-  @Override
-  public void onSensorChanged(SensorEvent e) {
-    log.add(e);
   }
 
   private boolean isXYZ(Sensor s) {

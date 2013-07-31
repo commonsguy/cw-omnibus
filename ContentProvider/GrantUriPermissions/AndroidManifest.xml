@@ -39,7 +39,7 @@
 		<provider
 			android:name="FileProvider"
 			android:authorities="com.commonsware.android.cp.files"
-			android:exported="true"
+			android:exported="false"
 			android:grantUriPermissions="false"
 			android:readPermission="com.commonsware.android.cp.perms.READ"
 			tools:ignore="ExportedContentProvider">

@@ -32,13 +32,18 @@ public class MainActivity extends Activity implements
 
     lastClip=(TextView)findViewById(R.id.last_clip);
     cm=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+  }
+  
+  @Override
+  public void onResume() {
+    super.onResume();
     cm.addPrimaryClipChangedListener(this);
   }
   
   @Override
-  public void onDestroy() {
+  public void onPause() {
     cm.removePrimaryClipChangedListener(this);
-    super.onDestroy();
+    super.onPause();
   }
 
   @Override

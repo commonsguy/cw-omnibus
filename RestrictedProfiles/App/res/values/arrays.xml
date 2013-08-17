@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="display_values">
+		<item>Foo</item>
+		<item>Bar!</item>
+		<item>Goo!!</item>
+	</string-array>
+	<string-array name="restriction_values">
+		<item>foo</item>
+		<item>bar</item>
+		<item>goo</item>
+	</string-array>
+
+</resources>

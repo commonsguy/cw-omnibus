@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">App Restrictions Demo</string>
+	<string name="action_settings">Settings</string>
+	<string name="hello_world">Hello world!</string>
+	<string name="no_restrictions">There are no restrictions on this app for this user!</string>
+	<string name="boolean_restriction_title">A Boolean Restriction</string>
+	<string name="boolean_restriction_desc">You should see a checkbox nearby...</string>
+	<string name="choice_restriction_title">A Choice Restriction</string>
+
+</resources>

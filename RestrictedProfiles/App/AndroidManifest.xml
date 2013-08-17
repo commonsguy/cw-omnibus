@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.profile.app"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<uses-sdk
+		android:minSdkVersion="18"
+		android:targetSdkVersion="18"/>
+
+	<application
+		android:allowBackup="true"
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name"
+		android:theme="@style/AppTheme">
+		<activity
+			android:name="com.commonsware.android.profile.app.MainActivity"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+
+		<receiver android:name="RestrictionEntriesReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.GET_RESTRICTION_ENTRIES"/>
+			</intent-filter>
+		</receiver>
+	</application>
+
+</manifest>

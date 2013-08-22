@@ -40,7 +40,7 @@ public class ChronoDemo extends Activity {
   }
   
   public void chooseDate(View v) {
-    new DatePickerDialog(ChronoDemo.this, d,
+    new DatePickerDialog(this, d,
                           dateAndTime.get(Calendar.YEAR),
                           dateAndTime.get(Calendar.MONTH),
                           dateAndTime.get(Calendar.DAY_OF_MONTH))
@@ -48,7 +48,7 @@ public class ChronoDemo extends Activity {
   }
   
   public void chooseTime(View v) {
-    new TimePickerDialog(ChronoDemo.this, t,
+    new TimePickerDialog(this, t,
                           dateAndTime.get(Calendar.HOUR_OF_DAY),
                           dateAndTime.get(Calendar.MINUTE),
                           true)

@@ -14,6 +14,8 @@
 
 package com.commonsware.android.picasso;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Owner {
-  String profile_image;
+  @SerializedName("profile_image") String profileImage;
 }

@@ -88,7 +88,7 @@ public class QuestionsFragment extends
       Item item=getItem(position);
       ImageView icon=(ImageView)row.findViewById(R.id.icon);
 
-      Picasso.with(getActivity()).load(item.owner.profile_image)
+      Picasso.with(getActivity()).load(item.owner.profileImage)
              .resize(size, size).centerCrop()
              .placeholder(R.drawable.owner_placeholder)
              .error(R.drawable.owner_error).into(icon);

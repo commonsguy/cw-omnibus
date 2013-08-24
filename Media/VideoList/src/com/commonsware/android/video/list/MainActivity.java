@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2013 CommonsWare, LLC
+  Copyright (c) 2013 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -12,7 +12,7 @@
     http://commonsware.com/Android
  */
 
-package com.commonsware.android.video.player;
+package com.commonsware.android.video.list;
 
 import android.app.Activity;
 import android.content.Intent;

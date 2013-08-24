@@ -3,5 +3,5 @@
   android:id="@+id/videos"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:name="com.commonsware.android.video.player.VideosFragment"
+  android:name="com.commonsware.android.video.list.VideosFragment"
 />

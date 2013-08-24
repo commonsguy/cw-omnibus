@@ -12,7 +12,7 @@
     http://commonsware.com/Android
  */
 
-package com.commonsware.android.video.player;
+package com.commonsware.android.video.list;
 
 import android.app.LoaderManager;
 import android.content.Context;
@@ -52,11 +52,14 @@ public class VideosFragment extends
 
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
-    Cursor c=
-        (Cursor)((CursorAdapter)getListAdapter()).getItem(position);
+    CursorAdapter adapter=(CursorAdapter)getListAdapter();
+    Cursor c=(Cursor)adapter.getItem(position);
+    int uriColumn=c.getColumnIndex(MediaStore.Video.Media.DATA);
+    int mimeTypeColumn=
+        c.getColumnIndex(MediaStore.Video.Media.MIME_TYPE);
 
-    getContract().onVideoSelected(c.getString(c.getColumnIndex(MediaStore.Video.Media.DATA)),
-                                  c.getString(c.getColumnIndex(MediaStore.Video.Media.MIME_TYPE)));
+    getContract().onVideoSelected(c.getString(uriColumn),
+                                  c.getString(mimeTypeColumn));
   }
 
   @Override
@@ -82,15 +85,18 @@ public class VideosFragment extends
     void onVideoSelected(String uri, String mimeType);
   }
 
-  private class ThumbnailBinder implements
+  private static class ThumbnailBinder implements
       SimpleCursorAdapter.ViewBinder {
     @Override
     public boolean setViewValue(View v, Cursor c, int column) {
       if (column == c.getColumnIndex(MediaStore.Video.Media._ID)) {
-        VideoThumbnailImage thumb=new VideoThumbnailImage(c.getInt(column),
-                                                          MediaStore.Video.Thumbnails.MICRO_KIND);
+        VideoThumbnailImage thumb=
+            new VideoThumbnailImage(
+                                    c.getInt(column),
+                                    MediaStore.Video.Thumbnails.MICRO_KIND);
 
-        ((SmartImageView)v).setImage(thumb, R.drawable.ic_media_video_poster);
+        ((SmartImageView)v).setImage(thumb,
+                                     R.drawable.ic_media_video_poster);
 
         return(true);
       }

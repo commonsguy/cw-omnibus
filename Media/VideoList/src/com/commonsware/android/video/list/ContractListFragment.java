@@ -16,7 +16,7 @@
 
 // derived from https://gist.github.com/JakeWharton/2621173
 
-package com.commonsware.android.video.player;
+package com.commonsware.android.video.list;
 
 import android.app.Activity;
 import android.app.ListFragment;

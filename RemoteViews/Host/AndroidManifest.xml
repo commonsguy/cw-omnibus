@@ -20,7 +20,11 @@
 	</permission>
 
 	<uses-permission android:name="com.commonsware.android.rv.host.ACT_AS_HOST"/>
-	<supports-screens android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
+
+	<supports-screens
+		android:largeScreens="true"
+		android:normalScreens="true"
+		android:smallScreens="true"/>
 
 	<application
 		android:icon="@drawable/ic_launcher"

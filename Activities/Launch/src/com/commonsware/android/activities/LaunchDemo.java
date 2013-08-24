@@ -37,7 +37,7 @@ public class LaunchDemo extends Activity {
   public void showMe(View v) {
     String _lat=lat.getText().toString();
     String _lon=lon.getText().toString();
-    Uri uri=Uri.parse("geo:"+_lat+","+_lon);
+    Uri uri=Uri.parse("geo:"+_lat+","+_lon+"?z=15");
     
     startActivity(new Intent(Intent.ACTION_VIEW, uri));
   }

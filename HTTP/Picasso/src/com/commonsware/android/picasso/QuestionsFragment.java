@@ -15,6 +15,7 @@
 package com.commonsware.android.picasso;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
 import com.squareup.picasso.Picasso;
@@ -92,6 +94,10 @@ public class QuestionsFragment extends
              .resize(size, size).centerCrop()
              .placeholder(R.drawable.owner_placeholder)
              .error(R.drawable.owner_error).into(icon);
+
+      TextView title=(TextView)row.findViewById(R.id.title);
+      
+      title.setText(Html.fromHtml(getItem(position).title));
 
       return(row);
     }

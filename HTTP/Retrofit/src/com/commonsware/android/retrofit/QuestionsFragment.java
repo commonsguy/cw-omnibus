@@ -15,12 +15,14 @@
 package com.commonsware.android.retrofit;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
 import retrofit.Callback;
@@ -72,6 +74,16 @@ public class QuestionsFragment extends
   class ItemsAdapter extends ArrayAdapter<Item> {
     ItemsAdapter(List<Item> items) {
       super(getActivity(), android.R.layout.simple_list_item_1, items);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      View row=super.getView(position, convertView, parent);
+      TextView title=(TextView)row.findViewById(android.R.id.text1);
+      
+      title.setText(Html.fromHtml(getItem(position).title));
+      
+      return(row);
     }
   }
 

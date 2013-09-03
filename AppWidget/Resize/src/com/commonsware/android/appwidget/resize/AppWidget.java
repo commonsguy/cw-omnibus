@@ -22,6 +22,22 @@ import android.widget.RemoteViews;
 import java.util.Locale;
 
 public class AppWidget extends AppWidgetProvider {
+  // based on http://stackoverflow.com/a/18552461/115145
+  
+  @Override
+  public void onUpdate(Context context,
+                       AppWidgetManager appWidgetManager,
+                       int[] appWidgetIds) {
+    super.onUpdate(context, appWidgetManager, appWidgetIds);
+
+    for (int appWidgetId : appWidgetIds) {
+      Bundle options=appWidgetManager.getAppWidgetOptions(appWidgetId);
+
+      onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId,
+                                options);
+    }
+  }
+
   @Override
   public void onAppWidgetOptionsChanged(Context ctxt,
                                         AppWidgetManager mgr,

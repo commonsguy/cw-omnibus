@@ -13,6 +13,10 @@
 		android:normalScreens="true"
 		android:smallScreens="false"/>
 
+	<uses-feature
+		android:name="android.software.app_widgets"
+		android:required="true"/>
+
 	<application
 		android:allowBackup="false"
 		android:icon="@drawable/ic_launcher"

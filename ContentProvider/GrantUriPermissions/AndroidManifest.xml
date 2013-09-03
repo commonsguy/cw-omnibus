@@ -14,13 +14,6 @@
 		android:normalScreens="true"
 		android:smallScreens="true"/>
 
-	<permission
-		android:name="com.commonsware.android.cp.perms.READ"
-		android:description="@string/perm_read"
-		android:label="@string/perm_read_label"/>
-
-	<uses-permission android:name="com.commonsware.android.cp.perms.READ"/>
-
 	<application
 		android:allowBackup="false"
 		android:icon="@drawable/ic_launcher"
@@ -41,7 +34,6 @@
 			android:authorities="com.commonsware.android.cp.files"
 			android:exported="false"
 			android:grantUriPermissions="false"
-			android:readPermission="com.commonsware.android.cp.perms.READ"
 			tools:ignore="ExportedContentProvider">
 			<grant-uri-permission android:path="/test.pdf"/>
 		</provider>

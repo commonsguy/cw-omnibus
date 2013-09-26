@@ -111,6 +111,8 @@ public class MainActivity extends Activity implements
             result.setComponent(new ComponentName(
                                                   info.serviceInfo.packageName,
                                                   info.serviceInfo.name));
+            
+            break;
           }
         }
         catch (Exception e) {

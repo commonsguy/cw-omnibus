@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Foreground Service Demo</string>
+    <string name="download_complete">Download complete!</string>
+    <string name="fun">Tap me to view the file</string>
+    <string name="exception">EXCEPTION!</string>
+    <string name="downloading">Downloading!</string>
+</resources>

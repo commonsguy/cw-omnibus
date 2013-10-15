@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Password Enforcer</string>
+	<string name="device_admin_explanation">For experimentation purposes only</string>
+	<string name="compliant">Your password is compliant!</string>
+	<string name="not_compliant">Your password is not compliant! Submit to my authority!</string>
+	<string name="password_failed">You will never break into this device!</string>
+	<string name="password_success">Congratulations!</string>
+
+</resources>

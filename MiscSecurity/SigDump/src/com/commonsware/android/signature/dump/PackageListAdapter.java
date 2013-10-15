@@ -39,7 +39,7 @@ class PackageListAdapter extends ArrayAdapter<PackageInfo> {
 
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   private static int getRowResourceId() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
       return(android.R.layout.simple_list_item_activated_1);
     }
 

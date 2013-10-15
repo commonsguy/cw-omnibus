@@ -17,23 +17,17 @@ package com.commonsware.android.mapsv2.model;
 import android.content.Context;
 
 public class Model {
-  String key;
   String title;
   String snippet;
   double lat;
   double lon;
 
-  Model(Context ctxt, String key, double lat, double lon, int title,
+  Model(Context ctxt, double lat, double lon, int title,
         int snippet) {
-    this.key=key;
     this.title=ctxt.getString(title);
     this.snippet=ctxt.getString(snippet);
     this.lat=lat;
     this.lon=lon;
-  }
-
-  String getKey() {
-    return(key);
   }
 
   String getTitle() {

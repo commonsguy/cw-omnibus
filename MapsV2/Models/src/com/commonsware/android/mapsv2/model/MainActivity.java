@@ -46,32 +46,6 @@ public class MainActivity extends AbstractMapActivity implements
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    Model model=
-        new Model(this, String.valueOf(R.string.un),
-                  40.748963847316034, -73.96807193756104, R.string.un,
-                  R.string.united_nations);
-
-    models.put(model.getKey(), model);
-
-    model=
-        new Model(this, String.valueOf(R.string.lincoln_center),
-                  40.76866299974387, -73.98268461227417,
-                  R.string.lincoln_center,
-                  R.string.lincoln_center_snippet);
-    models.put(model.getKey(), model);
-
-    model=
-        new Model(this, String.valueOf(R.string.carnegie_hall),
-                  40.765136435316755, -73.97989511489868,
-                  R.string.carnegie_hall, R.string.practice_x3);
-    models.put(model.getKey(), model);
-
-    model=
-        new Model(this, String.valueOf(R.string.downtown_club),
-                  40.70686417491799, -74.01572942733765,
-                  R.string.downtown_club, R.string.heisman_trophy);
-    models.put(model.getKey(), model);
-
     if (readyToGo()) {
       setContentView(R.layout.activity_main);
 
@@ -157,14 +131,36 @@ public class MainActivity extends AbstractMapActivity implements
   }
 
   private void addMarkers(GoogleMap map) {
-    for (Model model : models.values()) {
-      LatLng position=
-          new LatLng(model.getLatitude(), model.getLongitude());
+    Model model=
+        new Model(this, 40.748963847316034, -73.96807193756104,
+                  R.string.un, R.string.united_nations);
 
-      map.addMarker(new MarkerOptions().position(position)
-                                       .title(model.getTitle())
-                                       .snippet(model.getKey()));
+    models.put(addMarkerForModel(map, model).getId(), model);
 
-    }
+    model=
+        new Model(this, 40.76866299974387, -73.98268461227417,
+                  R.string.lincoln_center,
+                  R.string.lincoln_center_snippet);
+    models.put(addMarkerForModel(map, model).getId(), model);
+
+    model=
+        new Model(this, 40.765136435316755, -73.97989511489868,
+                  R.string.carnegie_hall, R.string.practice_x3);
+    models.put(addMarkerForModel(map, model).getId(), model);
+
+    model=
+        new Model(this, 40.70686417491799, -74.01572942733765,
+                  R.string.downtown_club, R.string.heisman_trophy);
+    models.put(addMarkerForModel(map, model).getId(), model);
+  }
+
+  private Marker addMarkerForModel(GoogleMap map, Model model) {
+    LatLng position=
+        new LatLng(model.getLatitude(), model.getLongitude());
+
+    return(map.addMarker(new MarkerOptions().position(position)
+                                            .title(model.getTitle())
+                                            .snippet(model.getSnippet())));
+
   }
 }

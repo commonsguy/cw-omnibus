@@ -40,7 +40,7 @@ public class EditPreferences extends SherlockPreferenceActivity {
   }
   
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-  public static class FirstPreferenceFragment extends PreferenceFragment {
+  public static class First extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -50,7 +50,7 @@ public class EditPreferences extends SherlockPreferenceActivity {
   }
   
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-  public static class SecondPreferenceFragment extends PreferenceFragment {
+  public static class Second extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);

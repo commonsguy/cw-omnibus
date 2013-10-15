@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Simple DrawerLayout Demo</string>
+	<string name="lorem">Lorem Ipsum</string>
+	<string name="something">Something Else</string>
+	<string name="drawer_open">Open navigation drawer</string>
+	<string name="drawer_close">Close navigation drawer</string>
+	<string name="hello_world">Hello, world!</string>
+
+</resources>

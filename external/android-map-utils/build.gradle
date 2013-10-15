@@ -1,0 +1,132 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+
+apply plugin: 'android-library'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+archivesBaseName = 'android-maps-utils'
+group = 'com.google.maps.android'
+
+dependencies {
+    compile 'com.google.android.gms:play-services:3.1.36+'
+}
+
+android {
+    compileSdkVersion 17
+    buildToolsVersion "17.0.0"
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+        }
+
+        instrumentTest {
+            java.srcDirs = ['tests/src']
+        }
+    }
+}
+
+// TODO: Add a task that prints the test results.
+task instrumentTest(dependsOn: connectedCheck)
+
+task apklib(type: Zip) {
+    dependsOn 'packageReleaseJar'
+    appendix = extension = 'apklib'
+
+    from 'AndroidManifest.xml'
+    into('res') {
+        from 'res'
+    }
+    into('src') {
+        from 'src'
+    }
+}
+
+artifacts {
+    archives apklib
+}
+
+signing {
+    sign configurations.archives
+}
+
+if(!hasProperty("sonatypeUsername")){
+    sonatypeUsername = ""
+}
+if(!hasProperty("sonatypePassword")){
+    sonatypePassword = ""
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            modifyPom(addFilter('aar') { artifact, file ->
+                artifact.name == 'android-maps-utils'
+            })
+
+            modifyPom(addFilter('apklib') { artifact, file ->
+                artifact.name == 'android-maps-utils-apklib'
+            })
+
+            // There's no official apklib for Google Play services, so we
+            // can't really maintain that dependency for the apklib packaging.
+            pom('apklib').whenConfigured { pom ->
+                pom.dependencies = []
+            }
+        }
+    }
+}
+
+def modifyPom(pom) {
+    pom.project {
+        name 'Google Maps Android API utility library'
+        description 'Handy extensions to the Google Maps Android API.'
+        url 'https://github.com/googlemaps/android-maps-utils'
+
+        scm {
+            url 'scm:git@github.com:googlemaps/android-maps-utils.git'
+            connection 'scm:git@github.com:googlemaps/android-maps-utils.git'
+            developerConnection 'scm:git@github.com:googlemaps/android-maps-utils.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        organization {
+            name 'Google Inc'
+            url 'http://developers.google.com/maps'
+        }
+
+        developers {
+            developer {
+                id 'broady'
+                name 'Chris Broadfoot'
+                url 'http://google.com/+ChristopherBroadfoot'
+            }
+        }
+    }
+}

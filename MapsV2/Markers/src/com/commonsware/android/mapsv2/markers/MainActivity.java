@@ -83,15 +83,15 @@ public class MainActivity extends AbstractMapActivity implements
   @Override
   public void onSaveInstanceState(Bundle savedInstanceState) {
     super.onSaveInstanceState(savedInstanceState);
-    
+
     savedInstanceState.putInt(STATE_NAV,
                               getSupportActionBar().getSelectedNavigationIndex());
   }
-  
+
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
-    
+
     getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
   }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="main" >
+        <source path="/home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/build-types/debug/assets" />
+    </dataSet>
+
+</merger>

@@ -1,0 +1,15 @@
+# incremental data. DO NOT EDIT.
+# format is <lastModified> <length> <SHA-1> <path>
+# Encoding is UTF-8
+1381432976000 212 612efd035708c11c9d5b50f5ac5bec0c42177ea3 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/values/strings.xml
+1381432976000 603 cd107a02b943733e571ca379af17ed2bc87de045 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/layout/activity_main.xml
+1381432976000 9397 4a5a9affbb731f195fc18fea78d51be7db7536a2 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/drawable-hdpi/ic_launcher.png
+1381432976000 190 3f1d1da2438d13ab83262aa70ef3879b5f95c039 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/values-sw600dp/dimens.xml
+1381432976000 363 6170a4d3fe5b38e410d4e3697f0eea3a2e357e85 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/values-v14/styles.xml
+1381432976000 14383 82acdd75e3fcc36026109406625edc69d4d7212d /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/drawable-xhdpi/ic_launcher.png
+1381432976000 5237 7761bceaf18ed25cdba5f34bf00a55616d078acf /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/drawable-mdpi/ic_launcher.png
+1381432976000 226 44aa96b5ed8856cae7a1593ba1069ec1f27154d8 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/menu/main.xml
+1381432976000 260 bee378a4ead0dfb75181a3b5e4ec8ae56d440140 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/values-sw720dp-land/dimens.xml
+1381432976000 306 279f46999542fdb6a0dc5bd1bc4bbfbddba4b561 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/values-v11/styles.xml
+1381432976000 204 32e2f336ceccb2d9fa2e1061525ca27ec78cc559 /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/values/dimens.xml
+1381432976000 641 f186f625d81f19c8907fe4ce68acbd05c5b3528b /home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/values/styles.xml

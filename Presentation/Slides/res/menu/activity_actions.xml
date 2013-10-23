@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/first"
+		android:icon="@android:drawable/ic_media_previous"
+		android:showAsAction="always"
+		android:title="@string/first">
+	</item>
+  <item
+    android:id="@+id/last"
+    android:icon="@android:drawable/ic_media_next"
+    android:showAsAction="always"
+    android:title="@string/last">
+  </item>
+		<item
+		android:id="@+id/present"
+		android:checkable="true"
+		android:checked="true"
+		android:showAsAction="never"
+		android:title="@string/show_presentation">
+	</item>
+
+</menu>

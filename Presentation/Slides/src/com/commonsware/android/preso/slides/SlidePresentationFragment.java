@@ -46,7 +46,7 @@ public class SlidePresentationFragment extends PresentationFragment {
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container,
                            Bundle savedInstanceState) {
-    slide=new ImageView(getActivity());
+    slide=new ImageView(getContext());
 
     setSlideContent(getArguments().getInt(KEY_RESOURCE));
 

@@ -141,6 +141,8 @@ public class DownloadFragment extends SherlockFragment implements
 
       Toast.makeText(getActivity(), statusMessage(c), Toast.LENGTH_LONG)
            .show();
+      
+      c.close();
     }
   }
 

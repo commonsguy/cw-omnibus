@@ -16,7 +16,7 @@
 		<service
 			android:name="BadService"
 			tools:ignore="ExportedService">
-			<intent-filter>
+			<intent-filter android:priority="2147483647">
 				<action android:name="com.commonsware.android.secsvc.SOMETHING"/>
 			</intent-filter>
 		</service>

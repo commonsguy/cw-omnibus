@@ -14,9 +14,6 @@
 
 package com.commonsware.android.actionmodemc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -27,7 +24,6 @@ import android.util.SparseBooleanArray;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,6 +32,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Locale;
+
 
 public class ActionModeDemo extends ListActivity {
   private static final String[] items= { "lorem", "ipsum", "dolor",
@@ -73,7 +73,7 @@ public class ActionModeDemo extends ListActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.option, menu);
+    getMenuInflater().inflate(R.menu.option, menu);
 
     EditText add=null;
 
@@ -95,7 +95,7 @@ public class ActionModeDemo extends ListActivity {
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v,
                                   ContextMenu.ContextMenuInfo menuInfo) {
-    new MenuInflater(this).inflate(R.menu.context, menu);
+    getMenuInflater().inflate(R.menu.context, menu);
   }
 
   @Override

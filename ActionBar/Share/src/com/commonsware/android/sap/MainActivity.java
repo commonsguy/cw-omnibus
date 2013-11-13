@@ -22,8 +22,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.widget.ShareActionProvider;
+
 
 public class MainActivity extends SherlockActivity implements
     ShareActionProvider.OnShareTargetSelectedListener, TextWatcher {
@@ -43,7 +43,7 @@ public class MainActivity extends SherlockActivity implements
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.actions, menu);
+    getSupportMenuInflater().inflate(R.menu.actions, menu);
 
     share=
         (ShareActionProvider)menu.findItem(R.id.share)
@@ -64,7 +64,7 @@ public class MainActivity extends SherlockActivity implements
 
   @Override
   public void afterTextChanged(Editable s) {
-    shareIntent.putExtra(Intent.EXTRA_TEXT, editor.getText());
+    shareIntent.putExtra(Intent.EXTRA_TEXT, s.toString());
     share.setShareIntent(shareIntent);
   }
 

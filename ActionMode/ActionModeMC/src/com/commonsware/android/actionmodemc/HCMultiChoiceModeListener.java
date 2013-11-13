@@ -24,7 +24,8 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class HCMultiChoiceModeListener implements AbsListView.MultiChoiceModeListener {
+public class HCMultiChoiceModeListener implements
+    AbsListView.MultiChoiceModeListener {
   ActionModeDemo host;
   ActionMode activeMode;
   ListView lv;
@@ -54,9 +55,9 @@ public class HCMultiChoiceModeListener implements AbsListView.MultiChoiceModeLis
   @Override
   public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
     boolean result=host.performActions(item);
-    
+
     updateSubtitle(activeMode);
-    
+
     return(result);
   }
 
@@ -70,8 +71,8 @@ public class HCMultiChoiceModeListener implements AbsListView.MultiChoiceModeLis
                                         long id, boolean checked) {
     updateSubtitle(mode);
   }
-  
+
   private void updateSubtitle(ActionMode mode) {
-    mode.setSubtitle("("+lv.getCheckedItemCount()+")");
+    mode.setSubtitle("(" + lv.getCheckedItemCount() + ")");
   }
 }

@@ -14,17 +14,17 @@
 
 package com.commonsware.android.inflation;
 
-import java.util.ArrayList;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
 
 public class ActionBarDemoActivity extends SherlockListActivity
     implements TextView.OnEditorActionListener {
@@ -45,7 +45,7 @@ public class ActionBarDemoActivity extends SherlockListActivity
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.actions, menu);
+    getSupportMenuInflater().inflate(R.menu.actions, menu);
 
     configureActionItem(menu);
 

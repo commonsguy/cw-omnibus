@@ -15,6 +15,7 @@
 package com.commonsware.android.pref1header;
 
 import java.util.List;
+import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
@@ -33,6 +34,7 @@ public class EditPreferences extends SherlockPreferenceActivity {
     }
   }
 
+  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   @Override
   public void onBuildHeaders(List<Header> target) {
     if (onIsHidingHeaders() || !onIsMultiPane()) {
@@ -41,5 +43,10 @@ public class EditPreferences extends SherlockPreferenceActivity {
     else {
       loadHeadersFromResource(R.xml.preference_headers, target);
     }
+  }
+
+  @Override
+  protected boolean isValidFragment(String fragmentName) {
+    return(StockPreferenceFragment.class.getName().equals(fragmentName));
   }
 }

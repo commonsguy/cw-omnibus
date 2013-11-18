@@ -27,18 +27,18 @@ public class EditPreferences extends SherlockPreferenceActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (Build.VERSION.SDK_INT<Build.VERSION_CODES.HONEYCOMB) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
       addPreferencesFromResource(R.xml.preferences);
       addPreferencesFromResource(R.xml.preferences2);
     }
   }
-  
+
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   @Override
   public void onBuildHeaders(List<Header> target) {
     loadHeadersFromResource(R.xml.preference_headers, target);
   }
-  
+
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public static class First extends PreferenceFragment {
     @Override
@@ -48,7 +48,7 @@ public class EditPreferences extends SherlockPreferenceActivity {
       addPreferencesFromResource(R.xml.preferences);
     }
   }
-  
+
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public static class Second extends PreferenceFragment {
     @Override
@@ -57,5 +57,15 @@ public class EditPreferences extends SherlockPreferenceActivity {
 
       addPreferencesFromResource(R.xml.preferences2);
     }
+  }
+
+  @Override
+  protected boolean isValidFragment(String fragmentName) {
+    if (First.class.getName().equals(fragmentName)
+        || Second.class.getName().equals(fragmentName)) {
+      return(true);
+    }
+    
+    return(false);
   }
 }

@@ -20,8 +20,8 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
 
 public class FragmentsDemo extends SherlockFragmentActivity {
   @Override
@@ -32,7 +32,7 @@ public class FragmentsDemo extends SherlockFragmentActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.actions, menu);
+    getSupportMenuInflater().inflate(R.menu.actions, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }

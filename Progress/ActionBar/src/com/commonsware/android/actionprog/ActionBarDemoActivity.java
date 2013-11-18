@@ -18,8 +18,8 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+
 
 public class ActionBarDemoActivity extends SherlockListActivity {
   private static final String[] items= { "lorem", "ipsum", "dolor",
@@ -41,7 +41,7 @@ public class ActionBarDemoActivity extends SherlockListActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.actions, menu);
+    getSupportMenuInflater().inflate(R.menu.actions, menu);
 
     refresh=menu.findItem(R.id.refresh);
 

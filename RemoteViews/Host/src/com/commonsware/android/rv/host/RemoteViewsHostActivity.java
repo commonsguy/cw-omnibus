@@ -22,11 +22,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RemoteViews;
+
 
 public class RemoteViewsHostActivity extends Activity {
   public static final String ACTION_CALL_FOR_PLUGINS=
@@ -74,7 +74,7 @@ public class RemoteViewsHostActivity extends Activity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.options, menu);
+    getMenuInflater().inflate(R.menu.options, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }

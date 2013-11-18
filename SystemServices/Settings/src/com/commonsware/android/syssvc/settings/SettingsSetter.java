@@ -19,17 +19,17 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class SettingsSetter extends ListActivity {
   private static Map<Integer,String> menuActivities=new HashMap<Integer,String>();
@@ -77,11 +77,11 @@ public class SettingsSetter extends ListActivity {
   
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(getApplication())
-                                  .inflate(R.menu.option, menu);
+    getMenuInflater().inflate(R.menu.option, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }
+  
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {

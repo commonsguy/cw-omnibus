@@ -8,6 +8,10 @@
 		android:minSdkVersion="10"
 		android:targetSdkVersion="18"/>
 
+  <uses-feature
+    android:name="android.software.device_admin"
+    android:required="true"/>
+	
 	<application
 		android:allowBackup="false"
 		android:icon="@drawable/ic_launcher"

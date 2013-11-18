@@ -122,10 +122,10 @@ public class MainActivity extends Activity implements
 
   @Override
   public void showPreso(Display display) {
+    int drawable=adapter.getPageResource(pager.getCurrentItem());
+
     preso=
-        SlidePresentationFragment.newInstance(this,
-                                              display,
-                                              adapter.getPageResource(pager.getCurrentItem()));
+        SlidePresentationFragment.newInstance(this, display, drawable);
     preso.show(getFragmentManager(), "preso");
   }
 }

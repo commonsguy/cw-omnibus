@@ -50,21 +50,21 @@ public class Provider extends ContentProvider {
                    "constants/#", CONSTANT_ID);
   }
 
-  private DatabaseHelper db=null;
-  private String key=null;
+  private DatabaseHelper dbHelper=null;
+  private SQLiteDatabase db=null;
 
   @Override
   public boolean onCreate() {
     SQLiteDatabase.loadLibs(getContext());
-    db=(new DatabaseHelper(getContext()));
+    dbHelper=(new DatabaseHelper(getContext()));
 
-    return((db == null) ? false : true);
+    return((dbHelper == null) ? false : true);
   }
 
   @Override
   public Bundle call(String method, String arg, Bundle extras) {
     if (SET_KEY_METHOD.equals(method) && arg != null) {
-      key=arg;
+      db=dbHelper.getWritableDatabase(arg);
     }
 
     return(null);
@@ -87,8 +87,8 @@ public class Provider extends ContentProvider {
     }
 
     Cursor c=
-        qb.query(db.getReadableDatabase(key), projection, selection,
-                 selectionArgs, null, null, orderBy);
+        qb.query(db, projection, selection, selectionArgs, null, null,
+                 orderBy);
 
     c.setNotificationUri(getContext().getContentResolver(), url);
 
@@ -106,9 +106,7 @@ public class Provider extends ContentProvider {
 
   @Override
   public Uri insert(Uri url, ContentValues initialValues) {
-    long rowID=
-        db.getWritableDatabase(key).insert(TABLE, Constants.TITLE,
-                                           initialValues);
+    long rowID=db.insert(TABLE, Constants.TITLE, initialValues);
 
     if (rowID > 0) {
       Uri uri=
@@ -124,8 +122,7 @@ public class Provider extends ContentProvider {
 
   @Override
   public int delete(Uri url, String where, String[] whereArgs) {
-    int count=
-        db.getWritableDatabase(key).delete(TABLE, where, whereArgs);
+    int count=db.delete(TABLE, where, whereArgs);
 
     getContext().getContentResolver().notifyChange(url, null);
 
@@ -135,9 +132,7 @@ public class Provider extends ContentProvider {
   @Override
   public int update(Uri url, ContentValues values, String where,
                     String[] whereArgs) {
-    int count=
-        db.getWritableDatabase(key).update(TABLE, values, where,
-                                           whereArgs);
+    int count=db.update(TABLE, values, where, whereArgs);
 
     getContext().getContentResolver().notifyChange(url, null);
 

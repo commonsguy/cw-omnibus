@@ -51,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
       db=SQLiteDatabase.openOrCreateDatabase(dbFile, PASSPHRASE, null);
       db.setVersion(version);
+      db.close();
 
       legacyFile.delete();
     }

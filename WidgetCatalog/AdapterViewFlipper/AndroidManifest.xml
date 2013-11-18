@@ -1,16 +1,9 @@
 <?xml version="1.0"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.commonsware.android.avflip">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.commonsware.android.avflip" android:versionCode="1" android:versionName="1.0">
 
-	<supports-screens
-		android:anyDensity="true"
-		android:largeScreens="true"
-		android:normalScreens="true"
-		android:smallScreens="true"/>
+	<supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
 
-	<uses-sdk
-		android:minSdkVersion="11"
-		android:targetSdkVersion="11"/>
+	<uses-sdk android:minSdkVersion="11" android:targetSdkVersion="11"/>
 
 	<application android:icon="@drawable/ic_launcher">
 		<activity android:name="FlipperDemo2">

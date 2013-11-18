@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
-<manifest package="com.commonsware.android.audio"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.commonsware.android.audio" android:versionCode="1" android:versionName="1.0">
           
-  <uses-sdk android:minSdkVersion="3"
-            android:targetSdkVersion="6" />
-  <supports-screens android:largeScreens="false"
-                    android:normalScreens="true"
-                    android:smallScreens="false" />
+  <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="6"/>
+  <supports-screens android:largeScreens="false" android:normalScreens="true" android:smallScreens="false"/>
   <application android:icon="@drawable/cw">
-    <activity android:label="AudioDemo"
-              android:name=".AudioDemo">
+    <activity android:label="AudioDemo" android:name=".AudioDemo">
       <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
   </application>

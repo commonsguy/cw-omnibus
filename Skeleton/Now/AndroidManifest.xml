@@ -1,14 +1,19 @@
 <?xml version="1.0"?>
-<manifest package="com.commonsware.android.skeleton"
-          xmlns:android="http://schemas.android.com/apk/res/android">
-          
-  <application>
-    <activity android:label="Now"
-              android:name="Now">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-  </application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.skeleton"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<application>
+		<activity
+			android:name="Now"
+			android:label="Now">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+	</application>
+
 </manifest>

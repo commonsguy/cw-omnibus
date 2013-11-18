@@ -1,0 +1,55 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+
+apply plugin: 'android'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "18.1.0"
+
+    defaultConfig {
+        versionCode 2
+        versionName "1.1"
+        minSdkVersion 14
+        targetSdkVersion 18
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('HelloConfig.keystore')
+            keyAlias 'HelloConfig'
+            storePassword 'laser.yams.heady.testy'
+            keyPassword 'fw.stabs.steady.wool'
+        }
+    }
+
+    buildTypes {
+        debug {
+          packageNameSuffix ".d"
+          versionNameSuffix "-debug"
+        }
+
+        release {
+            signingConfig signingConfigs.release
+        }
+
+        mezzanine.initWith(buildTypes.release)
+
+        mezzanine {
+            packageNameSuffix ".mezz"
+            debuggable true
+            signingConfig signingConfigs.release
+        }
+    }
+}
+

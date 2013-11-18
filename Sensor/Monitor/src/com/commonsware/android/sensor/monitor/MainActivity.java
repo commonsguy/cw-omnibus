@@ -14,12 +14,15 @@
 
 package com.commonsware.android.sensor.monitor;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -62,8 +65,16 @@ public class MainActivity extends SherlockFragmentActivity implements
 
   @Override
   public List<Sensor> getSensorList() {
-    List<Sensor> result=
+    List<Sensor> unfiltered=
         new ArrayList<Sensor>(mgr.getSensorList(Sensor.TYPE_ALL));
+    List<Sensor> result=new ArrayList<Sensor>();
+
+    for (Sensor s : unfiltered) {
+      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+          || !isTriggerSensor(s)) {
+        result.add(s);
+      }
+    }
 
     Collections.sort(result, new Comparator<Sensor>() {
       @Override
@@ -83,6 +94,7 @@ public class MainActivity extends SherlockFragmentActivity implements
     panes.closePane();
   }
 
+  @TargetApi(Build.VERSION_CODES.KITKAT)
   private boolean isXYZ(Sensor s) {
     switch (s.getType()) {
       case Sensor.TYPE_ACCELEROMETER:
@@ -90,9 +102,33 @@ public class MainActivity extends SherlockFragmentActivity implements
       case Sensor.TYPE_GYROSCOPE:
       case Sensor.TYPE_LINEAR_ACCELERATION:
       case Sensor.TYPE_MAGNETIC_FIELD:
+      case Sensor.TYPE_ROTATION_VECTOR:
         return(true);
     }
 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+      if (s.getType() == Sensor.TYPE_GAME_ROTATION_VECTOR
+          || s.getType() == Sensor.TYPE_GYROSCOPE_UNCALIBRATED
+          || s.getType() == Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED) {
+        return(true);
+      }
+    }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      if (s.getType() == Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR) {
+        return(true);
+      }
+    }
+
     return(false);
+  }
+
+  @TargetApi(Build.VERSION_CODES.KITKAT)
+  private boolean isTriggerSensor(Sensor s) {
+    int[] triggers=
+        { Sensor.TYPE_SIGNIFICANT_MOTION, Sensor.TYPE_STEP_DETECTOR,
+            Sensor.TYPE_STEP_COUNTER };
+
+    return(Arrays.binarySearch(triggers, s.getType()) >= 0);
   }
 }

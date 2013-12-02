@@ -69,6 +69,8 @@ public class RotationBundleDemo extends Activity {
 
   @Override
   protected void onRestoreInstanceState(Bundle state) {
+    super.onRestoreInstanceState(state);
+    
     String contactUri=state.getString("contact");
 
     if (contactUri != null) {

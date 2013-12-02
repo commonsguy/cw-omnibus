@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- From: file:/home/mmurphy/stuff/CommonsWare/books/Omnibus/samples/Gradle/Hello/res/values-sw720dp-land/dimens.xml -->
-    <dimen name="activity_horizontal_margin">128dp</dimen>
-
-</resources>

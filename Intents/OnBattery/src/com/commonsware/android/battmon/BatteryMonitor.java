@@ -10,17 +10,19 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.battmon;
 
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class BatteryMonitor extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-  }
+public class BatteryMonitor extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+	}
 }

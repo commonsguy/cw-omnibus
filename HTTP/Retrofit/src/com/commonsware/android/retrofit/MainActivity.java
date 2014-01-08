@@ -20,20 +20,24 @@ import android.net.Uri;
 import android.os.Bundle;
 
 public class MainActivity extends Activity implements
-    QuestionsFragment.Contract {
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+		QuestionsFragment.Contract
+{
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getFragmentManager().beginTransaction()
-                          .add(android.R.id.content,
-                               new QuestionsFragment()).commit();
-    }
-  }
+		if (getFragmentManager().findFragmentById(android.R.id.content) == null)
+		{
+			getFragmentManager().beginTransaction()
+					.add(android.R.id.content, new QuestionsFragment())
+					.commit();
+		}
+	}
 
-  @Override
-  public void showItem(Item item) {
-    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(item.link)));
-  }
+	@Override
+	public void showItem(Item item)
+	{
+		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(item.link)));
+	}
 }

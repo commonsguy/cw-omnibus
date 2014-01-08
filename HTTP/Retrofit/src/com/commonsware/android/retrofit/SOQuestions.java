@@ -16,6 +16,7 @@ package com.commonsware.android.retrofit;
 
 import java.util.List;
 
-public class SOQuestions {
-  List<Item> items;
+public class SOQuestions
+{
+	List<Item> items;
 }

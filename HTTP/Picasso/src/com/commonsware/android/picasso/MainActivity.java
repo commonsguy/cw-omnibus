@@ -14,29 +14,43 @@
 
 package com.commonsware.android.picasso;
 
-import android.app.Activity;
+import info.juanmendez.android.utils.Trace;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-public class MainActivity extends Activity implements
-    QuestionsFragment.Contract {
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.SherlockListFragment;
 
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getFragmentManager().beginTransaction()
-                          .add(android.R.id.content,
-                               new QuestionsFragment()).commit();
-    }
-  }
+public class MainActivity extends SherlockFragmentActivity implements
+		QuestionsFragment.Contract
+{
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-  @Override
-  public void showItem(Item item) {
-    Intent iCanHazBrowser=
-        new Intent(Intent.ACTION_VIEW, Uri.parse(item.link));
+		Trace.setTAG("picowso");
+		SherlockListFragment f = (SherlockListFragment) getSupportFragmentManager()
+				.findFragmentById(android.R.id.content);
 
-    startActivity(iCanHazBrowser);
-  }
+		if (f == null)
+		{
+
+			getSupportFragmentManager().beginTransaction()
+					.add(android.R.id.content, new QuestionsFragment())
+					.commit();
+		}
+		else
+		{
+			Trace.warn("no fragment found", this);
+		}
+	}
+
+	@Override
+	public void showItem(Item item)
+	{
+		startActivity(new Intent(Intent.ACTION_VIEW,
+				Uri.parse(item.link)));
+	}
 }

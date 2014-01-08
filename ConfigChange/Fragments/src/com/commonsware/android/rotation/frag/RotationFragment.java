@@ -25,57 +25,82 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class RotationFragment extends SherlockFragment implements
-    View.OnClickListener {
-  static final int PICK_REQUEST=1337;
-  Uri contact=null;
+		View.OnClickListener
+{
+	static final int PICK_REQUEST = 1337;
+	Uri contact = null;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-                           Bundle savedInstanceState) {
-    setRetainInstance(true);
+	public Uri getContact()
+	{
+		return contact;
+	}
 
-    View result=inflater.inflate(R.layout.main, parent, false);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+			Bundle savedInstanceState)
+	{
+		/**
+		 * Control whether a fragment instance is retained across Activity
+		 * re-creation (such as from a configuration change). This can only be
+		 * used with fragments not in the back stack. If set, the fragment
+		 * lifecycle will be slightly different when an activity is recreated:
+		 * 
+		 * onDestroy() will not be called (but onDetach() still will be, because
+		 * the fragment is being detached from its current activity).
+		 * onCreate(Bundle) will not be called since the fragment is not being
+		 * re-created. onAttach(Activity) and onActivityCreated(Bundle) will
+		 * still be called.
+		 */
+		setRetainInstance(true);
 
-    result.findViewById(R.id.pick).setOnClickListener(this);
+		View result = inflater.inflate(R.layout.main, parent, false);
 
-    View v=result.findViewById(R.id.view);
+		result.findViewById(R.id.pick).setOnClickListener(this);
 
-    v.setOnClickListener(this);
-    v.setEnabled(contact != null);
+		View v = result.findViewById(R.id.view);
 
-    return(result);
-  }
+		v.setOnClickListener(this);
+		v.setEnabled(contact != null);
 
-  @Override
-  public void onActivityResult(int requestCode, int resultCode,
-                               Intent data) {
-    if (requestCode == PICK_REQUEST) {
-      if (resultCode == Activity.RESULT_OK) {
-        contact=data.getData();
-        getView().findViewById(R.id.view).setEnabled(true);
-      }
-    }
-  }
+		return (result);
+	}
 
-  @Override
-  public void onClick(View v) {
-    if (v.getId() == R.id.pick) {
-      pickContact(v);
-    }
-    else {
-      viewContact(v);
-    }
-  }
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (requestCode == PICK_REQUEST)
+		{
+			if (resultCode == Activity.RESULT_OK)
+			{
+				contact = data.getData();
+				getView().findViewById(R.id.view).setEnabled(true);
+			}
+		}
+	}
 
-  public void pickContact(View v) {
-    Intent i=
-        new Intent(Intent.ACTION_PICK,
-                   ContactsContract.Contacts.CONTENT_URI);
+	@Override
+	public void onClick(View v)
+	{
+		if (v.getId() == R.id.pick)
+		{
+			pickContact(v);
+		}
+		else
+		{
+			viewContact(v);
+		}
+	}
 
-    startActivityForResult(i, PICK_REQUEST);
-  }
+	public void pickContact(View v)
+	{
+		Intent i = new Intent(Intent.ACTION_PICK,
+				ContactsContract.Contacts.CONTENT_URI);
 
-  public void viewContact(View v) {
-    startActivity(new Intent(Intent.ACTION_VIEW, contact));
-  }
+		startActivityForResult(i, PICK_REQUEST);
+	}
+
+	public void viewContact(View v)
+	{
+		startActivity(new Intent(Intent.ACTION_VIEW, contact));
+	}
 }

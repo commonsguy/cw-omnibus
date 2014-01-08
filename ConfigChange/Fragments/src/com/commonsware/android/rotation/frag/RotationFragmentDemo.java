@@ -17,15 +17,17 @@ package com.commonsware.android.rotation.frag;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class RotationFragmentDemo extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+public class RotationFragmentDemo extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getSupportFragmentManager().beginTransaction()
-                                 .add(android.R.id.content,
-                                      new RotationFragment()).commit();
-    }
-  }
+		if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null)
+		{
+			getSupportFragmentManager().beginTransaction()
+					.add(android.R.id.content, new RotationFragment()).commit();
+		}
+	}
 }

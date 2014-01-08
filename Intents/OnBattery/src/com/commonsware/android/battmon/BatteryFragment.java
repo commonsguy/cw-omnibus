@@ -28,70 +28,78 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class BatteryFragment extends SherlockFragment {
-  private ProgressBar bar=null;
-  private ImageView status=null;
-  private TextView level=null;
-  
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.batt, parent, false);
+public class BatteryFragment extends SherlockFragment
+{
+	private ProgressBar bar = null;
+	private ImageView status = null;
+	private TextView level = null;
 
-    bar=(ProgressBar)result.findViewById(R.id.bar);
-    status=(ImageView)result.findViewById(R.id.status);
-    level=(TextView)result.findViewById(R.id.level);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.batt, parent, false);
 
-    return(result);
-  }
+		bar = (ProgressBar) result.findViewById(R.id.bar);
+		status = (ImageView) result.findViewById(R.id.status);
+		level = (TextView) result.findViewById(R.id.level);
 
-  @Override
-  public void onResume() {
-    super.onResume();
+		return (result);
+	}
 
-    IntentFilter f=new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
-    getActivity().registerReceiver(onBattery, f);
-  }
+		IntentFilter f = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
-  @Override
-  public void onPause() {
-    getActivity().unregisterReceiver(onBattery);
+		getActivity().registerReceiver(onBattery, f);
+	}
 
-    super.onPause();
-  }
+	@Override
+	public void onPause()
+	{
+		getActivity().unregisterReceiver(onBattery);
 
-  BroadcastReceiver onBattery=new BroadcastReceiver() {
-    public void onReceive(Context context, Intent intent) {
-      int pct=
-          100 * intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 1)
-              / intent.getIntExtra(BatteryManager.EXTRA_SCALE, 1);
+		super.onPause();
+	}
 
-      bar.setProgress(pct);
-      level.setText(String.valueOf(pct));
+	BroadcastReceiver onBattery = new BroadcastReceiver()
+	{
+		public void onReceive(Context context, Intent intent)
+		{
+			int pct = 100 * intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 1)
+					/ intent.getIntExtra(BatteryManager.EXTRA_SCALE, 1);
 
-      switch (intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)) {
-        case BatteryManager.BATTERY_STATUS_CHARGING:
-          status.setImageResource(R.drawable.charging);
-          break;
+			bar.setProgress(pct);
+			level.setText(String.valueOf(pct));
 
-        case BatteryManager.BATTERY_STATUS_FULL:
-          int plugged=
-              intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
-
-          if (plugged == BatteryManager.BATTERY_PLUGGED_AC
-              || plugged == BatteryManager.BATTERY_PLUGGED_USB) {
-            status.setImageResource(R.drawable.full);
-          }
-          else {
-            status.setImageResource(R.drawable.unplugged);
-          }
-          break;
-
-        default:
-          status.setImageResource(R.drawable.unplugged);
-          break;
-      }
-    }
-  };
+			switch (intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1))
+			{
+				case BatteryManager.BATTERY_STATUS_CHARGING:
+					status.setImageResource(R.drawable.charging);
+					break;
+	
+				case BatteryManager.BATTERY_STATUS_FULL:
+					int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,
+							-1);
+	
+					if (plugged == BatteryManager.BATTERY_PLUGGED_AC
+							|| plugged == BatteryManager.BATTERY_PLUGGED_USB)
+					{
+						status.setImageResource(R.drawable.full);
+					}
+					else
+					{
+						status.setImageResource(R.drawable.unplugged);
+					}
+					break;
+	
+				default:
+					status.setImageResource(R.drawable.unplugged);
+					break;
+				}
+			}
+	};
 }

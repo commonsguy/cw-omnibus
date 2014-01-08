@@ -21,28 +21,31 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
-public class NoticeReceiver extends BroadcastReceiver {
-  private static final int NOTIFY_ME_ID=1337;
+public class NoticeReceiver extends BroadcastReceiver
+{
+	private static final int NOTIFY_ME_ID = 1337;
 
-  @Override
-  public void onReceive(Context ctxt, Intent intent) {
-    NotificationManager mgr=
-        (NotificationManager)ctxt.getSystemService(Context.NOTIFICATION_SERVICE);
-    NotificationCompat.Builder b=new NotificationCompat.Builder(ctxt);
-    PendingIntent pi=
-        PendingIntent.getActivity(ctxt, 0,
-                                  new Intent(ctxt,
-                                             OrderedActivity.class), 0);
+	@Override
+	public void onReceive(Context ctxt, Intent intent)
+	{
+		Log.e(NoticeService.BROADCAST,  "NoticeReceiver.onReceive");
+		
+		NotificationManager mgr = (NotificationManager) ctxt
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationCompat.Builder b = new NotificationCompat.Builder(ctxt);
+		PendingIntent pi = PendingIntent.getActivity(ctxt, 0, new Intent(ctxt,
+				OrderedActivity.class), 0);
 
-    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
-     .setWhen(System.currentTimeMillis())
-     .setContentTitle(ctxt.getString(R.string.notify_title))
-     .setContentText(ctxt.getString(R.string.notify_text))
-     .setSmallIcon(android.R.drawable.stat_notify_chat)
-     .setTicker(ctxt.getString(R.string.notify_ticker))
-     .setContentIntent(pi);
+		b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
+				.setWhen(System.currentTimeMillis())
+				.setContentTitle(ctxt.getString(R.string.notify_title))
+				.setContentText(ctxt.getString(R.string.notify_text))
+				.setSmallIcon(android.R.drawable.stat_notify_chat)
+				.setTicker(ctxt.getString(R.string.notify_ticker))
+				.setContentIntent(pi);
 
-    mgr.notify(NOTIFY_ME_ID, b.build());
-  }
+		mgr.notify(NOTIFY_ME_ID, b.build());
+	}
 }

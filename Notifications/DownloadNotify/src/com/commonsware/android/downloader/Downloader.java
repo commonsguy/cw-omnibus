@@ -30,91 +30,99 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Downloader extends IntentService {
-  public static final String ACTION_COMPLETE=
-      "com.commonsware.android.downloader.action.COMPLETE";
-  private static int NOTIFY_ID=1337;
+public class Downloader extends IntentService
+{
+	public static final String ACTION_COMPLETE = "com.commonsware.android.downloader.action.COMPLETE";
+	private static int NOTIFY_ID = 1337;
 
-  public Downloader() {
-    super("Downloader");
-  }
+	public Downloader()
+	{
+		super("Downloader");
+	}
 
-  @Override
-  public void onHandleIntent(Intent i) {
-    try {
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-      
-      root.mkdirs();
+	@Override
+	public void onHandleIntent(Intent i)
+	{
+		try
+		{
+			File root = Environment
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-      File output=new File(root, i.getData().getLastPathSegment());
+			root.mkdirs();
 
-      if (output.exists()) {
-        output.delete();
-      }
+			File output = new File(root, i.getData().getLastPathSegment());
 
-      URL url=new URL(i.getData().toString());
-      HttpURLConnection c=(HttpURLConnection)url.openConnection();
+			if (output.exists())
+			{
+				output.delete();
+			}
 
-      c.setRequestMethod("GET");
-      c.setReadTimeout(15000);
-      c.connect();
+			URL url = new URL(i.getData().toString());
+			HttpURLConnection c = (HttpURLConnection) url.openConnection();
 
-      FileOutputStream fos=new FileOutputStream(output.getPath());
-      BufferedOutputStream out=new BufferedOutputStream(fos);
+			c.setRequestMethod("GET");
+			c.setReadTimeout(15000);
+			c.connect();
 
-      try {
-        InputStream in=c.getInputStream();
-        byte[] buffer=new byte[8192];
-        int len=0;
+			FileOutputStream fos = new FileOutputStream(output.getPath());
+			BufferedOutputStream out = new BufferedOutputStream(fos);
 
-        while ((len=in.read(buffer)) > 0) {
-          out.write(buffer, 0, len);
-        }
+			try
+			{
+				InputStream in = c.getInputStream();
+				byte[] buffer = new byte[8192];
+				int len = 0;
 
-        out.flush();
-      }
-      finally {
-        fos.getFD().sync();
-        out.close();
-      }
+				while ((len = in.read(buffer)) > 0)
+				{
+					out.write(buffer, 0, len);
+				}
 
-      raiseNotification(i, output, null);
-    }
-    catch (IOException e2) {
-      raiseNotification(i, null, e2);
-    }
-  }
+				out.flush();
+			}
+			finally
+			{
+				fos.getFD().sync();
+				out.close();
+			}
 
-  private void raiseNotification(Intent inbound, File output,
-                                 Exception e) {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+			raiseNotification(i, output, null);
+		}
+		catch (IOException e2)
+		{
+			raiseNotification(i, null, e2);
+		}
+	}
 
-    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
-     .setWhen(System.currentTimeMillis());
+	private void raiseNotification(Intent inbound, File output, Exception e)
+	{
+		NotificationCompat.Builder b = new NotificationCompat.Builder(this);
 
-    if (e == null) {
-      b.setContentTitle(getString(R.string.download_complete))
-       .setContentText(getString(R.string.fun))
-       .setSmallIcon(android.R.drawable.stat_sys_download_done)
-       .setTicker(getString(R.string.download_complete));
+		b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL).setWhen(System.currentTimeMillis());
 
-      Intent outbound=new Intent(Intent.ACTION_VIEW);
+		if (e == null)
+		{
+			b.setContentTitle(getString(R.string.download_complete))
+					.setContentText(getString(R.string.fun))
+					.setSmallIcon(android.R.drawable.stat_sys_download_done)
+					.setTicker(getString(R.string.download_complete));
 
-      outbound.setDataAndType(Uri.fromFile(output), inbound.getType());
+			Intent outbound = new Intent(Intent.ACTION_VIEW);
 
-      b.setContentIntent(PendingIntent.getActivity(this, 0, outbound, 0));
-    }
-    else {
-      b.setContentTitle(getString(R.string.exception))
-       .setContentText(e.getMessage())
-       .setSmallIcon(android.R.drawable.stat_notify_error)
-       .setTicker(getString(R.string.exception));
-    }
+			outbound.setDataAndType(Uri.fromFile(output), inbound.getType());
 
-    NotificationManager mgr=
-        (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+			b.setContentIntent(PendingIntent.getActivity(this, 0, outbound, 0));
+		}
+		else
+		{
+			b.setContentTitle(getString(R.string.exception))
+					.setContentText(e.getMessage())
+					.setSmallIcon(android.R.drawable.stat_notify_error)
+					.setTicker(getString(R.string.exception));
+		}
 
-    mgr.notify(NOTIFY_ID, b.build());
-  }
+		NotificationManager mgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+		mgr.notify(NOTIFY_ID, b.build());
+	}
 }

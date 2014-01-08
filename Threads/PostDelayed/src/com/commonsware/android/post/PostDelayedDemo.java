@@ -19,35 +19,40 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class PostDelayedDemo extends Activity implements Runnable {
-  private static final int PERIOD=5000;
-  private View root=null;
+public class PostDelayedDemo extends Activity implements Runnable
+{
+	private static final int PERIOD = 5000;
+	private View root = null;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-    root=findViewById(android.R.id.content);
-  }
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+		root = findViewById(android.R.id.content);
+	}
 
-  @Override
-  public void onResume() {
-    super.onResume();
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
-    run();
-  }
+		run();
+	}
 
-  @Override
-  public void onPause() {
-    root.removeCallbacks(this);
+	@Override
+	public void onPause()
+	{
+		root.removeCallbacks(this);
 
-    super.onPause();
-  }
+		super.onPause();
+	}
 
-  @Override
-  public void run() {
-    Toast.makeText(PostDelayedDemo.this, "Who-hoo!", Toast.LENGTH_SHORT)
-         .show();
-    root.postDelayed(this, PERIOD);
-  }
+	@Override
+	public void run()
+	{
+		Toast.makeText(PostDelayedDemo.this, "Who-hoo!", Toast.LENGTH_SHORT)
+				.show();
+		root.postDelayed(this, PERIOD);
+	}
 }

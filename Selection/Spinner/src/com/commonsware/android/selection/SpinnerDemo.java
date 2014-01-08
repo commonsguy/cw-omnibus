@@ -22,8 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class SpinnerDemo extends Activity
-  implements AdapterView.OnItemSelectedListener {
+public class SpinnerDemo extends Activity implements AdapterView.OnItemSelectedListener {
   private TextView selection;
   private static final String[] items={"lorem", "ipsum", "dolor",
           "sit", "amet",

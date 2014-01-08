@@ -10,22 +10,29 @@
 	
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.weather;
 
+import info.juanmendez.android.utils.Trace;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class WeatherDemo extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+public class WeatherDemo extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getSupportFragmentManager().beginTransaction()
-                                 .add(android.R.id.content,
-                                      new WeatherFragment()).commit();
-    }
-  }
+		Trace.setTAG("weather");
+		
+		if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null)
+		{
+			getSupportFragmentManager()
+				.beginTransaction()
+				.add(android.R.id.content, new WeatherFragment())
+				.commit();
+		}
+	}
 }

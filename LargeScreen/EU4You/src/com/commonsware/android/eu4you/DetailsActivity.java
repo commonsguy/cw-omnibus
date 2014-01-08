@@ -14,37 +14,42 @@
 
 package com.commonsware.android.eu4you;
 
+import info.juanmendez.android.utils.Trace;
 import android.os.Bundle;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class DetailsActivity extends SherlockFragmentActivity {
-  public static final String EXTRA_URL=
-      "com.commonsware.android.eu4you.EXTRA_URL";
-  private String url=null;
-  private DetailsFragment details=null;
+public class DetailsActivity extends SherlockFragmentActivity
+{
+	public static final String EXTRA_URL = "com.commonsware.android.eu4you.EXTRA_URL";
+	private String url = null;
+	private DetailsFragment details = null;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    details=
-        (DetailsFragment)getSupportFragmentManager().findFragmentById(R.id.details);
+		details = (DetailsFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.details);
 
-    if (details == null) {
-      details=new DetailsFragment();
+		if (details == null)
+		{
+			details = new DetailsFragment();
 
-      getSupportFragmentManager().beginTransaction()
-                                 .add(android.R.id.content, details)
-                                 .commit();
-    }
+			getSupportFragmentManager().beginTransaction()
+					.add(android.R.id.content, details).commit();
+		}
 
-    url=getIntent().getStringExtra(EXTRA_URL);
-  }
+		url = getIntent().getStringExtra(EXTRA_URL);
+	}
 
-  @Override
-  public void onResume() {
-    super.onResume();
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
-    details.loadUrl(url);
-  }
+		Trace.warn( "selected url :" + url, this );
+		details.loadUrl(url);
+	}
 }

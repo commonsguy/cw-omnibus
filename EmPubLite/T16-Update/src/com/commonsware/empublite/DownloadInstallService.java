@@ -1,11 +1,5 @@
 package com.commonsware.empublite;
 
-import android.app.IntentService;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -16,80 +10,98 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class DownloadInstallService extends IntentService {
-  public static final String PREF_UPDATE_DIR="updateDir";
-  public static final String PREF_PREV_UPDATE="previousUpdateDir";
-  public static final String ACTION_UPDATE_READY=
-      "com.commonsware.empublite.action.UPDATE_READY";
+import android.app.IntentService;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
-  public DownloadInstallService() {
-    super("DownloadInstallService");
-  }
+public class DownloadInstallService extends IntentService
+{
+	public static final String PREF_UPDATE_DIR = "updateDir";
+	public static final String PREF_PREV_UPDATE = "previousUpdateDir";
+	public static final String ACTION_UPDATE_READY = "com.commonsware.empublite.action.UPDATE_READY";
 
-  @Override
-  protected void onHandleIntent(Intent intent) {
-    SharedPreferences prefs=
-        PreferenceManager.getDefaultSharedPreferences(this);
-    String prevUpdateDir=prefs.getString(PREF_UPDATE_DIR, null);
-    String pendingUpdateDir=
-        prefs.getString(DownloadCheckService.PREF_PENDING_UPDATE, null);
+	public DownloadInstallService()
+	{
+		super("DownloadInstallService");
+	}
 
-    if (pendingUpdateDir != null) {
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-      File update=new File(root, DownloadCheckService.UPDATE_FILENAME);
+	@Override
+	protected void onHandleIntent(Intent intent)
+	{
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		String prevUpdateDir = prefs.getString(PREF_UPDATE_DIR, null);
+		String pendingUpdateDir = prefs.getString(
+				DownloadCheckService.PREF_PENDING_UPDATE, null);
 
-      try {
-        unzip(update, new File(pendingUpdateDir));
-        prefs.edit().putString(PREF_PREV_UPDATE, prevUpdateDir)
-             .putString(PREF_UPDATE_DIR, pendingUpdateDir).commit();
-      }
-      catch (IOException e) {
-        Log.e(getClass().getSimpleName(), "Exception unzipping update",
-              e);
-      }
+		if (pendingUpdateDir != null)
+		{
+			File root = Environment
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+			File update = new File(root, DownloadCheckService.UPDATE_FILENAME);
 
-      update.delete();
+			try
+			{
+				unzip(update, new File(pendingUpdateDir));
+				prefs.edit().putString(PREF_PREV_UPDATE, prevUpdateDir)
+						.putString(PREF_UPDATE_DIR, pendingUpdateDir).commit();
+			}
+			catch (IOException e)
+			{
+				Log.e(getClass().getSimpleName(), "Exception unzipping update",
+						e);
+			}
 
-      Intent i=new Intent(ACTION_UPDATE_READY);
+			update.delete();
 
-      i.setPackage(getPackageName());
-      sendOrderedBroadcast(i, null);
-    }
-    else {
-      Log.e(getClass().getSimpleName(), "null pendingUpdateDir");
-    }
-  }
+			Intent i = new Intent(ACTION_UPDATE_READY);
 
-  private static void unzip(File src, File dest) throws IOException {
-    InputStream is=new FileInputStream(src);
-    ZipInputStream zis=new ZipInputStream(new BufferedInputStream(is));
-    ZipEntry ze;
+			i.setPackage(getPackageName());
+			sendOrderedBroadcast(i, null);
+		}
+		else
+		{
+			Log.e(getClass().getSimpleName(), "null pendingUpdateDir");
+		}
+	}
 
-    dest.mkdirs();
+	private static void unzip(File src, File dest) throws IOException
+	{
+		InputStream is = new FileInputStream(src);
+		ZipInputStream zis = new ZipInputStream(new BufferedInputStream(is));
+		ZipEntry ze;
 
-    while ((ze=zis.getNextEntry()) != null) {
-      byte[] buffer=new byte[8192];
-      int count;
-      FileOutputStream fos=
-          new FileOutputStream(new File(dest, ze.getName()));
-      BufferedOutputStream out=new BufferedOutputStream(fos);
+		dest.mkdirs();
 
-      try {
-        while ((count=zis.read(buffer)) != -1) {
-          out.write(buffer, 0, count);
-        }
+		while ((ze = zis.getNextEntry()) != null)
+		{
+			byte[] buffer = new byte[8192];
+			int count;
+			FileOutputStream fos = new FileOutputStream(new File(dest,
+					ze.getName()));
+			BufferedOutputStream out = new BufferedOutputStream(fos);
 
-        out.flush();
-      }
-      finally {
-        fos.getFD().sync();
-        out.close();
-      }
+			try
+			{
+				while ((count = zis.read(buffer)) != -1)
+				{
+					out.write(buffer, 0, count);
+				}
 
-      zis.closeEntry();
-    }
+				out.flush();
+			}
+			finally
+			{
+				fos.getFD().sync();
+				out.close();
+			}
 
-    zis.close();
-  }
+			zis.closeEntry();
+		}
+
+		zis.close();
+	}
 }

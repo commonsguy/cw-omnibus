@@ -22,30 +22,35 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class PlayerFragment extends SherlockFragment implements
-    View.OnClickListener {
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.main, parent, false);
+		View.OnClickListener
+{
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.main, parent, false);
 
-    result.findViewById(R.id.start).setOnClickListener(this);
-    result.findViewById(R.id.stop).setOnClickListener(this);
+		result.findViewById(R.id.start).setOnClickListener(this);
+		result.findViewById(R.id.stop).setOnClickListener(this);
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onClick(View v) {
-    Intent i=new Intent(getActivity(), PlayerService.class);
+	@Override
+	public void onClick(View v)
+	{
+		Intent i = new Intent(getActivity(), PlayerService.class);
 
-    if (v.getId()==R.id.start) {
-      i.putExtra(PlayerService.EXTRA_PLAYLIST, "main");
-      i.putExtra(PlayerService.EXTRA_SHUFFLE, true);
-  
-      getActivity().startService(i);
-    }
-    else {
-      getActivity().stopService(i);
-    }
-  }
+		if (v.getId() == R.id.start)
+		{
+			i.putExtra(PlayerService.EXTRA_PLAYLIST, "main");
+			i.putExtra(PlayerService.EXTRA_SHUFFLE, true);
+
+			getActivity().startService(i);
+		}
+		else
+		{
+			getActivity().stopService(i);
+		}
+	}
 }

@@ -21,21 +21,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
-public class PollReceiver extends BroadcastReceiver {
-  private static final int PERIOD=5000;
+public class PollReceiver extends BroadcastReceiver
+{
+	private static final int PERIOD = 5000;
 
-  @Override
-  public void onReceive(Context ctxt, Intent i) {
-    scheduleAlarms(ctxt);
-  }
+	@Override
+	public void onReceive(Context ctxt, Intent i)
+	{
+		scheduleAlarms(ctxt);
+	}
 
-  static void scheduleAlarms(Context ctxt) {
-    AlarmManager mgr=
-        (AlarmManager)ctxt.getSystemService(Context.ALARM_SERVICE);
-    Intent i=new Intent(ctxt, ScheduledService.class);
-    PendingIntent pi=PendingIntent.getService(ctxt, 0, i, 0);
-
-    mgr.setRepeating(AlarmManager.ELAPSED_REALTIME,
-                     SystemClock.elapsedRealtime() + PERIOD, PERIOD, pi);
-  }
+	static void scheduleAlarms(Context ctxt)
+	{
+		AlarmManager mgr = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
+		
+		Intent i = new Intent(ctxt, ScheduledService.class);
+		
+		PendingIntent pi = PendingIntent.getService(ctxt, 0, i, 0);
+		
+		//or pi = PendingIntent.getBroadcast(ctxt, 0, i, 0);
+		
+		/*
+		 * Alarm time in SystemClock.elapsedRealtime() (time since boot, including sleep). 
+		 * This alarm does not wake the device up; if it goes off while the device is asleep, 
+		 * it will not be delivered until the next time the device wakes up. 
+		 */
+		mgr.setRepeating(AlarmManager.ELAPSED_REALTIME,
+				SystemClock.elapsedRealtime() + PERIOD, PERIOD, pi);
+	}
 }

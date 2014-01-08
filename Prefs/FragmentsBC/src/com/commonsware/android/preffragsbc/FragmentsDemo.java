@@ -21,29 +21,33 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class FragmentsDemo extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-  }
+public class FragmentsDemo extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+	}
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.actions, menu);
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		new MenuInflater(this).inflate(R.menu.actions, menu);
+		return (super.onCreateOptionsMenu(menu));
+	}
 
-    return(super.onCreateOptionsMenu(menu));
-  }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+		case R.id.settings:
+			startActivity(new Intent(this, EditPreferences.class));
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.settings:
-        startActivity(new Intent(this, EditPreferences.class));
+			return (true);
+		}
 
-        return(true);
-    }
-
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 }

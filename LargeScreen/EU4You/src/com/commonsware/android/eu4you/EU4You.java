@@ -14,57 +14,66 @@
 
 package com.commonsware.android.eu4you;
 
+import info.juanmendez.android.utils.Trace;
 import android.content.Intent;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class EU4You extends SherlockFragmentActivity implements
-    CountriesFragment.Contract {
-  private CountriesFragment countries=null;
-  private DetailsFragment details=null;
+public class EU4You extends SherlockFragmentActivity implements CountriesFragment.Contract
+{
+	private CountriesFragment countries = null;
+	private DetailsFragment details = null;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		Trace.setTAG( "EU4You");
+		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-    countries=
-        (CountriesFragment)getSupportFragmentManager().findFragmentById(R.id.countries);
+		countries = (CountriesFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.countries);
 
-    if (countries == null) {
-      countries=new CountriesFragment();
-      getSupportFragmentManager().beginTransaction()
-                                 .add(R.id.countries, countries)
-                                 .commit();
-    }
+		if (countries == null)
+		{
+			countries = new CountriesFragment();
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.countries, countries).commit();
+		}
 
-    details=
-        (DetailsFragment)getSupportFragmentManager().findFragmentById(R.id.details);
+		details = (DetailsFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.details);
 
-    if (details == null && findViewById(R.id.details) != null) {
-      details=new DetailsFragment();
-      getSupportFragmentManager().beginTransaction()
-                                 .add(R.id.details, details).commit();
-    }
-  }
+		if (details == null && findViewById(R.id.details) != null)
+		{
+			details = new DetailsFragment();
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.details, details).commit();
+		}
+	}
 
-  @Override
-  public void onCountrySelected(Country c) {
-    String url=getString(c.url);
+	@Override
+	public void onCountrySelected(Country c)
+	{
+		String url = getString(c.url);
 
-    if (details != null && details.isVisible()) {
-      details.loadUrl(url);
-    }
-    else {
-      Intent i=new Intent(this, DetailsActivity.class);
+		if (details != null && details.isVisible())
+		{
+			details.loadUrl(url);
+		}
+		else
+		{
+			Intent i = new Intent(this, DetailsActivity.class);
 
-      i.putExtra(DetailsActivity.EXTRA_URL, url);
-      startActivity(i);
-    }
-  }
+			i.putExtra(DetailsActivity.EXTRA_URL, url);
+			startActivity(i);
+		}
+	}
 
-  @Override
-  public boolean isPersistentSelection() {
-    return(details != null && details.isVisible());
-  }
+	@Override
+	public boolean isPersistentSelection()
+	{
+		return (details != null && details.isVisible());
+	}
 }

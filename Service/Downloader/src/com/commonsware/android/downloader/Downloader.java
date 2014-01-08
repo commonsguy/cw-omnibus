@@ -26,58 +26,75 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Downloader extends IntentService {
-  public static final String ACTION_COMPLETE=
-      "com.commonsware.android.downloader.action.COMPLETE";
+/**
+ * IntentService is a base class for Services that handle asynchronous requests (expressed as Intents) on demand. Clients send requests through startService(Intent) calls; the service is started as needed, handles each Intent in turn using a worker thread, and stops itself when it runs out of work.
+ * @author Juan
+ *
+ */
+public class Downloader extends IntentService
+{
+	public static final String ACTION_COMPLETE = "com.commonsware.android.downloader.action.COMPLETE";
 
-  public Downloader() {
-    super("Downloader");
-  }
+	public Downloader()
+	{
+		super("Downloader");
+	}
 
-  @Override
-  public void onHandleIntent(Intent i) {
-    try {
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-      
-      root.mkdirs();
-      
-      File output=new File(root, i.getData().getLastPathSegment());
+	/**
+	 * All requests are handled on a single worker thread -- they may take as long as necessary (and will not block the application's main loop), but only one request will be processed at a time.
+	 */
+	@Override
+	public void onHandleIntent(Intent i)
+	{
+		try
+		{
+			File root = Environment
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-      if (output.exists()) {
-        output.delete();
-      }
+			root.mkdirs();
 
-      URL url=new URL(i.getData().toString());
-      HttpURLConnection c=(HttpURLConnection)url.openConnection();
+			File output = new File(root, i.getData().getLastPathSegment());
 
-      c.setRequestMethod("GET");
-      c.setReadTimeout(15000);
-      c.connect();
+			if (output.exists())
+			{
+				output.delete();
+			}
 
-      FileOutputStream fos=new FileOutputStream(output.getPath());
-      BufferedOutputStream out=new BufferedOutputStream(fos);
-      
-      try {
-        InputStream in=c.getInputStream();
-        byte[] buffer=new byte[8192];
-        int len=0;
+			URL url = new URL(i.getData().toString());
+			HttpURLConnection c = (HttpURLConnection) url.openConnection();
 
-        while ((len=in.read(buffer)) > 0) {
-          out.write(buffer, 0, len);
-        }
+			c.setRequestMethod("GET");
+			c.setReadTimeout(15000);
+			c.connect();
 
-        out.flush();
-      }
-      finally {
-        fos.getFD().sync();
-        out.close();
-      }
+			FileOutputStream fos = new FileOutputStream(output.getPath());
+			BufferedOutputStream out = new BufferedOutputStream(fos);
 
-      sendBroadcast(new Intent(ACTION_COMPLETE));
-    }
-    catch (IOException e2) {
-      Log.e(getClass().getName(), "Exception in download", e2);
-    }
-  }
+			try
+			{
+				InputStream in = c.getInputStream();
+				byte[] buffer = new byte[8192];
+				int len = 0;
+
+				while ((len = in.read(buffer)) > 0)
+				{
+					out.write(buffer, 0, len);
+				}
+
+				out.flush();
+			}
+			finally
+			{
+				fos.getFD().sync();
+				out.close();
+			}
+
+			sendBroadcast(new Intent(ACTION_COMPLETE));
+		}
+		catch (IOException e2)
+		{
+			Log.e(getClass().getName(), "Exception in download", e2);
+		}
+		//when onHandleIntent() ends, the IntentService will stop itself automatically
+	}
 }

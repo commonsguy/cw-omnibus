@@ -31,161 +31,187 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class DownloadFragment extends SherlockFragment implements
-    View.OnClickListener {
-  private DownloadManager mgr=null;
-  private long lastDownload=-1L;
-  private View query=null;
-  private View start=null;
+		View.OnClickListener
+{
+	private DownloadManager mgr = null;
+	private long lastDownload = -1L;
+	private View query = null;
+	private View start = null;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-                           Bundle savedInstanceState) {
-    mgr=
-        (DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+			Bundle savedInstanceState)
+	{
+		mgr = (DownloadManager) getActivity().getSystemService(
+				Context.DOWNLOAD_SERVICE);
 
-    View result=inflater.inflate(R.layout.main, parent, false);
+		View result = inflater.inflate(R.layout.main, parent, false);
 
-    query=result.findViewById(R.id.query);
-    query.setOnClickListener(this);
-    start=result.findViewById(R.id.start);
-    start.setOnClickListener(this);
+		query = result.findViewById(R.id.query);
+		query.setOnClickListener(this);
+		start = result.findViewById(R.id.start);
+		start.setOnClickListener(this);
 
-    result.findViewById(R.id.view).setOnClickListener(this);
+		result.findViewById(R.id.view).setOnClickListener(this);
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onResume() {
-    super.onResume();
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
-    IntentFilter f=
-        new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+		IntentFilter f = new IntentFilter(
+				DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 
-    f.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
+		f.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
 
-    getActivity().registerReceiver(onEvent, f);
-  }
+		getActivity().registerReceiver(onEvent, f);
+	}
 
-  @Override
-  public void onPause() {
-    getActivity().unregisterReceiver(onEvent);
+	@Override
+	public void onPause()
+	{
+		getActivity().unregisterReceiver(onEvent);
 
-    super.onPause();
-  }
+		super.onPause();
+	}
 
-  @Override
-  public void onClick(View v) {
-    if (v == query) {
-      queryStatus(v);
-    }
-    else if (v == start) {
-      startDownload(v);
-    }
-    else {
-      ((DownloadDemo)getActivity()).viewLog();
-    }
-  }
+	@Override
+	public void onClick(View v)
+	{
+		if (v == query)
+		{
+			queryStatus(v);
+		}
+		else
+			if (v == start)
+			{
+				startDownload(v);
+			}
+			else
+			{
+				((DownloadDemo) getActivity()).viewLog();
+			}
+	}
 
-  private void startDownload(View v) {
-    Uri uri=Uri.parse("http://commonsware.com/misc/test.mp4");
+	private void startDownload(View v)
+	{
+		Uri uri = Uri.parse("http://commonsware.com/misc/test.mp4");
 
-    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-               .mkdirs();
+		Environment.getExternalStoragePublicDirectory(
+				Environment.DIRECTORY_DOWNLOADS).mkdirs();
 
-    DownloadManager.Request req=new DownloadManager.Request(uri);
+		DownloadManager.Request req = new DownloadManager.Request(uri);
 
-    req.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI
-                                   | DownloadManager.Request.NETWORK_MOBILE)
-       .setAllowedOverRoaming(false)
-       .setTitle("Demo")
-       .setDescription("Something useful. No, really.")
-       .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
-                                          "test.mp4");
+		req.setAllowedNetworkTypes(
+				DownloadManager.Request.NETWORK_WIFI )
+				.setAllowedOverRoaming(false)
+				.setTitle("Demo")
+				.setDescription("Something useful. No, really.")
+				.setDestinationInExternalPublicDir(
+						Environment.DIRECTORY_DOWNLOADS, "test_wifi.mp4");
 
-    lastDownload=mgr.enqueue(req);
+		lastDownload = mgr.enqueue(req);
 
-    v.setEnabled(false);
-    query.setEnabled(true);
-  }
+		v.setEnabled(false);
+		query.setEnabled(true);
+	}
 
-  private void queryStatus(View v) {
-    Cursor c=
-        mgr.query(new DownloadManager.Query().setFilterById(lastDownload));
+	private void queryStatus(View v)
+	{
+		Cursor c = mgr.query(new DownloadManager.Query()
+				.setFilterById(lastDownload));
 
-    if (c == null) {
-      Toast.makeText(getActivity(), R.string.download_not_found,
-                     Toast.LENGTH_LONG).show();
-    }
-    else {
-      c.moveToFirst();
+		if (c == null)
+		{
+			Toast.makeText(getActivity(), R.string.download_not_found,
+					Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			c.moveToFirst();
 
-      Log.d(getClass().getName(),
-            "COLUMN_ID: "
-                + c.getLong(c.getColumnIndex(DownloadManager.COLUMN_ID)));
-      Log.d(getClass().getName(),
-            "COLUMN_BYTES_DOWNLOADED_SO_FAR: "
-                + c.getLong(c.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)));
-      Log.d(getClass().getName(),
-            "COLUMN_LAST_MODIFIED_TIMESTAMP: "
-                + c.getLong(c.getColumnIndex(DownloadManager.COLUMN_LAST_MODIFIED_TIMESTAMP)));
-      Log.d(getClass().getName(),
-            "COLUMN_LOCAL_URI: "
-                + c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)));
-      Log.d(getClass().getName(),
-            "COLUMN_STATUS: "
-                + c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS)));
-      Log.d(getClass().getName(),
-            "COLUMN_REASON: "
-                + c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON)));
+			Log.d(getClass().getName(),
+					"COLUMN_ID: "
+							+ c.getLong(c
+									.getColumnIndex(DownloadManager.COLUMN_ID)));
+			Log.d(getClass().getName(),
+					"COLUMN_BYTES_DOWNLOADED_SO_FAR: "
+							+ c.getLong(c
+									.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)));
+			Log.d(getClass().getName(),
+					"COLUMN_LAST_MODIFIED_TIMESTAMP: "
+							+ c.getLong(c
+									.getColumnIndex(DownloadManager.COLUMN_LAST_MODIFIED_TIMESTAMP)));
+			Log.d(getClass().getName(),
+					"COLUMN_LOCAL_URI: "
+							+ c.getString(c
+									.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)));
+			Log.d(getClass().getName(),
+					"COLUMN_STATUS: "
+							+ c.getInt(c
+									.getColumnIndex(DownloadManager.COLUMN_STATUS)));
+			Log.d(getClass().getName(),
+					"COLUMN_REASON: "
+							+ c.getInt(c
+									.getColumnIndex(DownloadManager.COLUMN_REASON)));
 
-      Toast.makeText(getActivity(), statusMessage(c), Toast.LENGTH_LONG)
-           .show();
-    }
-  }
+			Toast.makeText(getActivity(), statusMessage(c), Toast.LENGTH_LONG)
+					.show();
+		}
+	}
 
-  private String statusMessage(Cursor c) {
-    String msg="???";
+	private String statusMessage(Cursor c)
+	{
+		String msg = "???";
 
-    switch (c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS))) {
-      case DownloadManager.STATUS_FAILED:
-        msg=getSherlockActivity().getString(R.string.download_failed);
-        break;
+		switch (c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS)))
+		{
+		case DownloadManager.STATUS_FAILED:
+			msg = getSherlockActivity().getString(R.string.download_failed);
+			break;
 
-      case DownloadManager.STATUS_PAUSED:
-        msg=getSherlockActivity().getString(R.string.download_paused);
-        break;
+		case DownloadManager.STATUS_PAUSED:
+			msg = getSherlockActivity().getString(R.string.download_paused);
+			break;
 
-      case DownloadManager.STATUS_PENDING:
-        msg=getSherlockActivity().getString(R.string.download_pending);
-        break;
+		case DownloadManager.STATUS_PENDING:
+			msg = getSherlockActivity().getString(R.string.download_pending);
+			break;
 
-      case DownloadManager.STATUS_RUNNING:
-        msg=
-            getSherlockActivity().getString(R.string.download_in_progress);
-        break;
+		case DownloadManager.STATUS_RUNNING:
+			msg = getSherlockActivity()
+					.getString(R.string.download_in_progress);
+			break;
 
-      case DownloadManager.STATUS_SUCCESSFUL:
-        msg=getSherlockActivity().getString(R.string.download_complete);
-        break;
+		case DownloadManager.STATUS_SUCCESSFUL:
+			msg = getSherlockActivity().getString(R.string.download_complete);
+			break;
 
-      default:
-        msg=
-            getSherlockActivity().getString(R.string.download_is_nowhere_in_sight);
-        break;
-    }
+		default:
+			msg = getSherlockActivity().getString(
+					R.string.download_is_nowhere_in_sight);
+			break;
+		}
 
-    return(msg);
-  }
+		return (msg);
+	}
 
-  private BroadcastReceiver onEvent=new BroadcastReceiver() {
-    public void onReceive(Context ctxt, Intent i) {
-      if (DownloadManager.ACTION_NOTIFICATION_CLICKED.equals(i.getAction())) {
-        Toast.makeText(ctxt, R.string.hi, Toast.LENGTH_LONG).show();
-      }
-      else {
-        start.setEnabled(true);
-      }
-    }
-  };
+	private BroadcastReceiver onEvent = new BroadcastReceiver()
+	{
+		public void onReceive(Context ctxt, Intent i)
+		{
+			if (DownloadManager.ACTION_NOTIFICATION_CLICKED.equals(i
+					.getAction()))
+			{
+				Toast.makeText(ctxt, R.string.hi, Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				start.setEnabled(true);
+			}
+		}
+	};
 }

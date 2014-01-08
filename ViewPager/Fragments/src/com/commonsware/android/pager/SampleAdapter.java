@@ -14,22 +14,40 @@
 
 package com.commonsware.android.pager;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class SampleAdapter extends FragmentPagerAdapter {
-  public SampleAdapter(FragmentManager mgr) {
-    super(mgr);
-  }
+public class SampleAdapter extends FragmentPagerAdapter
+{
+	private Context ctxt;
 
-  @Override
-  public int getCount() {
-    return(10);
-  }
+	public SampleAdapter(Context ctxt, FragmentManager mgr)
+	{
+		super(mgr);
 
-  @Override
-  public Fragment getItem(int position) {
-    return(EditorFragment.newInstance(position));
-  }
+		this.ctxt = ctxt;
+	}
+
+	/**
+	 * 10 pages total.
+	 */
+	@Override
+	public int getCount()
+	{
+		return (10);
+	}
+
+	@Override
+	public Fragment getItem(int position)
+	{
+		return (EditorFragment.newInstance(position));
+	}
+
+	@Override
+	public String getPageTitle(int position)
+	{
+		return (EditorFragment.getTitle(ctxt, position));
+	}
 }

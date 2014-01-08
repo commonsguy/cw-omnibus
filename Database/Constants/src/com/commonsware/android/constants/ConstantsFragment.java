@@ -14,6 +14,7 @@
 
 package com.commonsware.android.constants;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -32,127 +33,141 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ConstantsFragment extends SherlockListFragment implements
-    DialogInterface.OnClickListener {
-  private DatabaseHelper db=null;
+		DialogInterface.OnClickListener
+{
+	private DatabaseHelper db = null;
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 
-    setHasOptionsMenu(true);
-    setRetainInstance(true);
+		setHasOptionsMenu(true);
+		setRetainInstance(true);
 
-    db=new DatabaseHelper(getActivity());
-    new LoadCursorTask().execute();
-  }
+		db = new DatabaseHelper(getActivity());
+		new LoadCursorTask().execute();
+	}
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
 
-    ((CursorAdapter)getListAdapter()).getCursor().close();
-    db.close();
-  }
+		((CursorAdapter) getListAdapter()).getCursor().close();
+		db.close();
+	}
 
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.actions, menu);
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		inflater.inflate(R.menu.actions, menu);
 
-    super.onCreateOptionsMenu(menu, inflater);
-  }
+		super.onCreateOptionsMenu(menu, inflater);
+	}
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.add:
-        add();
-        return(true);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+		case R.id.add:
+			add();
+			return (true);
+		}
 
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 
-  private void add() {
-    LayoutInflater inflater=getActivity().getLayoutInflater();
-    View addView=inflater.inflate(R.layout.add_edit, null);
-    AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+	private void add()
+	{
+		LayoutInflater inflater = getActivity().getLayoutInflater();
+		View addView = inflater.inflate(R.layout.add_edit, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-    builder.setTitle(R.string.add_title).setView(addView)
-           .setPositiveButton(R.string.ok, this)
-           .setNegativeButton(R.string.cancel, null).show();
-  }
+		builder.setTitle(R.string.add_title).setView(addView)
+				.setPositiveButton(R.string.ok, this)
+				.setNegativeButton(R.string.cancel, null).show();
+	}
 
-  public void onClick(DialogInterface di, int whichButton) {
-    ContentValues values=new ContentValues(2);
-    AlertDialog dlg=(AlertDialog)di;
-    EditText title=(EditText)dlg.findViewById(R.id.title);
-    EditText value=(EditText)dlg.findViewById(R.id.value);
+	public void onClick(DialogInterface di, int whichButton)
+	{
+		ContentValues values = new ContentValues(2);
+		AlertDialog dlg = (AlertDialog) di;
+		EditText title = (EditText) dlg.findViewById(R.id.title);
+		EditText value = (EditText) dlg.findViewById(R.id.value);
 
-    values.put(DatabaseHelper.TITLE, title.getText().toString());
-    values.put(DatabaseHelper.VALUE, value.getText().toString());
+		values.put(DatabaseHelper.TITLE, title.getText().toString());
+		values.put(DatabaseHelper.VALUE, value.getText().toString());
 
-    new InsertTask().execute(values);
-  }
+		new InsertTask().execute(values);
+	}
 
-  private Cursor doQuery() {
-    return(db.getReadableDatabase().rawQuery("SELECT _id, title, value "
-                                                 + "FROM constants ORDER BY title",
-                                             null));
-  }
+	private Cursor doQuery()
+	{
+		return (db.getReadableDatabase().rawQuery("SELECT _id, title, value "
+				+ "FROM constants ORDER BY title", null));
+	}
 
-  private class LoadCursorTask extends AsyncTask<Void, Void, Void> {
-    private Cursor constantsCursor=null;
+	private class LoadCursorTask extends AsyncTask<Void, Void, Void>
+	{
+		private Cursor constantsCursor = null;
 
-    @Override
-    protected Void doInBackground(Void... params) {
-      constantsCursor=doQuery();
-      constantsCursor.getCount();
+		@Override
+		protected Void doInBackground(Void... params)
+		{
+			constantsCursor = doQuery();
+			constantsCursor.getCount();
 
-      return(null);
-    }
+			return (null);
+		}
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onPostExecute(Void arg0) {
-      SimpleCursorAdapter adapter;
-      
-      if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
-        adapter=new SimpleCursorAdapter(getActivity(), R.layout.row,
-                                  constantsCursor, new String[] {
-                                      DatabaseHelper.TITLE,
-                                      DatabaseHelper.VALUE },
-                                  new int[] { R.id.title, R.id.value },
-                                  0);
-      }
-      else {
-        adapter=new SimpleCursorAdapter(getActivity(), R.layout.row,
-                                        constantsCursor, new String[] {
-                                            DatabaseHelper.TITLE,
-                                            DatabaseHelper.VALUE },
-                                        new int[] { R.id.title, R.id.value });
-      }
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+		@SuppressWarnings("deprecation")
+		@Override
+		public void onPostExecute(Void arg0)
+		{
+			SimpleCursorAdapter adapter;
 
-      setListAdapter(adapter);
-    }
-  }
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			{
+				adapter = new SimpleCursorAdapter(getActivity(), R.layout.row,
+						constantsCursor, new String[] { DatabaseHelper.TITLE,
+								DatabaseHelper.VALUE }, new int[] { R.id.title,
+								R.id.value }, 0);
+			}
+			else
+			{
+				adapter = new SimpleCursorAdapter(getActivity(), R.layout.row,
+						constantsCursor, new String[] { DatabaseHelper.TITLE,
+								DatabaseHelper.VALUE }, new int[] { R.id.title,
+								R.id.value });
+			}
 
-  private class InsertTask extends AsyncTask<ContentValues, Void, Void> {
-    private Cursor constantsCursor=null;
+			setListAdapter(adapter);
+		}
+	}
 
-    @Override
-    protected Void doInBackground(ContentValues... values) {
-      db.getWritableDatabase().insert(DatabaseHelper.TABLE,
-                                      DatabaseHelper.TITLE, values[0]);
+	private class InsertTask extends AsyncTask<ContentValues, Void, Void>
+	{
+		private Cursor constantsCursor = null;
 
-      constantsCursor=doQuery();
-      constantsCursor.getCount();
+		@Override
+		protected Void doInBackground(ContentValues... values)
+		{
+			db.getWritableDatabase().insert(DatabaseHelper.TABLE,
+					DatabaseHelper.TITLE, values[0]);
 
-      return(null);
-    }
+			constantsCursor = doQuery();
+			constantsCursor.getCount();
 
-    @Override
-    public void onPostExecute(Void arg0) {
-      ((CursorAdapter)getListAdapter()).changeCursor(constantsCursor);
-    }
-  }
+			return (null);
+		}
+
+		@Override
+		public void onPostExecute(Void arg0)
+		{
+			((CursorAdapter) getListAdapter()).changeCursor(constantsCursor);
+		}
+	}
 }

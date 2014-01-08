@@ -10,24 +10,26 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.ordered;
 
 import android.app.IntentService;
 import android.content.Intent;
 
-public class NoticeService extends IntentService {
-  public static final String BROADCAST=
-    "com.commonsware.android.ordered.NoticeService.BROADCAST";
-  private static Intent broadcast=new Intent(BROADCAST);
-  
-  public NoticeService() {
-    super("NoticeService");
-  }
+public class NoticeService extends IntentService
+{
+	public static final String BROADCAST = "com.commonsware.android.ordered.NoticeService.BROADCAST";
+	private static Intent broadcast = new Intent(BROADCAST);
 
-  @Override
-  protected void onHandleIntent(Intent intent) {
-    sendOrderedBroadcast(broadcast, null);
-  }
+	public NoticeService()
+	{
+		super("NoticeService");
+	}
+
+	@Override
+	protected void onHandleIntent(Intent intent)
+	{
+		sendOrderedBroadcast(broadcast, null);
+	}
 }

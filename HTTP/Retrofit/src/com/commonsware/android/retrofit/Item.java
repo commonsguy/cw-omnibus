@@ -14,12 +14,14 @@
 
 package com.commonsware.android.retrofit;
 
-public class Item {
-  String title;
-  String link;
-  
-  @Override
-  public String toString() {
-    return(title);
-  }
+public class Item
+{
+	String title;
+	String link;
+
+	@Override
+	public String toString()
+	{
+		return (title);
+	}
 }

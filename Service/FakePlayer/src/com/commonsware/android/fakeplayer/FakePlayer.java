@@ -10,22 +10,24 @@
 	
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.fakeplayer;
 
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class FakePlayer extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getSupportFragmentManager().beginTransaction()
-                                 .add(android.R.id.content,
-                                      new PlayerFragment()).commit();
-    }
-  }
+public class FakePlayer extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null)
+		{
+			getSupportFragmentManager().beginTransaction()
+					.add(android.R.id.content, new PlayerFragment()).commit();
+		}
+	}
 }

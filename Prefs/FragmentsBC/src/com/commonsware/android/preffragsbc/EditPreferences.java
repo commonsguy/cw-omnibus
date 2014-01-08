@@ -14,6 +14,8 @@
 
 package com.commonsware.android.preffragsbc;
 
+import info.juanmendez.android.sdk.SDKSupport;
+
 import java.util.List;
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -21,41 +23,49 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
-public class EditPreferences extends SherlockPreferenceActivity {
-  @SuppressWarnings("deprecation")
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+public class EditPreferences extends SherlockPreferenceActivity
+{
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    if (Build.VERSION.SDK_INT<Build.VERSION_CODES.HONEYCOMB) {
-      addPreferencesFromResource(R.xml.preferences);
-      addPreferencesFromResource(R.xml.preferences2);
-    }
-  }
-  
-  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-  @Override
-  public void onBuildHeaders(List<Header> target) {
-    loadHeadersFromResource(R.xml.preference_headers, target);
-  }
-  
-  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-  public static class First extends PreferenceFragment {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
+		if (!SDKSupport.honeyOrHigher())
+		{
+			addPreferencesFromResource(R.xml.preferences);
+			addPreferencesFromResource(R.xml.preferences2);
+		}
+	}
 
-      addPreferencesFromResource(R.xml.preferences);
-    }
-  }
-  
-  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-  public static class Second extends PreferenceFragment {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
+	public void onBuildHeaders(List<Header> target)
+	{
+		loadHeadersFromResource(R.xml.preference_headers, target);
+	}
 
-      addPreferencesFromResource(R.xml.preferences2);
-    }
-  }
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public static class First extends PreferenceFragment
+	{
+		@Override
+		public void onCreate(Bundle savedInstanceState)
+		{
+			super.onCreate(savedInstanceState);
+
+			addPreferencesFromResource(R.xml.preferences);
+		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public static class Second extends PreferenceFragment
+	{
+		@Override
+		public void onCreate(Bundle savedInstanceState)
+		{
+			super.onCreate(savedInstanceState);
+
+			addPreferencesFromResource(R.xml.preferences2);
+		}
+	}
 }

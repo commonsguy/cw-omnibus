@@ -14,14 +14,10 @@
 
 package com.commonsware.android.weather;
 
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
+import info.juanmendez.android.utils.AsyncUtils;
+import info.juanmendez.android.utils.Trace;
+import info.juanmendez.android.views.WebViewFragment;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,188 +25,189 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-public class WeatherFragment extends WebViewFragment implements
-    LocationListener {
-  private String template=null;
-  private LocationManager mgr=null;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setRetainInstance(true);
+import com.commonsware.android.weather.tasks.FetchForecastTask;
 
-    template=getActivity().getString(R.string.url);
-    mgr=
-        (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-  }
+public class WeatherFragment extends WebViewFragment implements LocationListener
+{
+	
+	private LocationManager mgr = null;
 
-  @Override
-  public void onResume() {
-    super.onResume();
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 
-    mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3600000,
-                               1000, this);
-  }
+		
+		mgr = (LocationManager) getActivity().getSystemService( Context.LOCATION_SERVICE);
+	}
 
-  @Override
-  public void onPause() {
-    super.onPause();
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
-    mgr.removeUpdates(this);
-  }
+		Trace.warn( "onResume", this );
+		
+		mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3600000, 1000, this);
+	}
 
-  @Override
-  public void onLocationChanged(Location location) {
-    FetchForecastTask task=new FetchForecastTask();
+	@Override
+	public void onPause()
+	{
+		super.onPause();
 
-    task.execute(location);
-  }
+		Trace.warn( "onPause", this );
+		mgr.removeUpdates(this);
+	}
 
-  @Override
-  public void onProviderDisabled(String provider) {
-    // required for interface, not used
-  }
+	@Override
+	public void onLocationChanged(Location location)
+	{
+		Trace.warn( "onLocationChanged", this );
+		FetchForecastTask task = new FetchForecastTask( this );
+		AsyncUtils.execute(task, location );
+		//task.execute(location);
+	}
 
-  @Override
-  public void onProviderEnabled(String provider) {
-    // required for interface, not used
-  }
+	@Override
+	public void onProviderDisabled(String provider)
+	{
+		// required for interface, not used
+	}
 
-  @Override
-  public void onStatusChanged(String provider, int status, Bundle extras) {
-    // required for interface, not used
-  }
+	@Override
+	public void onProviderEnabled(String provider)
+	{
+		// required for interface, not used
+	}
 
-  private String getForecastXML(String path) throws IOException {
-    BufferedReader reader=null;
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras)
+	{
+		// required for interface, not used
+	}
+	
+	public String getTemplate()
+	{
+		return getActivity().getString(R.string.url);
+	}
 
-    try {
-      URL url=new URL(path);
-      HttpURLConnection c=(HttpURLConnection)url.openConnection();
+	private String getForecastXML(String path) throws IOException
+	{
+		BufferedReader reader = null;
 
-      c.setRequestMethod("GET");
-      c.setReadTimeout(15000);
-      c.connect();
+		try
+		{
+			URL url = new URL(path);
+			HttpURLConnection c = (HttpURLConnection) url.openConnection();
 
-      reader=
-          new BufferedReader(new InputStreamReader(c.getInputStream()));
+			c.setRequestMethod("GET");
+			c.setReadTimeout(15000);
+			c.connect();
 
-      StringBuilder buf=new StringBuilder();
-      String line=null;
+			reader = new BufferedReader(new InputStreamReader(
+					c.getInputStream()));
 
-      while ((line=reader.readLine()) != null) {
-        buf.append(line + "\n");
-      }
+			StringBuilder buf = new StringBuilder();
+			String line = null;
 
-      return(buf.toString());
-    }
-    finally {
-      if (reader != null) {
-        reader.close();
-      }
-    }
-  }
+			while ((line = reader.readLine()) != null)
+			{
+				buf.append(line + "\n");
+			}
 
-  private ArrayList<Forecast> buildForecasts(String raw)
-                                                        throws Exception {
-    ArrayList<Forecast> forecasts=new ArrayList<Forecast>();
-    DocumentBuilder builder=
-        DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    Document doc=builder.parse(new InputSource(new StringReader(raw)));
-    NodeList times=doc.getElementsByTagName("start-valid-time");
+			return (buf.toString());
+		}
+		finally
+		{
+			if (reader != null)
+			{
+				reader.close();
+			}
+		}
+	}
 
-    for (int i=0; i < times.getLength(); i++) {
-      Element time=(Element)times.item(i);
-      Forecast forecast=new Forecast();
+	private ArrayList<Forecast> buildForecasts(String raw) throws Exception
+	{
+		ArrayList<Forecast> forecasts = new ArrayList<Forecast>();
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance()
+				.newDocumentBuilder();
+		Document doc = builder.parse(new InputSource(new StringReader(raw)));
+		NodeList times = doc.getElementsByTagName("start-valid-time");
 
-      forecasts.add(forecast);
-      forecast.setTime(time.getFirstChild().getNodeValue());
-    }
+		for (int i = 0; i < times.getLength(); i++)
+		{
+			Element time = (Element) times.item(i);
+			Forecast forecast = new Forecast();
 
-    NodeList temps=doc.getElementsByTagName("value");
+			forecasts.add(forecast);
+			forecast.setTime(time.getFirstChild().getNodeValue());
+		}
 
-    for (int i=0; i < temps.getLength(); i++) {
-      Element temp=(Element)temps.item(i);
-      Forecast forecast=forecasts.get(i);
+		NodeList temps = doc.getElementsByTagName("value");
 
-      forecast.setTemp(new Integer(temp.getFirstChild().getNodeValue()));
-    }
+		for (int i = 0; i < temps.getLength(); i++)
+		{
+			Element temp = (Element) temps.item(i);
+			Forecast forecast = forecasts.get(i);
 
-    NodeList icons=doc.getElementsByTagName("icon-link");
+			forecast.setTemp(new Integer(temp.getFirstChild().getNodeValue()));
+		}
 
-    for (int i=0; i < icons.getLength(); i++) {
-      Element icon=(Element)icons.item(i);
-      Forecast forecast=forecasts.get(i);
+		NodeList icons = doc.getElementsByTagName("icon-link");
 
-      forecast.setIcon(icon.getFirstChild().getNodeValue());
-    }
+		for (int i = 0; i < icons.getLength(); i++)
+		{
+			Element icon = (Element) icons.item(i);
+			Forecast forecast = forecasts.get(i);
 
-    return(forecasts);
-  }
+			forecast.setIcon(icon.getFirstChild().getNodeValue());
+		}
 
-  String generatePage(ArrayList<Forecast> forecasts) {
-    StringBuilder bufResult=new StringBuilder("<html><body><table>");
+		return (forecasts);
+	}
+	
+	public String generatePage( String url ) throws IOException, Exception
+	{
+		return generatePage( buildForecasts( getForecastXML(url)));
+	}
 
-    bufResult.append("<tr><th width=\"50%\">Time</th>"
-        + "<th>Temperature</th><th>Forecast</th></tr>");
+	private String generatePage(ArrayList<Forecast> forecasts)
+	{
+		StringBuilder bufResult = new StringBuilder("<html><body><table>");
 
-    for (Forecast forecast : forecasts) {
-      bufResult.append("<tr><td align=\"center\">");
-      bufResult.append(forecast.getTime());
-      bufResult.append("</td><td align=\"center\">");
-      bufResult.append(forecast.getTemp());
-      bufResult.append("</td><td><img src=\"");
-      bufResult.append(forecast.getIcon());
-      bufResult.append("\"></td></tr>");
-    }
+		bufResult.append("<tr><th width=\"50%\">Time</th>"
+				+ "<th>Temperature</th><th>Forecast</th></tr>");
 
-    bufResult.append("</table></body></html>");
+		for (Forecast forecast : forecasts)
+		{
+			bufResult.append("<tr><td align=\"center\">");
+			bufResult.append(forecast.getTime());
+			bufResult.append("</td><td align=\"center\">");
+			bufResult.append(forecast.getTemp());
+			bufResult.append("</td><td><img src=\"");
+			bufResult.append(forecast.getIcon());
+			bufResult.append("\"></td></tr>");
+		}
 
-    return(bufResult.toString());
-  }
+		bufResult.append("</table></body></html>");
 
-  class FetchForecastTask extends AsyncTask<Location, Void, String> {
-    Exception e=null;
-
-    @Override
-    protected String doInBackground(Location... locs) {
-      String page=null;
-
-      try {
-        Location loc=locs[0];
-        String url=
-            String.format(template, loc.getLatitude(),
-                          loc.getLongitude());
-
-        page=generatePage(buildForecasts(getForecastXML(url)));
-      }
-      catch (Exception e) {
-        this.e=e;
-      }
-
-      return(page);
-    }
-
-    @Override
-    protected void onPostExecute(String page) {
-      if (e == null) {
-        getWebView().loadDataWithBaseURL(null, page, "text/html",
-                                         "UTF-8", null);
-      }
-      else {
-        Log.e(getClass().getSimpleName(), "Exception fetching data", e);
-        Toast.makeText(getActivity(),
-                       String.format(getString(R.string.error),
-                                     e.toString()), Toast.LENGTH_LONG)
-             .show();
-      }
-    }
-  }
+		return (bufResult.toString());
+	}	
 }

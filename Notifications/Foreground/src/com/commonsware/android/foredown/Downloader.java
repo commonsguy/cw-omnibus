@@ -30,112 +30,134 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Downloader extends IntentService {
-  public static final String ACTION_COMPLETE=
-      "com.commonsware.android.downloader.action.COMPLETE";
-  private static int NOTIFY_ID=1337;
-  private static int FOREGROUND_ID=1338;
+public class Downloader extends IntentService
+{
+	public static final String ACTION_COMPLETE = "com.commonsware.android.downloader.action.COMPLETE";
+	private static int NOTIFY_ID = 1337;
+	private static int FOREGROUND_ID = 1338;
 
-  public Downloader() {
-    super("Downloader");
-  }
+	public Downloader()
+	{
+		super("Downloader");
+	}
 
-  @Override
-  public void onHandleIntent(Intent i) {
-    try {
-      String filename=i.getData().getLastPathSegment();
+	@Override
+	public void onHandleIntent(Intent i)
+	{
+		try
+		{
+			String filename = i.getData().getLastPathSegment();
 
-      startForeground(FOREGROUND_ID,
-                      buildForegroundNotification(filename));
+			startForeground(FOREGROUND_ID,
+					buildForegroundNotification(filename));
 
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+			File root = Environment
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-      root.mkdirs();
+			root.mkdirs();
 
-      File output=new File(root, filename);
+			File output = new File(root, filename);
+			
+			Thread.sleep( 5000 );
 
-      if (output.exists()) {
-        output.delete();
-      }
+			if (output.exists())
+			{
+				output.delete();
+			}
 
-      URL url=new URL(i.getData().toString());
-      HttpURLConnection c=(HttpURLConnection)url.openConnection();
+			URL url = new URL(i.getData().toString());
+			HttpURLConnection c = (HttpURLConnection) url.openConnection();
 
-      c.setRequestMethod("GET");
-      c.setReadTimeout(15000);
-      c.connect();
+			c.setRequestMethod("GET");
+			c.setReadTimeout(15000);
+			c.connect();
 
-      FileOutputStream fos=new FileOutputStream(output.getPath());
-      BufferedOutputStream out=new BufferedOutputStream(fos);
+			FileOutputStream fos = new FileOutputStream(output.getPath());
+			BufferedOutputStream out = new BufferedOutputStream(fos);
 
-      try {
-        InputStream in=c.getInputStream();
-        byte[] buffer=new byte[8192];
-        int len=0;
+			try
+			{
+				InputStream in = c.getInputStream();
+				byte[] buffer = new byte[8192];
+				int len = 0;
 
-        while ((len=in.read(buffer)) > 0) {
-          out.write(buffer, 0, len);
-        }
+				while ((len = in.read(buffer)) > 0)
+				{
+					out.write(buffer, 0, len);
+				}
 
-        out.flush();
-      }
-      finally {
-        fos.getFD().sync();
-        out.close();
-      }
+				out.flush();
+			}
+			finally
+			{
+				fos.getFD().sync();
+				out.close();
+			}
+			
+			//call to stop notification and service in foreground. 
+			stopForeground(true);
+			
+			//now lets just create a simple notification 
+			//commenting the file has been uploaded
+			raiseNotification(i, output, null);
+		}
+		catch (IOException e2)
+		{
+			stopForeground(true);
+			raiseNotification(i, null, e2);
+		}
+		catch (InterruptedException e)
+		{
+			stopForeground(true);
+			raiseNotification(i, null, e);
+		}
+	}
 
-      stopForeground(true);
-      raiseNotification(i, output, null);
-    }
-    catch (IOException e2) {
-      stopForeground(true);
-      raiseNotification(i, null, e2);
-    }
-  }
+	private void raiseNotification(Intent inbound, File output, Exception e)
+	{
+		NotificationCompat.Builder b = new NotificationCompat.Builder(this);
 
-  private void raiseNotification(Intent inbound, File output,
-                                 Exception e) {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+		b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
+				.setWhen(System.currentTimeMillis());
 
-    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
-     .setWhen(System.currentTimeMillis());
+		if (e == null)
+		{
+			b.setContentTitle(getString(R.string.download_complete))
+					.setContentText(getString(R.string.fun))
+					.setSmallIcon(android.R.drawable.stat_sys_download_done)
+					.setTicker(getString(R.string.download_complete));
 
-    if (e == null) {
-      b.setContentTitle(getString(R.string.download_complete))
-       .setContentText(getString(R.string.fun))
-       .setSmallIcon(android.R.drawable.stat_sys_download_done)
-       .setTicker(getString(R.string.download_complete));
+			Intent outbound = new Intent(Intent.ACTION_VIEW);
 
-      Intent outbound=new Intent(Intent.ACTION_VIEW);
+			outbound.setDataAndType(Uri.fromFile(output), inbound.getType());
 
-      outbound.setDataAndType(Uri.fromFile(output), inbound.getType());
+			b.setContentIntent(PendingIntent.getActivity(this, 0, outbound, 0));
+		}
+		else
+		{
+			b.setContentTitle(getString(R.string.exception))
+					.setContentText(e.getMessage())
+					.setSmallIcon(android.R.drawable.stat_notify_error)
+					.setTicker(getString(R.string.exception));
+		}
 
-      b.setContentIntent(PendingIntent.getActivity(this, 0, outbound, 0));
-    }
-    else {
-      b.setContentTitle(getString(R.string.exception))
-       .setContentText(e.getMessage())
-       .setSmallIcon(android.R.drawable.stat_notify_error)
-       .setTicker(getString(R.string.exception));
-    }
+		NotificationManager mgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-    NotificationManager mgr=
-        (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		mgr.notify(NOTIFY_ID, b.build());
+	}
 
-    mgr.notify(NOTIFY_ID, b.build());
-  }
+	private Notification buildForegroundNotification(String filename)
+	{
+		NotificationCompat.Builder b = new NotificationCompat.Builder(this);
 
-  private Notification buildForegroundNotification(String filename) {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+		//this is an ongoing notification!
+		b.setOngoing(true);
 
-    b.setOngoing(true);
+		b.setContentTitle(getString(R.string.downloading))
+				.setContentText(filename)
+				.setSmallIcon(android.R.drawable.stat_sys_download)
+				.setTicker(getString(R.string.downloading));
 
-    b.setContentTitle(getString(R.string.downloading))
-     .setContentText(filename)
-     .setSmallIcon(android.R.drawable.stat_sys_download)
-     .setTicker(getString(R.string.downloading));
-
-    return(b.build());
-  }
+		return (b.build());
+	}
 }

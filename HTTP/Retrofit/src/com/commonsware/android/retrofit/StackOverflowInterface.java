@@ -18,7 +18,30 @@ import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
-public interface StackOverflowInterface {
-  @GET("/2.1/questions?order=desc&sort=creation&site=stackoverflow")
-  void questions(@Query("tagged") String tags, Callback<SOQuestions> cb);
+public interface StackOverflowInterface
+{
+	/**
+	 * Each method in the interface should have an annotation identifying the HTTP
+operation to perform, such as @GET or @POST. The parameter to the annotation is the
+path for the request and any fixed query parameters. In our case, we are using the
+path documented by StackExchange for retrieving questions (/2.1/questions), plus
+some fixed query parameters:
+• order for whether the results should be ascending (asc) or descending
+(desc)
+• sort to indicate how the questions should be sorted, such as creation to
+sort by time when the question was posted
+• site to indicate what StackExchange site we are querying (e.g.,
+stackoverflow)
+The method name can be whatever you want.
+If you have additional query parameters that vary dynamically, you can use the
+@Query annotation on String parameters to have them be added to the end of the
+URL. In our case, the tagged query parameter will be added with whatever the tags
+parameter is to our question() method.
+Similarly, you can use {name} placeholders for path segments, and replace those at
+runtime via @Path-annotated parameters to the method.
+	 * @param tags
+	 * @param cb
+	 */
+	@GET("/2.1/questions?order=desc&sort=creation&site=stackoverflow")
+	void questions(@Query("tagged") String tags, Callback<SOQuestions> cb);
 }

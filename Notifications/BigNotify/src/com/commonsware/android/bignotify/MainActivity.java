@@ -14,61 +14,70 @@
 
 package com.commonsware.android.bignotify;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
-public class MainActivity extends Activity {
-  private static final int NOTIFY_ID=1337;
+public class MainActivity extends Activity
+{
+	private static final int NOTIFY_ID = 1337;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    NotificationManager mgr=
-        (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-    NotificationCompat.Builder normal=buildNormal();
-    NotificationCompat.InboxStyle big=
-        new NotificationCompat.InboxStyle(normal);
+		NotificationManager mgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		NotificationCompat.Builder normal = buildNormal();
+		NotificationCompat.InboxStyle big = new NotificationCompat.InboxStyle(normal);
 
-    mgr.notify(NOTIFY_ID,
-               big.setSummaryText(getString(R.string.summary))
-                  .addLine(getString(R.string.entry))
-                  .addLine(getString(R.string.another_entry))
-                  .addLine(getString(R.string.third_entry))
-                  .addLine(getString(R.string.yet_another_entry))
-                  .addLine(getString(R.string.low)).build());
+		mgr.notify(
+				NOTIFY_ID,
+				big.setSummaryText(getString(R.string.summary))
+						.addLine(getString(R.string.entry))
+						.addLine(getString(R.string.another_entry))
+						.addLine(getString(R.string.third_entry))
+						.addLine(getString(R.string.yet_another_entry))
+						.addLine(getString(R.string.low)).build());
 
-    finish();
-  }
+		finish();
+	}
 
-  private NotificationCompat.Builder buildNormal() {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+	
+	private NotificationCompat.Builder buildNormal()
+	{
+		NotificationCompat.Builder b = new NotificationCompat.Builder(this);
 
-    b.setAutoCancel(true)
-     .setDefaults(Notification.DEFAULT_ALL)
-     .setWhen(System.currentTimeMillis())
-     .setContentTitle(getString(R.string.download_complete))
-     .setContentText(getString(R.string.fun))
-     .setContentIntent(buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))
-     .setSmallIcon(android.R.drawable.stat_sys_download_done)
-     .setTicker(getString(R.string.download_complete))
-     .setPriority(Notification.PRIORITY_HIGH)
-     .addAction(android.R.drawable.ic_media_play,
-                getString(R.string.play),
-                buildPendingIntent(Settings.ACTION_SETTINGS));
+		b.setAutoCancel(true)
+				.setDefaults(Notification.DEFAULT_ALL)
+				.setWhen(System.currentTimeMillis())
+				.setContentTitle(getString(R.string.download_complete))
+				.setContentText(getString(R.string.fun))
+				.setContentIntent(
+						buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))
+				.setSmallIcon(android.R.drawable.stat_sys_download_done)
+				.setTicker(getString(R.string.download_complete))
+				.addAction(android.R.drawable.ic_media_play,
+						getString(R.string.play),
+						buildPendingIntent(Settings.ACTION_SETTINGS));
 
-    return(b);
-  }
+		if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN )
+			b.setPriority(Notification.PRIORITY_HIGH);
+		
+		return (b);
+	}
 
-  private PendingIntent buildPendingIntent(String action) {
-    Intent i=new Intent(action);
+	private PendingIntent buildPendingIntent(String action)
+	{
+		Intent i = new Intent(action);
 
-    return(PendingIntent.getActivity(this, 0, i, 0));
-  }
+		return (PendingIntent.getActivity(this, 0, i, 0));
+	}
 }

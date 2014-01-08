@@ -19,34 +19,40 @@ import android.support.v4.widget.SlidingPaneLayout;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class EU4You extends SherlockFragmentActivity implements
-    CountriesFragment.Contract {
-  private DetailsFragment details=null;
-  private SlidingPaneLayout panes=null;
+		CountriesFragment.Contract
+{
+	private DetailsFragment details = null;
+	private SlidingPaneLayout panes = null;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-    details=
-        (DetailsFragment)getSupportFragmentManager().findFragmentById(R.id.details);
-    panes=(SlidingPaneLayout)findViewById(R.id.panes);
-    panes.openPane();
-  }
+		details = (DetailsFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.details);
+		panes = (SlidingPaneLayout) findViewById(R.id.panes);
+		panes.openPane();
+	}
 
-  @Override
-  public void onBackPressed() {
-    if (panes.isOpen()) {
-      super.onBackPressed();
-    }
-    else {
-      panes.openPane();
-    }
-  }
+	@Override
+	public void onBackPressed()
+	{
+		if (panes.isOpen())
+		{
+			super.onBackPressed();
+		}
+		else
+		{
+			panes.openPane();
+		}
+	}
 
-  @Override
-  public void onCountrySelected(Country c) {
-    details.loadUrl(getString(c.url));
-    panes.closePane();
-  }
+	@Override
+	public void onCountrySelected(Country c)
+	{
+		details.loadUrl(getString(c.url));
+		panes.closePane();
+	}
 }

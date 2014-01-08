@@ -16,42 +16,52 @@ package com.commonsware.android.eu4you2;
 
 import android.os.Bundle;
 
-public class DetailsFragment extends WebViewFragment {
-  private static final String STATE_URL="url";
-  private String url=null;
+public class DetailsFragment extends WebViewFragment
+{
+	private static final String STATE_URL = "url";
+	private String url = null;
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 
-    if (url == null && savedInstanceState != null) {
-      url=savedInstanceState.getString(STATE_URL);
-    }
+		if (url == null && savedInstanceState != null)
+		{
+			url = savedInstanceState.getString(STATE_URL);
+		}
 
-    if (url != null) {
-      loadUrl(url);
-      url=null;
-    }
-  }
+		if (url != null)
+		{
+			loadUrl(url);
+			url = null;
+		}
+	}
 
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
+	@Override
+	public void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
 
-    if (url == null) {
-      outState.putString(STATE_URL, getWebView().getUrl());
-    }
-    else {
-      outState.putString(STATE_URL, url);
-    }
-  }
+		if (url == null)
+		{
+			outState.putString(STATE_URL, getWebView().getUrl());
+		}
+		else
+		{
+			outState.putString(STATE_URL, url);
+		}
+	}
 
-  void loadUrl(String url) {
-    if (getView() == null) {
-      this.url=url;
-    }
-    else {
-      getWebView().loadUrl(url);
-    }
-  }
+	void loadUrl(String url)
+	{
+		if (getView() == null)
+		{
+			this.url = url;
+		}
+		else
+		{
+			getWebView().loadUrl(url);
+		}
+	}
 }

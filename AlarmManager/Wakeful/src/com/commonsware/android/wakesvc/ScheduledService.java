@@ -14,8 +14,10 @@
 
 package com.commonsware.android.wakesvc;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 public class ScheduledService extends WakefulIntentService {
@@ -27,4 +29,6 @@ public class ScheduledService extends WakefulIntentService {
   protected void doWakefulWork(Intent intent) {
     Log.d(getClass().getSimpleName(), "I ran!");
   }
+  
+  
 }

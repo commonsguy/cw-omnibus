@@ -10,7 +10,7 @@
 	
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.fancylists.five;
 
@@ -19,11 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 class ViewHolder {
-  ImageView icon=null;
-  TextView size=null;
-  
-  ViewHolder(View row) {
-    this.icon=(ImageView)row.findViewById(R.id.icon);
-    this.size=(TextView)row.findViewById(R.id.size);
-  }
+	ImageView icon = null;
+	TextView size = null;
+
+	ViewHolder(View row) {
+		this.icon = (ImageView) row.findViewById(R.id.icon);
+		this.size = (TextView) row.findViewById(R.id.size);
+	}
 }

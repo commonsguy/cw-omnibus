@@ -26,84 +26,103 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
+
 import com.squareup.picasso.Picasso;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class QuestionsFragment extends
-    ContractListFragment<QuestionsFragment.Contract> implements
-    Callback<SOQuestions> {
-  @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=
-        super.onCreateView(inflater, container, savedInstanceState);
+		ContractListFragment<QuestionsFragment.Contract> implements
+		Callback<SOQuestions>
+{
 
-    setRetainInstance(true);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
 
-    RestAdapter restAdapter=
-        new RestAdapter.Builder().setServer("https://api.stackexchange.com")
-                                 .build();
-    StackOverflowInterface so=
-        restAdapter.create(StackOverflowInterface.class);
+		setRetainInstance(true);
+	}
 
-    so.questions("android", this);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		View result = super.onCreateView(inflater, container,
+				savedInstanceState);
 
-    return(result);
-  }
+		RestAdapter restAdapter = new RestAdapter.Builder()
+		.setServer( "https://api.stackexchange.com").build();
+		
+		StackOverflowInterface so = restAdapter
+				.create(StackOverflowInterface.class);
 
-  @Override
-  public void onListItemClick(ListView l, View v, int position, long id) {
-    getContract().showItem(((ItemsAdapter)getListAdapter()).getItem(position));
-  }
+		so.questions("android", this);
 
-  @Override
-  public void failure(RetrofitError exception) {
-    Toast.makeText(getActivity(), exception.getMessage(),
-                   Toast.LENGTH_LONG).show();
-    Log.e(getClass().getSimpleName(),
-          "Exception from Retrofit request to StackOverflow", exception);
-  }
+		return (result);
+	}
 
-  @Override
-  public void success(SOQuestions questions, Response response) {
-    setListAdapter(new ItemsAdapter(questions.items));
-  }
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id)
+	{
+		getContract().showItem(
+				((ItemsAdapter) getListAdapter()).getItem(position));
+	}
 
-  class ItemsAdapter extends ArrayAdapter<Item> {
-    int size;
+	@Override
+	public void failure(RetrofitError exception)
+	{
+		Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG)
+				.show();
+		
+		Log.e(getClass().getSimpleName(),
+				"Exception from Retrofit request to StackOverflow", exception);
+	}
 
-    ItemsAdapter(List<Item> items) {
-      super(getActivity(), R.layout.row, R.id.title, items);
+	@Override
+	public void success(SOQuestions questions, Response response)
+	{
+		setListAdapter(new ItemsAdapter(questions.items));
+	}
 
-      size=
-          getActivity().getResources()
-                       .getDimensionPixelSize(R.dimen.icon);
-    }
+	class ItemsAdapter extends ArrayAdapter<Item>
+	{
+		int size;
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View row=super.getView(position, convertView, parent);
-      Item item=getItem(position);
-      ImageView icon=(ImageView)row.findViewById(R.id.icon);
+		ItemsAdapter(List<Item> items)
+		{
+			super(getActivity(), R.layout.row, R.id.title, items);
 
-      Picasso.with(getActivity()).load(item.owner.profileImage)
-             .resize(size, size).centerCrop()
-             .placeholder(R.drawable.owner_placeholder)
-             .error(R.drawable.owner_error).into(icon);
+			size = getActivity().getResources().getDimensionPixelSize(
+					R.dimen.icon);
+		}
 
-      TextView title=(TextView)row.findViewById(R.id.title);
-      
-      title.setText(Html.fromHtml(getItem(position).title));
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			View row = super.getView(position, convertView, parent);
+			Item item = getItem(position);
+			ImageView icon = (ImageView) row.findViewById(R.id.icon);
 
-      return(row);
-    }
-  }
+			Picasso.with(getActivity()).load(item.owner.profileImage)
+					.resize(size, size).centerCrop()
+					.placeholder(R.drawable.owner_placeholder)
+					.error(R.drawable.owner_error).into(icon);
 
-  interface Contract {
-    void showItem(Item item);
-  }
+			TextView title = (TextView) row.findViewById(R.id.title);
+
+			title.setText(Html.fromHtml(getItem(position).title));
+
+			return (row);
+		}
+	}
+
+	interface Contract
+	{
+		void showItem(Item item);
+	}
 }

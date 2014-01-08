@@ -10,36 +10,43 @@
 	
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.weather;
 
-class Forecast {
-  String time="";
-  Integer temp=null;
-  String iconUrl="";
-  
-  String getTime() {
-    return(time);
-  }
+public class Forecast
+{
+	String time = "";
+	Integer temp = null;
+	String iconUrl = "";
 
-  void setTime(String time) {
-    this.time=time.substring(0,16).replace('T', ' ');
-  }
-  
-  Integer getTemp() {
-    return(temp);
-  }
-  
-  void setTemp(Integer temp) {
-    this.temp=temp;
-  }
-  
-  String getIcon() {
-    return(iconUrl);
-  }
-  
-  void setIcon(String iconUrl) {
-    this.iconUrl=iconUrl;
-  }
+	String getTime()
+	{
+		return (time);
+	}
+
+	public void setTime(String time)
+	{
+		this.time = time.substring(0, 16).replace('T', ' ');
+	}
+
+	Integer getTemp()
+	{
+		return (temp);
+	}
+
+	public void setTemp(Integer temp)
+	{
+		this.temp = temp;
+	}
+
+	public String getIcon()
+	{
+		return (iconUrl);
+	}
+
+	public void setIcon(String iconUrl)
+	{
+		this.iconUrl = iconUrl;
+	}
 }

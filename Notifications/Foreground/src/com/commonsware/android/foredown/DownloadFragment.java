@@ -24,28 +24,32 @@ import android.widget.Button;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class DownloadFragment extends SherlockFragment implements
-    View.OnClickListener {
-  private Button b=null;
+		View.OnClickListener
+{
+	private Button b = null;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.main, parent, false);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.main, parent, false);
 
-    b=(Button)result.findViewById(R.id.button);
-    b.setOnClickListener(this);
+		b = (Button) result.findViewById(R.id.button);
+		b.setOnClickListener(this);
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onClick(View v) {
-    Intent i=new Intent(getActivity(), Downloader.class);
+	@Override
+	public void onClick(View v)
+	{
+		Intent i = new Intent(getActivity(), Downloader.class);
 
-    i.setDataAndType(Uri.parse("http://commonsware.com/Android/excerpt.pdf"),
-                     "application/pdf");
+		i.setDataAndType(
+				Uri.parse("http://commonsware.com/Android/excerpt.pdf"),
+				"application/pdf");
 
-    getActivity().startService(i);
-    getActivity().finish();
-  }
+		getActivity().startService(i);
+		getActivity().finish();
+	}
 }

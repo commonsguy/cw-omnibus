@@ -14,6 +14,7 @@
 
 package com.commonsware.android.alarm;
 
+import info.juanmendez.android.utils.Trace;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -42,14 +43,17 @@ public class SimpleAlarmDemoActivity extends Activity {
   @Override
   public void onDestroy() {
     mgr.cancel(pi);
-
+    
+    Trace.warn( "alarm canceled", this);	
     super.onDestroy();
   }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode,
                                   Intent data) {
-    if (requestCode == ALARM_ID) {
+    if (requestCode == ALARM_ID) 
+    {
+      Trace.warn( "activityResult", this);	
       Toast.makeText(this, R.string.toast, Toast.LENGTH_SHORT).show();
     }
   }

@@ -10,7 +10,7 @@
 	
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.styles;
 
@@ -20,27 +20,26 @@ import android.view.View;
 import android.widget.Button;
 import java.util.Date;
 
-public class NowStyled extends Activity
-  implements View.OnClickListener {
-  Button btn;
+public class NowStyled extends Activity implements View.OnClickListener {
+	Button btn;
 
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
-    
-    setContentView(R.layout.main);
+	@Override
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 
-    btn=(Button)findViewById(R.id.button);
-    btn.setOnClickListener(this);
-    updateTime();
-  }
+		setContentView(R.layout.main);
 
-  @Override
-  public void onClick(View view) {
-    updateTime();
-  }
+		btn = (Button) findViewById(R.id.button);
+		btn.setOnClickListener(this);
+		updateTime();
+	}
 
-  private void updateTime() {
-    btn.setText(new Date().toString());
-  }
+	@Override
+	public void onClick(View view) {
+		updateTime();
+	}
+
+	private void updateTime() {
+		btn.setText(new Date().toString());
+	}
 }

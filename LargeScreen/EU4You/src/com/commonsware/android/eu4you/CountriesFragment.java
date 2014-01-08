@@ -14,6 +14,7 @@
 
 package com.commonsware.android.eu4you;
 
+import info.juanmendez.android.views.ContractListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,75 +22,86 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class CountriesFragment extends
-    ContractListFragment<CountriesFragment.Contract> {
-  static private final String STATE_CHECKED=
-      "com.commonsware.android.eu4you.STATE_CHECKED";
+public class CountriesFragment extends ContractListFragment<CountriesFragment.Contract>
+{
+	static private final String STATE_CHECKED = "com.commonsware.android.eu4you.STATE_CHECKED";
 
-  @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+	@Override
+	public void onActivityCreated(Bundle state)
+	{
+		super.onActivityCreated(state);
 
-    setListAdapter(new CountryAdapter());
+		setListAdapter(new CountryAdapter());
 
-    if (state != null) {
-      int position=state.getInt(STATE_CHECKED, -1);
+		if (state != null)
+		{
+			int position = state.getInt(STATE_CHECKED, -1);
 
-      if (position > -1) {
-        getListView().setItemChecked(position, true);
-      }
-    }
-  }
+			if (position > -1)
+			{
+				getListView().setItemChecked(position, true);
+			}
+		}
+	}
 
-  @Override
-  public void onListItemClick(ListView l, View v, int position, long id) {
-    if (getContract().isPersistentSelection()) {
-      getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-      l.setItemChecked(position, true);
-    }
-    else {
-      getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
-    }
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id)
+	{
+		if (getContract().isPersistentSelection())
+		{
+			getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+			l.setItemChecked(position, true);
+		}
+		else
+		{
+			getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
+		}
 
-    getContract().onCountrySelected(Country.EU.get(position));
-  }
+		getContract().onCountrySelected(Country.EU.get(position));
+	}
 
-  @Override
-  public void onSaveInstanceState(Bundle state) {
-    super.onSaveInstanceState(state);
+	@Override
+	public void onSaveInstanceState(Bundle state)
+	{
+		super.onSaveInstanceState(state);
 
-    state.putInt(STATE_CHECKED, getListView().getCheckedItemPosition());
-  }
+		state.putInt(STATE_CHECKED, getListView().getCheckedItemPosition());
+	}
 
-  class CountryAdapter extends ArrayAdapter<Country> {
-    CountryAdapter() {
-      super(getActivity(), R.layout.row, R.id.name, Country.EU);
-    }
+	class CountryAdapter extends ArrayAdapter<Country>
+	{
+		CountryAdapter()
+		{
+			super(getActivity(), R.layout.row, R.id.name, Country.EU);
+		}
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      CountryViewHolder wrapper=null;
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			CountryViewHolder wrapper = null;
 
-      if (convertView == null) {
-        convertView=
-            LayoutInflater.from(getActivity()).inflate(R.layout.row,
-                                                       null);
-        wrapper=new CountryViewHolder(convertView);
-        convertView.setTag(wrapper);
-      }
-      else {
-        wrapper=(CountryViewHolder)convertView.getTag();
-      }
+			if (convertView == null)
+			{
+				convertView = LayoutInflater.from(getActivity()).inflate(
+						R.layout.row, null);
+				wrapper = new CountryViewHolder(convertView);
+				convertView.setTag(wrapper);
+			}
+			else
+			{
+				wrapper = (CountryViewHolder) convertView.getTag();
+			}
 
-      wrapper.populateFrom(getItem(position));
+			wrapper.populateFrom(getItem(position));
 
-      return(convertView);
-    }
-  }
+			return (convertView);
+		}
+	}
 
-  interface Contract {
-    void onCountrySelected(Country c);
+	interface Contract
+	{
+		void onCountrySelected(Country c);
 
-    boolean isPersistentSelection();
-  }
+		boolean isPersistentSelection();
+	}
 }

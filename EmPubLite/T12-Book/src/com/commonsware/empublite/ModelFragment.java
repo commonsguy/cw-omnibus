@@ -37,56 +37,68 @@ public class ModelFragment extends SherlockFragment {
     }
   }
 
-  @TargetApi(11)
-  static public <T> void executeAsyncTask(AsyncTask<T, ?, ?> task,
-                                          T... params) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
-    }
-    else {
-      task.execute(params);
-    }
-  }
+	@TargetApi(11)
+	static public <T> void executeAsyncTask(AsyncTask<T, ?, ?> task,
+			T... params)
+	{
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
+		}
+		else
+		{
+			task.execute(params);
+		}
+	}
 
-  private class ContentsLoadTask extends AsyncTask<Context, Void, Void> {
-    private BookContents localContents=null;
-    private Exception e=null;
+	private class ContentsLoadTask extends AsyncTask<Context, Void, Void>
+	{
+		private BookContents localContents = null;
+		private Exception e = null;
 
-    @Override
-    protected Void doInBackground(Context... ctxt) {
-      try {
-        StringBuilder buf=new StringBuilder();
-        InputStream json=ctxt[0].getAssets().open("book/contents.json");
-        BufferedReader in=
-            new BufferedReader(new InputStreamReader(json));
-        String str;
+		@Override
+		protected Void doInBackground(Context... ctxt)
+		{
+			try
+			{
+				StringBuilder buf = new StringBuilder();
+				InputStream json = ctxt[0].getAssets().open(
+						"book/contents.json");
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						json));
+				String str;
 
-        while ((str=in.readLine()) != null) {
-          buf.append(str);
-        }
+				while ((str = in.readLine()) != null)
+				{
+					buf.append(str);
+				}
 
-        in.close();
+				in.close();
 
-        localContents=new BookContents(new JSONObject(buf.toString()));
-      }
-      catch (Exception e) {
-        this.e=e;
-      }
+				localContents = new BookContents(new JSONObject(buf.toString()));
+			}
+			catch (Exception e)
+			{
+				this.e = e;
+			}
 
-      return(null);
-    }
+			return (null);
+		}
 
-    @Override
-    public void onPostExecute(Void arg0) {
-      if (e == null) {
-        ModelFragment.this.contents=localContents;
-        ModelFragment.this.contentsTask=null;
-        deliverModel();
-      }
-      else {
-        Log.e(getClass().getSimpleName(), "Exception loading contents",
-              e);
-      }
-    }
-  }
+		@Override
+		public void onPostExecute(Void arg0)
+		{
+			if (e == null)
+			{
+				ModelFragment.this.contents = localContents;
+				ModelFragment.this.contentsTask = null;
+				deliverModel();
+			}
+			else
+			{
+				Log.e(getClass().getSimpleName(), "Exception loading contents",
+						e);
+			}
+		}
+	}
 }

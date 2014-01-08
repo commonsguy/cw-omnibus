@@ -10,8 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
-
+ */
 
 package com.commonsware.android.ordered;
 
@@ -25,64 +24,74 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import java.util.Date;
 
-public class OrderedActivity extends Activity {
-  private Button notice=null;
-  private AlarmManager mgr=null;
-  private PendingIntent pi=null;
-  
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-    
-    notice=(Button)findViewById(R.id.notice);
-    
-    ((NotificationManager)getSystemService(NOTIFICATION_SERVICE))
-                                                      .cancelAll();
-    
-    mgr=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
-    
-    Intent i=new Intent(this, NoticeService.class);
-    
-    pi=PendingIntent.getService(this, 0, i, 0);
-    
-    cancelAlarm(null);
-    
-    mgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                      SystemClock.elapsedRealtime()+1000,
-                      5000,
-                      pi);
-  }
-  
-  @Override
-  public void onResume() {
-    super.onResume();
-    
-    IntentFilter filter=new IntentFilter(NoticeService.BROADCAST);
-    
-    filter.setPriority(2);
-    registerReceiver(onNotice, filter);
-  }
-  
-  @Override
-  public void onPause() {
-    super.onPause();
-    
-    unregisterReceiver(onNotice);
-  }
-  
-  public void cancelAlarm(View v) {
-    mgr.cancel(pi);
-  }
-  
-  private BroadcastReceiver onNotice=new BroadcastReceiver() {
-    public void onReceive(Context ctxt, Intent i) {
-      notice.setText(new Date().toString());
-      abortBroadcast();
-    }
-  };
+public class OrderedActivity extends Activity
+{
+	private Button notice = null;
+	private AlarmManager mgr = null;
+	private PendingIntent pi = null;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+
+		notice = (Button) findViewById(R.id.notice);
+
+		((NotificationManager) getSystemService(NOTIFICATION_SERVICE))
+				.cancelAll();
+
+		mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+		Intent i = new Intent(this, NoticeService.class);
+
+		pi = PendingIntent.getService(this, 0, i, 0);
+
+		cancelAlarm(null);
+
+		mgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+				SystemClock.elapsedRealtime() + 1000, 5000, pi);
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+
+		IntentFilter filter = new IntentFilter(NoticeService.BROADCAST);
+
+		filter.setPriority(2);
+		registerReceiver(ActivityReceiver, filter);
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+
+		unregisterReceiver(ActivityReceiver);
+	}
+
+	public void cancelAlarm(View v)
+	{
+		mgr.cancel(pi);
+	}
+
+	private BroadcastReceiver ActivityReceiver = new BroadcastReceiver()
+	{
+		public void onReceive(Context ctxt, Intent i)
+		{
+			Log.e(NoticeService.BROADCAST,  "ActivityReceiver.onReceive");
+			notice.setText(new Date().toString());
+			
+			//avoid other broadcast receivers to get it
+			abortBroadcast();
+		}
+	};
 }

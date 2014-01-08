@@ -24,46 +24,54 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class EditorFragment extends SherlockFragment {
-  private static final String KEY_POSITION="position";
-  private int position=-1;
+public class EditorFragment extends SherlockFragment
+{
+	private static final String KEY_POSITION = "position";
+	private int position = -1;
 
-  static EditorFragment newInstance(int position) {
-    EditorFragment frag=new EditorFragment();
-    Bundle args=new Bundle();
+	static EditorFragment newInstance(int position)
+	{
+		EditorFragment frag = new EditorFragment();
+		Bundle args = new Bundle();
 
-    args.putInt(KEY_POSITION, position);
-    frag.setArguments(args);
+		args.putInt(KEY_POSITION, position);
+		frag.setArguments(args);
 
-    return(frag);
-  }
+		return (frag);
+	}
 
-  static String getTitle(Context ctxt, int position) {
-    return(String.format(ctxt.getString(R.string.hint), position + 1));
-  }
+	static String getTitle(Context ctxt, int position)
+	{
+		return (String.format(ctxt.getString(R.string.hint), position + 1));
+	}
 
-  @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.editor, container, false);
-    EditText editor=(EditText)result.findViewById(R.id.editor);
-    
-    position=getArguments().getInt(KEY_POSITION, -1);
-    editor.setHint(getTitle(getActivity(), position));
-    
-    
-    if ((position % 2)==0) {
-      setHasOptionsMenu(true);
-    }
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.editor, container, false);
+		EditText editor = (EditText) result.findViewById(R.id.editor);
 
-    return(result);
-  }
+		position = getArguments().getInt(KEY_POSITION, -1);
+		editor.setHint(getTitle(getActivity(), position));
 
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.actions, menu);
+		if ((position % 2) == 0)
+		{
+			setHasOptionsMenu(true);
+		}
+		else
+		{
+			setHasOptionsMenu(false);
+		}
 
-    super.onCreateOptionsMenu(menu, inflater);
-  }
+		return (result);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		inflater.inflate(R.menu.actions, menu);
+
+		super.onCreateOptionsMenu(menu, inflater);
+	}
 }

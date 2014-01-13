@@ -29,6 +29,11 @@ public class AuthActivity extends SherlockFragmentActivity implements
     setContentView(R.layout.passphrase_setup);
 
     SQLiteDatabase.loadLibs(this);
+    
+    if (DatabaseHelper.getDatabase()!=null) {
+      startActivity(new Intent(this, MainActivity.class));
+      finish();
+    }
 
     dbState=DatabaseHelper.getDatabaseState(AuthActivity.this);
 

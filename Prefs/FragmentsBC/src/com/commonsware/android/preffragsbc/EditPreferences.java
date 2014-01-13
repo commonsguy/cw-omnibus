@@ -39,6 +39,16 @@ public class EditPreferences extends SherlockPreferenceActivity {
     loadHeadersFromResource(R.xml.preference_headers, target);
   }
 
+  @Override
+  protected boolean isValidFragment(String fragmentName) {
+    if (First.class.getName().equals(fragmentName)
+        || Second.class.getName().equals(fragmentName)) {
+      return(true);
+    }
+    
+    return(false);
+  }
+
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public static class First extends PreferenceFragment {
     @Override
@@ -57,15 +67,5 @@ public class EditPreferences extends SherlockPreferenceActivity {
 
       addPreferencesFromResource(R.xml.preferences2);
     }
-  }
-
-  @Override
-  protected boolean isValidFragment(String fragmentName) {
-    if (First.class.getName().equals(fragmentName)
-        || Second.class.getName().equals(fragmentName)) {
-      return(true);
-    }
-    
-    return(false);
   }
 }

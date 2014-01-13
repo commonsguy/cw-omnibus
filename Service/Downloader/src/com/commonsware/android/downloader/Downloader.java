@@ -39,9 +39,9 @@ public class Downloader extends IntentService {
     try {
       File root=
           Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-      
+
       root.mkdirs();
-      
+
       File output=new File(root, i.getData().getLastPathSegment());
 
       if (output.exists()) {
@@ -51,13 +51,9 @@ public class Downloader extends IntentService {
       URL url=new URL(i.getData().toString());
       HttpURLConnection c=(HttpURLConnection)url.openConnection();
 
-      c.setRequestMethod("GET");
-      c.setReadTimeout(15000);
-      c.connect();
-
       FileOutputStream fos=new FileOutputStream(output.getPath());
       BufferedOutputStream out=new BufferedOutputStream(fos);
-      
+
       try {
         InputStream in=c.getInputStream();
         byte[] buffer=new byte[8192];
@@ -72,6 +68,7 @@ public class Downloader extends IntentService {
       finally {
         fos.getFD().sync();
         out.close();
+        c.disconnect();
       }
 
       sendBroadcast(new Intent(ACTION_COMPLETE));

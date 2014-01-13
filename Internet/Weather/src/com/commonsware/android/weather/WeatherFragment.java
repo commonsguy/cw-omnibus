@@ -90,15 +90,10 @@ public class WeatherFragment extends WebViewFragment implements
 
   private String getForecastXML(String path) throws IOException {
     BufferedReader reader=null;
-
+    URL url=new URL(path);
+    HttpURLConnection c=(HttpURLConnection)url.openConnection();
+    
     try {
-      URL url=new URL(path);
-      HttpURLConnection c=(HttpURLConnection)url.openConnection();
-
-      c.setRequestMethod("GET");
-      c.setReadTimeout(15000);
-      c.connect();
-
       reader=
           new BufferedReader(new InputStreamReader(c.getInputStream()));
 
@@ -115,6 +110,8 @@ public class WeatherFragment extends WebViewFragment implements
       if (reader != null) {
         reader.close();
       }
+      
+      c.disconnect();
     }
   }
 
@@ -140,7 +137,7 @@ public class WeatherFragment extends WebViewFragment implements
       Element temp=(Element)temps.item(i);
       Forecast forecast=forecasts.get(i);
 
-      forecast.setTemp(new Integer(temp.getFirstChild().getNodeValue()));
+      forecast.setTemp(Integer.valueOf(temp.getFirstChild().getNodeValue()));
     }
 
     NodeList icons=doc.getElementsByTagName("icon-link");

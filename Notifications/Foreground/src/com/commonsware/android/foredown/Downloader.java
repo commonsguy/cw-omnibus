@@ -61,11 +61,6 @@ public class Downloader extends IntentService {
 
       URL url=new URL(i.getData().toString());
       HttpURLConnection c=(HttpURLConnection)url.openConnection();
-
-      c.setRequestMethod("GET");
-      c.setReadTimeout(15000);
-      c.connect();
-
       FileOutputStream fos=new FileOutputStream(output.getPath());
       BufferedOutputStream out=new BufferedOutputStream(fos);
 
@@ -83,6 +78,7 @@ public class Downloader extends IntentService {
       finally {
         fos.getFD().sync();
         out.close();
+        c.disconnect();
       }
 
       stopForeground(true);

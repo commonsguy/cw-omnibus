@@ -66,7 +66,10 @@ public class ActionBarFragment extends ListFragment implements
   public void onSaveInstanceState(Bundle state) {
     super.onSaveInstanceState(state);
 
-    state.putCharSequence(STATE_QUERY, sv.getQuery());
+    if (!sv.isIconified()) {
+      state.putCharSequence(STATE_QUERY, sv.getQuery());
+    }
+
     state.putStringArrayList(STATE_MODEL, words);
   }
 
@@ -146,13 +149,13 @@ public class ActionBarFragment extends ListFragment implements
 
   private void configureSearchView(Menu menu) {
     MenuItem search=menu.findItem(R.id.search);
-    
+
     sv=(SearchView)search.getActionView();
     sv.setOnQueryTextListener(this);
     sv.setOnCloseListener(this);
     sv.setSubmitButtonEnabled(false);
-    
-    if (initialQuery!=null) {
+
+    if (initialQuery != null) {
       sv.setIconified(false);
       search.expandActionView();
       sv.setQuery(initialQuery, true);

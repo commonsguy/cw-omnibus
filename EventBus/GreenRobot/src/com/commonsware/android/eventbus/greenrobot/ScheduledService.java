@@ -22,7 +22,6 @@ import android.support.v4.app.NotificationCompat;
 import java.util.Random;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 import de.greenrobot.event.EventBus;
-import de.greenrobot.event.NoSubscriberEvent;
 
 public class ScheduledService extends WakefulIntentService {
   private static int NOTIFY_ID=1337;
@@ -36,7 +35,7 @@ public class ScheduledService extends WakefulIntentService {
   public void onCreate() {
     super.onCreate();
     
-    EventBus.getDefault().register(this);
+    EventBus.getDefault().register(this, 0);
   }
 
   @Override
@@ -51,14 +50,13 @@ public class ScheduledService extends WakefulIntentService {
     super.onDestroy();
   }
 
-  public void onEvent(NoSubscriberEvent noSub) {
-    RandomEvent original=(RandomEvent)noSub.originalEvent;
+  public void onEvent(RandomEvent event) {
     NotificationCompat.Builder b=new NotificationCompat.Builder(this);
     Intent ui=new Intent(this, EventDemoActivity.class);
 
     b.setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND)
      .setContentTitle(getString(R.string.notif_title))
-     .setContentText(Integer.toHexString(original.value))
+     .setContentText(Integer.toHexString(event.value))
      .setSmallIcon(android.R.drawable.stat_notify_more)
      .setTicker(getString(R.string.notif_title))
      .setContentIntent(PendingIntent.getActivity(this, 0, ui, 0));

@@ -52,7 +52,7 @@ public class EventLogFragment extends SherlockListFragment {
   public void onResume() {
     super.onResume();
 
-    EventBus.getDefault().register(this);
+    EventBus.getDefault().register(this, 1);
   }
 
   @Override
@@ -62,8 +62,15 @@ public class EventLogFragment extends SherlockListFragment {
     super.onPause();
   }
 
-  public void onEventMainThread(RandomEvent event) {
-    adapter.add(event);
+  public void onEvent(final RandomEvent event) {
+    getActivity().runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        adapter.add(event);        
+      }
+    });
+    
+    EventBus.getDefault().cancelEventDelivery(event);
   }
 
   class EventLogAdapter extends ArrayAdapter<RandomEvent> {

@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.7.+'
+    }
+}
+
+subprojects {
+    apply plugin: 'android'
+
+    android {
+        def signingPropFile = rootProject.file('signing.properties')
+
+        if (signingPropFile.canRead()) {
+            def Properties signingProps = new Properties()
+
+            signingProps.load(new FileInputStream(signingPropFile))
+
+            signingConfigs {
+                release {
+                    storeFile rootProject.file('HelloAIDL.keystore')
+                    keyAlias signingProps['KEY_ALIAS']
+                    storePassword signingProps['STORE_PASSWORD']
+                    keyPassword signingProps['KEY_PASSWORD']
+                }
+            }
+
+            buildTypes {
+                release {
+                    signingConfig signingConfigs.release
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.7.+'
+    }
+}
+
+apply plugin: 'android'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "18.1.0"
+
+    defaultConfig {
+        testPackageName "com.commonsware.android.gradle.hello.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+}
+

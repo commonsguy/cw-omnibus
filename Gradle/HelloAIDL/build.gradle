@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.7.+'
+    }
+}
+
+subprojects {
+    apply plugin: 'android'
+
+    android {
+        signingConfigs {
+            release {
+                storeFile file('HelloAIDL.keystore')
+                keyAlias 'HelloConfig'
+                storePassword 'laser.yams.heady.testy'
+                keyPassword 'fw.stabs.steady.wool'
+            }
+        }
+
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+}
+

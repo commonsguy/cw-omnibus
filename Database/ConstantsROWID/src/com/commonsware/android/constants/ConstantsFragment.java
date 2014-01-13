@@ -96,9 +96,12 @@ public class ConstantsFragment extends SherlockListFragment implements
   }
 
   private Cursor doQuery() {
-    return(db.getReadableDatabase().rawQuery("SELECT ROWID AS _id, title, value "
-                                                 + "FROM constants ORDER BY title",
-                                             null));
+    String query=
+        String.format("SELECT ROWID AS _id, %s, %s FROM %s ORDER BY %s",
+                      DatabaseHelper.TITLE, DatabaseHelper.VALUE,
+                      DatabaseHelper.TABLE, DatabaseHelper.TITLE);
+
+    return(db.getReadableDatabase().rawQuery(query, null));
   }
 
   private class LoadCursorTask extends AsyncTask<Void, Void, Void> {

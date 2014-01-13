@@ -14,6 +14,7 @@
 
 package com.commonsware.android.constants;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -95,9 +96,12 @@ public class ConstantsFragment extends SherlockListFragment implements
   }
 
   private Cursor doQuery() {
-    return(db.getReadableDatabase().rawQuery("SELECT _id, title, value "
-                                                 + "FROM constants ORDER BY title",
-                                             null));
+    String query=
+        String.format("SELECT _id, %s, %s FROM %s ORDER BY %s",
+                      DatabaseHelper.TITLE, DatabaseHelper.VALUE,
+                      DatabaseHelper.TABLE, DatabaseHelper.TITLE);
+
+    return(db.getReadableDatabase().rawQuery(query, null));
   }
 
   private class LoadCursorTask extends AsyncTask<Void, Void, Void> {
@@ -111,25 +115,34 @@ public class ConstantsFragment extends SherlockListFragment implements
       return(null);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @SuppressWarnings("deprecation")
     @Override
     public void onPostExecute(Void arg0) {
       SimpleCursorAdapter adapter;
-      
-      if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
-        adapter=new SimpleCursorAdapter(getActivity(), R.layout.row,
-                                  constantsCursor, new String[] {
-                                      DatabaseHelper.TITLE,
-                                      DatabaseHelper.VALUE },
-                                  new int[] { R.id.title, R.id.value },
-                                  0);
+
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        adapter=
+            new SimpleCursorAdapter(
+                                    getActivity(),
+                                    R.layout.row,
+                                    constantsCursor,
+                                    new String[] {
+                                        DatabaseHelper.TITLE,
+                                        DatabaseHelper.VALUE },
+                                    new int[] { R.id.title, R.id.value },
+                                    0);
       }
       else {
-        adapter=new SimpleCursorAdapter(getActivity(), R.layout.row,
-                                        constantsCursor, new String[] {
-                                            DatabaseHelper.TITLE,
-                                            DatabaseHelper.VALUE },
-                                        new int[] { R.id.title, R.id.value });
+        adapter=
+            new SimpleCursorAdapter(
+                                    getActivity(),
+                                    R.layout.row,
+                                    constantsCursor,
+                                    new String[] {
+                                        DatabaseHelper.TITLE,
+                                        DatabaseHelper.VALUE },
+                                    new int[] { R.id.title, R.id.value });
       }
 
       setListAdapter(adapter);

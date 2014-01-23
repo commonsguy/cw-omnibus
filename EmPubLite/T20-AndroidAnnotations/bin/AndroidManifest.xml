@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.empublite"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<uses-sdk
+		android:minSdkVersion="9"
+		android:targetSdkVersion="19"/>
+
+	<supports-screens
+		android:largeScreens="true"
+		android:normalScreens="true"
+		android:smallScreens="false"
+		android:xlargeScreens="true"/>
+
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+	<application
+		android:allowBackup="true"
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name"
+		android:theme="@style/Theme.Sherlock.Light.DarkActionBar"
+		android:uiOptions="splitActionBarWhenNarrow">
+		<activity
+			android:name="EmPubLiteActivity_"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+		<activity android:name="SimpleContentActivity_">
+		</activity>
+		<activity android:name="Preferences">
+		</activity>
+		<activity android:name="NoteActivity_">
+		</activity>
+
+		<service android:name="DownloadCheckService_">
+		</service>
+		
+		<service android:name="DownloadInstallService_">
+		</service>
+
+		<receiver android:name="DownloadCompleteReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+			</intent-filter>
+		</receiver>
+		<receiver android:name="UpdateReceiver_">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"/>
+			</intent-filter>
+		</receiver>
+		<receiver
+			android:name="InstallReceiver"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="com.commonsware.empublite.action.UPDATE_READY"/>
+			</intent-filter>
+		</receiver>
+	</application>
+
+</manifest>

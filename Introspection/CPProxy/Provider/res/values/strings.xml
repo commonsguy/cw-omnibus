@@ -3,5 +3,6 @@
 
 	<string name="hello">Hello World!</string>
 	<string name="app_name">CPThunkProvider</string>
+	<string name="tainted_abort">Custom permission was defined before we were installed, aborting</string>
 
 </resources>

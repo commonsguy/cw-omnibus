@@ -5,11 +5,10 @@
 	android:versionName="1.0">
 
 	<uses-sdk
-		android:minSdkVersion="7"
+		android:minSdkVersion="9"
 		android:targetSdkVersion="11"/>
 
 	<uses-permission android:name="android.permission.READ_CONTACTS"/>
-	<uses-permission android:name="com.commonsware.android.cpproxy.PLUGIN"/>
 
 	<permission
 		android:name="com.commonsware.android.cpproxy.PLUGIN"

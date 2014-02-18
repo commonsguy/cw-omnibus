@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
+        classpath 'com.android.tools.build:gradle:0.8.+'
     }
 }
 
@@ -15,7 +15,7 @@ dependencies {
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "18.1.0"
+    buildToolsVersion "19.0.1"
 
     defaultConfig {
         versionCode 2
@@ -42,6 +42,7 @@ android {
 
         release {
           signingConfig signingConfigs.release
+          buildConfigField "String", "SERVER_URL", '"http://prod.this-is-so-fake.com"'
         }
 
         mezzanine.initWith(buildTypes.release)
@@ -51,10 +52,6 @@ android {
             debuggable true
             signingConfig signingConfigs.release
             buildConfigField "String", "SERVER_URL", '"http://stage.this-is-so-fake.com"'
-        }
-
-        release {
-          buildConfigField "String", "SERVER_URL", '"http://prod.this-is-so-fake.com"'
         }
     }
 }

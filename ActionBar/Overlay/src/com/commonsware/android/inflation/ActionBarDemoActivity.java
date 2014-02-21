@@ -42,6 +42,9 @@ public class ActionBarDemoActivity extends SherlockListActivity
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
 
+    /**
+     * Enable extended screen features. This must be called before setContentView(). 
+     */
     getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 
     initAdapter();

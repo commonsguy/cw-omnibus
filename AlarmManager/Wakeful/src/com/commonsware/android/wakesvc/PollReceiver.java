@@ -22,29 +22,33 @@ import android.content.Intent;
 import android.os.SystemClock;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 
-public class PollReceiver extends BroadcastReceiver {
-  private static final int PERIOD=900000; // 15 minutes
-  private static final int INITIAL_DELAY=5000; // 5 seconds
+public class PollReceiver extends BroadcastReceiver
+{
+	private static final int PERIOD = 900000; // 15 minutes
+	private static final int INITIAL_DELAY = 5000; // 5 seconds
 
-  @Override
-  public void onReceive(Context ctxt, Intent i) {
-    if (i.getAction() == null) {
-      WakefulIntentService.sendWakefulWork(ctxt, ScheduledService.class);
-    }
-    else {
-      scheduleAlarms(ctxt);
-    }
-  }
+	@Override
+	public void onReceive(Context ctxt, Intent i)
+	{
+		if (i.getAction() == null)
+		{
+			WakefulIntentService.sendWakefulWork(ctxt, ScheduledService.class);
+		}
+		else
+		{
+			scheduleAlarms(ctxt);
+		}
+	}
 
-  static void scheduleAlarms(Context ctxt) {
-    AlarmManager mgr=
-        (AlarmManager)ctxt.getSystemService(Context.ALARM_SERVICE);
-    Intent i=new Intent(ctxt, PollReceiver.class);
-    PendingIntent pi=PendingIntent.getBroadcast(ctxt, 0, i, 0);
+	static void scheduleAlarms(Context ctxt)
+	{
+		AlarmManager mgr = (AlarmManager) ctxt
+				.getSystemService(Context.ALARM_SERVICE);
+		Intent i = new Intent(ctxt, PollReceiver.class);
+		PendingIntent pi = PendingIntent.getBroadcast(ctxt, 0, i, 0);
 
-    mgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                     SystemClock.elapsedRealtime() + INITIAL_DELAY,
-                     PERIOD, pi);
+		mgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+				SystemClock.elapsedRealtime() + INITIAL_DELAY, PERIOD, pi);
 
-  }
+	}
 }

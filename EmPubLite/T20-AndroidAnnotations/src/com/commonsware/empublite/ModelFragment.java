@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.json.JSONObject;

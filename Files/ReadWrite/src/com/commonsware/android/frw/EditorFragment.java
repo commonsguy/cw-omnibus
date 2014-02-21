@@ -36,169 +36,205 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class EditorFragment extends SherlockFragment {
-  private static final String FILENAME="notes.txt";
-  private CheckBox external=null;
-  private EditText editor=null;
+public class EditorFragment extends SherlockFragment
+{
+	private static final String FILENAME = "notes.txt";
+	private CheckBox external = null;
+	private EditText editor = null;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-                           Bundle savedInstanceState) {
-    setHasOptionsMenu(true);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+			Bundle savedInstanceState)
+	{
+		setHasOptionsMenu(true);
 
-    View result=inflater.inflate(R.layout.editor, parent, false);
+		View result = inflater.inflate(R.layout.editor, parent, false);
 
-    editor=(EditText)result.findViewById(R.id.editor);
+		editor = (EditText) result.findViewById(R.id.editor);
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onResume() {
-    super.onResume();
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
-    new LoadTask().execute(getTarget());
-  }
+		new LoadTask().execute(getTarget());
+	}
 
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.actions, menu);
-    external=(CheckBox)menu.findItem(R.id.location).getActionView();
-  }
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		inflater.inflate(R.menu.actions, menu);
+		external = (CheckBox) menu.findItem(R.id.location).getActionView();
+	}
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.save) {
-      try {
-        save(editor.getText().toString(), getTarget());
-      }
-      catch (Exception e) {
-        boom(e);
-      }
-    }
-    else if (item.getItemId() == R.id.saveBackground) {
-      new SaveTask(editor.getText().toString(), getTarget()).execute();
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (item.getItemId() == R.id.save)
+		{
+			try
+			{
+				save(editor.getText().toString(), getTarget());
+			}
+			catch (Exception e)
+			{
+				boom(e);
+			}
+		}
+		else
+			if (item.getItemId() == R.id.saveBackground)
+			{
+				new SaveTask(editor.getText().toString(), getTarget())
+						.execute();
+			}
 
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 
-  private File getTarget() {
-    File root=null;
+	private File getTarget()
+	{
+		File root = null;
 
-    if (external != null && external.isChecked()) {
-      root=getActivity().getExternalFilesDir(null);
-    }
-    else {
-      root=getActivity().getFilesDir();
-    }
+		if (external != null && external.isChecked())
+		{
+			root = getActivity().getExternalFilesDir(null);
+		}
+		else
+		{
+			root = getActivity().getFilesDir();
+		}
 
-    return(new File(root, FILENAME));
-  }
+		return (new File(root, FILENAME));
+	}
 
-  private void boom(Exception e) {
-    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG)
-         .show();
-    Log.e(getClass().getSimpleName(), "Exception saving file", e);
-  }
+	private void boom(Exception e)
+	{
+		Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+		Log.e(getClass().getSimpleName(), "Exception saving file", e);
+	}
 
-  private void save(String text, File target) throws IOException {
-    FileOutputStream fos=new FileOutputStream(target);
-    OutputStreamWriter out=new OutputStreamWriter(fos);
+	private void save(String text, File target) throws IOException
+	{
+		FileOutputStream fos = new FileOutputStream(target);
+		OutputStreamWriter out = new OutputStreamWriter(fos);
 
-    out.write(text);
-    out.flush();
-    fos.getFD().sync();
-    out.close();
-  }
+		out.write(text);
+		out.flush();
+		fos.getFD().sync();
+		out.close();
+	}
 
-  private String load(File target) throws IOException {
-    String result="";
+	private String load(File target) throws IOException
+	{
+		String result = "";
 
-    try {
-      InputStream in=new FileInputStream(target);
+		try
+		{
+			InputStream in = new FileInputStream(target);
 
-      if (in != null) {
-        try {
-          InputStreamReader tmp=new InputStreamReader(in);
-          BufferedReader reader=new BufferedReader(tmp);
-          String str;
-          StringBuilder buf=new StringBuilder();
+			if (in != null)
+			{
+				try
+				{
+					InputStreamReader tmp = new InputStreamReader(in);
+					BufferedReader reader = new BufferedReader(tmp);
+					String str;
+					StringBuilder buf = new StringBuilder();
 
-          while ((str=reader.readLine()) != null) {
-            buf.append(str);
-            buf.append("\n");
-          }
+					while ((str = reader.readLine()) != null)
+					{
+						buf.append(str);
+						buf.append("\n");
+					}
 
-          result=buf.toString();
-        }
-        finally {
-          in.close();
-        }
-      }
-    }
-    catch (java.io.FileNotFoundException e) {
-      // that's OK, we probably haven't created it yet
-    }
+					result = buf.toString();
+				}
+				finally
+				{
+					in.close();
+				}
+			}
+		}
+		catch (java.io.FileNotFoundException e)
+		{
+			// that's OK, we probably haven't created it yet
+		}
 
-    return(result);
-  }
+		return (result);
+	}
 
-  private class LoadTask extends AsyncTask<File, Void, String> {
-    private Exception e=null;
+	private class LoadTask extends AsyncTask<File, Void, String>
+	{
+		private Exception e = null;
 
-    @Override
-    protected String doInBackground(File... args) {
-      String result="";
+		@Override
+		protected String doInBackground(File... args)
+		{
+			String result = "";
 
-      try {
-        result=load(args[0]);
-      }
-      catch (Exception e) {
-        this.e=e;
-      }
+			try
+			{
+				result = load(args[0]);
+			}
+			catch (Exception e)
+			{
+				this.e = e;
+			}
 
-      return(result);
-    }
+			return (result);
+		}
 
-    @Override
-    protected void onPostExecute(String text) {
-      if (e == null) {
-        editor.setText(text);
-      }
-      else {
-        boom(e);
-      }
-    }
-  }
+		@Override
+		protected void onPostExecute(String text)
+		{
+			if (e == null)
+			{
+				editor.setText(text);
+			}
+			else
+			{
+				boom(e);
+			}
+		}
+	}
 
-  private class SaveTask extends AsyncTask<Void, Void, Void> {
-    private Exception e=null;
-    private String text;
-    private File target;
+	private class SaveTask extends AsyncTask<Void, Void, Void>
+	{
+		private Exception e = null;
+		private String text;
+		private File target;
 
-    SaveTask(String text, File target) {
-      this.text=text;
-      this.target=target;
-    }
+		SaveTask(String text, File target)
+		{
+			this.text = text;
+			this.target = target;
+		}
 
-    @Override
-    protected Void doInBackground(Void... args) {
-      try {
-        save(text, target);
-      }
-      catch (Exception e) {
-        this.e=e;
-      }
+		@Override
+		protected Void doInBackground(Void... args)
+		{
+			try
+			{
+				save(text, target);
+			}
+			catch (Exception e)
+			{
+				this.e = e;
+			}
 
-      return(null);
-    }
+			return (null);
+		}
 
-    @Override
-    protected void onPostExecute(Void arg0) {
-      if (e != null) {
-        boom(e);
-      }
-    }
-  }
+		@Override
+		protected void onPostExecute(Void arg0)
+		{
+			if (e != null)
+			{
+				boom(e);
+			}
+		}
+	}
 }

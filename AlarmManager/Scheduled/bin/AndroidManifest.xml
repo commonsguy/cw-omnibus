@@ -30,6 +30,10 @@
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>
 			</intent-filter>
 		</receiver>
+		
+		<receiver android:name="AlarmReceiver"  android:exported="false">
+		    
+		</receiver>
 
 		<service android:name="ScheduledService">
 		</service>

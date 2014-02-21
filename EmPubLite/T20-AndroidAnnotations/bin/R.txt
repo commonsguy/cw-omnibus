@@ -531,7 +531,7 @@ int styleable SherlockSearchView_android_inputType 1
 int styleable SherlockSearchView_android_maxWidth 0
 int styleable SherlockSearchView_iconifiedByDefault 3
 int styleable SherlockSearchView_queryHint 4
-int[] styleable SherlockSpinner { 0x010100af, 0x01010175, 0x01010176, 0x0101017b, 0x01010262, 0x010102ac, 0x010102ad, 0x0101041f }
+int[] styleable SherlockSpinner { 0x010100af, 0x01010175, 0x01010176, 0x0101017b, 0x01010262, 0x010102ac, 0x010102ad, 0x0101043a }
 int styleable SherlockSpinner_android_dropDownHorizontalOffset 5
 int styleable SherlockSpinner_android_dropDownSelector 1
 int styleable SherlockSpinner_android_dropDownVerticalOffset 6

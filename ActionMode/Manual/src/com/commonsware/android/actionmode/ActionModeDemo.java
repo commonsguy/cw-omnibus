@@ -29,142 +29,151 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockListActivity;
 
-public class ActionModeDemo extends SherlockListActivity {
-  private static final String[] items= { "lorem", "ipsum", "dolor",
-      "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
-      "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
-      "vel", "erat", "placerat", "ante", "porttitor", "sodales",
-      "pellentesque", "augue", "purus" };
-  private ArrayList<String> words=null;
+public class ActionModeDemo extends SherlockListActivity
+{
+	private static final String[] items = { "lorem", "ipsum", "dolor", "sit",
+			"amet", "consectetuer", "adipiscing", "elit", "morbi", "vel",
+			"ligula", "vitae", "arcu", "aliquet", "mollis", "etiam", "vel",
+			"erat", "placerat", "ante", "porttitor", "sodales", "pellentesque",
+			"augue", "purus" };
+	private ArrayList<String> words = null;
 
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+	@Override
+	public void onCreate(Bundle icicle)
+	{
+		super.onCreate(icicle);
 
-    initAdapter();
-    getListView().setLongClickable(true);
-    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-    getListView().setOnItemLongClickListener(new ActionModeHelper(
-                                                                  this,
-                                                                  getListView()));
-  }
+		initAdapter();
+		getListView().setLongClickable(true);
+		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		getListView().setOnItemLongClickListener(
+				new ActionModeHelper(this, getListView()));
+	}
 
-  @Override
-  public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.option, menu);
+	@Override
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu)
+	{
+		getSupportMenuInflater().inflate(R.menu.option, menu);
 
-    EditText add=null;
+		EditText add = null;
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      View v=menu.findItem(R.id.add).getActionView();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			View v = menu.findItem(R.id.add).getActionView();
 
-      if (v != null) {
-        add=(EditText)v.findViewById(R.id.title);
-      }
-    }
+			if (v != null)
+			{
+				add = (EditText) v.findViewById(R.id.title);
+			}
+		}
 
-    if (add != null) {
-      add.setOnEditorActionListener(onSearch);
-    }
+		if (add != null)
+		{
+			add.setOnEditorActionListener(onSearch);
+		}
 
-    return(super.onCreateOptionsMenu(menu));
-  }
+		return (super.onCreateOptionsMenu(menu));
+	}
 
-  @Override
-  public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.add:
-        add();
-        return(true);
+	@Override
+	public boolean onOptionsItemSelected(
+			com.actionbarsherlock.view.MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+		case R.id.add:
+			add();
+			return (true);
 
-      case R.id.reset:
-        initAdapter();
-        return(true);
+		case R.id.reset:
+			initAdapter();
+			return (true);
 
-      case R.id.about:
-      case android.R.id.home:
-        Toast.makeText(this, "Action Bar Sample App", Toast.LENGTH_LONG)
-             .show();
-        return(true);
-    }
+		case R.id.about:
+		case android.R.id.home:
+			Toast.makeText(this, "Action Bar Sample App", Toast.LENGTH_LONG)
+					.show();
+			return (true);
+		}
 
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 
-  @SuppressWarnings("unchecked")
-  public boolean performAction(int itemId, int position) {
-    ArrayAdapter<String> adapter=(ArrayAdapter<String>)getListAdapter();
+	@SuppressWarnings("unchecked")
+	public boolean performAction(int itemId, int position)
+	{
+		ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListAdapter();
 
-    switch (itemId) {
-      case R.id.cap:
-        String word=words.get(position);
+		switch (itemId)
+		{
+		case R.id.cap:
+			String word = words.get(position);
 
-        word=word.toUpperCase();
+			word = word.toUpperCase();
 
-        adapter.remove(words.get(position));
-        adapter.insert(word, position);
+			adapter.remove(words.get(position));
+			adapter.insert(word, position);
 
-        return(true);
+			return (true);
 
-      case R.id.remove:
-        adapter.remove(words.get(position));
+		case R.id.remove:
+			adapter.remove(words.get(position));
 
-        return(true);
-    }
+			return (true);
+		}
 
-    return(false);
-  }
+		return (false);
+	}
 
-  private void initAdapter() {
-    words=new ArrayList<String>();
+	private void initAdapter()
+	{
+		words = new ArrayList<String>();
 
-    for (String s : items) {
-      words.add(s);
-    }
+		for (String s : items)
+		{
+			words.add(s);
+		}
 
-    setListAdapter(new ArrayAdapter<String>(
-                                            this,
-                                            R.layout.simple_list_item_1,
-                                            words));
-  }
+		setListAdapter(new ArrayAdapter<String>(this,
+				R.layout.simple_list_item_1, words));
+	}
 
-  private void add() {
-    final View addView=getLayoutInflater().inflate(R.layout.add, null);
+	private void add()
+	{
+		final View addView = getLayoutInflater().inflate(R.layout.add, null);
 
-    new AlertDialog.Builder(this).setTitle("Add a Word")
-                                 .setView(addView)
-                                 .setPositiveButton("OK",
-                                                    new DialogInterface.OnClickListener() {
-                                                      public void onClick(DialogInterface dialog,
-                                                                          int whichButton) {
-                                                        addWord((TextView)addView.findViewById(R.id.title));
-                                                      }
-                                                    })
-                                 .setNegativeButton("Cancel", null)
-                                 .show();
-  }
+		new AlertDialog.Builder(this).setTitle("Add a Word").setView(addView)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int whichButton)
+					{
+						addWord((TextView) addView.findViewById(R.id.title));
+					}
+				}).setNegativeButton("Cancel", null).show();
+	}
 
-  @SuppressWarnings("unchecked")
-  private void addWord(TextView title) {
-    ArrayAdapter<String> adapter=(ArrayAdapter<String>)getListAdapter();
+	@SuppressWarnings("unchecked")
+	private void addWord(TextView title)
+	{
+		ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListAdapter();
 
-    adapter.add(title.getText().toString());
-  }
+		adapter.add(title.getText().toString());
+	}
 
-  private TextView.OnEditorActionListener onSearch=
-      new TextView.OnEditorActionListener() {
-        public boolean onEditorAction(TextView v, int actionId,
-                                      KeyEvent event) {
-          if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
-            addWord(v);
+	private TextView.OnEditorActionListener onSearch = new TextView.OnEditorActionListener()
+	{
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+		{
+			if (event == null || event.getAction() == KeyEvent.ACTION_UP)
+			{
+				addWord(v);
 
-            InputMethodManager imm=
-                (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-          }
+				imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+			}
 
-          return(true);
-        }
-      };
+			return (true);
+		}
+	};
 }

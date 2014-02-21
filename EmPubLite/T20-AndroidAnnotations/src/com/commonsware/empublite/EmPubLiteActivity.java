@@ -1,7 +1,5 @@
 package com.commonsware.empublite;
 
-import info.juanmendez.android.utils.Trace;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentByTag;
@@ -28,8 +26,9 @@ import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 @EActivity(R.layout.main)
 @OptionsMenu(R.menu.options)
-public class EmPubLiteActivity extends SherlockFragmentActivity implements
-		FragmentManager.OnBackStackChangedListener
+public class EmPubLiteActivity
+extends SherlockFragmentActivity 
+implements FragmentManager.OnBackStackChangedListener
 {
 
 	private static final String MODEL = "model";
@@ -50,18 +49,9 @@ public class EmPubLiteActivity extends SherlockFragmentActivity implements
 	@ViewById(R.id.pager)
 	ViewPager pager;
 		
-	@ViewById( R.id.progressBar1 ) ProgressBar progressBar;
-
-	/**
-	 * fragments
-	 */
-
-	/**
-	 * FragmentByTag only references if it is attached, doesn't create it!
-	 * https:
-	 * //github.com/excilys/androidannotations/wiki/Enhance-Fragments#injecting
-	 * -fragments
-	 */
+	@ViewById( R.id.progressBar1 ) 
+	ProgressBar progressBar;
+	
 	@FragmentByTag(HELP) SimpleContentFragment help;
 	@FragmentByTag(ABOUT)SimpleContentFragment about;
 	@FragmentByTag(MODEL)ModelFragment_ model;
@@ -83,8 +73,6 @@ public class EmPubLiteActivity extends SherlockFragmentActivity implements
 
 		getSupportActionBar().setHomeButtonEnabled(true);
 		UpdateReceiver_.scheduleAlarm(this);
-		
-		Trace.warn("EmPubLiteActivity", this );	
 	}
 
 	@AfterViews

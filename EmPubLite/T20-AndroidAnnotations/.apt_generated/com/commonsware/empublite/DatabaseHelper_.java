@@ -54,6 +54,24 @@ public final class DatabaseHelper_
     }
 
     @Override
+    public void saveNoteAsync(final int position, final String prose) {
+        BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
+
+
+            @Override
+            public void execute() {
+                try {
+                    DatabaseHelper_.super.saveNoteAsync(position, prose);
+                } catch (Throwable e) {
+                    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
     public void getNoteAsync(final int position, final NoteListener listener) {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
@@ -80,24 +98,6 @@ public final class DatabaseHelper_
             public void execute() {
                 try {
                     DatabaseHelper_.super.deleteNoteAsync(position);
-                } catch (Throwable e) {
-                    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
-                }
-            }
-
-        }
-        );
-    }
-
-    @Override
-    public void saveNoteAsync(final int position, final String prose) {
-        BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
-
-
-            @Override
-            public void execute() {
-                try {
-                    DatabaseHelper_.super.saveNoteAsync(position, prose);
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }

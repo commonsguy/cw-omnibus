@@ -35,9 +35,10 @@ public class PollReceiver extends BroadcastReceiver
 	{
 		AlarmManager mgr = (AlarmManager) ctxt.getSystemService(Context.ALARM_SERVICE);
 		
-		Intent i = new Intent(ctxt, ScheduledService.class);
-		
-		PendingIntent pi = PendingIntent.getService(ctxt, 0, i, 0);
+		//Intent i = new Intent(ctxt, ScheduledService.class);
+		//PendingIntent pi = PendingIntent.getService(ctxt, 0, i, 0);
+		Intent i = new Intent( ctxt, AlarmReceiver.class );
+		PendingIntent pi = PendingIntent.getBroadcast(ctxt, 0, i, 0);
 		
 		//or pi = PendingIntent.getBroadcast(ctxt, 0, i, 0);
 		

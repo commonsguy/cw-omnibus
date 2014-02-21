@@ -4,11 +4,8 @@ import org.androidannotations.annotations.sharedpreferences.DefaultString;
 import org.androidannotations.annotations.sharedpreferences.SharedPref;
 
 /**
- * public static final String PREF_UPDATE_DIR = "updateDir"; public static final
- * String PREF_PREV_UPDATE = "previousUpdateDir";
- * 
- * @author Juan
- * 
+ * This shared preference uses Application's default. So we can share
+ * it among other services and activities.
  */
 
 @SharedPref( value = SharedPref.Scope.APPLICATION_DEFAULT)

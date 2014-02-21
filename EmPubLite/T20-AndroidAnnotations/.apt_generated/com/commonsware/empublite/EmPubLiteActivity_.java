@@ -80,11 +80,10 @@ public final class EmPubLiteActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        sidebar = ((View) hasViews.findViewById(com.commonsware.empublite.R.id.sidebar));
         progressBar = ((ProgressBar) hasViews.findViewById(com.commonsware.empublite.R.id.progressBar1));
         pager = ((ViewPager) hasViews.findViewById(com.commonsware.empublite.R.id.pager));
+        sidebar = ((View) hasViews.findViewById(com.commonsware.empublite.R.id.sidebar));
         divider = ((View) hasViews.findViewById(com.commonsware.empublite.R.id.divider));
-        model = ((ModelFragment_) findSupportFragmentByTag("model"));
         help = ((SimpleContentFragment) findSupportFragmentByTag("help"));
         about = ((SimpleContentFragment) findSupportFragmentByTag("about"));
         afterViews();
@@ -108,20 +107,20 @@ public final class EmPubLiteActivity_
             return true;
         }
         int itemId_ = item.getItemId();
-        if (itemId_ == com.commonsware.empublite.R.id.update) {
-            return updateMenuSelected();
-        }
-        if (itemId_ == com.commonsware.empublite.R.id.notes) {
-            return notesMenuSelected();
+        if (itemId_ == com.commonsware.empublite.R.id.settings) {
+            return settingsMenuSelected();
         }
         if (itemId_ == com.commonsware.empublite.R.id.about) {
             return aboutMenuSelected();
         }
-        if (itemId_ == com.commonsware.empublite.R.id.settings) {
-            return settingsMenuSelected();
+        if (itemId_ == com.commonsware.empublite.R.id.update) {
+            return updateMenuSelected();
         }
         if (itemId_ == android.R.id.home) {
             return homeMenuSelected();
+        }
+        if (itemId_ == com.commonsware.empublite.R.id.notes) {
+            return notesMenuSelected();
         }
         if (itemId_ == com.commonsware.empublite.R.id.help) {
             return helpMenuSelected();

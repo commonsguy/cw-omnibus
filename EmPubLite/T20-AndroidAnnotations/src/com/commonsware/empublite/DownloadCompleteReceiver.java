@@ -1,7 +1,5 @@
 package com.commonsware.empublite;
 
-import info.juanmendez.android.utils.Trace;
-
 import java.io.File;
 
 import android.content.BroadcastReceiver;
@@ -20,8 +18,7 @@ public class DownloadCompleteReceiver extends BroadcastReceiver
 				Environment
 						.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
 				DownloadCheckService.UPDATE_FILENAME);
-
-		Trace.warn("DownloadCompleteReceiver", this );
+		
 		if (update.exists())
 		{
 			WakefulIntentService.sendWakefulWork(ctxt,

@@ -17,22 +17,26 @@ package com.commonsware.android.abf;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-public class ActionBarFragmentActivity extends ActionBarActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+public class ActionBarFragmentActivity extends ActionBarActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.main);
+		setContentView(R.layout.main);
 
-    findViewById(android.R.id.content).post(new Runnable() {
-      public void run() {
-        if (getSupportFragmentManager().findFragmentById(R.id.fragment) == null) {
-          getSupportFragmentManager().beginTransaction()
-                                     .add(R.id.fragment,
-                                          new ActionBarFragment())
-                                     .commit();
-        }
-      }
-    });
-  }
+		findViewById(android.R.id.content).post(new Runnable()
+		{
+			public void run()
+			{
+				if (getSupportFragmentManager().findFragmentById(R.id.fragment) == null)
+				{
+					getSupportFragmentManager().beginTransaction()
+							.add(R.id.fragment, new ActionBarFragment())
+							.commit();
+				}
+			}
+		});
+	}
 }

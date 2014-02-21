@@ -29,81 +29,89 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ActionBarFragment extends ListFragment implements
-    TextView.OnEditorActionListener {
-  private static final String[] items= { "lorem", "ipsum", "dolor",
-      "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
-      "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
-      "vel", "erat", "placerat", "ante", "porttitor", "sodales",
-      "pellentesque", "augue", "purus" };
-  private ArrayList<String> words=null;
-  private ArrayAdapter<String> adapter=null;
+		TextView.OnEditorActionListener
+{
+	private static final String[] items = { "lorem", "ipsum", "dolor", "sit",
+			"amet", "consectetuer", "adipiscing", "elit", "morbi", "vel",
+			"ligula", "vitae", "arcu", "aliquet", "mollis", "etiam", "vel",
+			"erat", "placerat", "ante", "porttitor", "sodales", "pellentesque",
+			"augue", "purus" };
+	private ArrayList<String> words = null;
+	private ArrayAdapter<String> adapter = null;
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 
-    setRetainInstance(true);
-    setHasOptionsMenu(true);
+		setRetainInstance(true);
+		setHasOptionsMenu(true);
 
-    if (adapter == null) {
-      initAdapter();
-    }
-  }
+		if (adapter == null)
+		{
+			initAdapter();
+		}
+	}
 
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.actions, menu);
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		inflater.inflate(R.menu.actions, menu);
 
-    configureActionItem(menu);
+		configureActionItem(menu);
 
-    super.onCreateOptionsMenu(menu, inflater);
-  }
+		super.onCreateOptionsMenu(menu, inflater);
+	}
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.reset) {
-      initAdapter();
-      return(true);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (item.getItemId() == R.id.reset)
+		{
+			initAdapter();
+			return (true);
+		}
 
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 
-  @Override
-  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-    if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
-      adapter.add(v.getText().toString());
-      v.setText("");
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+	{
+		if (event == null || event.getAction() == KeyEvent.ACTION_UP)
+		{
+			adapter.add(v.getText().toString());
+			v.setText("");
 
-      InputMethodManager imm=
-          (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+			InputMethodManager imm = (InputMethodManager) getActivity()
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
 
-      imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
+			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+		}
 
-    return(true);
-  }
+		return (true);
+	}
 
-  private void configureActionItem(Menu menu) {
-    EditText add=
-        (EditText)MenuItemCompat.getActionView(menu.findItem(R.id.add))
-                                .findViewById(R.id.title);
+	private void configureActionItem(Menu menu)
+	{
+		EditText add = (EditText) MenuItemCompat.getActionView(
+				menu.findItem(R.id.add)).findViewById(R.id.title);
 
-    add.setOnEditorActionListener(this);
-  }
+		add.setOnEditorActionListener(this);
+	}
 
-  private void initAdapter() {
-    words=new ArrayList<String>();
+	private void initAdapter()
+	{
+		words = new ArrayList<String>();
 
-    for (String s : items) {
-      words.add(s);
-    }
+		for (String s : items)
+		{
+			words.add(s);
+		}
 
-    adapter=
-        new ArrayAdapter<String>(getActivity(),
-                                 android.R.layout.simple_list_item_1,
-                                 words);
+		adapter = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_1, words);
 
-    setListAdapter(adapter);
-  }
+		setListAdapter(adapter);
+	}
 }

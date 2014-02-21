@@ -24,54 +24,63 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class HCMultiChoiceModeListener implements AbsListView.MultiChoiceModeListener {
-  ActionModeDemo host;
-  ActionMode activeMode;
-  ListView lv;
+public class HCMultiChoiceModeListener implements
+		AbsListView.MultiChoiceModeListener
+{
+	ActionModeDemo activity;
+	ActionMode mode;
+	ListView list;
 
-  HCMultiChoiceModeListener(ActionModeDemo host, ListView lv) {
-    this.host=host;
-    this.lv=lv;
-  }
+	HCMultiChoiceModeListener(ActionModeDemo activity, ListView list)
+	{
+		this.activity = activity;
+		this.list = list;
+	}
 
-  @Override
-  public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-    MenuInflater inflater=host.getMenuInflater();
+	@Override
+	public boolean onCreateActionMode(ActionMode mode, Menu menu)
+	{
+		MenuInflater inflater = activity.getMenuInflater();
 
-    inflater.inflate(R.menu.context, menu);
-    mode.setTitle(R.string.context_title);
-    mode.setSubtitle("(1)");
-    activeMode=mode;
+		inflater.inflate(R.menu.context, menu);
+		mode.setTitle(R.string.context_title);
+		mode.setSubtitle("(1)");
+		this.mode = mode;
 
-    return(true);
-  }
+		return (true);
+	}
 
-  @Override
-  public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-    return(false);
-  }
+	@Override
+	public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+	{
+		return (false);
+	}
 
-  @Override
-  public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-    boolean result=host.performActions(item);
-    
-    updateSubtitle(activeMode);
-    
-    return(result);
-  }
+	@Override
+	public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+	{
+		boolean result = activity.performActions(item);
 
-  @Override
-  public void onDestroyActionMode(ActionMode mode) {
-    activeMode=null;
-  }
+		updateSubtitle(mode);
 
-  @Override
-  public void onItemCheckedStateChanged(ActionMode mode, int position,
-                                        long id, boolean checked) {
-    updateSubtitle(mode);
-  }
-  
-  private void updateSubtitle(ActionMode mode) {
-    mode.setSubtitle("("+lv.getCheckedItemCount()+")");
-  }
+		return (result);
+	}
+
+	@Override
+	public void onDestroyActionMode(ActionMode mode)
+	{
+		mode = null;
+	}
+
+	@Override
+	public void onItemCheckedStateChanged(ActionMode mode, int position,
+			long id, boolean checked)
+	{
+		updateSubtitle(mode);
+	}
+
+	private void updateSubtitle(ActionMode mode)
+	{
+		mode.setSubtitle("(" + list.getCheckedItemCount() + ")");
+	}
 }

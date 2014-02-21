@@ -19,20 +19,24 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class FilesDemoActivity extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+public class FilesDemoActivity extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-    if (BuildConfig.DEBUG
-        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-      StrictMode.setThreadPolicy(buildPolicy());
-    }
-  }
+		if (BuildConfig.DEBUG
+				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD)
+		{
+			StrictMode.setThreadPolicy(buildPolicy());
+		}
+	}
 
-  private StrictMode.ThreadPolicy buildPolicy() {
-    return(new StrictMode.ThreadPolicy.Builder().detectAll()
-                                                .penaltyLog().build());
-  }
+	private StrictMode.ThreadPolicy buildPolicy()
+	{
+		return (new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog()
+				.build());
+	}
 }

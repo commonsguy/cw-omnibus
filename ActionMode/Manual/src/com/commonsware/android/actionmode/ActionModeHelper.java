@@ -23,61 +23,73 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ActionModeHelper implements ActionMode.Callback,
-    AdapterView.OnItemLongClickListener {
-  ActionModeDemo host;
-  ActionMode activeMode;
-  ListView modeView;
+		AdapterView.OnItemLongClickListener
+{
+	ActionModeDemo activity;
+	ActionMode activeMode;
+	ListView list;
 
-  ActionModeHelper(final ActionModeDemo host, ListView modeView) {
-    this.host=host;
-    this.modeView=modeView;
-  }
+	ActionModeHelper(final ActionModeDemo activity, ListView list)
+	{
+		this.activity = activity;
+		this.list = list;
+	}
 
-  @Override
-  public boolean onItemLongClick(AdapterView<?> view, View row,
-                                 int position, long id) {
-    modeView.clearChoices();
-    modeView.setItemChecked(position, true);
+	@Override
+	public boolean onItemLongClick(AdapterView<?> view, View row, int position,
+			long id)
+	{
+		list.clearChoices();
+		list.setItemChecked(position, true);
 
-    if (activeMode == null) {
-      activeMode=host.startActionMode(this);
-    }
+		if (activeMode == null)
+		{
+			activeMode = activity.startActionMode(this);
+		}
 
-    return(true);
-  }
+		return (true);
+	}
 
-  @Override
-  public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-    MenuInflater inflater=host.getSupportMenuInflater();
+	@Override
+	public boolean onCreateActionMode(ActionMode mode, Menu menu)
+	{
+		MenuInflater inflater = activity.getSupportMenuInflater();
 
-    inflater.inflate(R.menu.context, menu);
-    mode.setTitle(R.string.context_title);
+		inflater.inflate(R.menu.context, menu);
+		mode.setTitle(R.string.context_title);
 
-    return(true);
-  }
+		return (true);
+	}
 
-  @Override
-  public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-    return(false);
-  }
+	@Override
+	public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+	{
+		return (false);
+	}
 
-  @Override
-  public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-    boolean result=
-        host.performAction(item.getItemId(),
-                           modeView.getCheckedItemPosition());
+	@Override
+	public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+	{
+		boolean result = activity.performAction(item.getItemId(),
+				list.getCheckedItemPosition());
 
-    if (item.getItemId() == R.id.remove) {
-      activeMode.finish();
-    }
+		if (item.getItemId() == R.id.remove)
+		{
+			activeMode.finish();
+		}
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onDestroyActionMode(ActionMode mode) {
-    activeMode=null;
-    modeView.clearChoices();
-    modeView.requestLayout();
-  }
+	/**
+	 * However, for reasons that are not yet clear,clear
+	 * Choices()does not update the UI when called from onDestroyActionMode()unless you also callrequestLayout().
+	 */
+	@Override
+	public void onDestroyActionMode(ActionMode mode)
+	{
+		activeMode = null;
+		list.clearChoices();
+		list.requestLayout();
+	}
 }

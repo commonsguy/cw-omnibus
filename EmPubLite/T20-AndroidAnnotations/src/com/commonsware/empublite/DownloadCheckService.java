@@ -69,7 +69,7 @@ public class DownloadCheckService extends WakefulIntentService
 
 		if (!localCopy.exists())
 		{
-			prefs.edit().pendingUpdateDir().put(localCopy.getAbsolutePath());
+			prefs.edit().pendingUpdateDir().put(localCopy.getAbsolutePath()).apply();
 
 			String url = json.getString(version);
 			

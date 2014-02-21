@@ -58,8 +58,8 @@
 			</intent-filter>
 		</receiver>
 		<receiver
-			android:name="InstallReceiver"
-			android:exported="true">
+			android:name="InstallReceiver_"
+			android:exported="false">
 			<intent-filter>
 				<action android:name="com.commonsware.empublite.action.UPDATE_READY"/>
 			</intent-filter>

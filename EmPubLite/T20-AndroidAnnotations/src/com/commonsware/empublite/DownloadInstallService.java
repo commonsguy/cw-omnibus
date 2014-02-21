@@ -1,7 +1,5 @@
 package com.commonsware.empublite;
 
-import info.juanmendez.android.utils.Trace;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -44,8 +42,7 @@ public class DownloadInstallService extends WakefulIntentService
 
 		if (pendingUpdateDir != null)
 		{
-			File root = Environment
-					.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+			File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 			File update = new File(root, DownloadCheckService.UPDATE_FILENAME);
 
 			try
@@ -66,8 +63,13 @@ public class DownloadInstallService extends WakefulIntentService
 
 			Intent i = new Intent(ACTION_UPDATE_READY);
 			
+			/*
+			 * (Usually optional) Set an explicit application package name that limits 
+			 * the components this Intent will resolve to. If left to the default value 
+			 * of null, all components in all applications will considered. If non-null, 
+			 * the Intent can only match the components in the given application package.
+			 */
 			i.setPackage(getPackageName());
-			Trace.warn("DownloadInstallService", this );
 			sendOrderedBroadcast(i, null);
 		}
 		else

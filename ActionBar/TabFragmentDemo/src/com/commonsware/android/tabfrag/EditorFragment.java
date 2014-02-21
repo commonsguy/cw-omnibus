@@ -21,40 +21,42 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class EditorFragment extends SherlockFragment {
-  private static final String KEY_POSITION="position";
-  private static final String KEY_TEXT="text";
-  private EditText editor=null;
+public class EditorFragment extends SherlockFragment
+{
+	private static final String KEY_POSITION = "position";
+	private static final String KEY_TEXT = "text";
+	private EditText editor = null;
 
-  static EditorFragment newInstance(int position,
-                                    CharSequence text) {
-    EditorFragment frag=new EditorFragment();
-    Bundle args=new Bundle();
+	static EditorFragment newInstance(int position, CharSequence text)
+	{
+		EditorFragment frag = new EditorFragment();
+		Bundle args = new Bundle();
 
-    args.putInt(KEY_POSITION, position);
-    args.putCharSequence(KEY_TEXT, text);
-    frag.setArguments(args);
+		args.putInt(KEY_POSITION, position);
+		args.putCharSequence(KEY_TEXT, text);
+		frag.setArguments(args);
 
-    return(frag);
-  }
+		return (frag);
+	}
 
-  @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.editor, container, false);
-    
-    editor=(EditText)result.findViewById(R.id.editor);
-    
-    int position=getArguments().getInt(KEY_POSITION, -1);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.editor, container, false);
 
-    editor.setHint(String.format(getString(R.string.hint), position + 1));
-    editor.setText(getArguments().getCharSequence(KEY_TEXT));
+		editor = (EditText) result.findViewById(R.id.editor);
 
-    return(result);
-  }
-  
-  CharSequence getText() {
-    return(editor.getText());
-  }
+		int position = getArguments().getInt(KEY_POSITION, -1);
+
+		editor.setHint(String.format(getString(R.string.hint), position + 1));
+		editor.setText(getArguments().getCharSequence(KEY_TEXT));
+
+		return (result);
+	}
+
+	CharSequence getText()
+	{
+		return (editor.getText());
+	}
 }

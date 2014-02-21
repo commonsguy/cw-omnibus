@@ -21,29 +21,33 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class EditorFragment extends SherlockFragment {
-  private EditText editor=null;
+public class EditorFragment extends SherlockFragment
+{
+	private EditText editor = null;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.editor, container, false);
-    
-    editor=(EditText)result.findViewById(R.id.editor);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.editor, container, false);
 
-    return(result);
-  }
-  
-  CharSequence getText() {
-    return(editor.getText());
-  }
-  
-  void setText(CharSequence text) {
-    editor.setText(text);
-  }
-  
-  void setHint(CharSequence hint) {
-    editor.setHint(hint);
-  }
+		editor = (EditText) result.findViewById(R.id.editor);
+
+		return (result);
+	}
+
+	CharSequence getText()
+	{
+		return (editor.getText());
+	}
+
+	void setText(CharSequence text)
+	{
+		editor.setText(text);
+	}
+
+	void setHint(CharSequence hint)
+	{
+		editor.setHint(hint);
+	}
 }

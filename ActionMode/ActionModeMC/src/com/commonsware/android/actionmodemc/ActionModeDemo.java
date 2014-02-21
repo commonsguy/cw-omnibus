@@ -17,6 +17,7 @@ package com.commonsware.android.actionmodemc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
+
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -37,193 +38,214 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActionModeDemo extends ListActivity {
-  private static final String[] items= { "lorem", "ipsum", "dolor",
-      "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
-      "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
-      "vel", "erat", "placerat", "ante", "porttitor", "sodales",
-      "pellentesque", "augue", "purus" };
-  private ArrayList<String> words=null;
+public class ActionModeDemo extends ListActivity
+{
+	private static final String[] items = { "lorem", "ipsum", "dolor", "sit",
+			"amet", "consectetuer", "adipiscing", "elit", "morbi", "vel",
+			"ligula", "vitae", "arcu", "aliquet", "mollis", "etiam", "vel",
+			"erat", "placerat", "ante", "porttitor", "sodales", "pellentesque",
+			"augue", "purus" };
+	private ArrayList<String> words = null;
 
-  @TargetApi(11)
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
+	public void onCreate(Bundle icicle)
+	{
+		super.onCreate(icicle);
 
-    initAdapter();
+		initAdapter();
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-      getListView().setMultiChoiceModeListener(new HCMultiChoiceModeListener(
-                                                                             this,
-                                                                             getListView()));
-    }
-    else {
-      getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-      registerForContextMenu(getListView());
-    }
-  }
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+			getListView().setMultiChoiceModeListener(
+					new HCMultiChoiceModeListener(this, getListView()));
+		}
+		else
+		{
+			getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+			registerForContextMenu(getListView());
+		}
+	}
 
-  @Override
-  public void onListItemClick(ListView l, View v, int position, long id) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      l.setItemChecked(position, true);
-    }
-  }
+	@Override
+	public void onListItemClick(ListView list, View v, int position, long id)
+	{
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			list.setItemChecked(position, true);
+		}
+	}
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.option, menu);
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		new MenuInflater(this).inflate(R.menu.option, menu);
 
-    EditText add=null;
+		EditText add = null;
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      View v=menu.findItem(R.id.add).getActionView();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			View v = menu.findItem(R.id.add).getActionView();
 
-      if (v != null) {
-        add=(EditText)v.findViewById(R.id.title);
-      }
-    }
+			if (v != null)
+			{
+				add = (EditText) v.findViewById(R.id.title);
+			}
+		}
 
-    if (add != null) {
-      add.setOnEditorActionListener(onSearch);
-    }
+		if (add != null)
+		{
+			add.setOnEditorActionListener(onSearch);
+		}
 
-    return(super.onCreateOptionsMenu(menu));
-  }
+		return (super.onCreateOptionsMenu(menu));
+	}
 
-  @Override
-  public void onCreateContextMenu(ContextMenu menu, View v,
-                                  ContextMenu.ContextMenuInfo menuInfo) {
-    new MenuInflater(this).inflate(R.menu.context, menu);
-  }
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenu.ContextMenuInfo menuInfo)
+	{
+		new MenuInflater(this).inflate(R.menu.context, menu);
+	}
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.add:
-        add();
-        return(true);
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+		case R.id.add:
+			add();
+			return (true);
 
-      case R.id.reset:
-        initAdapter();
-        return(true);
+		case R.id.reset:
+			initAdapter();
+			return (true);
 
-      case R.id.about:
-      case android.R.id.home:
-        Toast.makeText(this, "Action Bar Sample App", Toast.LENGTH_LONG)
-             .show();
-        return(true);
-    }
+		case R.id.about:
+		case android.R.id.home:
+			Toast.makeText(this, "Action Bar Sample App", Toast.LENGTH_LONG)
+					.show();
+			return (true);
+		}
 
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 
-  @Override
-  public boolean onContextItemSelected(MenuItem item) {
-    boolean result=performActions(item);
+	@Override
+	public boolean onContextItemSelected(MenuItem item)
+	{
+		boolean result = performActions(item);
 
-    if (!result) {
-      result=super.onContextItemSelected(item);
-    }
+		if (!result)
+		{
+			result = super.onContextItemSelected(item);
+		}
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @SuppressWarnings("unchecked")
-  public boolean performActions(MenuItem item) {
-    ArrayAdapter<String> adapter=(ArrayAdapter<String>)getListAdapter();
-    SparseBooleanArray checked=getListView().getCheckedItemPositions();
+	@SuppressWarnings("unchecked")
+	public boolean performActions(MenuItem item)
+	{
+		ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListAdapter();
+		SparseBooleanArray checked = getListView().getCheckedItemPositions();
 
-    switch (item.getItemId()) {
-      case R.id.cap:
-        for (int i=0; i < checked.size(); i++) {
-          if (checked.valueAt(i)) {
-            int position=checked.keyAt(i);
-            String word=words.get(position);
+		switch (item.getItemId())
+		{
+		case R.id.cap:
+			for (int i = 0; i < checked.size(); i++)
+			{
+				if (checked.valueAt(i))
+				{
+					int position = checked.keyAt(i);
+					String word = words.get(position);
 
-            word=word.toUpperCase(Locale.ENGLISH);
+					word = word.toUpperCase(Locale.ENGLISH);
 
-            adapter.remove(words.get(position));
-            adapter.insert(word, position);
-          }
-        }
+					adapter.remove(words.get(position));
+					adapter.insert(word, position);
+				}
+			}
 
-        return(true);
+			return (true);
 
-      case R.id.remove:
-        ArrayList<Integer> positions=new ArrayList<Integer>();
+		case R.id.remove:
+			ArrayList<Integer> positions = new ArrayList<Integer>();
 
-        for (int i=0; i < checked.size(); i++) {
-          if (checked.valueAt(i)) {
-            positions.add(checked.keyAt(i));
-          }
-        }
+			for (int i = 0; i < checked.size(); i++)
+			{
+				if (checked.valueAt(i))
+				{
+					positions.add(checked.keyAt(i));
+				}
+			}
 
-        Collections.sort(positions, Collections.reverseOrder());
+			Collections.sort(positions, Collections.reverseOrder());
 
-        for (int position : positions) {
-          adapter.remove(words.get(position));
-        }
+			for (int position : positions)
+			{
+				adapter.remove(words.get(position));
+			}
 
-        getListView().clearChoices();
+			getListView().clearChoices();
 
-        return(true);
-    }
+			return (true);
+		}
 
-    return(false);
-  }
+		return (false);
+	}
 
-  private void initAdapter() {
-    words=new ArrayList<String>();
+	private void initAdapter()
+	{
+		words = new ArrayList<String>();
 
-    for (String s : items) {
-      words.add(s);
-    }
+		for (String s : items)
+		{
+			words.add(s);
+		}
 
-    setListAdapter(new ArrayAdapter<String>(
-                                            this,
-                                            android.R.layout.simple_list_item_checked,
-                                            words));
-  }
+		setListAdapter(new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_checked, words));
+	}
 
-  private void add() {
-    final View addView=getLayoutInflater().inflate(R.layout.add, null);
+	private void add()
+	{
+		final View addView = getLayoutInflater().inflate(R.layout.add, null);
 
-    new AlertDialog.Builder(this).setTitle("Add a Word")
-                                 .setView(addView)
-                                 .setPositiveButton("OK",
-                                                    new DialogInterface.OnClickListener() {
-                                                      public void onClick(DialogInterface dialog,
-                                                                          int whichButton) {
-                                                        addWord((TextView)addView.findViewById(R.id.title));
-                                                      }
-                                                    })
-                                 .setNegativeButton("Cancel", null)
-                                 .show();
-  }
+		new AlertDialog.Builder(this).setTitle("Add a Word").setView(addView)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int whichButton)
+					{
+						addWord((TextView) addView.findViewById(R.id.title));
+					}
+				}).setNegativeButton("Cancel", null).show();
+	}
 
-  @SuppressWarnings("unchecked")
-  private void addWord(TextView title) {
-    ArrayAdapter<String> adapter=(ArrayAdapter<String>)getListAdapter();
+	@SuppressWarnings("unchecked")
+	private void addWord(TextView title)
+	{
+		ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListAdapter();
 
-    adapter.add(title.getText().toString());
-  }
+		adapter.add(title.getText().toString());
+	}
 
-  private TextView.OnEditorActionListener onSearch=
-      new TextView.OnEditorActionListener() {
-        public boolean onEditorAction(TextView v, int actionId,
-                                      KeyEvent event) {
-          if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
-            addWord(v);
+	private TextView.OnEditorActionListener onSearch = new TextView.OnEditorActionListener()
+	{
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+		{
+			if (event == null || event.getAction() == KeyEvent.ACTION_UP)
+			{
+				addWord(v);
 
-            InputMethodManager imm=
-                (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-          }
+				imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+			}
 
-          return(true);
-        }
-      };
+			return (true);
+		}
+	};
 }

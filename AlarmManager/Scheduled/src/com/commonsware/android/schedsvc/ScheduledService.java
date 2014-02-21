@@ -14,6 +14,7 @@
 
 package com.commonsware.android.schedsvc;
 
+import info.juanmendez.android.utils.Trace;
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
@@ -24,7 +25,8 @@ public class ScheduledService extends IntentService {
   }
 
   @Override
-  protected void onHandleIntent(Intent intent) {
+  protected void onHandleIntent(Intent intent) { 
     Log.d(getClass().getSimpleName(), "I ran!");
+    Trace.toast( getApplicationContext(), "I ran!" );
   }
 }

@@ -25,7 +25,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -77,21 +76,9 @@ public class ActionBarFragment extends ListFragment implements
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.actions, menu);
 
-    configureActionItem(menu);
     configureSearchView(menu);
 
     super.onCreateOptionsMenu(menu, inflater);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.reset) {
-      initAdapter(null);
-
-      return(true);
-    }
-
-    return(super.onOptionsItemSelected(item));
   }
 
   @Override
@@ -139,14 +126,6 @@ public class ActionBarFragment extends ListFragment implements
                    Toast.LENGTH_LONG).show();
   }
 
-  private void configureActionItem(Menu menu) {
-    EditText add=
-        (EditText)menu.findItem(R.id.add).getActionView()
-                      .findViewById(R.id.title);
-
-    add.setOnEditorActionListener(this);
-  }
-
   private void configureSearchView(Menu menu) {
     MenuItem search=menu.findItem(R.id.search);
 
@@ -154,6 +133,7 @@ public class ActionBarFragment extends ListFragment implements
     sv.setOnQueryTextListener(this);
     sv.setOnCloseListener(this);
     sv.setSubmitButtonEnabled(false);
+    sv.setIconifiedByDefault(true);
 
     if (initialQuery != null) {
       sv.setIconified(false);

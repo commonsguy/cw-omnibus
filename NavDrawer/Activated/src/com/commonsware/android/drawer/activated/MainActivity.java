@@ -44,12 +44,6 @@ public class MainActivity extends Activity implements
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    if (getFragmentManager().findFragmentById(R.id.content) == null) {
-      showLorem();
-    }
-
-    getFragmentManager().addOnBackStackChangedListener(this);
-
     drawer=(ListView)findViewById(R.id.drawer);
     drawer.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
@@ -58,11 +52,6 @@ public class MainActivity extends Activity implements
     drawer.setAdapter(new ArrayAdapter<String>(this,
                                                R.layout.drawer_row,
                                                rows));
-
-    if (savedInstanceState == null) {
-      drawer.setItemChecked(0, true); // starting here
-    }
-
     drawer.setOnItemClickListener(this);
 
     drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
@@ -74,21 +63,11 @@ public class MainActivity extends Activity implements
     drawerLayout.setDrawerListener(toggle);
     getActionBar().setDisplayHomeAsUpEnabled(true);
     getActionBar().setHomeButtonEnabled(true);
-  }
 
-  @Override
-  public void onSaveInstanceState(Bundle state) {
-    super.onSaveInstanceState(state);
+    getFragmentManager().addOnBackStackChangedListener(this);
 
-    state.putInt(STATE_CHECKED, drawer.getCheckedItemPosition());
-  }
-
-  @Override
-  public void onRestoreInstanceState(Bundle state) {
-    int position=state.getInt(STATE_CHECKED, -1);
-
-    if (position > -1) {
-      drawer.setItemChecked(position, true);
+    if (getFragmentManager().findFragmentById(R.id.content) == null) {
+      showLorem();
     }
   }
 
@@ -130,22 +109,11 @@ public class MainActivity extends Activity implements
 
   @Override
   public void onBackStackChanged() {
-    if (lorem.isVisible()) {
-      drawer.setItemChecked(0, true);
-    }
-    else if (content != null && content.isVisible()) {
-      drawer.setItemChecked(1, true);
-    }
+    drawer.post(onNavChange);
   }
 
   @Override
   public void wordClicked() {
-    int toClear=drawer.getCheckedItemPosition();
-
-    if (toClear >= 0) {
-      drawer.setItemChecked(toClear, false);
-    }
-
     if (stuff == null) {
       stuff=new StuffFragment();
     }
@@ -153,6 +121,7 @@ public class MainActivity extends Activity implements
     getFragmentManager().beginTransaction()
                         .replace(R.id.content, stuff)
                         .addToBackStack(null).commit();
+    drawer.post(onNavChange);
   }
 
   private void showLorem() {
@@ -164,6 +133,7 @@ public class MainActivity extends Activity implements
       getFragmentManager().popBackStack();
       getFragmentManager().beginTransaction()
                           .replace(R.id.content, lorem).commit();
+      drawer.post(onNavChange);
     }
   }
 
@@ -176,6 +146,26 @@ public class MainActivity extends Activity implements
       getFragmentManager().popBackStack();
       getFragmentManager().beginTransaction()
                           .replace(R.id.content, content).commit();
+      drawer.post(onNavChange);
     }
   }
+
+  private Runnable onNavChange=new Runnable() {
+    @Override
+    public void run() {
+      if (lorem != null && lorem.isVisible()) {
+        drawer.setItemChecked(0, true);
+      }
+      else if (content != null && content.isVisible()) {
+        drawer.setItemChecked(1, true);
+      }
+      else {
+        int toClear=drawer.getCheckedItemPosition();
+
+        if (toClear >= 0) {
+          drawer.setItemChecked(toClear, false);
+        }
+      }
+    }
+  };
 }

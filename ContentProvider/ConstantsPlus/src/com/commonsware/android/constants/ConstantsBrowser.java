@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -10,57 +10,44 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
-   
 package com.commonsware.android.constants;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 
-public class ConstantsBrowser extends ListActivity {
-  private static final int ADD_ID = Menu.FIRST+1;
-  private static final int DELETE_ID = Menu.FIRST+3;
-  private static final String[] PROJECTION = new String[] {
+public class ConstantsBrowser extends ListActivity implements OnClickListener {
+  private static final int ADD_ID=Menu.FIRST + 1;
+  private static final String[] PROJECTION=new String[] {
       Provider.Constants._ID, Provider.Constants.TITLE,
-      Provider.Constants.VALUE};
-  private Cursor constantsCursor;
-  
+      Provider.Constants.VALUE };
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
-    constantsCursor=managedQuery(Provider.Constants.CONTENT_URI,
-                                  PROJECTION, null, null, null);
-  
-    ListAdapter adapter=new SimpleCursorAdapter(this,
-                          R.layout.row, constantsCursor,
-                          new String[] {Provider.Constants.TITLE,
-                                          Provider.Constants.VALUE},
-                          new int[] {R.id.title, R.id.value});
-    
-    setListAdapter(adapter);
-    registerForContextMenu(getListView());
+
+    new LoadCursorTask().execute();
   }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(Menu.NONE, ADD_ID, Menu.NONE, "Add")
-        .setIcon(R.drawable.add)
-        .setAlphabeticShortcut('a');
+        .setIcon(R.drawable.add).setAlphabeticShortcut('a');
 
     return(super.onCreateOptionsMenu(menu));
   }
@@ -75,128 +62,95 @@ public class ConstantsBrowser extends ListActivity {
 
     return(super.onOptionsItemSelected(item));
   }
-  
-  @Override
-  public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-    menu.add(Menu.NONE, DELETE_ID, Menu.NONE, "Delete")
-        .setIcon(R.drawable.delete)
-        .setAlphabeticShortcut('d');
-  }
 
   @Override
-  public boolean onContextItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case DELETE_ID:
-        AdapterView.AdapterContextMenuInfo info=
-          (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-
-        delete(info.id);
-        return(true);
-    }
-
-    return(super.onOptionsItemSelected(item));
-  }
-  
-  private void add() {
-    LayoutInflater inflater=LayoutInflater.from(this);
-    View addView=inflater.inflate(R.layout.add_edit, null);
-    final DialogWrapper wrapper=new DialogWrapper(addView);
-    
-    new AlertDialog.Builder(this)
-      .setTitle(R.string.add_title)
-      .setView(addView)
-      .setPositiveButton(R.string.ok,
-                          new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog,
-                              int whichButton) {
-          processAdd(wrapper);
-        }
-      })
-      .setNegativeButton(R.string.cancel,
-                          new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog,
-                              int whichButton) {
-          // ignore, just dismiss
-        }
-      })
-      .show();
-  }
-  
-  private void delete(final long rowId) {
-    if (rowId>0) {
-      new AlertDialog.Builder(this)
-        .setTitle(R.string.delete_title)
-        .setPositiveButton(R.string.ok,
-                            new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog,
-                                int whichButton) {
-            processDelete(rowId);
-          }
-        })
-        .setNegativeButton(R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog,
-                                int whichButton) {
-          // ignore, just dismiss
-          }
-        })
-        .show();
-    }
-  }
-  
-  private void processAdd(DialogWrapper wrapper) {
+  public void onClick(DialogInterface dialog, int which) {
     ContentValues values=new ContentValues(2);
-    
-    values.put(Provider.Constants.TITLE, wrapper.getTitle());
-    values.put(Provider.Constants.VALUE, wrapper.getValue());
-    
-    getContentResolver().insert(Provider.Constants.CONTENT_URI,
-                                  values);
-    constantsCursor.requery();
+    AlertDialog dlg=(AlertDialog)dialog;
+    EditText title=(EditText)dlg.findViewById(R.id.title);
+    EditText value=(EditText)dlg.findViewById(R.id.value);
+
+    values.put(DatabaseHelper.TITLE, title.getText().toString());
+    values.put(DatabaseHelper.VALUE, value.getText().toString());
+
+    new InsertTask().execute(values);
   }
-  
-  private void processDelete(long rowId) {
-    String[] args={String.valueOf(rowId)};
-    
-    getContentResolver().delete(Provider.Constants.CONTENT_URI,
-                                Provider.Constants._ID+"=?", args);
-    constantsCursor.requery();
+
+  private void add() {
+    View addView=getLayoutInflater().inflate(R.layout.add_edit, null);
+    AlertDialog.Builder builder=new AlertDialog.Builder(this);
+
+    builder.setTitle(R.string.add_title).setView(addView)
+           .setPositiveButton(R.string.ok, this)
+           .setNegativeButton(R.string.cancel, null).show();
   }
-  
-  class DialogWrapper {
-    EditText titleField=null;
-    EditText valueField=null;
-    View base=null;
-    
-    DialogWrapper(View base) {
-      this.base=base;
-      valueField=(EditText)base.findViewById(R.id.value);
+
+  private Cursor doQuery() {
+    return(getContentResolver().query(Provider.Constants.CONTENT_URI,
+                                      PROJECTION, null, null, null));
+  }
+
+  private class LoadCursorTask extends AsyncTask<Void, Void, Void> {
+    private Cursor constantsCursor=null;
+
+    @Override
+    protected Void doInBackground(Void... params) {
+      constantsCursor=doQuery();
+      constantsCursor.getCount();
+
+      return(null);
     }
-    
-    String getTitle() {
-      return(getTitleField().getText().toString());
-    }
-    
-    float getValue() {
-      return(new Float(getValueField().getText().toString())
-                                                  .floatValue());
-    }
-    
-    private EditText getTitleField() {
-      if (titleField==null) {
-        titleField=(EditText)base.findViewById(R.id.title);
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onPostExecute(Void arg0) {
+      SimpleCursorAdapter adapter;
+
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        adapter=
+            new SimpleCursorAdapter(
+                                    ConstantsBrowser.this,
+                                    R.layout.row,
+                                    constantsCursor,
+                                    new String[] {
+                                        DatabaseHelper.TITLE,
+                                        DatabaseHelper.VALUE },
+                                    new int[] { R.id.title, R.id.value },
+                                    0);
       }
-      
-      return(titleField);
-    }
-    
-    private EditText getValueField() {
-      if (valueField==null) {
-        valueField=(EditText)base.findViewById(R.id.value);
+      else {
+        adapter=
+            new SimpleCursorAdapter(
+                                    ConstantsBrowser.this,
+                                    R.layout.row,
+                                    constantsCursor,
+                                    new String[] {
+                                        DatabaseHelper.TITLE,
+                                        DatabaseHelper.VALUE },
+                                    new int[] { R.id.title, R.id.value });
       }
-      
-      return(valueField);
+
+      setListAdapter(adapter);
+    }
+  }
+
+  private class InsertTask extends AsyncTask<ContentValues, Void, Void> {
+    private Cursor constantsCursor=null;
+
+    @Override
+    protected Void doInBackground(ContentValues... values) {
+      getContentResolver().insert(Provider.Constants.CONTENT_URI, values[0]);
+
+      constantsCursor=doQuery();
+      constantsCursor.getCount();
+
+      return(null);
+    }
+
+    @Override
+    public void onPostExecute(Void arg0) {
+      ((CursorAdapter)getListAdapter()).changeCursor(constantsCursor);
     }
   }
 }

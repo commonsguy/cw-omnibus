@@ -23,6 +23,8 @@ import android.hardware.SensorManager;
 
 class DatabaseHelper extends SQLiteOpenHelper {
   private static final String DATABASE_NAME="constants.db";
+  static final String TITLE="title";
+  static final String VALUE="value";
 
   public DatabaseHelper(Context context) {
     super(context, DATABASE_NAME, null, 1);

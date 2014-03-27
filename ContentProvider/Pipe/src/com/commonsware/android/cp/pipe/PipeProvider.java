@@ -14,10 +14,7 @@
 
 package com.commonsware.android.cp.pipe;
 
-import android.content.ContentProvider;
-import android.content.ContentValues;
 import android.content.res.AssetManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.os.ParcelFileDescriptor.AutoCloseOutputStream;
@@ -26,34 +23,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 
-public class PipeProvider extends ContentProvider {
+public class PipeProvider extends AbstractFileProvider {
   public static final Uri CONTENT_URI=
       Uri.parse("content://com.commonsware.android.cp.pipe/");
-  private static final HashMap<String, String> MIME_TYPES=
-      new HashMap<String, String>();
-
-  static {
-    MIME_TYPES.put(".pdf", "application/pdf");
-  }
 
   @Override
   public boolean onCreate() {
     return(true);
-  }
-
-  @Override
-  public String getType(Uri uri) {
-    String path=uri.toString();
-
-    for (String extension : MIME_TYPES.keySet()) {
-      if (path.endsWith(extension)) {
-        return(MIME_TYPES.get(extension));
-      }
-    }
-
-    return(null);
   }
 
   @Override
@@ -75,28 +52,6 @@ public class PipeProvider extends ContentProvider {
     }
 
     return(pipe[0]);
-  }
-
-  @Override
-  public Cursor query(Uri url, String[] projection, String selection,
-                      String[] selectionArgs, String sort) {
-    throw new RuntimeException("Operation not supported");
-  }
-
-  @Override
-  public Uri insert(Uri uri, ContentValues initialValues) {
-    throw new RuntimeException("Operation not supported");
-  }
-
-  @Override
-  public int update(Uri uri, ContentValues values, String where,
-                    String[] whereArgs) {
-    throw new RuntimeException("Operation not supported");
-  }
-
-  @Override
-  public int delete(Uri uri, String where, String[] whereArgs) {
-    throw new RuntimeException("Operation not supported");
   }
 
   static class TransferThread extends Thread {

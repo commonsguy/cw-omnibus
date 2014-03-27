@@ -43,7 +43,7 @@ public class QuestionsFragment extends
     setRetainInstance(true);
 
     RestAdapter restAdapter=
-        new RestAdapter.Builder().setServer("https://api.stackexchange.com")
+        new RestAdapter.Builder().setEndpoint("https://api.stackexchange.com")
                                  .build();
     StackOverflowInterface so=
         restAdapter.create(StackOverflowInterface.class);
@@ -80,9 +80,9 @@ public class QuestionsFragment extends
     public View getView(int position, View convertView, ViewGroup parent) {
       View row=super.getView(position, convertView, parent);
       TextView title=(TextView)row.findViewById(android.R.id.text1);
-      
+
       title.setText(Html.fromHtml(getItem(position).title));
-      
+
       return(row);
     }
   }

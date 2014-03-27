@@ -45,7 +45,7 @@ public class QuestionsFragment extends
     setRetainInstance(true);
 
     RestAdapter restAdapter=
-        new RestAdapter.Builder().setServer("https://api.stackexchange.com")
+        new RestAdapter.Builder().setEndpoint("https://api.stackexchange.com")
                                  .build();
     StackOverflowInterface so=
         restAdapter.create(StackOverflowInterface.class);

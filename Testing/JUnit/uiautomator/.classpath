@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/opt/android-sdk-linux_x86/platforms/android-17/android.jar"/>
-	<classpathentry kind="lib" path="/opt/android-sdk-linux_x86/platforms/android-17/uiautomator.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry kind="lib" path="/opt/android-sdk-linux/platforms/android-19/android.jar"/>
+	<classpathentry kind="lib" path="/opt/android-sdk-linux/platforms/android-19/uiautomator.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

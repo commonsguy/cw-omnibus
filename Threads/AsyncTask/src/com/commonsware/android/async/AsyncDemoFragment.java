@@ -30,6 +30,7 @@ public class AsyncDemoFragment extends SherlockListFragment {
       "pellentesque", "augue", "purus" };
   private ArrayList<String> model=null;
   private ArrayAdapter<String> adapter=null;
+  private AddStringTask task=null;
 
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
@@ -39,7 +40,8 @@ public class AsyncDemoFragment extends SherlockListFragment {
 
     if (model == null) {
       model=new ArrayList<String>();
-      new AddStringTask().execute();
+      task=new AddStringTask();
+      task.execute();
     }
 
     adapter=
@@ -51,12 +53,23 @@ public class AsyncDemoFragment extends SherlockListFragment {
     setListAdapter(adapter);
   }
 
+  @Override
+  public void onDestroy() {
+    if (task != null) {
+      task.cancel(false);
+    }
+    
+    super.onDestroy();
+  }
+
   class AddStringTask extends AsyncTask<Void, String, Void> {
     @Override
     protected Void doInBackground(Void... unused) {
       for (String item : items) {
-        publishProgress(item);
-        SystemClock.sleep(400);
+        if (!isCancelled()) {
+          publishProgress(item);
+          SystemClock.sleep(400);
+        }
       }
 
       return(null);
@@ -69,8 +82,12 @@ public class AsyncDemoFragment extends SherlockListFragment {
 
     @Override
     protected void onPostExecute(Void unused) {
-      Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
-           .show();
+      if (!isCancelled()) {
+        Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
+             .show();
+      }
+      
+      task=null;
     }
   }
 }

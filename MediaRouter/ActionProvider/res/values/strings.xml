@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">MediaRouter ActionProvider Demo</string>
+	<string name="route_provider_title">Cast!</string>
+	<string name="a_bug_workaround">A Bug Workaround</string>
+
+</resources>

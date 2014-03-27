@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Remote Playback Demo</string>
+	<string name="route_provider_title">Cast!</string>
+	<string name="play">Play</string>
+	<string name="pause">Pause</string>
+	<string name="stop">Stop</string>
+	<string name="route_selected">Route selected</string>
+	<string name="route_unselected">Route unselected</string>
+	<string name="remote_playback_not_supported">Remote playback not supported!</string>
+	<string name="releasing_client">Disconnected</string>
+	<string name="connected">Connected</string>
+	<string name="playing">Playing</string>
+	<string name="play_error">"Error on play: "</string>
+	<string name="stopped">Stopped</string>
+	<string name="session_ended">Session ended</string>
+	<string name="paused">Paused</string>
+	<string name="resumed">Resumed</string>
+	<string name="play_requested">Play requested</string>
+	<string name="pause_requested">Pause requested</string>
+	<string name="resume_requested">Resume requested</string>
+	<string name="stop_requested">Stop requested</string>
+	<string name="session_end_requested">Session end requested</string>
+	<string name="session_started">Session started</string>
+	<string name="session_failed">Session FAILED</string>
+	<string name="session_ending">Session ending</string>
+
+</resources>

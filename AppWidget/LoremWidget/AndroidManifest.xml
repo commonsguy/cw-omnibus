@@ -5,8 +5,8 @@
 	android:versionName="1.0">
 
 	<uses-sdk
-		android:minSdkVersion="11"
-		android:targetSdkVersion="11"/>
+		android:minSdkVersion="14"
+		android:targetSdkVersion="19"/>
 
 	<uses-feature
 		android:name="android.software.app_widgets"

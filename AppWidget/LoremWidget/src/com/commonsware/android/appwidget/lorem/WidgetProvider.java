@@ -38,8 +38,7 @@ public class WidgetProvider extends AppWidgetProvider {
       RemoteViews widget=new RemoteViews(ctxt.getPackageName(),
                                           R.layout.widget);
       
-      widget.setRemoteAdapter(appWidgetIds[i], R.id.words,
-                              svcIntent);
+      widget.setRemoteAdapter(R.id.words, svcIntent);
 
       Intent clickIntent=new Intent(ctxt, LoremActivity.class);
       PendingIntent clickPI=PendingIntent

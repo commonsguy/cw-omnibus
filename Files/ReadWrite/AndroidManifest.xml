@@ -14,7 +14,9 @@
 		android:smallScreens="true"
 		android:xlargeScreens="true"/>
 
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission
+		android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+		android:maxSdkVersion="18"/>
 
 	<application
 		android:icon="@drawable/ic_launcher"

@@ -334,8 +334,11 @@ public class PlaybackFragment extends Fragment {
 
       client.release();
       client=null;
-      getActivity().supportInvalidateOptionsMenu();
-      logToTranscript(getActivity().getString(R.string.session_ended));
+
+      if (getActivity() != null) {
+        getActivity().supportInvalidateOptionsMenu();
+        logToTranscript(getActivity().getString(R.string.session_ended));
+      }
     }
   }
 }

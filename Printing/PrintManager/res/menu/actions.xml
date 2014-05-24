@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/bitmap"
+		android:showAsAction="never"
+		android:title="@string/bitmap">
+	</item>
+	<item
+		android:id="@+id/web"
+		android:showAsAction="never"
+		android:title="@string/web_page">
+	</item>
+	<item
+		android:id="@+id/report"
+		android:showAsAction="never"
+		android:title="@string/tps_report">
+	</item>
+	<item
+		android:id="@+id/pdf"
+		android:showAsAction="never"
+		android:title="@string/pdf">
+	</item>
+
+</menu>

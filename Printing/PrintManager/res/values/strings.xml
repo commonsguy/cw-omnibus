@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Print Demo</string>
+	<string name="bitmap">Bitmap</string>
+	<string name="prose_hint">Type something here to include in the report</string>
+	<string name="web_page">Web Page</string>
+	<string name="tps_report">TPS Report</string>
+	<string name="report_body">
+<![CDATA[
+<html>
+<body>
+<h1>TPS Report for: {{reportDate}}</h1>
+<p>Here are the contents of this week\'s TPS report:</p>
+<p>{{message}}</p>
+<p>If you have any questions regarding this report, please
+do <b>not</b> ask Mark Murphy.</p>
+</body>		
+</html>
+]]>
+	</string>
+	<string name="pdf">PDF</string>
+
+</resources>

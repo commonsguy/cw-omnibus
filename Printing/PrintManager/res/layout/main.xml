@@ -1,0 +1,18 @@
+<com.commonsware.cwac.layouts.MirroringFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/source"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<EditText
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/prose"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="left|top"
+		android:hint="@string/prose_hint"
+		android:inputType="textMultiLine">
+
+		<requestFocus/>
+	</EditText>
+
+</com.commonsware.cwac.layouts.MirroringFrameLayout>

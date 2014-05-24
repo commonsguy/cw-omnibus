@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/add"
+		android:actionLayout="@layout/add"
+		android:icon="@android:drawable/ic_menu_add"
+		android:showAsAction="ifRoom"
+		android:title="@string/add"/>
+	<item
+		android:id="@+id/reset"
+		android:icon="@android:drawable/ic_menu_revert"
+		android:showAsAction="always|withText"
+		android:title="@string/reset"/>
+	<item
+		android:id="@+id/about"
+		android:icon="@android:drawable/ic_menu_info_details"
+		android:showAsAction="never"
+		android:title="@string/about">
+	</item>
+
+</menu>

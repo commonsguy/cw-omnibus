@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2012 CommonsWare, LLC
+  Copyright (c) 2012-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -12,7 +12,7 @@
     http://commonsware.com/Android
  */
 
-package com.commonsware.android.tabpager;
+package com.commonsware.android.tabfrag;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -20,77 +20,62 @@ import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 
-public class ViewPagerFragmentDemoActivity extends
-    Activity implements TabListener,
-    OnPageChangeListener {
+public class TabFragmentDemoActivity extends Activity implements
+    TabListener {
+  private static final String KEY_MODELS="models";
   private static final String KEY_POSITION="position";
-  private ViewPager pager=null;
+  private CharSequence[] models=new CharSequence[10];
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
-    pager=(ViewPager)findViewById(R.id.pager);
-    pager.setAdapter(new SampleAdapter(getFragmentManager()));
-    pager.setOnPageChangeListener(this);
+    if (state != null) {
+      models=state.getCharSequenceArray(KEY_MODELS);
+    }
 
     ActionBar bar=getActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
     for (int i=0; i < 10; i++) {
-      bar.addTab(bar.newTab()
-                    .setText("Editor #" + String.valueOf(i + 1))
+      bar.addTab(bar.newTab().setText("Tab #" + String.valueOf(i + 1))
                     .setTabListener(this).setTag(i));
+    }
+
+    if (state != null) {
+      bar.setSelectedNavigationItem(state.getInt(KEY_POSITION));
     }
   }
 
   @Override
-  public void onRestoreInstanceState(Bundle state) {
-    super.onRestoreInstanceState(state);
-    
-    pager.setCurrentItem(state.getInt(KEY_POSITION));
-  }
-
-  @Override
   public void onSaveInstanceState(Bundle state) {
-    super.onSaveInstanceState(state);
-    
-    state.putInt(KEY_POSITION, pager.getCurrentItem());
+    state.putCharSequenceArray(KEY_MODELS, models);
+    state.putInt(KEY_POSITION,
+                 getActionBar().getSelectedNavigationIndex());
   }
 
   @Override
   public void onTabSelected(Tab tab, FragmentTransaction ft) {
-    Integer position=(Integer)tab.getTag();
+    int i=((Integer)tab.getTag()).intValue();
 
-    pager.setCurrentItem(position);
+    ft.replace(android.R.id.content,
+               EditorFragment.newInstance(i, models[i]));
   }
 
   @Override
   public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-    // no-op
+    int i=((Integer)tab.getTag()).intValue();
+    EditorFragment frag=
+        (EditorFragment)getFragmentManager().findFragmentById(android.R.id.content);
+
+    if (frag != null) {
+      models[i]=frag.getText();
+    }
   }
 
   @Override
   public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    // no-op
-  }
-
-  @Override
-  public void onPageScrollStateChanged(int arg0) {
-    // no-op
-  }
-
-  @Override
-  public void onPageScrolled(int arg0, float arg1, int arg2) {
-    // no-op
-  }
-
-  @Override
-  public void onPageSelected(int position) {
-    getActionBar().setSelectedNavigationItem(position);
+    // unused
   }
 }

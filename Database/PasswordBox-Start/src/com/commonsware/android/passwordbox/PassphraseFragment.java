@@ -14,6 +14,7 @@
 
 package com.commonsware.android.passwordbox;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -23,9 +24,8 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class PassphraseFragment extends SherlockFragment implements
+public class PassphraseFragment extends Fragment implements
     OnClickListener, OnCheckedChangeListener {
   private EditText passphrase=null;
   private EditText title=null;

@@ -18,7 +18,7 @@ import android.content.Context;
 import java.io.IOException;
 import com.commonsware.cwac.loaderex.SQLCipherUtils;
 import com.commonsware.cwac.loaderex.SQLCipherUtils.State;
-import com.commonsware.cwac.loaderex.acl.SQLCipherCursorLoader;
+import com.commonsware.cwac.loaderex.SQLCipherCursorLoader;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 

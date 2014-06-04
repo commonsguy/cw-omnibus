@@ -15,6 +15,7 @@
 package com.commonsware.android.bitmap.iss;
 
 import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -28,9 +29,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.io.IOException;
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class BitmapFragment extends SherlockFragment {
+public class BitmapFragment extends Fragment {
   private static final String KEY_SAMPLE_SIZE="inSampleSize";
   private AssetManager assets=null;
 

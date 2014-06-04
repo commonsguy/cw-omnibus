@@ -1,5 +1,6 @@
 package com.commonsware.android.passwordbox;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,11 +13,10 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 import java.io.IOException;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.commonsware.cwac.loaderex.SQLCipherUtils.State;
 import net.sqlcipher.database.SQLiteDatabase;
 
-public class AuthActivity extends SherlockFragmentActivity implements
+public class AuthActivity extends Activity implements
     OnCheckedChangeListener, OnClickListener, TextWatcher {
   private EditText passphrase=null;
   private EditText confirm=null;

@@ -14,22 +14,22 @@
 
 package com.commonsware.android.passwordbox;
 
+import android.app.ListFragment;
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.commonsware.cwac.loaderex.acl.SQLCipherCursorLoader;
+import android.widget.SimpleCursorAdapter;
+import com.commonsware.cwac.loaderex.SQLCipherCursorLoader;
 
-public class RosterFragment extends SherlockListFragment implements
+public class RosterFragment extends ListFragment implements
     LoaderManager.LoaderCallbacks<Cursor> {
   private SQLCipherCursorLoader loader=null;
 

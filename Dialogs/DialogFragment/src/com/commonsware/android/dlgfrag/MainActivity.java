@@ -14,11 +14,11 @@
 
 package com.commonsware.android.dlgfrag;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -26,7 +26,6 @@ public class MainActivity extends SherlockFragmentActivity {
   }
 
   public void showMe(View v) {
-    new SampleDialogFragment().show(getSupportFragmentManager(),
-                                    "sample");
+    new SampleDialogFragment().show(getFragmentManager(), "sample");
   }
 }

@@ -8,8 +8,19 @@ buildscript {
 }
 apply plugin: 'android'
 
+repositories {
+    maven {
+				url "http://dl.bintray.com/populov/maven"
+		}
+		maven {
+		    url "https://repo.commonsware.com.s3.amazonaws.com"
+    }
+}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+		compile 'com.viewpagerindicator:library:2.4.1@aar'
+		compile 'com.commonsware.cwac:presentation:0.4.+'
+		compile 'com.android.support:support-v13:19.1.0'
 }
 
 android {

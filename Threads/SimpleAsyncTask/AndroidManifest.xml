@@ -11,7 +11,7 @@
 		android:smallScreens="true"/>
 
 	<uses-sdk
-		android:minSdkVersion="5"
+		android:minSdkVersion="7"
 		android:targetSdkVersion="14"/>
 
 	<application

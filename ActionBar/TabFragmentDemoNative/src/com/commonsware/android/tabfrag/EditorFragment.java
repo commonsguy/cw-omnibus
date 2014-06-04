@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2012 CommonsWare, LLC
+  Copyright (c) 2012-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -12,7 +12,7 @@
     http://commonsware.com/Android
  */
 
-package com.commonsware.android.tabpager;
+package com.commonsware.android.tabfrag;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -23,12 +23,16 @@ import android.widget.EditText;
 
 public class EditorFragment extends Fragment {
   private static final String KEY_POSITION="position";
+  private static final String KEY_TEXT="text";
+  private EditText editor=null;
 
-  static EditorFragment newInstance(int position) {
+  static EditorFragment newInstance(int position,
+                                    CharSequence text) {
     EditorFragment frag=new EditorFragment();
     Bundle args=new Bundle();
 
     args.putInt(KEY_POSITION, position);
+    args.putCharSequence(KEY_TEXT, text);
     frag.setArguments(args);
 
     return(frag);
@@ -39,11 +43,18 @@ public class EditorFragment extends Fragment {
                            ViewGroup container,
                            Bundle savedInstanceState) {
     View result=inflater.inflate(R.layout.editor, container, false);
-    EditText editor=(EditText)result.findViewById(R.id.editor);
+    
+    editor=(EditText)result.findViewById(R.id.editor);
+    
     int position=getArguments().getInt(KEY_POSITION, -1);
 
     editor.setHint(String.format(getString(R.string.hint), position + 1));
-    
+    editor.setText(getArguments().getCharSequence(KEY_TEXT));
+
     return(result);
+  }
+  
+  CharSequence getText() {
+    return(editor.getText());
   }
 }

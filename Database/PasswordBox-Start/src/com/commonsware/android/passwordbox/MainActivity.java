@@ -14,10 +14,10 @@
 
 package com.commonsware.android.passwordbox;
 
+import android.app.Activity;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends Activity {
   private RosterFragment roster=null;
   private PassphraseFragment passphrase=null;
 
@@ -27,9 +27,9 @@ public class MainActivity extends SherlockFragmentActivity {
     setContentView(R.layout.activity_main);
 
     passphrase=
-        (PassphraseFragment)getSupportFragmentManager().findFragmentById(R.id.passphrase);
+        (PassphraseFragment)getFragmentManager().findFragmentById(R.id.passphrase);
     roster=
-        (RosterFragment)getSupportFragmentManager().findFragmentById(R.id.roster);
+        (RosterFragment)getFragmentManager().findFragmentById(R.id.roster);
   }
 
   void showPassphrase() {
@@ -43,7 +43,7 @@ public class MainActivity extends SherlockFragmentActivity {
     }
 
     if (!passphrase.isVisible()) {
-      getSupportFragmentManager().beginTransaction()
+      getFragmentManager().beginTransaction()
                                  .addToBackStack(null)
                                  .replace(R.id.passphrase, passphrase)
                                  .commit();
@@ -71,6 +71,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
   void savePassphrase(int id, String title, String passphrase) {
     roster.savePassphrase(id, title, passphrase);
-    getSupportFragmentManager().popBackStack();
+    getFragmentManager().popBackStack();
   }
 }

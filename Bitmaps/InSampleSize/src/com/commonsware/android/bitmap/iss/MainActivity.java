@@ -14,26 +14,23 @@
 
 package com.commonsware.android.bitmap.iss;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.viewpagerindicator.TabPageIndicator;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
     ViewPager pager=(ViewPager)findViewById(R.id.pager);
-    TabPageIndicator tabs=(TabPageIndicator)findViewById(R.id.titles);
 
     pager.setAdapter(buildAdapter());
-    tabs.setViewPager(pager);
   }
 
   private PagerAdapter buildAdapter() {
-    return(new SampleAdapter(this, getSupportFragmentManager()));
+    return(new SampleAdapter(this, getFragmentManager()));
   }
 }

@@ -15,6 +15,7 @@
 package com.commonsware.android.picture;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.AsyncTask;
@@ -22,18 +23,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.android.camera.PreviewFrameLayout;
 
-public class PictureDemo extends SherlockActivity {
+public class PictureDemo extends Activity {
   private PreviewFrameLayout frame=null;
   private SurfaceView preview=null;
   private SurfaceHolder previewHolder=null;

@@ -14,13 +14,12 @@
 
 package com.commonsware.android.gridlayout;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class MainActivity extends
-    SherlockFragmentActivity {
+public class MainActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,6 +31,6 @@ public class MainActivity extends
   }
 
   private PagerAdapter buildAdapter() {
-    return(new SampleAdapter(this, getSupportFragmentManager()));
+    return(new SampleAdapter(this, getFragmentManager()));
   }
 }

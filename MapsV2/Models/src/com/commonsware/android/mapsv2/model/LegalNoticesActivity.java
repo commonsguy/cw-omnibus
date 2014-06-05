@@ -14,12 +14,12 @@
 
 package com.commonsware.android.mapsv2.model;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-public class LegalNoticesActivity extends SherlockActivity {
+public class LegalNoticesActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

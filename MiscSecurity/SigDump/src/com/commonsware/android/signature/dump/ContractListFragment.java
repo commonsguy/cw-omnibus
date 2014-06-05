@@ -19,9 +19,9 @@
 package com.commonsware.android.signature.dump;
 
 import android.app.Activity;
-import com.actionbarsherlock.app.SherlockListFragment;
+import android.app.ListFragment;
 
-public class ContractListFragment<T> extends SherlockListFragment {
+public class ContractListFragment<T> extends ListFragment {
   private T contract;
 
   @SuppressWarnings("unchecked")

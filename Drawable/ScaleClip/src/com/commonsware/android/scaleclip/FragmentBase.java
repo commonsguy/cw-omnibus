@@ -14,18 +14,18 @@
 
 package com.commonsware.android.scaleclip;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import com.actionbarsherlock.app.SherlockFragment;
 
-abstract public class FragmentBase extends SherlockFragment implements
+abstract public class FragmentBase extends Fragment implements
     SeekBar.OnSeekBarChangeListener {
   abstract void setImageBackground(ImageView image);
-  
+
   private ImageView image=null;
 
   @Override
@@ -36,7 +36,7 @@ abstract public class FragmentBase extends SherlockFragment implements
 
     View result=inflater.inflate(R.layout.scaleclip, container, false);
     SeekBar bar=((SeekBar)result.findViewById(R.id.level));
-    
+
     bar.setOnSeekBarChangeListener(this);
     image=(ImageView)result.findViewById(R.id.image);
     setImageBackground(image);
@@ -44,7 +44,7 @@ abstract public class FragmentBase extends SherlockFragment implements
 
     return(result);
   }
-  
+
   @Override
   public void onProgressChanged(SeekBar seekBar, int progress,
                                 boolean fromUser) {

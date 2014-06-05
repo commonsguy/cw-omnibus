@@ -15,6 +15,7 @@
 package com.commonsware.android.eventbus.greenrobot;
 
 import android.annotation.SuppressLint;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import com.actionbarsherlock.app.SherlockListFragment;
 import de.greenrobot.event.EventBus;
 
-public class EventLogFragment extends SherlockListFragment {
+public class EventLogFragment extends ListFragment {
   static final String EXTRA_RANDOM="r";
   static final String EXTRA_TIME="t";
   static final String ACTION_EVENT="e";

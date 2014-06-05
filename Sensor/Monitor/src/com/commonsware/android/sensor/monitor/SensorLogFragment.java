@@ -15,6 +15,7 @@
 package com.commonsware.android.sensor.monitor;
 
 import android.annotation.SuppressLint;
+import android.app.ListFragment;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -25,9 +26,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
-import com.actionbarsherlock.app.SherlockListFragment;
 
-public class SensorLogFragment extends SherlockListFragment implements
+public class SensorLogFragment extends ListFragment implements
     SensorEventListener {
   private SensorLogAdapter adapter=null;
   private boolean isXYZ=false;

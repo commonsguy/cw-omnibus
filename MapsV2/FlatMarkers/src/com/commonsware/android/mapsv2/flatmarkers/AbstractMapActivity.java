@@ -14,27 +14,27 @@
 
 package com.commonsware.android.mapsv2.flatmarkers;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-public class AbstractMapActivity extends SherlockFragmentActivity {
+public class AbstractMapActivity extends Activity {
   protected static final String TAG_ERROR_DIALOG_FRAGMENT="errorDialog";
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+    getMenuInflater().inflate(R.menu.activity_main, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }
@@ -65,7 +65,7 @@ public class AbstractMapActivity extends SherlockFragmentActivity {
     }
     else if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
       ErrorDialogFragment.newInstance(status)
-                         .show(getSupportFragmentManager(),
+                         .show(getFragmentManager(),
                                TAG_ERROR_DIALOG_FRAGMENT);
     }
     else {

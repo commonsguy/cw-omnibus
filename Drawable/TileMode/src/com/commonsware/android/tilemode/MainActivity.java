@@ -14,16 +14,15 @@
 
 package com.commonsware.android.tilemode;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockActivity;
 
-public class MainActivity extends SherlockActivity implements
-    TabListener {
+public class MainActivity extends Activity implements TabListener {
   private static final int TABS[]= { R.string._default, R.string.clamp,
       R.string.repeat, R.string.mirror };
   private static final int DRAWABLES[]= { R.drawable._default,
@@ -37,7 +36,7 @@ public class MainActivity extends SherlockActivity implements
 
     widget=findViewById(R.id.widget);
 
-    ActionBar bar=getSupportActionBar();
+    ActionBar bar=getActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
     for (int i=0; i < TABS.length; i++) {

@@ -14,6 +14,7 @@
 
 package com.commonsware.android.signature.dump;
 
+import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -25,9 +26,8 @@ import java.io.FileOutputStream;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class MainActivity extends SherlockFragmentActivity implements
+public class MainActivity extends Activity implements
     PackagesFragment.Contract {
   private PackageManager mgr=null;
   private SignatureFragment sigDisplay=null;
@@ -40,7 +40,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
     mgr=getPackageManager();
     sigDisplay=
-        (SignatureFragment)getSupportFragmentManager().findFragmentById(R.id.log);
+        (SignatureFragment)getFragmentManager().findFragmentById(R.id.log);
 
     panes=(SlidingPaneLayout)findViewById(R.id.panes);
     panes.openPane();

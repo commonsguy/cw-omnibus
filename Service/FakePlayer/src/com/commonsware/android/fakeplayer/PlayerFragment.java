@@ -14,14 +14,14 @@
 
 package com.commonsware.android.fakeplayer;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class PlayerFragment extends SherlockFragment implements
+public class PlayerFragment extends Fragment implements
     View.OnClickListener {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup parent,
@@ -38,10 +38,10 @@ public class PlayerFragment extends SherlockFragment implements
   public void onClick(View v) {
     Intent i=new Intent(getActivity(), PlayerService.class);
 
-    if (v.getId()==R.id.start) {
+    if (v.getId() == R.id.start) {
       i.putExtra(PlayerService.EXTRA_PLAYLIST, "main");
       i.putExtra(PlayerService.EXTRA_SHUFFLE, true);
-  
+
       getActivity().startService(i);
     }
     else {

@@ -14,16 +14,16 @@
 
 package com.commonsware.android.mapsv2.nooyawk;
 
+import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import java.util.ArrayList;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AbstractMapActivity implements
@@ -43,8 +43,8 @@ public class MainActivity extends AbstractMapActivity implements
     if (readyToGo()) {
       setContentView(R.layout.activity_main);
 
-      SupportMapFragment mapFrag=
-          (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+      MapFragment mapFrag=
+          (MapFragment)getFragmentManager().findFragmentById(R.id.map);
 
       initListNav();
 
@@ -73,21 +73,20 @@ public class MainActivity extends AbstractMapActivity implements
   public void onSaveInstanceState(Bundle state) {
     super.onSaveInstanceState(state);
 
-    state.putInt(STATE_NAV,
-                 getSupportActionBar().getSelectedNavigationIndex());
+    state.putInt(STATE_NAV, getActionBar().getSelectedNavigationIndex());
   }
 
   @Override
   public void onRestoreInstanceState(Bundle state) {
     super.onRestoreInstanceState(state);
 
-    getSupportActionBar().setSelectedNavigationItem(state.getInt(STATE_NAV));
+    getActionBar().setSelectedNavigationItem(state.getInt(STATE_NAV));
   }
 
   private void initListNav() {
     ArrayList<String> items=new ArrayList<String>();
     ArrayAdapter<String> nav=null;
-    ActionBar bar=getSupportActionBar();
+    ActionBar bar=getActionBar();
 
     for (int type : MAP_TYPE_NAMES) {
       items.add(getString(type));

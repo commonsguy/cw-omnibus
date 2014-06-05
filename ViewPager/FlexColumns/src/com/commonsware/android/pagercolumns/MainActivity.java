@@ -14,15 +14,15 @@
 
 package com.commonsware.android.pagercolumns;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.commonsware.cwac.pager.PageDescriptor;
 import com.commonsware.cwac.pager.SimplePageDescriptor;
-import com.commonsware.cwac.pager.v4.ArrayPagerAdapter;
+import com.commonsware.cwac.pager.ArrayPagerAdapter;
 import com.viewpagerindicator.TabPageIndicator;
 
 public class MainActivity extends SherlockFragmentActivity {
@@ -34,16 +34,16 @@ public class MainActivity extends SherlockFragmentActivity {
     ViewPager pager=(ViewPager)findViewById(R.id.pager);
 
     if (pager == null) {
-      if (getSupportFragmentManager().findFragmentById(R.id.editor1) == null) {
+      if (getFragmentManager().findFragmentById(R.id.editor1) == null) {
         SamplePagerAdapter adapter=buildAdapter();
         FragmentTransaction ft=
-            getSupportFragmentManager().beginTransaction();
+            getFragmentManager().beginTransaction();
 
-        populateColumn(getSupportFragmentManager(), ft, adapter, 0,
+        populateColumn(getFragmentManager(), ft, adapter, 0,
                        R.id.editor1);
-        populateColumn(getSupportFragmentManager(), ft, adapter, 1,
+        populateColumn(getFragmentManager(), ft, adapter, 1,
                        R.id.editor2);
-        populateColumn(getSupportFragmentManager(), ft, adapter, 2,
+        populateColumn(getFragmentManager(), ft, adapter, 2,
                        R.id.editor3);
         ft.commit();
       }
@@ -64,7 +64,7 @@ public class MainActivity extends SherlockFragmentActivity {
       pages.add(new SimplePageDescriptor(buildTag(i), buildTitle(i)));
     }
 
-    return(new SamplePagerAdapter(getSupportFragmentManager(), pages));
+    return(new SamplePagerAdapter(getFragmentManager(), pages));
   }
 
   private String buildTag(int position) {

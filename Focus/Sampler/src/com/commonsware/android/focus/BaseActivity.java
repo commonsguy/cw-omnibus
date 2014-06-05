@@ -14,19 +14,19 @@
 
 package com.commonsware.android.focus;
 
+import android.app.Activity;
 import android.content.Intent;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class BaseActivity extends SherlockFragmentActivity {
+public class BaseActivity extends Activity {
   protected void initActionBar() {
-    getSupportActionBar().setHomeButtonEnabled(true);
+    getActionBar().setHomeButtonEnabled(true);
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.actions, menu);
+    getMenuInflater().inflate(R.menu.actions, menu);
 
     return super.onCreateOptionsMenu(menu);
   }

@@ -14,16 +14,16 @@
 
 package com.commonsware.android.weather2;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-public class WeatherDemo extends SherlockFragmentActivity {
+public class WeatherDemo extends Activity {
   protected static final String TAG_ERROR_DIALOG_FRAGMENT="errorDialog";
 
   @Override
@@ -31,10 +31,10 @@ public class WeatherDemo extends SherlockFragmentActivity {
     super.onCreate(savedInstanceState);
 
     if (readyToGo()) {
-      if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
-        getSupportFragmentManager().beginTransaction()
-                                   .add(android.R.id.content,
-                                        new WeatherFragment()).commit();
+      if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
+        getFragmentManager().beginTransaction()
+                            .add(android.R.id.content,
+                                 new WeatherFragment()).commit();
       }
     }
   }
@@ -48,7 +48,7 @@ public class WeatherDemo extends SherlockFragmentActivity {
     }
     else if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
       ErrorDialogFragment.newInstance(status)
-                         .show(getSupportFragmentManager(),
+                         .show(getFragmentManager(),
                                TAG_ERROR_DIALOG_FRAGMENT);
     }
     else {

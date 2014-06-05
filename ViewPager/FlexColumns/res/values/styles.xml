@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<style name="AppTheme" parent="@style/Theme.Sherlock.Light">
+	<style name="AppTheme" parent="@android:style/Theme.Holo.Light">
 		<item name="vpiTabPageIndicatorStyle">@style/TabStyle</item>
 	</style>
 

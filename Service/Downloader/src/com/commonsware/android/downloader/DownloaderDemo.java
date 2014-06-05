@@ -14,16 +14,16 @@
 
 package com.commonsware.android.downloader;
 
+import android.app.Activity;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class DownloaderDemo extends SherlockFragmentActivity {
+public class DownloaderDemo extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getSupportFragmentManager().beginTransaction()
+    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
+      getFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new DownloadFragment()).commit();
     }

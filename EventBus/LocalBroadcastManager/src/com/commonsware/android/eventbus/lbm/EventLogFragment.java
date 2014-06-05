@@ -15,6 +15,7 @@
 package com.commonsware.android.eventbus.lbm;
 
 import android.annotation.SuppressLint;
+import android.app.ListFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,9 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import com.actionbarsherlock.app.SherlockListFragment;
 
-public class EventLogFragment extends SherlockListFragment {
+public class EventLogFragment extends ListFragment {
   static final String EXTRA_RANDOM="r";
   static final String EXTRA_TIME="t";
   static final String ACTION_EVENT="e";

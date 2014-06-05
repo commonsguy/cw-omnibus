@@ -33,6 +33,6 @@ public class MainActivity extends AbstractMapActivity {
   }
 
   private PagerAdapter buildAdapter() {
-    return(new MapPageAdapter(this, getSupportFragmentManager()));
+    return(new MapPageAdapter(this, getFragmentManager()));
   }
 }

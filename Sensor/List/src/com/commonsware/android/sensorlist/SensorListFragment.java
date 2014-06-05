@@ -1,5 +1,6 @@
 package com.commonsware.android.sensorlist;
 
+import android.app.ListFragment;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -12,9 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockListFragment;
 
-public class SensorListFragment extends SherlockListFragment implements
+public class SensorListFragment extends ListFragment implements
     SensorEventListener {
   private SensorManager mgr=null;
   private ArrayAdapter<Sensor> adapter=null;
@@ -31,7 +31,7 @@ public class SensorListFragment extends SherlockListFragment implements
 
     setListAdapter(adapter);
   }
-  
+
   @Override
   public void onPause() {
     mgr.unregisterListener(this);

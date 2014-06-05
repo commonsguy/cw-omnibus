@@ -14,6 +14,7 @@
 
 package com.commonsware.android.signature.dump;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,9 +28,8 @@ import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class SignatureFragment extends SherlockFragment {
+public class SignatureFragment extends Fragment {
   DateFormat fmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
   @Override

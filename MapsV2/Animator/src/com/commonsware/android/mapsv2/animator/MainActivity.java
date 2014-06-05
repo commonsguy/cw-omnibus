@@ -16,19 +16,19 @@ package com.commonsware.android.mapsv2.animator;
 
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
+import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Property;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import java.util.ArrayList;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -61,8 +61,8 @@ public class MainActivity extends AbstractMapActivity implements
     if (readyToGo()) {
       setContentView(R.layout.activity_main);
 
-      SupportMapFragment mapFrag=
-          (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+      MapFragment mapFrag=
+          (MapFragment)getFragmentManager().findFragmentById(R.id.map);
 
       initListNav();
 
@@ -93,7 +93,7 @@ public class MainActivity extends AbstractMapActivity implements
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.animate, menu);
+    getMenuInflater().inflate(R.menu.animate, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }
@@ -121,20 +121,20 @@ public class MainActivity extends AbstractMapActivity implements
     super.onSaveInstanceState(savedInstanceState);
 
     savedInstanceState.putInt(STATE_NAV,
-                              getSupportActionBar().getSelectedNavigationIndex());
+                              getActionBar().getSelectedNavigationIndex());
   }
 
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
 
-    getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
+    getActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
   }
 
   private void initListNav() {
     ArrayList<String> items=new ArrayList<String>();
     ArrayAdapter<String> nav=null;
-    ActionBar bar=getSupportActionBar();
+    ActionBar bar=getActionBar();
 
     for (int type : MAP_TYPE_NAMES) {
       items.add(getString(type));

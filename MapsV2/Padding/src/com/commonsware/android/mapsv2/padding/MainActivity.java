@@ -14,18 +14,18 @@
 
 package com.commonsware.android.mapsv2.padding;
 
+import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import java.util.ArrayList;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -48,8 +48,8 @@ public class MainActivity extends AbstractMapActivity implements
 
       setContentView(R.layout.activity_main);
 
-      SupportMapFragment mapFrag=
-          (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+      MapFragment mapFrag=
+          (MapFragment)getFragmentManager().findFragmentById(R.id.map);
 
       initListNav();
 
@@ -60,15 +60,8 @@ public class MainActivity extends AbstractMapActivity implements
       TypedValue tv=new TypedValue();
       int actionBarHeight=0;
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize,
-                                        tv, true))
-          actionBarHeight=
-              TypedValue.complexToDimensionPixelSize(tv.data,
-                                                     getResources().getDisplayMetrics());
-      }
-      else if (getTheme().resolveAttribute(com.actionbarsherlock.R.attr.actionBarSize,
-                                           tv, true)) {
+      if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv,
+                                      true)) {
         actionBarHeight=
             TypedValue.complexToDimensionPixelSize(tv.data,
                                                    getResources().getDisplayMetrics());
@@ -110,20 +103,20 @@ public class MainActivity extends AbstractMapActivity implements
     super.onSaveInstanceState(savedInstanceState);
 
     savedInstanceState.putInt(STATE_NAV,
-                              getSupportActionBar().getSelectedNavigationIndex());
+                              getActionBar().getSelectedNavigationIndex());
   }
 
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
 
-    getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
+    getActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
   }
 
   private void initListNav() {
     ArrayList<String> items=new ArrayList<String>();
     ArrayAdapter<String> nav=null;
-    ActionBar bar=getSupportActionBar();
+    ActionBar bar=getActionBar();
 
     for (int type : MAP_TYPE_NAMES) {
       items.add(getString(type));

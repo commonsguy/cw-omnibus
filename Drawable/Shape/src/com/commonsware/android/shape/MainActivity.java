@@ -14,16 +14,15 @@
 
 package com.commonsware.android.shape;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockActivity;
 
-public class MainActivity extends SherlockActivity implements
-    TabListener {
+public class MainActivity extends Activity implements TabListener {
   private static final int TABS[]= { R.string.solid, R.string.gradient,
       R.string.border, R.string.rounded, R.string.ring,
       R.string.layered };
@@ -39,7 +38,7 @@ public class MainActivity extends SherlockActivity implements
 
     image=(ImageView)findViewById(R.id.image);
 
-    ActionBar bar=getSupportActionBar();
+    ActionBar bar=getActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
     for (int i=0; i < TABS.length; i++) {

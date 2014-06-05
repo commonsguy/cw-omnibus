@@ -1,5 +1,5 @@
 <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res/com.commonsware.android.gridlayout"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	app:columnCount="9"
@@ -80,8 +80,8 @@
 
 	<android.support.v7.widget.Space
 		android:layout_height="36dp"
-		android:layout_column="8"
-		android:layout_row="0"/>
+		app:layout_column="8"
+		app:layout_row="0"/>
 
 	<android.support.v7.widget.Space
 		android:layout_height="36dp"

@@ -52,7 +52,7 @@ public class ModelFragment extends SherlockFragment {
                      getActivity().getApplicationContext());
   }
 
-  @TargetApi(11)
+  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   static public <T> void executeAsyncTask(AsyncTask<T, ?, ?> task,
                                           T... params) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {

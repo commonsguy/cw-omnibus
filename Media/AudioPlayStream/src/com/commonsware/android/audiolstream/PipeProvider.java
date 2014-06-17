@@ -114,7 +114,7 @@ public class PipeProvider extends ContentProvider {
       int len;
 
       try {
-        while ((len=in.read(buf)) > 0) {
+        while ((len=in.read(buf)) >= 0) {
           out.write(buf, 0, len);
         }
 

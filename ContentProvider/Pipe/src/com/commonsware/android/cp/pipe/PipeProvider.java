@@ -69,7 +69,7 @@ public class PipeProvider extends AbstractFileProvider {
       int len;
 
       try {
-        while ((len=in.read(buf)) > 0) {
+        while ((len=in.read(buf)) >= 0) {
           out.write(buf, 0, len);
         }
 

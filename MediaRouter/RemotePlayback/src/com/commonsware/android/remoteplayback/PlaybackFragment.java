@@ -257,7 +257,10 @@ public class PlaybackFragment extends Fragment {
       logToTranscript(getActivity().getString(R.string.session_ending));
       EndSessionCallback endCB=new EndSessionCallback();
 
-      client.endSession(null, endCB);
+      if (client.isSessionManagementSupported()) {
+        client.endSession(null, endCB);
+      }
+
       transcript.postDelayed(endCB, 1000);
     }
   }
@@ -278,25 +281,31 @@ public class PlaybackFragment extends Fragment {
     }
   };
 
-  class RunnableSessionActionCallback extends SessionActionCallback
-      implements Runnable {
+  abstract class RunnableSessionActionCallback extends
+      SessionActionCallback implements Runnable {
+    abstract protected void doWork();
+
+    private boolean hasRun=false;
+
     @Override
     public void onResult(Bundle data, String sessionId,
                          MediaSessionStatus sessionStatus) {
+      transcript.removeCallbacks(this);
       run();
     }
 
     @Override
     public void run() {
-      transcript.removeCallbacks(this);
+      if (!hasRun) {
+        hasRun=true;
+        doWork();
+      }
     }
   }
 
   private class PauseCallback extends RunnableSessionActionCallback {
     @Override
-    public void run() {
-      super.run();
-
+    protected void doWork() {
       isPaused=true;
       getActivity().supportInvalidateOptionsMenu();
       logToTranscript(getActivity().getString(R.string.paused));
@@ -305,9 +314,7 @@ public class PlaybackFragment extends Fragment {
 
   private class ResumeCallback extends RunnableSessionActionCallback {
     @Override
-    public void run() {
-      super.run();
-
+    protected void doWork() {
       isPaused=false;
       getActivity().supportInvalidateOptionsMenu();
       logToTranscript(getActivity().getString(R.string.resumed));
@@ -316,9 +323,7 @@ public class PlaybackFragment extends Fragment {
 
   private class StopCallback extends RunnableSessionActionCallback {
     @Override
-    public void run() {
-      super.run();
-
+    protected void doWork() {
       isPlaying=false;
       isPaused=false;
       getActivity().supportInvalidateOptionsMenu();
@@ -329,9 +334,7 @@ public class PlaybackFragment extends Fragment {
   private class EndSessionCallback extends
       RunnableSessionActionCallback {
     @Override
-    public void run() {
-      super.run();
-
+    protected void doWork() {
       client.release();
       client=null;
 

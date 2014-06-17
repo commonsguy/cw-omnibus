@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
     try {
       DataInputStream d2=new DataInputStream(i2);
       int len;
-      while ((len=i1.read(buf1)) > 0) {
+      while ((len=i1.read(buf1)) >= 0) {
         d2.readFully(buf2, 0, len);
         for (int i=0; i < len; i++)
           if (buf1[i] != buf2[i])

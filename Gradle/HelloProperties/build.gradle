@@ -3,14 +3,26 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.0'
+        classpath 'com.android.tools.build:gradle:0.11.+'
     }
 }
 
 subprojects {
+		buildscript {
+				repositories {
+				    mavenCentral()
+				}
+				dependencies {
+				    classpath 'com.android.tools.build:gradle:0.11.+'
+				}
+		}
+
     apply plugin: 'android'
 
     android {
+				compileSdkVersion 18
+				buildToolsVersion "19.1.0"
+
         def signingPropFile = rootProject.file('signing.properties')
 
         if (signingPropFile.canRead()) {

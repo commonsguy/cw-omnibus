@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.0'
+        classpath 'com.android.tools.build:gradle:0.11.+'
     }
 }
 
@@ -15,7 +15,7 @@ dependencies {
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "19.0.1"
+    buildToolsVersion "19.1.0"
 
     def versionPropsFile = file('version.properties')
 
@@ -51,7 +51,7 @@ android {
 
     buildTypes {
         debug {
-          packageNameSuffix ".d"
+          applicationIdSuffix ".d"
           versionNameSuffix "-debug"
         }
 
@@ -62,7 +62,7 @@ android {
         mezzanine.initWith(buildTypes.release)
 
         mezzanine {
-            packageNameSuffix ".mezz"
+            applicationIdSuffix ".mezz"
             debuggable true
             signingConfig signingConfigs.release
         }

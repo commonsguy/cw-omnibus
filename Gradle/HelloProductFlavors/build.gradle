@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.0'
+        classpath 'com.android.tools.build:gradle:0.11.+'
     }
 }
 
@@ -15,7 +15,7 @@ dependencies {
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "19.0.1"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         versionCode 2
@@ -35,7 +35,7 @@ android {
 
     buildTypes {
         debug {
-          packageNameSuffix ".d"
+          applicationIdSuffix ".d"
           versionNameSuffix "-debug"
         }
 
@@ -46,7 +46,7 @@ android {
         mezzanine.initWith(buildTypes.release)
 
         mezzanine {
-            packageNameSuffix ".mezz"
+            applicationIdSuffix ".mezz"
             debuggable true
             signingConfig signingConfigs.release
         }
@@ -54,11 +54,11 @@ android {
 
     productFlavors {
         vanilla {
-            packageName "com.commonsware.android.gradle.hello.vanilla"
+            applicationId "com.commonsware.android.gradle.hello.vanilla"
         }
 
         chocolate {
-            packageName "com.commonsware.android.gradle.hello.chocolate"
+            applicationId "com.commonsware.android.gradle.hello.chocolate"
         }
     }
 }

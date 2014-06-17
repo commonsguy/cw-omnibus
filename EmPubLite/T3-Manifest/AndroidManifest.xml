@@ -9,7 +9,10 @@
 		android:normalScreens="true"
 		android:smallScreens="false"
 		android:xlargeScreens="true"/>
-	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19"/>
+
+	<uses-sdk
+		android:minSdkVersion="15"
+		android:targetSdkVersion="19"/>
 
 	<application
 		android:allowBackup="false"

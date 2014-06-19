@@ -1,13 +1,12 @@
 package com.commonsware.empublite;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class EmPubLiteActivity extends SherlockFragmentActivity {
+public class EmPubLiteActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -16,7 +15,8 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.options, menu);
+    getMenuInflater().inflate(R.menu.options, menu);
+
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -25,20 +25,20 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
     switch (item.getItemId()) {
       case android.R.id.home:
         return(true);
-        
+
       case R.id.about:
         Intent i=new Intent(this, SimpleContentActivity.class);
         startActivity(i);
-        
+
         return(true);
-        
+
       case R.id.help:
         i=new Intent(this, SimpleContentActivity.class);
         startActivity(i);
-        
+
         return(true);
     }
-    
+
     return(super.onOptionsItemSelected(item));
   }
 }

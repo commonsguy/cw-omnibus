@@ -5,9 +5,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebViewFragment;
 
-abstract public class AbstractContentFragment extends WebViewFragment {
-  abstract String getPage();
+public class SimpleContentFragment extends WebViewFragment {
+  private static final String KEY_FILE="file";
+
+  protected static SimpleContentFragment newInstance(String file) {
+    SimpleContentFragment f=new SimpleContentFragment();
+
+    Bundle args=new Bundle();
+
+    args.putString(KEY_FILE, file);
+    f.setArguments(args);
+
+    return(f);
+  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -29,5 +41,9 @@ abstract public class AbstractContentFragment extends WebViewFragment {
     getWebView().loadUrl(getPage());
 
     return(result);
+  }
+
+  private String getPage() {
+    return(getArguments().getString(KEY_FILE));
   }
 }

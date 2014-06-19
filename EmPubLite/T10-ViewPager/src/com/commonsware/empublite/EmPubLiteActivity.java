@@ -1,23 +1,22 @@
 package com.commonsware.empublite;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class EmPubLiteActivity extends SherlockFragmentActivity {
+public class EmPubLiteActivity extends Activity {
   private ViewPager pager=null;
   private ContentsAdapter adapter=null;
-  
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
-    
+
     pager=(ViewPager)findViewById(R.id.pager);
     adapter=new ContentsAdapter(this);
     pager.setAdapter(adapter);
@@ -27,7 +26,8 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.options, menu);
+    getMenuInflater().inflate(R.menu.options, menu);
+
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -36,20 +36,20 @@ public class EmPubLiteActivity extends SherlockFragmentActivity {
     switch (item.getItemId()) {
       case android.R.id.home:
         return(true);
-        
+
       case R.id.about:
         Intent i=new Intent(this, SimpleContentActivity.class);
         startActivity(i);
-        
+
         return(true);
-        
+
       case R.id.help:
         i=new Intent(this, SimpleContentActivity.class);
         startActivity(i);
-        
+
         return(true);
     }
-    
+
     return(super.onOptionsItemSelected(item));
   }
 }

@@ -45,6 +45,7 @@ public class PlaybackFragment extends Fragment {
   private RemotePlaybackClient client=null;
   private boolean isPlaying=false;
   private boolean isPaused=false;
+  private DemoRouteProvider provider=null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,15 @@ public class PlaybackFragment extends Fragment {
     super.onAttach(host);
 
     router=MediaRouter.getInstance(host);
-    router.addProvider(new DemoRouteProvider(getActivity()));
+    provider=new DemoRouteProvider(getActivity());
+    router.addProvider(provider);
+  }
+
+  @Override
+  public void onDetach() {
+    router.removeProvider(provider);
+    
+    super.onDetach();
   }
 
   @Override

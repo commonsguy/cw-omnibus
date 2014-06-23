@@ -1,22 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<item
-		android:id="@+id/settings"
-		android:icon="@android:drawable/ic_menu_preferences"
-		android:showAsAction="never"
-		android:title="@string/settings">
-	</item>
-	<item
+	<item android:id="@+id/settings" android:icon="@android:drawable/ic_menu_preferences" android:title="@string/settings" android:showAsAction="never"></item><item
 		android:id="@+id/help"
 		android:icon="@android:drawable/ic_menu_help"
-		android:showAsAction="never"
 		android:title="@string/help">
 	</item>
 	<item
 		android:id="@+id/about"
 		android:icon="@android:drawable/ic_menu_info_details"
-		android:showAsAction="never"
 		android:title="@string/about">
 	</item>
+	
 
 </menu>

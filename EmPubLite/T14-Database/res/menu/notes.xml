@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<item
-		android:id="@+id/delete"
-		android:icon="@android:drawable/ic_menu_delete"
-		android:showAsAction="ifRoom|withText"
-		android:title="@string/delete">
-	</item>
+  <item
+    android:id="@+id/delete"
+    android:icon="@android:drawable/ic_menu_delete"
+    android:showAsAction="ifRoom|withText"
+    android:title="@string/delete">
+  </item>
 
 </menu>

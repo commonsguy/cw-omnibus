@@ -1,15 +1,14 @@
 package com.commonsware.empublite;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import android.app.Activity;
+import android.app.Fragment;
+import android.support.v13.app.FragmentStatePagerAdapter;
 
 public class ContentsAdapter extends FragmentStatePagerAdapter {
   private BookContents contents=null;
 
-  public ContentsAdapter(SherlockFragmentActivity ctxt,
-                         BookContents contents) {
-    super(ctxt.getSupportFragmentManager());
+  public ContentsAdapter(Activity ctxt, BookContents contents) {
+    super(ctxt.getFragmentManager());
 
     this.contents=contents;
   }

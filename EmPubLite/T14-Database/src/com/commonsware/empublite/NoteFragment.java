@@ -1,20 +1,24 @@
 package com.commonsware.empublite;
 
+import android.app.Fragment;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import de.greenrobot.event.EventBus;
 
-public class NoteFragment extends SherlockFragment implements
-    DatabaseHelper.NoteListener {
+public class NoteFragment extends Fragment {
+  public interface Contract {
+    void closeNotes();
+  }
+
   private static final String KEY_POSITION="position";
   private EditText editor=null;
-  private boolean isDeleted=false;
 
   static NoteFragment newInstance(int position) {
     NoteFragment frag=new NoteFragment();
@@ -27,30 +31,44 @@ public class NoteFragment extends SherlockFragment implements
   }
 
   @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    setHasOptionsMenu(true);
+  }
+
+  @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container,
                            Bundle savedInstanceState) {
     View result=inflater.inflate(R.layout.editor, container, false);
-    int position=getArguments().getInt(KEY_POSITION, -1);
 
     editor=(EditText)result.findViewById(R.id.editor);
-    DatabaseHelper.getInstance(getActivity()).getNoteAsync(position,
-                                                           this);
-
-    setHasOptionsMenu(true);
 
     return(result);
   }
 
   @Override
-  public void onPause() {
-    if (!isDeleted) {
-      int position=getArguments().getInt(KEY_POSITION, -1);
-  
-      DatabaseHelper.getInstance(getActivity())
-                    .saveNoteAsync(position, editor.getText().toString());
+  public void onResume() {
+    super.onResume();
+
+    EventBus.getDefault().register(this);
+
+    if (TextUtils.isEmpty(editor.getText())) {
+      DatabaseHelper db=DatabaseHelper.getInstance(getActivity());
+
+      db.loadNote(getPosition());
     }
-    
+  }
+
+  @Override
+  public void onPause() {
+    DatabaseHelper.getInstance(getActivity())
+                  .updateNote(getPosition(),
+                              editor.getText().toString());
+
+    EventBus.getDefault().unregister(this);
+
     super.onPause();
   }
 
@@ -64,13 +82,8 @@ public class NoteFragment extends SherlockFragment implements
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.delete) {
-      int position=getArguments().getInt(KEY_POSITION, -1);
-
-      isDeleted=true;
-      DatabaseHelper.getInstance(getActivity())
-                    .deleteNoteAsync(position);
-      
-      ((NoteActivity)getActivity()).closeNotes();
+      editor.setText(null);
+      getContract().closeNotes();
 
       return(true);
     }
@@ -78,8 +91,17 @@ public class NoteFragment extends SherlockFragment implements
     return(super.onOptionsItemSelected(item));
   }
 
-  @Override
-  public void setNote(String note) {
-    editor.setText(note);
+  public void onEventMainThread(NoteLoadedEvent event) {
+    if (event.getPosition() == getPosition()) {
+      editor.setText(event.getProse());
+    }
+  }
+
+  private int getPosition() {
+    return(getArguments().getInt(KEY_POSITION, -1));
+  }
+
+  private Contract getContract() {
+    return((Contract)getActivity());
   }
 }

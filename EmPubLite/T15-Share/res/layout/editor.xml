@@ -1,8 +1,19 @@
-<EditText xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/editor"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:gravity="left|top"
-  android:hint="@string/hint"
-  android:inputType="textMultiLine"/>
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
 
+	<EditText
+		android:id="@+id/editor"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:ems="10"
+		android:gravity="top|left"
+		android:hint="@string/hint"
+		android:inputType="textMultiLine">
+
+		<requestFocus/>
+	</EditText>
+
+</LinearLayout>

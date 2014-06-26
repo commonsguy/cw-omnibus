@@ -2,39 +2,41 @@ package com.commonsware.empublite;
 
 import android.net.Uri;
 import java.io.File;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.List;
 
 public class BookContents {
-  JSONObject raw=null;
-  JSONArray chapters;
-  File updateDir=null;
+  String title;
+  List<BookContents.Chapter> chapters;
+  File baseDir=null;
 
-  BookContents(JSONObject raw) {
-    this(raw, null);
-  }
-
-  BookContents(JSONObject raw, File updateDir) {
-    this.raw=raw;
-    this.updateDir=updateDir;
-    chapters=raw.optJSONArray("chapters");
+  void setBaseDir(File baseDir) {
+    this.baseDir=baseDir;
   }
 
   int getChapterCount() {
-    return(chapters.length());
+    return(chapters.size());
   }
 
   String getChapterFile(int position) {
-    JSONObject chapter=chapters.optJSONObject(position);
+    return(chapters.get(position).file);
+  }
 
-    if (updateDir != null) {
-      return(Uri.fromFile(new File(updateDir, chapter.optString("file"))).toString());
+  String getChapterPath(int position) {
+    String file=getChapterFile(position);
+
+    if (baseDir == null) {
+      return("file:///android_asset/book/" + file);
     }
 
-    return("file:///android_asset/book/"+chapter.optString("file"));
+    return(Uri.fromFile(new File(baseDir, file)).toString());
   }
 
   String getTitle() {
-    return(raw.optString("title"));
+    return(title);
+  }
+
+  static class Chapter {
+    String file;
+    String title;
   }
 }

@@ -10,12 +10,12 @@ import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 public class UpdateReceiver extends BroadcastReceiver {
   @Override
-  public void onReceive(Context ctxt, Intent i) {
-    if (i.getAction() != null) {
-      scheduleAlarm(ctxt);
+  public void onReceive(Context context, Intent intent) {
+    if (intent.getAction() != null) {
+      scheduleAlarm(context);
     }
     else {
-      WakefulIntentService.sendWakefulWork(ctxt,
+      WakefulIntentService.sendWakefulWork(context,
                                            DownloadCheckService.class);
     }
   }

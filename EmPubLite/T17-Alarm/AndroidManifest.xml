@@ -4,27 +4,25 @@
 	android:versionCode="1"
 	android:versionName="1.0">
 
-	<uses-sdk
-		android:minSdkVersion="9"
-		android:targetSdkVersion="15"/>
-
 	<supports-screens
 		android:largeScreens="true"
 		android:normalScreens="true"
 		android:smallScreens="false"
 		android:xlargeScreens="true"/>
 
+	<uses-sdk
+		android:minSdkVersion="15"
+		android:targetSdkVersion="19"/>
+
 	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 
 	<application
-		android:allowBackup="true"
+		android:allowBackup="false"
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
-		android:theme="@style/Theme.Sherlock.Light.DarkActionBar"
+		android:theme="@style/AppTheme"
 		android:uiOptions="splitActionBarWhenNarrow">
 		<activity
 			android:name="EmPubLiteActivity"
@@ -44,14 +42,7 @@
 
 		<service android:name="DownloadCheckService">
 		</service>
-		<service android:name="DownloadInstallService">
-		</service>
 
-		<receiver android:name="DownloadCompleteReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-			</intent-filter>
-		</receiver>
 		<receiver android:name="UpdateReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>

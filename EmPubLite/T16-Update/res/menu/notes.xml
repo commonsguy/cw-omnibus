@@ -2,10 +2,9 @@
 
 	<item
 		android:id="@+id/share"
-		android:icon="@android:drawable/ic_menu_share"
-		android:showAsAction="ifRoom|withText"
-		android:title="@string/share">
-	</item>
+		android:actionProviderClass="android.widget.ShareActionProvider"
+		android:showAsAction="ifRoom"
+		android:title="@string/share"/>
 	<item
 		android:id="@+id/delete"
 		android:icon="@android:drawable/ic_menu_delete"

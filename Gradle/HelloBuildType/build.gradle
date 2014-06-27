@@ -48,7 +48,6 @@ android {
         mezzanine {
             applicationIdSuffix ".mezz"
             debuggable true
-            signingConfig signingConfigs.release
         }
     }
 }

@@ -1,174 +1,111 @@
 package com.commonsware.empublite;
 
-import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import com.actionbarsherlock.app.SherlockFragment;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import de.greenrobot.event.EventBus;
 
-public class ModelFragment extends SherlockFragment {
+public class ModelFragment extends Fragment {
   private BookContents contents=null;
-  private ContentsLoadTask contentsTask=null;
   private SharedPreferences prefs=null;
-  private PrefsLoadTask prefsTask=null;
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
-    deliverModel();
   }
 
-  synchronized private void deliverModel() {
-    if (prefs != null && contents != null) {
-      ((EmPubLiteActivity)getActivity()).setupPager(prefs, contents);
-    }
-    else {
-      if (prefs == null && prefsTask == null) {
-        prefsTask=new PrefsLoadTask();
-        executeAsyncTask(prefsTask,
-                         getActivity().getApplicationContext());
-      }
-      else if (contents == null && contentsTask == null) {
-        updateBook();
-      }
+  @Override
+  public void onAttach(Activity host) {
+    super.onAttach(host);
+
+    EventBus.getDefault().register(this, 1);
+
+    if (contents == null) {
+      new LoadThread(host).start();
     }
   }
 
-  void updateBook() {
-    contentsTask=new ContentsLoadTask();
-    executeAsyncTask(contentsTask,
-                     getActivity().getApplicationContext());
+  @Override
+  public void onDetach() {
+    EventBus.getDefault().unregister(this);
+
+    super.onDetach();
   }
 
-  @TargetApi(11)
-  static public <T> void executeAsyncTask(AsyncTask<T, ?, ?> task,
-                                          T... params) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
-    }
-    else {
-      task.execute(params);
+  public void onEvent(BookUpdatedEvent event) {
+    if (getActivity() != null) {
+      new LoadThread(getActivity()).start();
+      EventBus.getDefault().cancelEventDelivery(event);
     }
   }
 
-  private static boolean deleteDir(File dir) {
-    if (dir.exists() && dir.isDirectory()) {
-      File[] children=dir.listFiles();
-
-      for (File child : children) {
-        boolean ok=deleteDir(child);
-
-        if (!ok) {
-          return(false);
-        }
-      }
-    }
-
-    return(dir.delete());
+  public BookContents getBook() {
+    return(contents);
   }
 
-  private class ContentsLoadTask extends AsyncTask<Context, Void, Void> {
-    private BookContents localContents=null;
-    private Exception e=null;
+  public SharedPreferences getPrefs() {
+    return(prefs);
+  }
+
+  private class LoadThread extends Thread {
+    private Context ctxt=null;
+
+    LoadThread(Context ctxt) {
+      super();
+
+      this.ctxt=ctxt.getApplicationContext();
+      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+    }
 
     @Override
-    protected Void doInBackground(Context... ctxt) {
-      String updateDir=
-          prefs.getString(DownloadInstallService.PREF_UPDATE_DIR, null);
+    public void run() {
+      prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
+
+      Gson gson=new Gson();
+
+      File baseDir=
+          new File(ctxt.getFilesDir(),
+                   DownloadCheckService.UPDATE_BASEDIR);
 
       try {
-        StringBuilder buf=new StringBuilder();
-        InputStream json=null;
+        InputStream is;
 
-        if (updateDir != null && new File(updateDir).exists()) {
-          json=
-              new FileInputStream(new File(new File(updateDir),
-                                           "contents.json"));
+        if (baseDir.exists()) {
+          is=new FileInputStream(new File(baseDir, "contents.json"));
         }
         else {
-          json=ctxt[0].getAssets().open("book/contents.json");
+          is=ctxt.getAssets().open("book/contents.json");
         }
 
-        BufferedReader in=
-            new BufferedReader(new InputStreamReader(json));
-        String str;
+        BufferedReader reader=
+            new BufferedReader(new InputStreamReader(is));
 
-        while ((str=in.readLine()) != null) {
-          buf.append(str);
+        contents=gson.fromJson(reader, BookContents.class);
+        is.close();
+
+        if (baseDir.exists()) {
+          contents.setBaseDir(baseDir);
         }
 
-        in.close();
-
-        if (updateDir != null && new File(updateDir).exists()) {
-          localContents=
-              new BookContents(new JSONObject(buf.toString()),
-                               new File(updateDir));
-        }
-        else {
-          localContents=
-              new BookContents(new JSONObject(buf.toString()));
-        }
+        EventBus.getDefault().post(new BookLoadedEvent(contents));
       }
-      catch (Exception e) {
-        this.e=e;
+      catch (IOException e) {
+        Log.e(getClass().getSimpleName(), "Exception parsing JSON", e);
       }
-
-      String prevUpdateDir=
-          prefs.getString(DownloadInstallService.PREF_PREV_UPDATE, null);
-
-      if (prevUpdateDir != null) {
-        File toBeDeleted=new File(prevUpdateDir);
-
-        if (toBeDeleted.exists()) {
-          deleteDir(toBeDeleted);
-        }
-      }
-
-      return(null);
-    }
-
-    @Override
-    public void onPostExecute(Void arg0) {
-      if (e == null) {
-        ModelFragment.this.contents=localContents;
-        ModelFragment.this.contentsTask=null;
-        deliverModel();
-      }
-      else {
-        Log.e(getClass().getSimpleName(), "Exception loading contents",
-              e);
-      }
-    }
-  }
-
-  private class PrefsLoadTask extends AsyncTask<Context, Void, Void> {
-    SharedPreferences localPrefs=null;
-
-    @Override
-    protected Void doInBackground(Context... ctxt) {
-      localPrefs=PreferenceManager.getDefaultSharedPreferences(ctxt[0]);
-      localPrefs.getAll();
-
-      return(null);
-    }
-
-    @Override
-    public void onPostExecute(Void arg0) {
-      ModelFragment.this.prefs=localPrefs;
-      ModelFragment.this.prefsTask=null;
-      deliverModel();
     }
   }
 }

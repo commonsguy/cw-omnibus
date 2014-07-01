@@ -46,6 +46,7 @@ public class PlaybackFragment extends Fragment {
   private boolean isPlaying=false;
   private boolean isPaused=false;
   private DemoRouteProvider provider=null;
+  private Menu menu=null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class PlaybackFragment extends Fragment {
   @Override
   public void onDetach() {
     router.removeProvider(provider);
-    
+
     super.onDetach();
   }
 
@@ -113,23 +114,10 @@ public class PlaybackFragment extends Fragment {
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    this.menu=menu;
     inflater.inflate(R.menu.main, menu);
 
-    if (client != null) {
-      if (isPlaying) {
-        menu.findItem(R.id.stop).setVisible(true);
-
-        if (isPaused) {
-          menu.findItem(R.id.play).setVisible(true);
-        }
-        else {
-          menu.findItem(R.id.pause).setVisible(true);
-        }
-      }
-      else {
-        menu.findItem(R.id.play).setVisible(true);
-      }
-    }
+    updateMenu();
 
     MenuItem item=menu.findItem(R.id.route_provider);
     MediaRouteActionProvider provider=
@@ -161,6 +149,16 @@ public class PlaybackFragment extends Fragment {
     }
 
     return(super.onOptionsItemSelected(item));
+  }
+
+  private void updateMenu() {
+    if (menu != null) {
+      menu.findItem(R.id.stop).setVisible(client != null && isPlaying);
+      menu.findItem(R.id.pause).setVisible(client != null && isPlaying
+                                               && !isPaused);
+      menu.findItem(R.id.play)
+          .setVisible(client != null && (!isPlaying || isPaused));
+    }
   }
 
   private void play() {
@@ -291,11 +289,12 @@ public class PlaybackFragment extends Fragment {
     }
   };
 
-  abstract class RunnableSessionActionCallback extends SessionActionCallback
-      implements Runnable {
+  abstract class RunnableSessionActionCallback extends
+      SessionActionCallback implements Runnable {
     abstract protected void doWork();
+
     private boolean hasRun=false;
-    
+
     @Override
     public void onResult(Bundle data, String sessionId,
                          MediaSessionStatus sessionStatus) {

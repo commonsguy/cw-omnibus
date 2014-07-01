@@ -1,14 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/foo"
+	android:id="@+id/something"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
+	android:layout_height="match_parent">
 
 	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="7">
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_weight="7"
+		tools:context=".EmPubLiteActivity">
 
 		<ProgressBar
 			android:id="@+id/progressBar1"
@@ -27,16 +27,15 @@
 
 	<View
 		android:id="@+id/divider"
-		android:layout_width="match_parent"
-		android:layout_height="2dp"
+		android:layout_width="2dp"
+		android:layout_height="match_parent"
 		android:background="#AA000000"
 		android:visibility="gone"/>
 
 	<FrameLayout
 		android:id="@+id/sidebar"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="0">
+		android:layout_width="0dp"
+		android:layout_height="match_parent">
 
 	</FrameLayout>
 

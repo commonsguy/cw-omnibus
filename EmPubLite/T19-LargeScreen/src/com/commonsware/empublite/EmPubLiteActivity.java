@@ -1,23 +1,20 @@
 package com.commonsware.empublite;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
+import de.greenrobot.event.EventBus;
 
-public class EmPubLiteActivity extends SherlockFragmentActivity
-    implements FragmentManager.OnBackStackChangedListener {
+public class EmPubLiteActivity extends Activity implements
+    FragmentManager.OnBackStackChangedListener {
   private static final String MODEL="model";
   private static final String PREF_LAST_POSITION="lastPosition";
   private static final String PREF_SAVE_LAST_POSITION=
@@ -31,8 +28,7 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
       "file:///android_asset/misc/about.html";
   private ViewPager pager=null;
   private ContentsAdapter adapter=null;
-  private SharedPreferences prefs=null;
-  private ModelFragment model=null;
+  private ModelFragment mfrag=null;
   private View sidebar=null;
   private View divider=null;
   private SimpleContentFragment help=null;
@@ -42,33 +38,34 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentByTag(MODEL) == null) {
-      model=new ModelFragment();
-      getSupportFragmentManager().beginTransaction().add(model, MODEL)
-                                 .commit();
-    }
-    else {
-      model=
-          (ModelFragment)getSupportFragmentManager().findFragmentByTag(MODEL);
-    }
-
-    help=
-        (SimpleContentFragment)getSupportFragmentManager().findFragmentByTag(HELP);
-    about=
-        (SimpleContentFragment)getSupportFragmentManager().findFragmentByTag(ABOUT);
-
     setContentView(R.layout.main);
     sidebar=findViewById(R.id.sidebar);
     divider=findViewById(R.id.divider);
+    pager=(ViewPager)findViewById(R.id.pager);
 
-    getSupportFragmentManager().addOnBackStackChangedListener(this);
+    getFragmentManager().addOnBackStackChangedListener(this);
 
-    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+    if (getFragmentManager().getBackStackEntryCount() > 0) {
       openSidebar();
     }
 
-    pager=(ViewPager)findViewById(R.id.pager);
-    getSupportActionBar().setHomeButtonEnabled(true);
+    mfrag=(ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
+
+    if (mfrag == null) {
+      mfrag=new ModelFragment();
+      getFragmentManager().beginTransaction().add(mfrag, MODEL)
+                          .commit();
+    }
+    else if (mfrag.getBook() != null) {
+      setupPager(mfrag.getBook());
+    }
+
+    help=
+        (SimpleContentFragment)getFragmentManager().findFragmentByTag(HELP);
+    about=
+        (SimpleContentFragment)getFragmentManager().findFragmentByTag(ABOUT);
+
+    getActionBar().setHomeButtonEnabled(true);
     UpdateReceiver.scheduleAlarm(this);
   }
 
@@ -76,23 +73,23 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
   public void onResume() {
     super.onResume();
 
-    if (prefs != null) {
-      pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
-    }
+    EventBus.getDefault().register(this);
 
-    IntentFilter f=
-        new IntentFilter(DownloadInstallService.ACTION_UPDATE_READY);
-    f.setPriority(1000);
-    registerReceiver(onUpdate, f);
+    if (mfrag.getPrefs() != null) {
+      pager.setKeepScreenOn(mfrag.getPrefs()
+                                 .getBoolean(PREF_KEEP_SCREEN_ON, false));
+    }
   }
 
   @Override
   public void onPause() {
-    unregisterReceiver(onUpdate);
+    EventBus.getDefault().unregister(this);
 
-    if (prefs != null) {
+    if (mfrag.getPrefs() != null) {
       int position=pager.getCurrentItem();
-      prefs.edit().putInt(PREF_LAST_POSITION, position).apply();
+
+      mfrag.getPrefs().edit().putInt(PREF_LAST_POSITION, position)
+           .apply();
     }
 
     super.onPause();
@@ -100,7 +97,8 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.options, menu);
+    getMenuInflater().inflate(R.menu.options, menu);
+
     return(super.onCreateOptionsMenu(menu));
   }
 
@@ -113,13 +111,16 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
 
       case R.id.notes:
         Intent i=new Intent(this, NoteActivity.class);
+
         i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
         startActivity(i);
+
         return(true);
 
       case R.id.update:
         WakefulIntentService.sendWakefulWork(this,
                                              DownloadCheckService.class);
+
         return(true);
 
       case R.id.about:
@@ -142,7 +143,7 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
 
   @Override
   public void onBackStackChanged() {
-    if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+    if (getFragmentManager().getBackStackEntryCount() == 0) {
       LinearLayout.LayoutParams p=
           (LinearLayout.LayoutParams)sidebar.getLayoutParams();
       if (p.weight > 0) {
@@ -153,23 +154,29 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
     }
   }
 
-  void setupPager(SharedPreferences prefs, BookContents contents) {
-    this.prefs=prefs;
+  public void onEventMainThread(BookLoadedEvent event) {
+    setupPager(event.getBook());
+  }
 
+  private void setupPager(BookContents contents) {
     adapter=new ContentsAdapter(this, contents);
     pager.setAdapter(adapter);
 
     findViewById(R.id.progressBar1).setVisibility(View.GONE);
     findViewById(R.id.pager).setVisibility(View.VISIBLE);
 
-    if (prefs.getBoolean(PREF_SAVE_LAST_POSITION, false)) {
-      pager.setCurrentItem(prefs.getInt(PREF_LAST_POSITION, 0));
-    }
+    SharedPreferences prefs=mfrag.getPrefs();
 
-    pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
+    if (prefs != null) {
+      if (prefs.getBoolean(PREF_SAVE_LAST_POSITION, false)) {
+        pager.setCurrentItem(prefs.getInt(PREF_LAST_POSITION, 0));
+      }
+
+      pager.setKeepScreenOn(prefs.getBoolean(PREF_KEEP_SCREEN_ON, false));
+    }
   }
 
-  void openSidebar() {
+  private void openSidebar() {
     LinearLayout.LayoutParams p=
         (LinearLayout.LayoutParams)sidebar.getLayoutParams();
     if (p.weight == 0) {
@@ -179,50 +186,41 @@ public class EmPubLiteActivity extends SherlockFragmentActivity
     divider.setVisibility(View.VISIBLE);
   }
 
-  void showAbout() {
+  private void showAbout() {
     if (sidebar != null) {
       openSidebar();
-      
+
       if (about == null) {
         about=SimpleContentFragment.newInstance(FILE_ABOUT);
       }
-      
-      getSupportFragmentManager().beginTransaction()
-                                 .addToBackStack(null)
-                                 .replace(R.id.sidebar, about).commit();
+
+      getFragmentManager().beginTransaction().addToBackStack(null)
+                          .replace(R.id.sidebar, about).commit();
     }
     else {
       Intent i=new Intent(this, SimpleContentActivity.class);
-      
+
       i.putExtra(SimpleContentActivity.EXTRA_FILE, FILE_ABOUT);
       startActivity(i);
     }
   }
 
-  void showHelp() {
+  private void showHelp() {
     if (sidebar != null) {
       openSidebar();
-      
+
       if (help == null) {
         help=SimpleContentFragment.newInstance(FILE_HELP);
       }
-      
-      getSupportFragmentManager().beginTransaction()
-                                 .addToBackStack(null)
-                                 .replace(R.id.sidebar, help).commit();
+
+      getFragmentManager().beginTransaction().addToBackStack(null)
+                          .replace(R.id.sidebar, help).commit();
     }
     else {
       Intent i=new Intent(this, SimpleContentActivity.class);
-      
+
       i.putExtra(SimpleContentActivity.EXTRA_FILE, FILE_HELP);
       startActivity(i);
     }
   }
-
-  private BroadcastReceiver onUpdate=new BroadcastReceiver() {
-    public void onReceive(Context ctxt, Intent i) {
-      model.updateBook();
-      abortBroadcast();
-    }
-  };
 }

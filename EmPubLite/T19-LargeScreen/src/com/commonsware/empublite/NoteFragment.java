@@ -1,34 +1,31 @@
-/***
-  Copyright (c) 2012 CommonsWare, LLC
-  Licensed under the Apache License, Version 2.0 (the "License"); you may not
-  use this file except in compliance with the License. You may obtain a copy
-  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
-  by applicable law or agreed to in writing, software distributed under the
-  License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
-  OF ANY KIND, either express or implied. See the License for the specific
-  language governing permissions and limitations under the License.
-  
-  From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
- */
-
 package com.commonsware.empublite;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import android.widget.ShareActionProvider;
+import de.greenrobot.event.EventBus;
 
-public class NoteFragment extends SherlockFragment implements
-    DatabaseHelper.NoteListener {
+public class NoteFragment extends Fragment implements TextWatcher {
+  public interface Contract {
+    void closeNotes();
+  }
+
   private static final String KEY_POSITION="position";
   private EditText editor=null;
-  private boolean isDeleted=false;
+  private ShareActionProvider share=null;
+  private Intent shareIntent=
+      new Intent(Intent.ACTION_SEND).setType("text/plain");
 
   static NoteFragment newInstance(int position) {
     NoteFragment frag=new NoteFragment();
@@ -41,30 +38,44 @@ public class NoteFragment extends SherlockFragment implements
   }
 
   @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    setHasOptionsMenu(true);
+  }
+
+  @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container,
                            Bundle savedInstanceState) {
     View result=inflater.inflate(R.layout.editor, container, false);
-    int position=getArguments().getInt(KEY_POSITION, -1);
 
     editor=(EditText)result.findViewById(R.id.editor);
-    DatabaseHelper.getInstance(getActivity()).getNoteAsync(position,
-                                                           this);
-
-    setHasOptionsMenu(true);
-
+    editor.addTextChangedListener(this);
+    
     return(result);
   }
 
   @Override
-  public void onPause() {
-    if (!isDeleted) {
-      int position=getArguments().getInt(KEY_POSITION, -1);
+  public void onResume() {
+    super.onResume();
 
-      DatabaseHelper.getInstance(getActivity())
-                    .saveNoteAsync(position,
-                                   editor.getText().toString());
+    EventBus.getDefault().register(this);
+
+    if (TextUtils.isEmpty(editor.getText())) {
+      DatabaseHelper db=DatabaseHelper.getInstance(getActivity());
+
+      db.loadNote(getPosition());
     }
+  }
+
+  @Override
+  public void onPause() {
+    DatabaseHelper.getInstance(getActivity())
+                  .updateNote(getPosition(),
+                              editor.getText().toString());
+
+    EventBus.getDefault().unregister(this);
 
     super.onPause();
   }
@@ -73,25 +84,19 @@ public class NoteFragment extends SherlockFragment implements
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.notes, menu);
 
+    share=
+        (ShareActionProvider)menu.findItem(R.id.share)
+                                 .getActionProvider();
+    share.setShareIntent(shareIntent);
+
     super.onCreateOptionsMenu(menu, inflater);
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.delete) {
-      int position=getArguments().getInt(KEY_POSITION, -1);
-
-      isDeleted=true;
-      DatabaseHelper.getInstance(getActivity())
-                    .deleteNoteAsync(position);
-
-      ((NoteActivity)getActivity()).closeNotes();
-
-      return(true);
-    }
-    else if (item.getItemId() == R.id.share) {
-      ((NoteActivity)getActivity()).sendNotes(editor.getText()
-                                                    .toString());
+      editor.setText(null);
+      getContract().closeNotes();
 
       return(true);
     }
@@ -100,7 +105,33 @@ public class NoteFragment extends SherlockFragment implements
   }
 
   @Override
-  public void setNote(String note) {
-    editor.setText(note);
+  public void afterTextChanged(Editable s) {
+    shareIntent.putExtra(Intent.EXTRA_TEXT, s.toString());
+  }
+
+  @Override
+  public void beforeTextChanged(CharSequence s, int start, int count,
+                                int after) {
+    // ignored
+  }
+
+  @Override
+  public void onTextChanged(CharSequence s, int start, int before,
+                            int count) {
+    // ignored
+  }
+
+  public void onEventMainThread(NoteLoadedEvent event) {
+    if (event.getPosition() == getPosition()) {
+      editor.setText(event.getProse());
+    }
+  }
+
+  private int getPosition() {
+    return(getArguments().getInt(KEY_POSITION, -1));
+  }
+
+  private Contract getContract() {
+    return((Contract)getActivity());
   }
 }

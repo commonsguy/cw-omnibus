@@ -17,6 +17,7 @@ package com.commonsware.android.downloader;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -71,7 +72,8 @@ public class Downloader extends IntentService {
         c.disconnect();
       }
 
-      sendBroadcast(new Intent(ACTION_COMPLETE));
+      LocalBroadcastManager.getInstance(this)
+                           .sendBroadcast(new Intent(ACTION_COMPLETE));
     }
     catch (IOException e2) {
       Log.e(getClass().getName(), "Exception in download", e2);

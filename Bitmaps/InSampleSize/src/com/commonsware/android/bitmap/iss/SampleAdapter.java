@@ -19,7 +19,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 
-
 public class SampleAdapter extends FragmentPagerAdapter {
   Context ctxt=null;
 

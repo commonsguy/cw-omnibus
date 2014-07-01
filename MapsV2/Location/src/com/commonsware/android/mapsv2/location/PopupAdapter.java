@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2012 CommonsWare, LLC
+  Copyright (c) 2012-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,6 +14,7 @@
 
 package com.commonsware.android.mapsv2.location;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -21,7 +22,8 @@ import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
 class PopupAdapter implements InfoWindowAdapter {
-  LayoutInflater inflater=null;
+  private View popup=null;
+  private LayoutInflater inflater=null;
 
   PopupAdapter(LayoutInflater inflater) {
     this.inflater=inflater;
@@ -32,9 +34,12 @@ class PopupAdapter implements InfoWindowAdapter {
     return(null);
   }
 
+  @SuppressLint("InflateParams")
   @Override
   public View getInfoContents(Marker marker) {
-    View popup=inflater.inflate(R.layout.popup, null);
+    if (popup == null) {
+      popup=inflater.inflate(R.layout.popup, null);
+    }
 
     TextView tv=(TextView)popup.findViewById(R.id.title);
 

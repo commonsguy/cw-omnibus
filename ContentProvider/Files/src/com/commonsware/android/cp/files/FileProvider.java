@@ -52,8 +52,7 @@ public class FileProvider extends AbstractFileProvider {
     File f=new File(getContext().getFilesDir(), uri.getPath());
 
     if (f.exists()) {
-      return(ParcelFileDescriptor.open(f,
-                                       ParcelFileDescriptor.MODE_READ_ONLY));
+      return(ParcelFileDescriptor.open(f, parseMode(mode)));
     }
 
     throw new FileNotFoundException(uri.getPath());
@@ -64,5 +63,43 @@ public class FileProvider extends AbstractFileProvider {
     File f=new File(getContext().getFilesDir(), uri.getPath());
 
     return(f.length());
+  }
+
+  // following is from ParcelFileDescriptor source code
+  // Copyright (C) 2006 The Android Open Source Project
+  // (even though this method was added much after 2006...)
+
+  private static int parseMode(String mode) {
+    final int modeBits;
+    if ("r".equals(mode)) {
+      modeBits=ParcelFileDescriptor.MODE_READ_ONLY;
+    }
+    else if ("w".equals(mode) || "wt".equals(mode)) {
+      modeBits=
+          ParcelFileDescriptor.MODE_WRITE_ONLY
+              | ParcelFileDescriptor.MODE_CREATE
+              | ParcelFileDescriptor.MODE_TRUNCATE;
+    }
+    else if ("wa".equals(mode)) {
+      modeBits=
+          ParcelFileDescriptor.MODE_WRITE_ONLY
+              | ParcelFileDescriptor.MODE_CREATE
+              | ParcelFileDescriptor.MODE_APPEND;
+    }
+    else if ("rw".equals(mode)) {
+      modeBits=
+          ParcelFileDescriptor.MODE_READ_WRITE
+              | ParcelFileDescriptor.MODE_CREATE;
+    }
+    else if ("rwt".equals(mode)) {
+      modeBits=
+          ParcelFileDescriptor.MODE_READ_WRITE
+              | ParcelFileDescriptor.MODE_CREATE
+              | ParcelFileDescriptor.MODE_TRUNCATE;
+    }
+    else {
+      throw new IllegalArgumentException("Bad mode '" + mode + "'");
+    }
+    return modeBits;
   }
 }

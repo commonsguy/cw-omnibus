@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2012 CommonsWare, LLC
+  Copyright (c) 2012-14 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,12 +14,11 @@
 
 package com.commonsware.android.pager;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class ViewPagerFragmentDemoActivity extends
-    SherlockFragmentActivity {
+public class ViewPagerFragmentDemoActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -27,6 +26,6 @@ public class ViewPagerFragmentDemoActivity extends
 
     ViewPager pager=(ViewPager)findViewById(R.id.pager);
 
-    pager.setAdapter(new SampleAdapter(getSupportFragmentManager()));
+    pager.setAdapter(new SampleAdapter(getFragmentManager()));
   }
 }

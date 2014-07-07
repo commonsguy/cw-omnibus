@@ -15,12 +15,12 @@
 package com.commonsware.android.dfrag;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import com.actionbarsherlock.app.SherlockListFragment;
 
-public class OtherFragment extends SherlockListFragment {
+public class OtherFragment extends ListFragment {
   private static final String[] items= { "lorem", "ipsum", "dolor",
       "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",

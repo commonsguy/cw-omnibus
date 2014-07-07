@@ -14,11 +14,11 @@
 
 package com.commonsware.android.sfrag;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class LifecycleLoggingActivity extends SherlockFragmentActivity {
+public class LifecycleLoggingActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

@@ -14,19 +14,19 @@
 
 package com.commonsware.android.advservice.binding;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class BshServiceDemo extends SherlockFragmentActivity {
+public class BshServiceDemo extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getSupportFragmentManager().beginTransaction()
+    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
+      getFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new BshFragment()).commit();
     }
@@ -34,7 +34,7 @@ public class BshServiceDemo extends SherlockFragmentActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.actions, menu);
+    getMenuInflater().inflate(R.menu.actions, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }

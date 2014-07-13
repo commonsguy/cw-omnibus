@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,15 +14,15 @@
 
 package com.commonsware.android.async;
 
-import java.util.ArrayList;
+import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockListFragment;
+import java.util.ArrayList;
 
-public class AsyncDemoFragment extends SherlockListFragment {
+public class AsyncDemoFragment extends ListFragment {
   private static final String[] items= { "lorem", "ipsum", "dolor",
       "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",

@@ -14,10 +14,10 @@
 
 package com.commonsware.android.eu4you2;
 
+import android.app.Activity;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class EU4You extends SherlockFragmentActivity implements
+public class EU4You extends Activity implements
     CountriesFragment.Contract {
   private static final String TAG_COUNTRIES="countries";
   private static final String TAG_DETAILS="details";
@@ -30,13 +30,13 @@ public class EU4You extends SherlockFragmentActivity implements
     setContentView(R.layout.main);
 
     countries=
-        (CountriesFragment)getSupportFragmentManager().findFragmentByTag(TAG_COUNTRIES);
+        (CountriesFragment)getFragmentManager().findFragmentByTag(TAG_COUNTRIES);
     details=
-        (DetailsFragment)getSupportFragmentManager().findFragmentByTag(TAG_DETAILS);
+        (DetailsFragment)getFragmentManager().findFragmentByTag(TAG_DETAILS);
 
     if (countries == null) {
       countries=new CountriesFragment();
-      getSupportFragmentManager().beginTransaction()
+      getFragmentManager().beginTransaction()
                                  .add(R.id.mainfrag, countries,
                                       TAG_COUNTRIES).commit();
     }
@@ -45,7 +45,7 @@ public class EU4You extends SherlockFragmentActivity implements
       details=new DetailsFragment();
 
       if (findViewById(R.id.details) != null) {
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                                    .add(R.id.details, details,
                                         TAG_DETAILS).commit();
       }
@@ -53,16 +53,16 @@ public class EU4You extends SherlockFragmentActivity implements
     else {
       if (details.getId() == R.id.mainfrag) {
         if (findViewById(R.id.details) != null) {
-          getSupportFragmentManager().popBackStackImmediate();
+          getFragmentManager().popBackStackImmediate();
         }
       }
       else {
-        getSupportFragmentManager().beginTransaction().remove(details)
+        getFragmentManager().beginTransaction().remove(details)
                                    .commit();
       }
 
       if (findViewById(R.id.details) != null) {
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                                    .add(R.id.details, details,
                                         TAG_DETAILS).commit();
       }
@@ -76,7 +76,7 @@ public class EU4You extends SherlockFragmentActivity implements
     details.loadUrl(url);
 
     if (details.getId() != R.id.details) {
-      getSupportFragmentManager().beginTransaction()
+      getFragmentManager().beginTransaction()
                                  .replace(R.id.mainfrag, details,
                                           TAG_DETAILS)
                                  .addToBackStack(null).commit();

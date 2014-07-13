@@ -14,6 +14,8 @@
 
 package com.commonsware.android.eu4you;
 
+import android.webkit.WebViewFragment;
+
 public class DetailsFragment extends WebViewFragment {
   public void loadUrl(String url) {
     getWebView().loadUrl(url);

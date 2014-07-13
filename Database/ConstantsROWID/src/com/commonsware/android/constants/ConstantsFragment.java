@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,25 +14,23 @@
 
 package com.commonsware.android.constants;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.ListFragment;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class ConstantsFragment extends SherlockListFragment implements
+public class ConstantsFragment extends ListFragment implements
     DialogInterface.OnClickListener {
   private DatabaseHelper db=null;
 
@@ -115,35 +113,15 @@ public class ConstantsFragment extends SherlockListFragment implements
       return(null);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    @SuppressWarnings("deprecation")
     @Override
     public void onPostExecute(Void arg0) {
-      SimpleCursorAdapter adapter;
-
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-        adapter=
-            new SimpleCursorAdapter(
-                                    getActivity(),
-                                    R.layout.row,
-                                    constantsCursor,
-                                    new String[] {
-                                        DatabaseHelper.TITLE,
-                                        DatabaseHelper.VALUE },
-                                    new int[] { R.id.title, R.id.value },
-                                    0);
-      }
-      else {
-        adapter=
-            new SimpleCursorAdapter(
-                                    getActivity(),
-                                    R.layout.row,
-                                    constantsCursor,
-                                    new String[] {
-                                        DatabaseHelper.TITLE,
-                                        DatabaseHelper.VALUE },
-                                    new int[] { R.id.title, R.id.value });
-      }
+      SimpleCursorAdapter adapter=
+          new SimpleCursorAdapter(getActivity(), R.layout.row,
+                                  constantsCursor, new String[] {
+                                      DatabaseHelper.TITLE,
+                                      DatabaseHelper.VALUE },
+                                  new int[] { R.id.title, R.id.value },
+                                  0);
 
       setListAdapter(adapter);
     }

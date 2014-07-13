@@ -14,11 +14,11 @@
 
 package com.commonsware.android.eu4you;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class EU4You extends SherlockFragmentActivity implements
+public class EU4You extends Activity implements
     CountriesFragment.Contract {
   private CountriesFragment countries=null;
   private DetailsFragment details=null;
@@ -29,21 +29,21 @@ public class EU4You extends SherlockFragmentActivity implements
     setContentView(R.layout.main);
 
     countries=
-        (CountriesFragment)getSupportFragmentManager().findFragmentById(R.id.countries);
+        (CountriesFragment)getFragmentManager().findFragmentById(R.id.countries);
 
     if (countries == null) {
       countries=new CountriesFragment();
-      getSupportFragmentManager().beginTransaction()
+      getFragmentManager().beginTransaction()
                                  .add(R.id.countries, countries)
                                  .commit();
     }
 
     details=
-        (DetailsFragment)getSupportFragmentManager().findFragmentById(R.id.details);
+        (DetailsFragment)getFragmentManager().findFragmentById(R.id.details);
 
     if (details == null && findViewById(R.id.details) != null) {
       details=new DetailsFragment();
-      getSupportFragmentManager().beginTransaction()
+      getFragmentManager().beginTransaction()
                                  .add(R.id.details, details).commit();
     }
   }

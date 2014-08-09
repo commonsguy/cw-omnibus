@@ -14,5 +14,14 @@
 
 package com.commonsware.android.eventbus;
 
-public class WordReadyEvent {
+class WordReadyEvent {
+  private String word;
+  
+  WordReadyEvent(String word) {
+    this.word=word;
+  }
+  
+  String getWord() {
+    return(word);
+  }
 }

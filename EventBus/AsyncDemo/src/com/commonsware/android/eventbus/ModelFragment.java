@@ -42,7 +42,7 @@ public class ModelFragment extends Fragment {
   }
   
   public ArrayList<String> getModel() {
-    return(model);
+    return(new ArrayList<String>(model));
   }
 
   class LoadWordsThread extends Thread {
@@ -51,7 +51,7 @@ public class ModelFragment extends Fragment {
       for (String item : items) {
         if (!isInterrupted()) {
           model.add(item);
-          EventBus.getDefault().post(new WordReadyEvent());
+          EventBus.getDefault().post(new WordReadyEvent(item));
           SystemClock.sleep(400);
         }
       }

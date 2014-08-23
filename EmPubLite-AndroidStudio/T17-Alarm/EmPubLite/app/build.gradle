@@ -1,0 +1,29 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "com.commonsware.empublite"
+        versionCode 1
+        versionName "1.0"
+        minSdkVersion 15
+        targetSdkVersion 18
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://repo.commonsware.com.s3.amazonaws.com"
+    }
+}
+
+dependencies {
+    compile 'de.greenrobot:eventbus:2.2.1'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'com.android.support:support-v13:19.1.0'
+    compile 'com.commonsware.cwac:wakeful:1.0.+'
+}

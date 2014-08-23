@@ -1,0 +1,22 @@
+body, body.tei.tei-text {
+    color: black;
+    background-color: white;
+    margin: 0.5em 1em 0 0.5em;
+    border: 0;
+    padding: 0
+    }
+div, p, pre, h1, h2, h3, h4, h5, h6 {
+    margin-left: 0;
+    margin-right: 0
+    }
+h2 {
+    page-break-before: always;
+    padding-top: 1em
+    }
+.pgmonospaced {
+    font-family: monospace;
+    font-size: 0.9em
+    }
+a.pgkilled {
+    text-decoration: none
+    }

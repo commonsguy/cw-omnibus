@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2012 CommonsWare, LLC
+  Copyright (c) 2012-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -38,24 +38,25 @@ public class MainActivity extends Activity implements OnKeyListener {
 
   @Override
   public boolean onKey(View v, int keyCode, KeyEvent event) {
-    Editable text=editor.getText();
+    if (event.getAction() == KeyEvent.ACTION_DOWN) {
+      Editable text=editor.getText();
 
-    if (keyCode == KeyEvent.KEYCODE_TAB) {
-      text.insert(editor.getSelectionStart(), "\t");
-    }
-    else if (event.isCtrlPressed()) {
-      int rawStart=editor.getSelectionStart();
-      int rawEnd=editor.getSelectionEnd();
-      int selStart=(rawStart>rawEnd ? rawEnd : rawStart);
-      int selEnd=(rawStart>rawEnd ? rawStart : rawEnd);
-      
-      switch (keyCode) {
-        case KeyEvent.KEYCODE_T:
-          Toast.makeText(this,
-                         TextUtils.substring(text, selStart, selEnd),
-                         Toast.LENGTH_LONG).show();
+      if (keyCode == KeyEvent.KEYCODE_TAB) {
+        text.insert(editor.getSelectionStart(), "\t");
 
-          return(true);
+        return(true);
+      }
+      else if (event.isCtrlPressed() && keyCode == KeyEvent.KEYCODE_T) {
+        int rawStart=editor.getSelectionStart();
+        int rawEnd=editor.getSelectionEnd();
+        int selStart=(rawStart > rawEnd ? rawEnd : rawStart);
+        int selEnd=(rawStart > rawEnd ? rawStart : rawEnd);
+
+        Toast.makeText(this,
+                       TextUtils.substring(text, selStart, selEnd),
+                       Toast.LENGTH_LONG).show();
+
+        return(true);
       }
     }
 

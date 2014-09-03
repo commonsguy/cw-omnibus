@@ -1,10 +1,10 @@
 package com.commonsware.empublite;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -57,7 +57,7 @@ public class DownloadCheckService extends WakefulIntentService {
   }
 
   public void onEvent(BookUpdatedEvent event) {
-    Notification.Builder builder=new Notification.Builder(this);
+    NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
     Intent toLaunch=new Intent(this, EmPubLiteActivity.class);
     PendingIntent pi=PendingIntent.getActivity(this, 0, toLaunch, 0);
 

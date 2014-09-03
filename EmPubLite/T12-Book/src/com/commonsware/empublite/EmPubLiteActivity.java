@@ -3,6 +3,7 @@ package com.commonsware.empublite;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,8 @@ public class EmPubLiteActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    setupStrictMode();
+
     setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
 
@@ -31,7 +34,7 @@ public class EmPubLiteActivity extends Activity {
     else if (mfrag.getBook() != null) {
       setupPager(mfrag.getBook());
     }
-    
+
     getActionBar().setHomeButtonEnabled(true);
   }
 
@@ -95,5 +98,20 @@ public class EmPubLiteActivity extends Activity {
 
     findViewById(R.id.progressBar1).setVisibility(View.GONE);
     findViewById(R.id.pager).setVisibility(View.VISIBLE);
+  }
+
+  private void setupStrictMode() {
+    StrictMode.ThreadPolicy.Builder builder=
+        new StrictMode.ThreadPolicy.Builder().detectDiskWrites()
+                                             .detectNetwork();
+
+    if (BuildConfig.DEBUG) {
+      builder.penaltyDeath();
+    }
+    else {
+      builder.penaltyLog();
+    }
+
+    StrictMode.setThreadPolicy(builder.build());
   }
 }

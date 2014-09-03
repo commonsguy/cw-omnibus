@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/settings"
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:icon="@drawable/ic_action_settings"
         android:showAsAction="never"
         android:title="@string/settings">
     </item>
     <item
         android:id="@+id/help"
-        android:icon="@android:drawable/ic_menu_help"
+        android:icon="@drawable/ic_action_help"
         android:title="@string/help">
     </item>
     <item
         android:id="@+id/about"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/ic_action_about"
         android:title="@string/about">
     </item>
 

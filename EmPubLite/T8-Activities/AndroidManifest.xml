@@ -12,17 +12,17 @@
 
 	<uses-sdk
 		android:minSdkVersion="15"
-		android:targetSdkVersion="19"/>
+		android:targetSdkVersion="18"/>
 
 	<application
 		android:allowBackup="false"
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
-		android:theme="@style/AppTheme"
-		android:uiOptions="splitActionBarWhenNarrow">
+		android:theme="@style/AppTheme">
 		<activity
 			android:name="EmPubLiteActivity"
-			android:label="@string/app_name">
+			android:label="@string/app_name"
+      android:uiOptions="splitActionBarWhenNarrow">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 

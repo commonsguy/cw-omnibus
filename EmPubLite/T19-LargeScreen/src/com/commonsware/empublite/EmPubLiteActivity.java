@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +38,8 @@ public class EmPubLiteActivity extends Activity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    setupStrictMode();
 
     setContentView(R.layout.main);
     sidebar=findViewById(R.id.sidebar);
@@ -222,5 +225,20 @@ public class EmPubLiteActivity extends Activity implements
       i.putExtra(SimpleContentActivity.EXTRA_FILE, FILE_HELP);
       startActivity(i);
     }
+  }
+
+  private void setupStrictMode() {
+    StrictMode.ThreadPolicy.Builder builder=
+        new StrictMode.ThreadPolicy.Builder().detectDiskWrites()
+                                             .detectNetwork();
+
+    if (BuildConfig.DEBUG) {
+      builder.penaltyDeath();
+    }
+    else {
+      builder.penaltyLog();
+    }
+
+    StrictMode.setThreadPolicy(builder.build());
   }
 }

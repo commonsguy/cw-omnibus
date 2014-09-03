@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,16 +14,14 @@
 
 package com.commonsware.android.pref1header;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
-
-public class FragmentsDemo extends SherlockFragmentActivity {
+public class FragmentsDemo extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,7 +30,7 @@ public class FragmentsDemo extends SherlockFragmentActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.actions, menu);
+    getMenuInflater().inflate(R.menu.actions, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }
@@ -52,18 +50,14 @@ public class FragmentsDemo extends SherlockFragmentActivity {
   private void editPrefs() {
     Intent i=new Intent(this, EditPreferences.class);
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
-        && getResources().getBoolean(R.bool.suppressHeader)) {
-      i.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
-      i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT,
-                 StockPreferenceFragment.class.getName());
+    i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+               StockPreferenceFragment.class.getName());
 
-      Bundle b=new Bundle();
+    Bundle b=new Bundle();
 
-      b.putString("resource", "preferences");
+    b.putString("resource", "preferences");
 
-      i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, b);
-    }
+    i.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, b);
 
     startActivity(i);
   }

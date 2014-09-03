@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Launch Demo</string>
+  <string name="show_me">Show Me!</string>
+  <string name="url">URL</string>
+</resources>

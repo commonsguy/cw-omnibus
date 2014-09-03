@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.wimm.framework.view.AdapterViewTray xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@android:id/list"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:background="#FFFFFFFF">
-
-</com.wimm.framework.view.AdapterViewTray>

@@ -14,14 +14,14 @@
 
 package com.commonsware.android.tabpager;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class EditorFragment extends SherlockFragment {
+public class EditorFragment extends Fragment {
   private static final String KEY_POSITION="position";
 
   static EditorFragment newInstance(int position) {

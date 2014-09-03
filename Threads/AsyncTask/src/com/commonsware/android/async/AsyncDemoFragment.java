@@ -18,6 +18,7 @@ import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -33,8 +34,8 @@ public class AsyncDemoFragment extends ListFragment {
   private AddStringTask task=null;
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
 
@@ -48,6 +49,11 @@ public class AsyncDemoFragment extends ListFragment {
         new ArrayAdapter<String>(getActivity(),
                                  android.R.layout.simple_list_item_1,
                                  model);
+  }
+
+  @Override
+  public void onViewCreated(View v, Bundle savedInstanceState) {
+    super.onViewCreated(v, savedInstanceState);
 
     getListView().setScrollbarFadingEnabled(false);
     setListAdapter(adapter);
@@ -58,7 +64,7 @@ public class AsyncDemoFragment extends ListFragment {
     if (task != null) {
       task.cancel(false);
     }
-    
+
     super.onDestroy();
   }
 
@@ -66,10 +72,11 @@ public class AsyncDemoFragment extends ListFragment {
     @Override
     protected Void doInBackground(Void... unused) {
       for (String item : items) {
-        if (!isCancelled()) {
-          publishProgress(item);
-          SystemClock.sleep(400);
-        }
+        if (isCancelled())
+          break;
+        
+        publishProgress(item);
+        SystemClock.sleep(400);
       }
 
       return(null);
@@ -77,7 +84,9 @@ public class AsyncDemoFragment extends ListFragment {
 
     @Override
     protected void onProgressUpdate(String... item) {
-      adapter.add(item[0]);
+      if (!isCancelled()) {
+        adapter.add(item[0]);
+      }
     }
 
     @Override
@@ -86,7 +95,7 @@ public class AsyncDemoFragment extends ListFragment {
         Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
              .show();
       }
-      
+
       task=null;
     }
   }

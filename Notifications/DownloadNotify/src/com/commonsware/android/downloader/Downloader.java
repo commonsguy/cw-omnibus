@@ -86,8 +86,7 @@ public class Downloader extends IntentService {
                                  Exception e) {
     NotificationCompat.Builder b=new NotificationCompat.Builder(this);
 
-    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
-     .setWhen(System.currentTimeMillis());
+    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
 
     if (e == null) {
       b.setContentTitle(getString(R.string.download_complete))

@@ -14,16 +14,16 @@
 
 package com.commonsware.android.async;
 
+import android.app.Activity;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class AsyncDemo extends SherlockFragmentActivity {
+public class AsyncDemo extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getSupportFragmentManager().beginTransaction()
+    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
+      getFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new AsyncDemoFragment()).commit();
     }

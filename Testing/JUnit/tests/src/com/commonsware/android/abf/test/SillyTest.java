@@ -1,5 +1,5 @@
 /***
-	Copyright (c) 2008-2012 CommonsWare, LLC
+	Copyright (c) 2008-2014 CommonsWare, LLC
 	Licensed under the Apache License, Version 2.0 (the "License"); you may not
 	use this file except in compliance with the License. You may obtain a copy
 	of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -30,6 +30,6 @@ public class SillyTest extends TestCase {
 	}
 	
 	public void testNonsense() {
-		assertTrue(1==1);
+		assertEquals(1, 1);
 	}
 }

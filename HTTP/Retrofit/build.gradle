@@ -3,18 +3,23 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'de.greenrobot:eventbus:2.2.1'
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "19.0.1"
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
 
     sourceSets {
         main {

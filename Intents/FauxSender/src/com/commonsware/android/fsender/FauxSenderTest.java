@@ -35,7 +35,6 @@ public class FauxSenderTest extends Activity {
     i.putExtra(Intent.EXTRA_SUBJECT, R.string.share_subject);
     i.putExtra(Intent.EXTRA_TEXT, theMessage);
     
-    startActivity(Intent.createChooser(i,
-                                       getString(R.string.share_title)));
+    startActivity(i);
   }
 }

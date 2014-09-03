@@ -25,7 +25,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-
 public class ActionBarDemoActivity extends ListActivity
     implements TextView.OnEditorActionListener {
   private static final String[] items= { "lorem", "ipsum", "dolor",

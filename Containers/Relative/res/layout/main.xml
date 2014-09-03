@@ -10,6 +10,7 @@
   	android:layout_height="wrap_content"
   	android:layout_alignBaseline="@+id/entry"
   	android:layout_alignParentLeft="true"
+  	android:layout_marginLeft="4dip"
   	android:text="@string/url"/>
 
   <EditText

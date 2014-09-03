@@ -5,7 +5,11 @@
 	android:stretchColumns="1">
 
 	<TableRow>
-		<TextView android:text="@string/url"/>
+
+		<TextView
+			android:layout_marginLeft="4dip"
+			android:text="@string/url"/>
+
 		<EditText
 			android:id="@+id/entry"
 			android:layout_span="3"
@@ -17,10 +21,12 @@
 		android:background="#0000FF"/>
 
 	<TableRow>
+
 		<Button
 			android:id="@+id/cancel"
 			android:layout_column="2"
 			android:text="@string/cancel"/>
+
 		<Button
 			android:id="@+id/ok"
 			android:text="@string/ok"/>

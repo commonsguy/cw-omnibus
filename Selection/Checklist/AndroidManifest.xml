@@ -1,13 +1,26 @@
 <?xml version="1.0"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.commonsware.android.checklist" android:versionCode="1" android:versionName="1.0">
-          
-  <application android:icon="@drawable/cw">
-    <activity android:label="@string/app_name" android:name=".ChecklistDemo">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-  </application>
-  <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.checklist"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<application android:icon="@drawable/cw">
+		<activity
+			android:name=".ChecklistDemo"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+	</application>
+
+	<supports-screens
+		android:anyDensity="true"
+		android:largeScreens="true"
+		android:normalScreens="true"
+		android:smallScreens="true"/>
+	<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="14"/>
+
 </manifest>

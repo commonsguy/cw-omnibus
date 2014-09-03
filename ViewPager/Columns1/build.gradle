@@ -3,27 +3,26 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 repositories {
     maven {
-				url "http://dl.bintray.com/populov/maven"
-		}
-		mavenCentral()
+        url "http://dl.bintray.com/populov/maven"
+    }
+    mavenCentral()
 }
 
 dependencies {
-		compile 'com.viewpagerindicator:library:2.4.1@aar'
-		compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-		compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
+    compile 'com.android.support:support-v13:19.1.0'
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "19.0.1"
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
 
     sourceSets {
         main {

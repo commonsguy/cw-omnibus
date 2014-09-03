@@ -10,6 +10,14 @@ change with every release, and since some samples are used by
 multiple chapters, I am loathe to put chapter numbers in the
 actual directory names.
 
+## Using in Android Studio
+
+Most of the projects should have a `build.gradle` file suitable for
+importing the project into Android Studio. Note, though, that you
+may need to adjust the `compileSdkVersion` in `build.gradle` if it
+requests an SDK that you have not downloaded and do not wish to
+download.
+
 ## Using in Eclipse
 
 These projects can be imported using the normal Eclipse import process. That
@@ -24,8 +32,10 @@ are getting errors:
 installed. You will need to set the project build target to something that
 you have, by means of Project Properties.
 
-- Many of these projects use [ActionBarSherlock](http://actionbarsherlock.com).
-There is a copy of a compatible ActionBarSherlock in `external/`, and the 
+- A few of these projects use [ActionBarSherlock](http://actionbarsherlock.com) or
+other Android library projects. You will need to attach a suitable copy of those
+projects to your app. For example, 
+there is a copy of a compatible ActionBarSherlock in `external/`, and the 
 project files are set up to reference that copy. If you import it first, your
 imports of other sample apps should go more smoothly. Alternatively, you 
 can download and set up ActionBarSherlock yourself in your Eclipse workspace,
@@ -39,11 +49,4 @@ in the Java Compiler area.
 
 - Restarting Eclipse, for whatever reason, can clear up some undefined problems
 indicated by red exclamation marks over the project name in the Project Explorer.
-
-## Using from Ant
-
-If you wish to use this code, you should delete build.xml from the project, then run
-  `android update project -p ...`  (where ... is the path to a project of interest)
-	on those projects you wish to use, so the build files are
-	updated for your Android SDK version.
 

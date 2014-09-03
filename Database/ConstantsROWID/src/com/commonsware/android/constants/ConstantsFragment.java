@@ -33,13 +33,18 @@ import android.widget.SimpleCursorAdapter;
 public class ConstantsFragment extends ListFragment implements
     DialogInterface.OnClickListener {
   private DatabaseHelper db=null;
-
+  
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    
     setHasOptionsMenu(true);
     setRetainInstance(true);
+  }
+
+  @Override
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
     db=new DatabaseHelper(getActivity());
     new LoadCursorTask().execute();

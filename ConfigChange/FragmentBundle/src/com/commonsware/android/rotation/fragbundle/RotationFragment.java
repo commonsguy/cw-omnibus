@@ -41,11 +41,7 @@ public class RotationFragment extends Fragment implements
     v.setOnClickListener(this);
 
     if (state != null) {
-      String contactUri=state.getString("contact");
-
-      if (contactUri != null) {
-        contact=Uri.parse(contactUri);
-      }
+      contact=(Uri)state.getParcelable("contact");
     }
 
     v.setEnabled(contact != null);
@@ -58,7 +54,7 @@ public class RotationFragment extends Fragment implements
     super.onSaveInstanceState(outState);
 
     if (contact != null) {
-      outState.putString("contact", contact.toString());
+      outState.putParcelable("contact", contact);
     }
   }
 

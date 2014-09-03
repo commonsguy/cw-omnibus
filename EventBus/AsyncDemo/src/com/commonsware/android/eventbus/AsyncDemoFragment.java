@@ -52,8 +52,7 @@ public class AsyncDemoFragment extends ListFragment {
   }
 
   public void onEventMainThread(WordReadyEvent event) {
-    model.add(event.getWord());
-    adapter.notifyDataSetChanged();
+    adapter.add(event.getWord());
   }
 
   public void setModel(ArrayList<String> model) {

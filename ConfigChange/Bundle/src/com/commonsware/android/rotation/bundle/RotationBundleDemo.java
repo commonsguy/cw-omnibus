@@ -63,19 +63,15 @@ public class RotationBundleDemo extends Activity {
     super.onSaveInstanceState(outState);
 
     if (contact != null) {
-      outState.putString("contact", contact.toString());
+      outState.putParcelable("contact", contact);
     }
   }
 
   @Override
   protected void onRestoreInstanceState(Bundle state) {
     super.onRestoreInstanceState(state);
-    
-    String contactUri=state.getString("contact");
 
-    if (contactUri != null) {
-      contact=Uri.parse(contactUri);
-      viewButton.setEnabled(true);
-    }
+    contact=state.getParcelable("contact");
+    viewButton.setEnabled(contact != null);
   }
 }

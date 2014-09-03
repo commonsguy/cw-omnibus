@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2012 CommonsWare, LLC
+  Copyright (c) 2012-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -21,6 +21,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.WebViewFragment;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.IOException;

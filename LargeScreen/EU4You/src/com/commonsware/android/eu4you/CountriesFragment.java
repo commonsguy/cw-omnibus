@@ -73,7 +73,7 @@ public class CountriesFragment extends
       if (convertView == null) {
         convertView=
             LayoutInflater.from(getActivity()).inflate(R.layout.row,
-                                                       null);
+                                                       parent, false);
         wrapper=new CountryViewHolder(convertView);
         convertView.setTag(wrapper);
       }

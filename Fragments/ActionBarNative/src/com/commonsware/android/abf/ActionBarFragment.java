@@ -21,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -38,13 +39,23 @@ public class ActionBarFragment extends ListFragment implements
   private ArrayAdapter<String> adapter=null;
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
     setHasOptionsMenu(true);
+  }
+
+  @Override
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
     if (adapter == null) {
+      adapter=
+          new ArrayAdapter<String>(getActivity(),
+                                   android.R.layout.simple_list_item_1,
+                                   new ArrayList<String>());
+      setListAdapter(adapter);
       initAdapter();
     }
   }
@@ -98,11 +109,7 @@ public class ActionBarFragment extends ListFragment implements
       words.add(s);
     }
 
-    adapter=
-        new ArrayAdapter<String>(getActivity(),
-                                 android.R.layout.simple_list_item_1,
-                                 words);
-
-    setListAdapter(adapter);
+    adapter.clear();
+    adapter.addAll(words);
   }
 }

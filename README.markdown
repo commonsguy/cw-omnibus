@@ -18,6 +18,11 @@ may need to adjust the `compileSdkVersion` in `build.gradle` if it
 requests an SDK that you have not downloaded and do not wish to
 download.
 
+You will also need your own independent copy of [Gradle](http://gradle.org)
+1.12 installed and to know where you installed it. The first time you
+import a project, you may be asked where your "Gradle home" is &mdash;
+supply the directory into which you installed Gradle.
+
 ## Using in Eclipse
 
 These projects can be imported using the normal Eclipse import process. That

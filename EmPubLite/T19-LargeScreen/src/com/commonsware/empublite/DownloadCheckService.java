@@ -34,10 +34,10 @@ public class DownloadCheckService extends WakefulIntentService {
 
   @Override
   protected void doWakefulWork(Intent intent) {
-    String url=getUpdateUrl();
+    try {
+      String url=getUpdateUrl();
 
-    if (url != null) {
-      try {
+      if (url != null) {
         File book=download(url);
         File updateDir=new File(getFilesDir(), UPDATE_BASEDIR);
 
@@ -49,15 +49,16 @@ public class DownloadCheckService extends WakefulIntentService {
         EventBus.getDefault().post(new BookUpdatedEvent());
         EventBus.getDefault().unregister(this);
       }
-      catch (Exception e) {
-        Log.e(getClass().getSimpleName(),
-              "Exception downloading update", e);
-      }
+    }
+    catch (Exception e) {
+      Log.e(getClass().getSimpleName(), "Exception downloading update",
+            e);
     }
   }
 
   public void onEvent(BookUpdatedEvent event) {
-    NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
+    NotificationCompat.Builder builder=
+        new NotificationCompat.Builder(this);
     Intent toLaunch=new Intent(this, EmPubLiteActivity.class);
     PendingIntent pi=PendingIntent.getActivity(this, 0, toLaunch, 0);
 

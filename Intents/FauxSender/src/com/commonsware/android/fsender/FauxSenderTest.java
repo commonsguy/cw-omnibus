@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.fsender;
 
@@ -22,19 +22,20 @@ public class FauxSenderTest extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
+
     sendIt(getString(R.string.test));
-    
+
     finish();
   }
-  
+
   void sendIt(String theMessage) {
     Intent i=new Intent(Intent.ACTION_SEND);
-    
+
     i.setType("text/plain");
     i.putExtra(Intent.EXTRA_SUBJECT, R.string.share_subject);
     i.putExtra(Intent.EXTRA_TEXT, theMessage);
-    
-    startActivity(i);
+
+    startActivity(Intent.createChooser(i,
+                                       getString(R.string.share_title)));
   }
 }

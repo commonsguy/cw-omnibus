@@ -39,17 +39,17 @@ public class DemoActivityTest extends
   }
 
   public void testListCount() {
-    assertEquals(list.getAdapter().getCount(), 25);
+    assertEquals(25, list.getAdapter().getCount());
   }
 
   public void testKeyEvents() {
     sendKeys("4*DPAD_DOWN");
-    assertEquals(list.getSelectedItemPosition(), 4);
+    assertEquals(4, list.getSelectedItemPosition());
   }
 
   public void testTouchEvents() {
     TouchUtils.scrollToBottom(this, getActivity(), list);
     getInstrumentation().waitForIdleSync();
-    assertEquals(list.getLastVisiblePosition(), 24);
+    assertEquals(24, list.getLastVisiblePosition());
   }
 }

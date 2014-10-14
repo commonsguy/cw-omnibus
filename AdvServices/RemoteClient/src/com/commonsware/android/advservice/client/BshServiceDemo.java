@@ -14,16 +14,16 @@
 
 package com.commonsware.android.advservice.client;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
-public class BshServiceDemo extends FragmentActivity {
+public class BshServiceDemo extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getSupportFragmentManager().beginTransaction()
+    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
+      getFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new BshFragment()).commit();
     }

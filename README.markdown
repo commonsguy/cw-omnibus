@@ -16,12 +16,20 @@ Most of the projects should have a `build.gradle` file suitable for
 importing the project into Android Studio. Note, though, that you
 may need to adjust the `compileSdkVersion` in `build.gradle` if it
 requests an SDK that you have not downloaded and do not wish to
-download.
+download. Similarly, you may need to adjust the `buildToolsVersion`
+value to refer to a version of the "Build-tools" that you have downloaded
+from the SDK Manager.
 
-You will also need your own independent copy of [Gradle](http://gradle.org)
-1.12 installed and to know where you installed it. The first time you
-import a project, you may be asked where your "Gradle home" is &mdash;
-supply the directory into which you installed Gradle.
+The samples also have stub Gradle wrapper files, enough to allow for
+easy import into Android Studio. However,
+**always check the `gradle-wrapper.properties` file before importing anything into Android Studio**,
+as there is always the chance that somebody has published material linking you to a hacked Gradle installation.
+
+## Using with Command-Line Gradle
+
+Right now, you will need your own local installation of Gradle 2.1
+in order to build the projects from the command line, as the repository
+does not contain `gradlew` or its corresponding JAR for security reasons.
 
 ## Using in Eclipse
 

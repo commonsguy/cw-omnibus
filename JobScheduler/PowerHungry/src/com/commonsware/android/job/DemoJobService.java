@@ -14,16 +14,13 @@
 
 package com.commonsware.android.job;
 
-import android.app.Service;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.content.Intent;
-import android.os.IBinder;
 import android.os.PersistableBundle;
 import android.util.Log;
 
 public class DemoJobService extends JobService {
-  Thread job=null;
+  private volatile Thread job=null;
 
   @Override
   public boolean onStartJob(JobParameters params) {
@@ -42,13 +39,17 @@ public class DemoJobService extends JobService {
   }
 
   @Override
-  public boolean onStopJob(JobParameters params) {
+  synchronized public boolean onStopJob(JobParameters params) {
     if (job!=null) {
       Log.d(getClass().getSimpleName(), "job interrupted");
       job.interrupt();
     }
 
     return(false);
+  }
+
+  synchronized private void clearJob() {
+    job=null;
   }
 
   private class DownloadThread extends Thread {
@@ -63,7 +64,7 @@ public class DemoJobService extends JobService {
       Log.d(getClass().getSimpleName(), "job begins");
       new DownloadJob().run();
       Log.d(getClass().getSimpleName(), "job ends");
-      job=null;
+      clearJob();
       jobFinished(params, false);
     }
   }

@@ -144,7 +144,7 @@ public class EmPubLiteActivity extends Activity {
 
   private void setupStrictMode() {
     StrictMode.ThreadPolicy.Builder builder=
-        new StrictMode.ThreadPolicy.Builder().detectDiskWrites().detectNetwork();
+        new StrictMode.ThreadPolicy.Builder().detectNetwork();
 
     if (BuildConfig.DEBUG) {
       builder.penaltyDeath();

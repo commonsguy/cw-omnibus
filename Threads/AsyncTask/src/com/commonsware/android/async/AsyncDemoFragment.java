@@ -60,12 +60,16 @@ public class AsyncDemoFragment extends ListFragment {
   }
 
   @Override
-  public void onDestroy() {
+  synchronized public void onDestroy() {
     if (task != null) {
       task.cancel(false);
     }
 
     super.onDestroy();
+  }
+
+  synchronized private void clearTask() {
+    task=null;
   }
 
   class AddStringTask extends AsyncTask<Void, String, Void> {
@@ -96,7 +100,7 @@ public class AsyncDemoFragment extends ListFragment {
              .show();
       }
 
-      task=null;
+      clearTask();
     }
   }
 }

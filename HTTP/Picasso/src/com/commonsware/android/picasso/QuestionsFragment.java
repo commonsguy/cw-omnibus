@@ -77,14 +77,8 @@ public class QuestionsFragment extends ListFragment implements
   }
 
   class ItemsAdapter extends ArrayAdapter<Item> {
-    int size;
-
     ItemsAdapter(List<Item> items) {
       super(getActivity(), R.layout.row, R.id.title, items);
-
-      size=
-          getActivity().getResources()
-                       .getDimensionPixelSize(R.dimen.icon);
     }
 
     @Override
@@ -94,7 +88,7 @@ public class QuestionsFragment extends ListFragment implements
       ImageView icon=(ImageView)row.findViewById(R.id.icon);
 
       Picasso.with(getActivity()).load(item.owner.profileImage)
-             .resize(size, size).centerCrop()
+             .fit().centerCrop()
              .placeholder(R.drawable.owner_placeholder)
              .error(R.drawable.owner_error).into(icon);
 

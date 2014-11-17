@@ -49,7 +49,6 @@ android {
         mezzanine {
             applicationIdSuffix ".mezz"
             debuggable true
-            signingConfig signingConfigs.release
             buildConfigField "String", "SERVER_URL", '"http://stage.this-is-so-fake.com"'
         }
     }

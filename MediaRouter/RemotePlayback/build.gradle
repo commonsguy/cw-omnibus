@@ -9,11 +9,12 @@ buildscript {
 apply plugin: 'com.android.application'
 
 dependencies {
-	compile 'com.android.support:mediarouter-v7:19.1.0'
+	compile 'com.android.support:mediarouter-v7:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.0'
 }
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "20.0.0"
 
     sourceSets {

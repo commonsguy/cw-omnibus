@@ -55,7 +55,9 @@ public class DatePickerDemoActivity extends Activity implements
   @Override
   public void onCheckedChanged(CompoundButton buttonView,
                                boolean isChecked) {
-    picker.setCalendarViewShown(isChecked);
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
+      picker.setCalendarViewShown(isChecked);
+    }
   }
 
   @Override

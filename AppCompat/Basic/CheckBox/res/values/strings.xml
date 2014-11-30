@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">CheckBoxDemo</string>
+  <string name="unchecked">This checkbox is: unchecked</string>
+  <string name="checked">This checkbox is: checked</string>
+</resources>

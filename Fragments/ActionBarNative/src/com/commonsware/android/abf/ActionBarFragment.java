@@ -15,21 +15,15 @@
 package com.commonsware.android.abf;
 
 import android.app.ListFragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.TextView;
 import java.util.ArrayList;
 
-public class ActionBarFragment extends ListFragment implements
-    TextView.OnEditorActionListener {
+public class ActionBarFragment extends ListFragment {
   private static final String[] items= { "lorem", "ipsum", "dolor",
       "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
@@ -64,52 +58,40 @@ public class ActionBarFragment extends ListFragment implements
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.actions, menu);
 
-    configureActionItem(menu);
-
     super.onCreateOptionsMenu(menu, inflater);
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.reset) {
-      initAdapter();
-      return(true);
+    switch(item.getItemId()) {
+      case R.id.add:
+        addWord();
+
+        return(true);
+
+      case R.id.reset:
+        initAdapter();
+
+        return(true);
     }
 
     return(super.onOptionsItemSelected(item));
   }
 
-  @Override
-  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-    if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
-      adapter.add(v.getText().toString());
-      v.setText("");
-
-      InputMethodManager imm=
-          (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-      imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
-
-    return(true);
-  }
-
-  private void configureActionItem(Menu menu) {
-    EditText add=
-        (EditText)menu.findItem(R.id.add).getActionView()
-                      .findViewById(R.id.title);
-
-    add.setOnEditorActionListener(this);
-  }
-
   private void initAdapter() {
     words=new ArrayList<String>();
 
-    for (String s : items) {
-      words.add(s);
+    for (int i=0;i<5;i++) {
+      words.add(items[i]);
     }
 
     adapter.clear();
     adapter.addAll(words);
+  }
+
+  private void addWord() {
+    if (adapter.getCount()<items.length) {
+      adapter.add(items[adapter.getCount()]);
+    }
   }
 }

@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -12,7 +12,7 @@ repositories {
     maven {
 			url "http://dl.bintray.com/populov/maven"
 		}
-	maven {
+	  maven {
 		    url "https://repo.commonsware.com.s3.amazonaws.com"
     }
     mavenCentral()

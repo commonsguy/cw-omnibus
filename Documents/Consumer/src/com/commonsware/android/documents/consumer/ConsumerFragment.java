@@ -126,7 +126,6 @@ public class ConsumerFragment extends Fragment {
     Intent i=new Intent().setType("image/*");
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
       startActivityForResult(i.setAction(Intent.ACTION_OPEN_DOCUMENT)
                               .addCategory(Intent.CATEGORY_OPENABLE),
                              REQUEST_OPEN);

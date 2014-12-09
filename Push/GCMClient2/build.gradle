@@ -25,9 +25,28 @@ android {
     compileSdkVersion 19
     buildToolsVersion "20.0.0"
 
-		defaultConfig {
-			targetSdkVersion 17
-		}
+    defaultConfig {
+        targetSdkVersion 17
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('HelloConfig.keystore')
+            keyAlias 'HelloConfig'
+            storePassword 'laser.yams.heady.testy'
+            keyPassword 'fw.stabs.steady.wool'
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".d"
+        }
+
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
 
     sourceSets {
         main {

@@ -13,11 +13,20 @@
 		android:smallScreens="true"
 		android:xlargeScreens="true"/>
 
+<!--
 	<permission
 		android:name="com.commonsware.android.gcm.client.permission.C2D_MESSAGE"
 		android:protectionLevel="signature"/>
 
 	<uses-permission android:name="com.commonsware.android.gcm.client.permission.C2D_MESSAGE"/>
+-->
+
+  <permission
+    android:name="${applicationId}.permission.C2D_MESSAGE"
+    android:protectionLevel="signature" />
+  <uses-permission
+    android:name="${applicationId}.permission.C2D_MESSAGE" />
+
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
@@ -42,7 +51,7 @@
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
 
-				<category android:name="com.commonsware.android.gcm.client"/>
+        <category android:name="${applicationId}" />
 			</intent-filter>
 		</receiver>
 

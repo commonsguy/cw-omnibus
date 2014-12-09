@@ -52,7 +52,7 @@ public class EventLogFragment extends ListFragment {
   public void onResume() {
     super.onResume();
 
-    EventBus.getDefault().register(this, 1);
+    EventBus.getDefault().register(this);
   }
 
   @Override
@@ -62,15 +62,8 @@ public class EventLogFragment extends ListFragment {
     super.onPause();
   }
 
-  public void onEvent(final RandomEvent event) {
-    getActivity().runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        adapter.add(event);        
-      }
-    });
-    
-    EventBus.getDefault().cancelEventDelivery(event);
+  public void onEventMainThread(final RandomEvent event) {
+    adapter.add(event);
   }
 
   class EventLogAdapter extends ArrayAdapter<RandomEvent> {

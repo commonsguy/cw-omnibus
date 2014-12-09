@@ -14,27 +14,20 @@
 
 package com.commonsware.android.actionmode.longpress;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +43,7 @@ public class ActionModeDemo extends ListActivity implements
       "vel", "erat", "placerat", "ante", "porttitor", "sodales",
       "pellentesque", "augue", "purus" };
   private ArrayList<String> words=null;
+  private ArrayAdapter<String> adapter=null;
   private ActionMode activeMode=null;
 
   @Override
@@ -75,28 +69,12 @@ public class ActionModeDemo extends ListActivity implements
 
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      l.setItemChecked(position, true);
-    }
+    l.setItemChecked(position, true);
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.option, menu);
-
-    EditText add=null;
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      View v=menu.findItem(R.id.add).getActionView();
-
-      if (v != null) {
-        add=(EditText)v.findViewById(R.id.title);
-      }
-    }
-
-    if (add != null) {
-      add.setOnEditorActionListener(onSearch);
-    }
+    getMenuInflater().inflate(R.menu.actions, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }
@@ -111,17 +89,19 @@ public class ActionModeDemo extends ListActivity implements
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.add:
-        add();
+        addWord();
+
         return(true);
 
       case R.id.reset:
         initAdapter(null);
+
         return(true);
 
       case R.id.about:
-      case android.R.id.home:
-        Toast.makeText(this, "Action Bar Sample App", Toast.LENGTH_LONG)
-             .show();
+        Toast.makeText(this, R.string.about_toast, Toast.LENGTH_LONG)
+            .show();
+
         return(true);
     }
 
@@ -239,57 +219,23 @@ public class ActionModeDemo extends ListActivity implements
     if (startingPoint == null) {
       words=new ArrayList<String>();
 
-      for (String s : items) {
-        words.add(s);
+      for (int i=0;i<5;i++) {
+        words.add(items[i]);
       }
     }
     else {
       words=startingPoint;
     }
 
-    setListAdapter(new ArrayAdapter<String>(
-                                            this,
-                                            android.R.layout.simple_list_item_activated_1,
-                                            words));
+    adapter=new ArrayAdapter<String>(this,
+        android.R.layout.simple_list_item_activated_1,
+        words);
+    setListAdapter(adapter);
   }
 
-  private void add() {
-    final View addView=getLayoutInflater().inflate(R.layout.add, null);
-
-    new AlertDialog.Builder(this).setTitle("Add a Word")
-                                 .setView(addView)
-                                 .setPositiveButton("OK",
-                                                    new DialogInterface.OnClickListener() {
-                                                      public void onClick(DialogInterface dialog,
-                                                                          int whichButton) {
-                                                        addWord((TextView)addView.findViewById(R.id.title));
-                                                      }
-                                                    })
-                                 .setNegativeButton("Cancel", null)
-                                 .show();
+  private void addWord() {
+    if (adapter.getCount()<items.length) {
+      adapter.add(items[adapter.getCount()]);
+    }
   }
-
-  @SuppressWarnings("unchecked")
-  private void addWord(TextView title) {
-    ArrayAdapter<String> adapter=(ArrayAdapter<String>)getListAdapter();
-
-    adapter.add(title.getText().toString());
-  }
-
-  private TextView.OnEditorActionListener onSearch=
-      new TextView.OnEditorActionListener() {
-        public boolean onEditorAction(TextView v, int actionId,
-                                      KeyEvent event) {
-          if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
-            addWord(v);
-
-            InputMethodManager imm=
-                (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-          }
-
-          return(true);
-        }
-      };
 }

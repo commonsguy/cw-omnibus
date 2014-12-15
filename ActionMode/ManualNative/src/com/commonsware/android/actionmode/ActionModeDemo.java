@@ -74,7 +74,6 @@ public class ActionModeDemo extends ListActivity {
     return(super.onOptionsItemSelected(item));
   }
 
-  @SuppressWarnings("unchecked")
   public boolean performAction(int itemId, int position) {
     switch (itemId) {
       case R.id.cap:

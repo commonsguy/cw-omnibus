@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
-    compile 'com.android.support:support-v13:19.1.0'
+    compile 'com.android.support:support-v13:21.0.3'
 }
 
 android {

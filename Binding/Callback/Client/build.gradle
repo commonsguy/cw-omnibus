@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-	compile 'com.android.support:support-v13:19.1.0'
+	compile 'com.android.support:support-v13:21.0.3'
     compile 'de.greenrobot:eventbus:2.2.1'
 }
 

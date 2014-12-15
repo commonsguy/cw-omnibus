@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     compile 'com.samskivert:jmustache:1.9'
-    compile 'com.android.support:support-v13:19.1.0'
+    compile 'com.android.support:support-v13:21.0.3'
     compile 'com.commonsware.cwac:layouts:0.4.+'
 }
 

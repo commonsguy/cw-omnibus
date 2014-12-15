@@ -10,7 +10,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'com.google.android.gms:play-services:5.0.+'
-    compile 'com.android.support:support-v13:19.1.0'
+    compile 'com.android.support:support-v13:21.0.3'
 }
 
 android {

@@ -21,7 +21,7 @@ repositories {
 dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.commonsware.cwac:presentation:0.4.+'
-    compile 'com.android.support:support-v13:21.0.0'
+    compile 'com.android.support:support-v13:21.0.3'
     compile 'com.google.code.gson:gson:2.3'
     compile 'de.greenrobot:eventbus:2.2.1'
     compile 'com.commonsware.cwac:mediarouter:0.1.+'

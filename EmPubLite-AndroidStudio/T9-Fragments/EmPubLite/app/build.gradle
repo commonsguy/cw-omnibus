@@ -18,8 +18,8 @@ repositories {
 }
 
 dependencies {
-    compile 'de.greenrobot:eventbus:2.2.1'
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
-    compile 'com.android.support:support-v13:19.1.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.squareup.retrofit:retrofit:1.8.1'
+    compile 'com.android.support:support-v13:21.0.3'
 }

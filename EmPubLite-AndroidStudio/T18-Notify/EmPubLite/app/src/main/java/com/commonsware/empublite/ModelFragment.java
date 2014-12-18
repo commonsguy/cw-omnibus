@@ -32,7 +32,7 @@ public class ModelFragment extends Fragment {
   public void onAttach(Activity host) {
     super.onAttach(host);
 
-    EventBus.getDefault().register(this, 1);
+    EventBus.getDefault().register(this);
 
     if (contents == null) {
       new LoadThread(host).start();
@@ -57,7 +57,6 @@ public class ModelFragment extends Fragment {
   public void onEvent(BookUpdatedEvent event) {
     if (getActivity() != null) {
       new LoadThread(getActivity()).start();
-      EventBus.getDefault().cancelEventDelivery(event);
     }
   }
 

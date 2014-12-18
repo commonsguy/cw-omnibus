@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import com.google.gson.Gson;
 import de.greenrobot.event.EventBus;
 
 public class ModelFragment extends Fragment {
@@ -24,7 +25,6 @@ public class ModelFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setRetainInstance(true);
   }
 
@@ -32,7 +32,7 @@ public class ModelFragment extends Fragment {
   public void onAttach(Activity host) {
     super.onAttach(host);
 
-    EventBus.getDefault().register(this, 1);
+    EventBus.getDefault().register(this);
 
     if (contents == null) {
       new LoadThread(host).start();
@@ -46,19 +46,18 @@ public class ModelFragment extends Fragment {
     super.onDetach();
   }
 
-  public void onEvent(BookUpdatedEvent event) {
-    if (getActivity() != null) {
-      new LoadThread(getActivity()).start();
-      EventBus.getDefault().cancelEventDelivery(event);
-    }
-  }
-
   public BookContents getBook() {
     return(contents);
   }
 
   public SharedPreferences getPrefs() {
     return(prefs);
+  }
+
+  public void onEvent(BookUpdatedEvent event) {
+    if (getActivity() != null) {
+      new LoadThread(getActivity()).start();
+    }
   }
 
   private class LoadThread extends Thread {
@@ -76,10 +75,9 @@ public class ModelFragment extends Fragment {
       prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
 
       Gson gson=new Gson();
-
       File baseDir=
           new File(ctxt.getFilesDir(),
-                   DownloadCheckService.UPDATE_BASEDIR);
+              DownloadCheckService.UPDATE_BASEDIR);
 
       try {
         InputStream is;

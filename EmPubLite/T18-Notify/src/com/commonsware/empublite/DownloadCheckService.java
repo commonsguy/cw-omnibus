@@ -1,11 +1,13 @@
 package com.commonsware.empublite;
 
+import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import com.commonsware.cwac.wakeful.WakefulIntentService;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -18,8 +20,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 import de.greenrobot.event.EventBus;
+import de.greenrobot.event.NoSubscriberEvent;
 import retrofit.RestAdapter;
 
 public class DownloadCheckService extends WakefulIntentService {
@@ -45,28 +47,27 @@ public class DownloadCheckService extends WakefulIntentService {
         unzip(book, updateDir);
         book.delete();
 
-        EventBus.getDefault().register(this, 0);
+        EventBus.getDefault().register(this);
         EventBus.getDefault().post(new BookUpdatedEvent());
         EventBus.getDefault().unregister(this);
       }
     }
     catch (Exception e) {
-      Log.e(getClass().getSimpleName(), "Exception downloading update",
-            e);
+      Log.e(getClass().getSimpleName(),
+          "Exception downloading update", e);
     }
   }
 
-  public void onEvent(BookUpdatedEvent event) {
-    NotificationCompat.Builder builder=
-        new NotificationCompat.Builder(this);
+  public void onEvent(NoSubscriberEvent event) {
+    NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
     Intent toLaunch=new Intent(this, EmPubLiteActivity.class);
     PendingIntent pi=PendingIntent.getActivity(this, 0, toLaunch, 0);
 
     builder.setAutoCancel(true).setContentIntent(pi)
-           .setContentTitle(getString(R.string.update_complete))
-           .setContentText(getString(R.string.update_desc))
-           .setSmallIcon(android.R.drawable.stat_sys_download_done)
-           .setTicker(getString(R.string.update_complete));
+        .setContentTitle(getString(R.string.update_complete))
+        .setContentText(getString(R.string.update_desc))
+        .setSmallIcon(android.R.drawable.stat_sys_download_done)
+        .setTicker(getString(R.string.update_complete));
 
     NotificationManager mgr=
         ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
@@ -77,7 +78,7 @@ public class DownloadCheckService extends WakefulIntentService {
   private String getUpdateUrl() {
     RestAdapter restAdapter=
         new RestAdapter.Builder().setEndpoint("http://commonsware.com")
-                                 .build();
+            .build();
     BookUpdateInterface updateInterface=
         restAdapter.create(BookUpdateInterface.class);
     BookUpdateInfo info=updateInterface.update();
@@ -90,7 +91,7 @@ public class DownloadCheckService extends WakefulIntentService {
   }
 
   private File download(String url) throws MalformedURLException,
-                                   IOException {
+      IOException {
     File output=new File(getFilesDir(), UPDATE_FILENAME);
 
     if (output.exists()) {
@@ -99,7 +100,6 @@ public class DownloadCheckService extends WakefulIntentService {
 
     HttpURLConnection c=
         (HttpURLConnection)new URL(url).openConnection();
-
     FileOutputStream fos=new FileOutputStream(output.getPath());
     BufferedOutputStream out=new BufferedOutputStream(fos);
 
@@ -141,7 +141,6 @@ public class DownloadCheckService extends WakefulIntentService {
         while ((count=zis.read(buffer)) != -1) {
           out.write(buffer, 0, count);
         }
-
         out.flush();
       }
       finally {

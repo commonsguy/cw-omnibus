@@ -24,17 +24,6 @@ public class EmPubLiteActivity extends Activity {
     setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
 
-    ModelFragment mfrag=
-        (ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
-
-    if (mfrag == null) {
-      getFragmentManager().beginTransaction()
-          .add(new ModelFragment(), MODEL).commit();
-    }
-    else if (mfrag.getBook() != null) {
-      setupPager(mfrag.getBook());
-    }
-
     getActionBar().setHomeButtonEnabled(true);
   }
 
@@ -42,6 +31,19 @@ public class EmPubLiteActivity extends Activity {
   public void onResume() {
     super.onResume();
     EventBus.getDefault().register(this);
+
+    if (adapter==null) {
+      ModelFragment mfrag=
+          (ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
+
+      if (mfrag == null) {
+        getFragmentManager().beginTransaction()
+            .add(new ModelFragment(), MODEL).commit();
+      }
+      else if (mfrag.getBook() != null) {
+        setupPager(mfrag.getBook());
+      }
+    }
   }
 
   @Override

@@ -14,8 +14,7 @@ import de.greenrobot.event.EventBus;
 public class EmPubLiteActivity extends Activity {
   private static final String MODEL="model";
   private static final String PREF_LAST_POSITION="lastPosition";
-  private static final String PREF_SAVE_LAST_POSITION=
-      "saveLastPosition";
+  private static final String PREF_SAVE_LAST_POSITION="saveLastPosition";
   private static final String PREF_KEEP_SCREEN_ON="keepScreenOn";
   private ViewPager pager=null;
   private ContentsAdapter adapter=null;
@@ -30,17 +29,6 @@ public class EmPubLiteActivity extends Activity {
     setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
 
-    mfrag=(ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
-
-    if (mfrag == null) {
-      mfrag=new ModelFragment();
-      getFragmentManager().beginTransaction().add(mfrag, MODEL)
-                          .commit();
-    }
-    else if (mfrag.getBook() != null) {
-      setupPager(mfrag.getBook());
-    }
-
     getActionBar().setHomeButtonEnabled(true);
   }
 
@@ -50,9 +38,22 @@ public class EmPubLiteActivity extends Activity {
 
     EventBus.getDefault().register(this);
 
+    if (adapter==null) {
+      mfrag=
+          (ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
+
+      if (mfrag == null) {
+        mfrag=new ModelFragment();
+        getFragmentManager().beginTransaction().add(mfrag, MODEL).commit();
+      }
+      else if (mfrag.getBook() != null) {
+        setupPager(mfrag.getBook());
+      }
+    }
+
     if (mfrag.getPrefs() != null) {
       pager.setKeepScreenOn(mfrag.getPrefs()
-                                 .getBoolean(PREF_KEEP_SCREEN_ON, false));
+          .getBoolean(PREF_KEEP_SCREEN_ON, false));
     }
   }
 
@@ -64,7 +65,7 @@ public class EmPubLiteActivity extends Activity {
       int position=pager.getCurrentItem();
 
       mfrag.getPrefs().edit().putInt(PREF_LAST_POSITION, position)
-           .apply();
+          .apply();
     }
 
     super.onPause();
@@ -88,7 +89,7 @@ public class EmPubLiteActivity extends Activity {
         Intent i=new Intent(this, SimpleContentActivity.class);
 
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
-                   "file:///android_asset/misc/about.html");
+            "file:///android_asset/misc/about.html");
         startActivity(i);
 
         return(true);
@@ -97,13 +98,14 @@ public class EmPubLiteActivity extends Activity {
         i=new Intent(this, SimpleContentActivity.class);
 
         i.putExtra(SimpleContentActivity.EXTRA_FILE,
-                   "file:///android_asset/misc/help.html");
+            "file:///android_asset/misc/help.html");
         startActivity(i);
 
         return(true);
 
       case R.id.settings:
         startActivity(new Intent(this, Preferences.class));
+
         return(true);
     }
 
@@ -117,12 +119,10 @@ public class EmPubLiteActivity extends Activity {
   private void setupPager(BookContents contents) {
     adapter=new ContentsAdapter(this, contents);
     pager.setAdapter(adapter);
-
     findViewById(R.id.progressBar1).setVisibility(View.GONE);
     findViewById(R.id.pager).setVisibility(View.VISIBLE);
 
     SharedPreferences prefs=mfrag.getPrefs();
-
     if (prefs != null) {
       if (prefs.getBoolean(PREF_SAVE_LAST_POSITION, false)) {
         pager.setCurrentItem(prefs.getInt(PREF_LAST_POSITION, 0));

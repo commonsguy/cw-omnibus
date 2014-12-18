@@ -47,17 +47,6 @@ public class EmPubLiteActivity extends Activity implements
 
     getFragmentManager().addOnBackStackChangedListener(this);
 
-    mfrag=(ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
-
-    if (mfrag == null) {
-      mfrag=new ModelFragment();
-      getFragmentManager().beginTransaction().add(mfrag, MODEL)
-          .commit();
-    }
-    else if (mfrag.getBook() != null) {
-      setupPager(mfrag.getBook());
-    }
-
     help=
         (SimpleContentFragment)getFragmentManager().findFragmentByTag(HELP);
     about=
@@ -72,6 +61,19 @@ public class EmPubLiteActivity extends Activity implements
     super.onResume();
 
     EventBus.getDefault().register(this);
+
+    if (adapter==null) {
+      mfrag=
+          (ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
+
+      if (mfrag == null) {
+        mfrag=new ModelFragment();
+        getFragmentManager().beginTransaction().add(mfrag, MODEL).commit();
+      }
+      else if (mfrag.getBook() != null) {
+        setupPager(mfrag.getBook());
+      }
+    }
 
     if (mfrag.getPrefs() != null) {
       pager.setKeepScreenOn(mfrag.getPrefs()

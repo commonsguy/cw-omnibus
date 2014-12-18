@@ -30,17 +30,6 @@ public class EmPubLiteActivity extends Activity {
     setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
 
-    mfrag=(ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
-
-    if (mfrag == null) {
-      mfrag=new ModelFragment();
-      getFragmentManager().beginTransaction().add(mfrag, MODEL)
-          .commit();
-    }
-    else if (mfrag.getBook() != null) {
-      setupPager(mfrag.getBook());
-    }
-
     getActionBar().setHomeButtonEnabled(true);
     UpdateReceiver.scheduleAlarm(this);
   }
@@ -50,6 +39,19 @@ public class EmPubLiteActivity extends Activity {
     super.onResume();
 
     EventBus.getDefault().register(this);
+
+    if (adapter==null) {
+      mfrag=
+          (ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
+
+      if (mfrag == null) {
+        mfrag=new ModelFragment();
+        getFragmentManager().beginTransaction().add(mfrag, MODEL).commit();
+      }
+      else if (mfrag.getBook() != null) {
+        setupPager(mfrag.getBook());
+      }
+    }
 
     if (mfrag.getPrefs() != null) {
       pager.setKeepScreenOn(mfrag.getPrefs()

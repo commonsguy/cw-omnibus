@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import de.greenrobot.event.EventBus;
+import de.greenrobot.event.NoSubscriberEvent;
 import retrofit.RestAdapter;
 
 public class DownloadCheckService extends WakefulIntentService {
@@ -46,7 +47,7 @@ public class DownloadCheckService extends WakefulIntentService {
         unzip(book, updateDir);
         book.delete();
 
-        EventBus.getDefault().register(this, 0);
+        EventBus.getDefault().register(this);
         EventBus.getDefault().post(new BookUpdatedEvent());
         EventBus.getDefault().unregister(this);
       }
@@ -57,7 +58,7 @@ public class DownloadCheckService extends WakefulIntentService {
     }
   }
 
-  public void onEvent(BookUpdatedEvent event) {
+  public void onEvent(NoSubscriberEvent event) {
     NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
     Intent toLaunch=new Intent(this, EmPubLiteActivity.class);
     PendingIntent pi=PendingIntent.getActivity(this, 0, toLaunch, 0);

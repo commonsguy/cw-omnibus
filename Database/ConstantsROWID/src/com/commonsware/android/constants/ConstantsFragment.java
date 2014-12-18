@@ -33,6 +33,7 @@ import android.widget.SimpleCursorAdapter;
 public class ConstantsFragment extends ListFragment implements
     DialogInterface.OnClickListener {
   private DatabaseHelper db=null;
+  private Cursor current=null;
   
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +47,20 @@ public class ConstantsFragment extends ListFragment implements
   public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    db=new DatabaseHelper(getActivity());
-    new LoadCursorTask().execute();
+    SimpleCursorAdapter adapter=
+        new SimpleCursorAdapter(getActivity(), R.layout.row,
+            current, new String[] {
+            DatabaseHelper.TITLE,
+            DatabaseHelper.VALUE },
+            new int[] { R.id.title, R.id.value },
+            0);
+
+    setListAdapter(adapter);
+
+    if (current==null) {
+      db=new DatabaseHelper(getActivity());
+      new LoadCursorTask().execute();
+    }
   }
 
   @Override
@@ -67,10 +80,9 @@ public class ConstantsFragment extends ListFragment implements
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.add:
-        add();
-        return(true);
+    if (item.getItemId()==R.id.add) {
+      add();
+      return(true);
     }
 
     return(super.onOptionsItemSelected(item));
@@ -98,57 +110,42 @@ public class ConstantsFragment extends ListFragment implements
     new InsertTask().execute(values);
   }
 
-  private Cursor doQuery() {
-    String query=
-        String.format("SELECT ROWID AS _id, %s, %s FROM %s ORDER BY %s",
-                      DatabaseHelper.TITLE, DatabaseHelper.VALUE,
-                      DatabaseHelper.TABLE, DatabaseHelper.TITLE);
-
-    return(db.getReadableDatabase().rawQuery(query, null));
-  }
-
-  private class LoadCursorTask extends AsyncTask<Void, Void, Void> {
-    private Cursor constantsCursor=null;
-
+  abstract private class BaseTask<T> extends AsyncTask<T, Void, Cursor> {
     @Override
-    protected Void doInBackground(Void... params) {
-      constantsCursor=doQuery();
-      constantsCursor.getCount();
-
-      return(null);
+    public void onPostExecute(Cursor result) {
+      ((CursorAdapter)getListAdapter()).changeCursor(result);
     }
 
-    @Override
-    public void onPostExecute(Void arg0) {
-      SimpleCursorAdapter adapter=
-          new SimpleCursorAdapter(getActivity(), R.layout.row,
-                                  constantsCursor, new String[] {
-                                      DatabaseHelper.TITLE,
-                                      DatabaseHelper.VALUE },
-                                  new int[] { R.id.title, R.id.value },
-                                  0);
+    protected Cursor doQuery() {
+      Cursor result=
+          db
+              .getReadableDatabase()
+              .query(DatabaseHelper.TABLE,
+                  new String[] {"ROWID AS _id",
+                                DatabaseHelper.TITLE,
+                                DatabaseHelper.VALUE},
+                  null, null, null, null, DatabaseHelper.TITLE);
 
-      setListAdapter(adapter);
+      result.getCount();
+
+      return(result);
     }
   }
 
-  private class InsertTask extends AsyncTask<ContentValues, Void, Void> {
-    private Cursor constantsCursor=null;
-
+  private class LoadCursorTask extends BaseTask<Void> {
     @Override
-    protected Void doInBackground(ContentValues... values) {
+    protected Cursor doInBackground(Void... params) {
+      return(doQuery());
+    }
+  }
+
+  private class InsertTask extends BaseTask<ContentValues> {
+    @Override
+    protected Cursor doInBackground(ContentValues... values) {
       db.getWritableDatabase().insert(DatabaseHelper.TABLE,
                                       DatabaseHelper.TITLE, values[0]);
 
-      constantsCursor=doQuery();
-      constantsCursor.getCount();
-
-      return(null);
-    }
-
-    @Override
-    public void onPostExecute(Void arg0) {
-      ((CursorAdapter)getListAdapter()).changeCursor(constantsCursor);
+      return(doQuery());
     }
   }
 }

@@ -13,8 +13,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.google.android.gms:play-services:5.0.+'
-	compile 'com.google.maps.android:android-maps-utils:0.3+'
+    compile 'com.google.android.gms:play-services-maps:6.5.87'
+	compile 'com.google.maps.android:android-maps-utils:0.3.4'
 }
 
 android {

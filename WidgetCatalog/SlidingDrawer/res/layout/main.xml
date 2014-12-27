@@ -21,11 +21,9 @@
 			android:layout_height="wrap_content"
 			android:src="@drawable/tray_handle_normal"/>
 
-		<Button
-			android:id="@id/content"
+		<ImageView  android:id="@id/content"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:text="@string/drawer_msg"/>
+			android:layout_height="match_parent"/>
 	</SlidingDrawer>
 
 </RelativeLayout>

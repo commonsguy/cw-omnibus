@@ -10,7 +10,7 @@
 	
 	From _Tuning Android Applications_
 		http://commonsware.com/AndTuning
-*/
+ */
 
 package com.commonsware.android.tuning.goasync;
 
@@ -18,15 +18,21 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.util.Log;
 
-public class AsyncReceiver extends BroadcastReceiver {
+public class AsyncReceiver extends BroadcastReceiver
+{
 	@Override
-	public void onReceive(Context context, Intent intent) {
-		final BroadcastReceiver.PendingResult result=goAsync();
-		
-		(new Thread() {
-			public void run() {
-				SystemClock.sleep(7000);
+	public void onReceive(Context context, Intent intent)
+	{
+		final BroadcastReceiver.PendingResult result = goAsync();
+
+		(new Thread()
+		{
+			public void run()
+			{
+				SystemClock.sleep(14000);
+				Log.e("goasync", "completed");
 				result.finish();
 			}
 		}).start();

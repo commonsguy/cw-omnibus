@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.gcm.client;
 
@@ -21,42 +21,50 @@ import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gcm.GCMBaseIntentService;
 
-public class GCMIntentService extends GCMBaseIntentService {
-  public GCMIntentService() {
-    super(MainActivity.SENDER_ID);
-  }
-  
-  @Override
-  protected void onRegistered(Context ctxt, String regId) {
-    Log.d(getClass().getSimpleName(), "onRegistered: " + regId);
-    Toast.makeText(this, regId, Toast.LENGTH_LONG).show();
-  }
+public class GCMIntentService extends GCMBaseIntentService
+{
+	public GCMIntentService()
+	{
+		super(MainActivity.SENDER_ID);
+	}
 
-  @Override
-  protected void onUnregistered(Context ctxt, String regId) {
-    Log.d(getClass().getSimpleName(), "onUnregistered: " + regId);
-  }
+	@Override
+	protected void onRegistered(Context ctxt, String regId)
+	{
+		Log.d(getClass().getSimpleName(), "onRegistered: " + regId);
+		Toast.makeText(this, regId, Toast.LENGTH_LONG).show();
+	}
 
-  @Override
-  protected void onMessage(Context ctxt, Intent message) {
-    Bundle extras=message.getExtras();
+	@Override
+	protected void onUnregistered(Context ctxt, String regId)
+	{
+		Log.d(getClass().getSimpleName(), "onUnregistered: " + regId);
+	}
 
-    for (String key : extras.keySet()) {
-      Log.d(getClass().getSimpleName(),
-            String.format("onMessage: %s=%s", key,
-                          extras.getString(key)));
-    }
-  }
+	@Override
+	protected void onMessage(Context ctxt, Intent message)
+	{
+		Bundle extras = message.getExtras();
 
-  @Override
-  protected void onError(Context ctxt, String errorMsg) {
-    Log.d(getClass().getSimpleName(), "onError: " + errorMsg);
-  }
+		for (String key : extras.keySet())
+		{
+			Log.d(getClass().getSimpleName(),
+					String.format("onMessage: %s=%s", key,
+							extras.getString(key)));
+		}
+	}
 
-  @Override
-  protected boolean onRecoverableError(Context ctxt, String errorMsg) {
-    Log.d(getClass().getSimpleName(), "onRecoverableError: " + errorMsg);
-    
-    return(true);
-  }
+	@Override
+	protected void onError(Context ctxt, String errorMsg)
+	{
+		Log.d(getClass().getSimpleName(), "onError: " + errorMsg);
+	}
+
+	@Override
+	protected boolean onRecoverableError(Context ctxt, String errorMsg)
+	{
+		Log.d(getClass().getSimpleName(), "onRecoverableError: " + errorMsg);
+
+		return (true);
+	}
 }

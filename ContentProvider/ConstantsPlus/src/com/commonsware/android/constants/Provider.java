@@ -25,111 +25,121 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 
-public class Provider extends ContentProvider {
-  private static final int CONSTANTS=1;
-  private static final int CONSTANT_ID=2;
-  private static final UriMatcher MATCHER;
-  private static final String TABLE="constants";
+public class Provider extends ContentProvider
+{
+	private static final int CONSTANTS = 1;
+	private static final int CONSTANT_ID = 2;
+	private static final UriMatcher MATCHER;
+	private static final String TABLE = "constants";
 
-  public static final class Constants implements BaseColumns {
-    public static final Uri CONTENT_URI=
-        Uri.parse("content://com.commonsware.android.constants.Provider/constants");
-    public static final String DEFAULT_SORT_ORDER="title";
-    public static final String TITLE="title";
-    public static final String VALUE="value";
-  }
+	public static final class Constants implements BaseColumns
+	{
+		public static final Uri CONTENT_URI = Uri
+				.parse("content://com.commonsware.android.constants.Provider/constants");
+		public static final String DEFAULT_SORT_ORDER = "title";
+		public static final String TITLE = "title";
+		public static final String VALUE = "value";
+	}
 
-  static {
-    MATCHER=new UriMatcher(UriMatcher.NO_MATCH);
-    MATCHER.addURI("com.commonsware.android.constants.Provider",
-                   "constants", CONSTANTS);
-    MATCHER.addURI("com.commonsware.android.constants.Provider",
-                   "constants/#", CONSTANT_ID);
-  }
+	static
+	{
+		MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+		MATCHER.addURI("com.commonsware.android.constants.Provider",
+				"constants", CONSTANTS);
+		MATCHER.addURI("com.commonsware.android.constants.Provider",
+				"constants/#", CONSTANT_ID);
+	}
 
-  private DatabaseHelper db=null;
+	private DatabaseHelper db = null;
 
-  @Override
-  public boolean onCreate() {
-    db=new DatabaseHelper(getContext());
+	@Override
+	public boolean onCreate()
+	{
+		db = new DatabaseHelper(getContext());
 
-    return((db == null) ? false : true);
-  }
+		return ((db == null) ? false : true);
+	}
 
-  @Override
-  public Cursor query(Uri url, String[] projection, String selection,
-                      String[] selectionArgs, String sort) {
-    SQLiteQueryBuilder qb=new SQLiteQueryBuilder();
+	@Override
+	public Cursor query(Uri url, String[] projection, String selection,
+			String[] selectionArgs, String sort)
+	{
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-    qb.setTables(TABLE);
+		qb.setTables(TABLE);
 
-    String orderBy;
+		String orderBy;
 
-    if (TextUtils.isEmpty(sort)) {
-      orderBy=Constants.DEFAULT_SORT_ORDER;
-    }
-    else {
-      orderBy=sort;
-    }
+		if (TextUtils.isEmpty(sort))
+		{
+			orderBy = Constants.DEFAULT_SORT_ORDER;
+		}
+		else
+		{
+			orderBy = sort;
+		}
 
-    Cursor c=
-        qb.query(db.getReadableDatabase(), projection, selection,
-                 selectionArgs, null, null, orderBy);
+		Cursor c = qb.query(db.getReadableDatabase(), projection, selection,
+				selectionArgs, null, null, orderBy);
 
-    c.setNotificationUri(getContext().getContentResolver(), url);
+		c.setNotificationUri(getContext().getContentResolver(), url);
 
-    return(c);
-  }
+		return (c);
+	}
 
-  @Override
-  public String getType(Uri url) {
-    if (isCollectionUri(url)) {
-      return("vnd.commonsware.cursor.dir/constant");
-    }
+	@Override
+	public String getType(Uri url)
+	{
+		if (isCollectionUri(url))
+		{
+			return ("vnd.commonsware.cursor.dir/constant");
+		}
 
-    return("vnd.commonsware.cursor.item/constant");
-  }
+		return ("vnd.commonsware.cursor.item/constant");
+	}
 
-  @Override
-  public Uri insert(Uri url, ContentValues initialValues) {
-    long rowID=
-        db.getWritableDatabase().insert(TABLE, Constants.TITLE,
-                                        initialValues);
+	@Override
+	public Uri insert(Uri url, ContentValues initialValues)
+	{
+		long rowID = db.getWritableDatabase().insert(TABLE, Constants.TITLE,
+				initialValues);
 
-    if (rowID > 0) {
-      Uri uri=
-          ContentUris.withAppendedId(Provider.Constants.CONTENT_URI,
-                                     rowID);
-      getContext().getContentResolver().notifyChange(uri, null);
+		if (rowID > 0)
+		{
+			Uri uri = ContentUris.withAppendedId(
+					Provider.Constants.CONTENT_URI, rowID);
+			getContext().getContentResolver().notifyChange(uri, null);
 
-      return(uri);
-    }
+			return (uri);
+		}
 
-    throw new SQLException("Failed to insert row into " + url);
-  }
+		throw new SQLException("Failed to insert row into " + url);
+	}
 
-  @Override
-  public int delete(Uri url, String where, String[] whereArgs) {
-    int count=db.getWritableDatabase().delete(TABLE, where, whereArgs);
+	@Override
+	public int delete(Uri url, String where, String[] whereArgs)
+	{
+		int count = db.getWritableDatabase().delete(TABLE, where, whereArgs);
 
-    getContext().getContentResolver().notifyChange(url, null);
+		getContext().getContentResolver().notifyChange(url, null);
 
-    return(count);
-  }
+		return (count);
+	}
 
-  @Override
-  public int update(Uri url, ContentValues values, String where,
-                    String[] whereArgs) {
-    int count=
-        db.getWritableDatabase()
-          .update(TABLE, values, where, whereArgs);
+	@Override
+	public int update(Uri url, ContentValues values, String where,
+			String[] whereArgs)
+	{
+		int count = db.getWritableDatabase().update(TABLE, values, where,
+				whereArgs);
 
-    getContext().getContentResolver().notifyChange(url, null);
+		getContext().getContentResolver().notifyChange(url, null);
 
-    return(count);
-  }
+		return (count);
+	}
 
-  private boolean isCollectionUri(Uri url) {
-    return(MATCHER.match(url) == CONSTANTS);
-  }
+	private boolean isCollectionUri(Uri url)
+	{
+		return (MATCHER.match(url) == CONSTANTS);
+	}
 }

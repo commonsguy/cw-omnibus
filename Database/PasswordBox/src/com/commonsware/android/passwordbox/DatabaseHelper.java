@@ -22,61 +22,67 @@ import com.commonsware.cwac.loaderex.acl.SQLCipherCursorLoader;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
-  private static final String DATABASE_NAME="passwordbox.db";
-  private static final int SCHEMA=1;
-  static final String ID="_id";
-  static final String TITLE="title";
-  static final String PASSPHRASE="passphrase";
-  static final int SELECT_ALL_ID=0;
-  static final int SELECT_ALL_TITLE=1;
-  static final int SELECT_ALL_PASSPHRASE=2;
-  static final String TABLE="roster";
-  private static volatile SQLiteDatabase singleton=null;
+public class DatabaseHelper extends SQLiteOpenHelper
+{
+	private static final String DATABASE_NAME = "passwordbox.db";
+	private static final int SCHEMA = 1;
+	static final String ID = "_id";
+	static final String TITLE = "title";
+	static final String PASSPHRASE = "passphrase";
+	static final int SELECT_ALL_ID = 0;
+	static final int SELECT_ALL_TITLE = 1;
+	static final int SELECT_ALL_PASSPHRASE = 2;
+	static final String TABLE = "roster";
+	private static volatile SQLiteDatabase singleton = null;
 
-  static State getDatabaseState(Context context) {
-    return(SQLCipherUtils.getDatabaseState(context, DATABASE_NAME));
-  }
+	static State getDatabaseState(Context context)
+	{
+		return (SQLCipherUtils.getDatabaseState(context, DATABASE_NAME));
+	}
 
-  static void encrypt(Context ctxt, String passphrase)
-                                                      throws IOException {
-    SQLCipherUtils.encrypt(ctxt, DATABASE_NAME, passphrase);
-  }
+	static void encrypt(Context ctxt, String passphrase) throws IOException
+	{
+		SQLCipherUtils.encrypt(ctxt, DATABASE_NAME, passphrase);
+	}
 
-  synchronized static SQLiteDatabase initDatabase(Context context,
-                                                  String passphrase) {
-    if (singleton == null) {
-      singleton=
-          new DatabaseHelper(context.getApplicationContext()).getWritableDatabase(passphrase);
-    }
+	synchronized static SQLiteDatabase initDatabase(Context context,
+			String passphrase)
+	{
+		if (singleton == null)
+		{
+			singleton = new DatabaseHelper(context.getApplicationContext())
+			.getWritableDatabase(passphrase);
+		}
 
-    return(singleton);
-  }
+		return (singleton);
+	}
 
-  synchronized static SQLiteDatabase getDatabase() {
-    return(singleton);
-  }
+	synchronized static SQLiteDatabase getDatabase()
+	{
+		return (singleton);
+	}
 
-  static SQLCipherCursorLoader buildSelectAllLoader(Context ctxt) {
-    return(new SQLCipherCursorLoader(
-                                     ctxt,
-                                     getDatabase(),
-                                     "SELECT _id, title, passphrase FROM roster ORDER BY title",
-                                     null));
-  }
+	static SQLCipherCursorLoader buildSelectAllLoader(Context ctxt)
+	{
+		return (new SQLCipherCursorLoader(ctxt, getDatabase(),
+				"SELECT _id, title, passphrase FROM roster ORDER BY title",
+				null));
+	}
 
-  private DatabaseHelper(Context context) {
-    super(context, DATABASE_NAME, null, SCHEMA);
-  }
+	private DatabaseHelper(Context context)
+	{
+		super(context, DATABASE_NAME, null, SCHEMA);
+	}
 
-  @Override
-  public void onCreate(SQLiteDatabase db) {
-    db.execSQL("CREATE TABLE roster (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, passphrase TEXT);");
-  }
+	@Override
+	public void onCreate(SQLiteDatabase db)
+	{
+		db.execSQL("CREATE TABLE roster (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, passphrase TEXT);");
+	}
 
-  @Override
-  public void onUpgrade(SQLiteDatabase db, int oldVersion,
-                        int newVersion) {
-    throw new RuntimeException("How did we get here?");
-  }
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+	{
+		throw new RuntimeException("How did we get here?");
+	}
 }

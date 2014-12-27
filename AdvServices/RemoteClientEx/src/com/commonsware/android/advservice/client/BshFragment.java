@@ -33,82 +33,96 @@ import com.commonsware.android.advservice.IScript;
 import com.commonsware.android.advservice.IScriptResult;
 
 public class BshFragment extends Fragment implements OnClickListener,
-    ServiceConnection {
-  private IScript service=null;
-  private Button btn=null;
+		ServiceConnection
+{
+	private IScript service = null;
+	private Button btn = null;
 
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.main, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.main, container, false);
 
-    btn=(Button)result.findViewById(R.id.eval);
-    btn.setOnClickListener(this);
-    btn.setEnabled((service!=null));
+		btn = (Button) result.findViewById(R.id.eval);
+		btn.setOnClickListener(this);
+		btn.setEnabled((service != null));
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 
-    setRetainInstance(true);
-    getActivity().getApplicationContext()
-                 .bindService(new Intent(
-                                         "com.commonsware.android.advservice.IScript"),
-                              this, Context.BIND_AUTO_CREATE);
-  }
+		setRetainInstance(true);
+		getActivity().getApplicationContext().bindService(
+				new Intent("com.commonsware.android.advservice.IScript"), this,
+				Context.BIND_AUTO_CREATE);
+	}
 
-  @Override
-  public void onDestroy() {
-    getActivity().getApplicationContext().unbindService(this);
+	@Override
+	public void onDestroy()
+	{
+		getActivity().getApplicationContext().unbindService(this);
 
-    super.onDestroy();
-  }
+		super.onDestroy();
+	}
 
-  @Override
-  public void onClick(View view) {
-    EditText script=(EditText)getView().findViewById(R.id.script);
-    String src=script.getText().toString();
+	@Override
+	public void onClick(View view)
+	{
+		EditText script = (EditText) getView().findViewById(R.id.script);
+		String src = script.getText().toString();
 
-    try {
-      service.executeScript(src, callback);
-    }
-    catch (RemoteException e) {
-      Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG)
-           .show();
-    }
-  }
+		try
+		{
+			service.executeScript(src, callback);
+		}
+		catch (RemoteException e)
+		{
+			Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG)
+					.show();
+		}
+	}
 
-  @Override
-  public void onServiceConnected(ComponentName className, IBinder binder) {
-    service=IScript.Stub.asInterface(binder);
-    btn.setEnabled(true);
-  }
+	@Override
+	public void onServiceConnected(ComponentName className, IBinder binder)
+	{
+		service = IScript.Stub.asInterface(binder);
+		btn.setEnabled(true);
+	}
 
-  @Override
-  public void onServiceDisconnected(ComponentName className) {
-    service=null;
-  }
+	@Override
+	public void onServiceDisconnected(ComponentName className)
+	{
+		service = null;
+	}
 
-  private final IScriptResult.Stub callback=new IScriptResult.Stub() {
-    public void success(final String result) {
-      getActivity().runOnUiThread(new Runnable() {
-        public void run() {
-          Toast.makeText(getActivity(), result, Toast.LENGTH_LONG)
-               .show();
-        }
-      });
-    }
+	private final IScriptResult.Stub callback = new IScriptResult.Stub()
+	{
+		public void success(final String result)
+		{
+			getActivity().runOnUiThread(new Runnable()
+			{
+				public void run()
+				{
+					Toast.makeText(getActivity(), result, Toast.LENGTH_LONG)
+							.show();
+				}
+			});
+		}
 
-    public void failure(final String error) {
-      getActivity().runOnUiThread(new Runnable() {
-        public void run() {
-          Toast.makeText(getActivity(), error, Toast.LENGTH_LONG)
-               .show();
-        }
-      });
-    }
-  };
+		public void failure(final String error)
+		{
+			getActivity().runOnUiThread(new Runnable()
+			{
+				public void run()
+				{
+					Toast.makeText(getActivity(), error, Toast.LENGTH_LONG)
+							.show();
+				}
+			});
+		}
+	};
 }

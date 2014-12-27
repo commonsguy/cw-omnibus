@@ -8,18 +8,22 @@
 		android:largeScreens="true"
 		android:normalScreens="true"
 		android:smallScreens="false"/>
+	
+	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19"/>
 
 	<application
+	    android:allowBackup="true"
 		android:icon="@drawable/cw"
 		android:label="@string/app_name">
 		<activity
 			android:name="URLHandler"
 			android:label="@string/app_name">
+			<!-- icon + launch activity  -->
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
-
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
+			<!-- we have pdf files then respond to browser links -->
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 
@@ -28,6 +32,7 @@
 
 				<data android:mimeType="application/pdf"/>
 			</intent-filter>
+			<!-- handle http requests for website having given path by link action -->
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 
@@ -39,6 +44,8 @@
 					android:path="/something"
 					android:scheme="http"/>
 			</intent-filter>
+			
+			<!-- custom action intend. generate URL that Android can honor, and responds to browser links -->
 			<intent-filter>
 				<action android:name="com.commonsware.android.MY_ACTION"/>
 

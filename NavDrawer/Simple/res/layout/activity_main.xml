@@ -3,11 +3,16 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+    <!-- the real content activity -->
 	<FrameLayout
 		android:id="@+id/content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
+	<!-- flying activity
+		 layout_gravity represents the side of the layout
+		 width recommended between 240dp and 320dp
+	 -->
 	<ListView
 		android:id="@+id/drawer"
 		android:layout_width="240dp"

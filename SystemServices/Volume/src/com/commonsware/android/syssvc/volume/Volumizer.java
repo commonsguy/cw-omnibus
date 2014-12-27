@@ -21,11 +21,12 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 
 public class Volumizer extends Activity {
-  SeekBar alarm=null;
-  SeekBar music=null;
-  SeekBar ring=null;
-  SeekBar system=null;
-  SeekBar voice=null;
+  SeekBar alarmBar=null;
+  SeekBar musicBar=null;
+  SeekBar ringBar=null;
+  SeekBar systemBar=null;
+  SeekBar voiceBar=null;
+  
   AudioManager mgr=null;
   
   @Override
@@ -35,17 +36,17 @@ public class Volumizer extends Activity {
     
     mgr=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
     
-    alarm=(SeekBar)findViewById(R.id.alarm);
-    music=(SeekBar)findViewById(R.id.music);
-    ring=(SeekBar)findViewById(R.id.ring);
-    system=(SeekBar)findViewById(R.id.system);
-    voice=(SeekBar)findViewById(R.id.voice);
+    alarmBar=(SeekBar)findViewById(R.id.alarm);
+    musicBar=(SeekBar)findViewById(R.id.music);
+    ringBar=(SeekBar)findViewById(R.id.ring);
+    systemBar=(SeekBar)findViewById(R.id.system);
+    voiceBar=(SeekBar)findViewById(R.id.voice);
     
-    initBar(alarm, AudioManager.STREAM_ALARM);
-    initBar(music, AudioManager.STREAM_MUSIC);
-    initBar(ring, AudioManager.STREAM_RING);
-    initBar(system, AudioManager.STREAM_SYSTEM);
-    initBar(voice, AudioManager.STREAM_VOICE_CALL);
+    initBar(alarmBar, AudioManager.STREAM_ALARM);
+    initBar(musicBar, AudioManager.STREAM_MUSIC);
+    initBar(ringBar, AudioManager.STREAM_RING);
+    initBar(systemBar, AudioManager.STREAM_SYSTEM);
+    initBar(voiceBar, AudioManager.STREAM_VOICE_CALL);
   }
   
   private void initBar(SeekBar bar, final int stream) {

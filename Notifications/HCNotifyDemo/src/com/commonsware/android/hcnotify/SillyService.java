@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.hcnotify;
 
@@ -26,71 +26,90 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
-public class SillyService extends IntentService {
-  private static int NOTIFICATION_ID=1337;
-  
-  public SillyService() {
-    super("SillyService");
-  }
+public class SillyService extends IntentService
+{
+	private static int NOTIFICATION_ID = 1337;
 
-  @Override
-  protected void onHandleIntent(Intent intent) {
-    NotificationManager mgr=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-    NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
+	public SillyService()
+	{
+		super("SillyService");
+	}
 
-    builder
-      .setContent(buildContent(0))
-      .setTicker(getText(R.string.ticker), buildTicker())
-      .setContentIntent(buildContentIntent())
-      .setLargeIcon(buildLargeIcon())
-      .setSmallIcon(R.drawable.ic_stat_notif_small_icon)
-      .setOngoing(true);
-    
-    Notification notif=builder.build();
-    
-    for (int i=0;i<20;i++) {
-      notif.contentView.setProgressBar(android.R.id.progress,
-                                       100, i*5, false);
-      mgr.notify(NOTIFICATION_ID, notif);
-      
-      if (i==0) {
-        notif.tickerText=null;
-        notif.tickerView=null;
-      }
-      
-      SystemClock.sleep(1000);
-    }
-    
-    mgr.cancel(NOTIFICATION_ID);
-  }
-  
-  private Bitmap buildLargeIcon() {
-    Bitmap raw=BitmapFactory.decodeResource(getResources(),
-                                            R.drawable.icon);
-    
-    return(raw);
-  }
+	@Override
+	protected void onHandleIntent(Intent intent)
+	{
+		NotificationManager mgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(
+				this);
 
-  private RemoteViews buildTicker() {
-    RemoteViews ticker=new RemoteViews(this.getPackageName(),
-                                       R.layout.ticker);
-    
-    ticker.setTextViewText(R.id.ticker_text,
-                           getString(R.string.ticker));
-    
-    return(ticker);
-  }
+		builder.setContent(buildContent(0))
+				.setTicker(getText(R.string.ticker), buildTicker())
+				.setContentIntent(buildContentIntent())
+				.setLargeIcon(buildLargeIcon())
+				.setSmallIcon(R.drawable.ic_stat_notif_small_icon)
+				.setOngoing(true);
 
-  private PendingIntent buildContentIntent() {
-    Intent i=new Intent(Settings.ACTION_SETTINGS);
-    
-    return(PendingIntent.getActivity(this, 0, i, 0));
-  }
+		Notification notif = builder.build();
 
-  private RemoteViews buildContent(int progress) {
-    RemoteViews content=new RemoteViews(this.getPackageName(),
-                                       R.layout.content);
-    
-    return(content);
-  }
+		for (int i = 0; i < 20; i++)
+		{
+			/**
+			 * viewId  The id of the ProgressBar to change 
+				max  The 100% value for the progress bar 
+				progress  The current value of the progress bar. 
+				indeterminate  True if the progress bar is indeterminate, false if not.  
+
+			 */
+			notif.contentView.setProgressBar(android.R.id.progress, 100, i * 5,
+					false);
+			mgr.notify(NOTIFICATION_ID, notif);
+
+			if (i == 0 )
+			{
+				notif.tickerText = null;
+				//notif.tickerView = null;
+			}
+			else
+			{
+				notif.tickerText = String.format("progress ?", i*5);
+			}
+			
+			SystemClock.sleep( i == 0 ? 4000:1000);
+		}
+
+		mgr.cancel(NOTIFICATION_ID);
+	}
+
+	private Bitmap buildLargeIcon()
+	{
+		Bitmap raw = BitmapFactory.decodeResource(getResources(),
+				R.drawable.icon);
+
+		return (raw);
+	}
+
+	private RemoteViews buildTicker()
+	{
+		RemoteViews ticker = new RemoteViews(this.getPackageName(),
+				R.layout.ticker);
+
+		ticker.setTextViewText(R.id.ticker_text, getString(R.string.ticker));
+
+		return (ticker);
+	}
+
+	private PendingIntent buildContentIntent()
+	{
+		Intent i = new Intent(Settings.ACTION_SETTINGS);
+
+		return (PendingIntent.getActivity(this, 0, i, 0));
+	}
+
+	private RemoteViews buildContent(int progress)
+	{
+		RemoteViews content = new RemoteViews(this.getPackageName(),
+				R.layout.content);
+
+		return (content);
+	}
 }

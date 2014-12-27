@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.gcm.client;
 
@@ -19,11 +19,13 @@ import android.content.Context;
 import android.content.Intent;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
 
-public class GCMBroadcastReceiverCompat extends BroadcastReceiver {
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    intent.setClass(context, GCMIntentService.class);
+public class GCMBroadcastReceiverCompat extends BroadcastReceiver
+{
+	@Override
+	public void onReceive(Context context, Intent intent)
+	{
+		intent.setClass(context, GCMIntentService.class);
 
-    WakefulIntentService.sendWakefulWork(context, intent);
-  }
+		WakefulIntentService.sendWakefulWork(context, intent);
+	}
 }

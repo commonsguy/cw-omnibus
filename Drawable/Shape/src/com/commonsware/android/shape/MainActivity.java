@@ -17,49 +17,54 @@ package com.commonsware.android.shape;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockActivity;
 
-public class MainActivity extends SherlockActivity implements
-    TabListener {
-  private static final int TABS[]= { R.string.solid, R.string.gradient,
-      R.string.border, R.string.rounded, R.string.ring,
-      R.string.layered };
-  private static final int DRAWABLES[]= { R.drawable.rectangle,
-      R.drawable.gradient, R.drawable.border, R.drawable.rounded,
-      R.drawable.ring, R.drawable.layered };
-  private ImageView image=null;
+public class MainActivity extends SherlockActivity implements TabListener
+{
+	private static final int TABS[] = { R.string.solid, R.string.gradient,
+			R.string.border, R.string.rounded, R.string.ring, R.string.layered };
+	private static final int DRAWABLES[] = { R.drawable.rectangle,
+			R.drawable.gradient, R.drawable.border, R.drawable.rounded,
+			R.drawable.ring, R.drawable.layered };
+	private ImageView image = null;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    image=(ImageView)findViewById(R.id.image);
+		image = (ImageView) findViewById(R.id.image);
 
-    ActionBar bar=getSupportActionBar();
-    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		ActionBar bar = getSupportActionBar();
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-    for (int i=0; i < TABS.length; i++) {
-      bar.addTab(bar.newTab().setText(getString(TABS[i]))
-                    .setTabListener(this));
-    }
-  }
+		for (int i = 0; i < TABS.length; i++)
+		{
+			bar.addTab(bar.newTab().setText(getString(TABS[i]))
+					.setTabListener(this));
+		}
+	}
 
-  @Override
-  public void onTabSelected(Tab tab, FragmentTransaction ft) {
-    image.setImageResource(DRAWABLES[tab.getPosition()]);
-  }
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft)
+	{
+		image.setImageResource(DRAWABLES[tab.getPosition()]);
+	}
 
-  @Override
-  public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-    // no-op
-  }
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft)
+	{
+		// no-op
+	}
 
-  @Override
-  public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    // no-op
-  }
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft)
+	{
+		// no-op
+	}
 }

@@ -23,72 +23,81 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+public class MainActivity extends Activity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    ViewPager pager=(ViewPager)findViewById(R.id.pager);
+		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 
-    pager.setAdapter(new SampleAdapter());
-  }
+		pager.setAdapter(new SampleAdapter());
+	}
 
-  /*
-   * Inspired by
-   * https://gist.github.com/8cbe094bb7a783e37ad1
-   */
-  private class SampleAdapter extends PagerAdapter {
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-      View page=
-          getLayoutInflater().inflate(R.layout.page, container, false);
-      TextView tv=(TextView)page.findViewById(R.id.text);
+	/*
+	 * Inspired by https://gist.github.com/8cbe094bb7a783e37ad1
+	 */
+	private class SampleAdapter extends PagerAdapter
+	{
+		@Override
+		public Object instantiateItem(ViewGroup container, int position)
+		{
+			View page = getLayoutInflater().inflate(R.layout.page, container,
+					false);
+			TextView tv = (TextView) page.findViewById(R.id.text);
 
-      position=position * 2;
+			position = position * 2;
 
-      populateTextView(tv, position);
-      position++;
-      tv=(TextView)page.findViewById(R.id.text2);
+			populateTextView(tv, position);
+			position++;
+			tv = (TextView) page.findViewById(R.id.text2);
 
-      if (position < getRealCount()) {
-        populateTextView(tv, position);
-        tv.setVisibility(View.VISIBLE);
-      }
-      else {
-        tv.setVisibility(View.INVISIBLE);
-      }
+			if (position < getRealCount())
+			{
+				populateTextView(tv, position);
+				tv.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				tv.setVisibility(View.INVISIBLE);
+			}
 
-      container.addView(page);
+			container.addView(page);
 
-      return(page);
-    }
+			return (page);
+		}
 
-    @Override
-    public void destroyItem(ViewGroup container, int position,
-                            Object object) {
-      container.removeView((View)object);
-    }
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object)
+		{
+			container.removeView((View) object);
+		}
 
-    @Override
-    public int getCount() {
-      return((getRealCount() / 2) + 1);
-    }
+		@Override
+		public int getCount()
+		{
+			return ((getRealCount() / 2) + 1);
+		}
 
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-      return(view == object);
-    }
+		@Override
+		public boolean isViewFromObject(View view, Object object)
+		{
+			return (view == object);
+		}
 
-    private int getRealCount() {
-      return(9);
-    }
+		private int getRealCount()
+		{
+			return (9);
+		}
 
-    private void populateTextView(TextView tv, int position) {
-      int blue=position * 25;
+		private void populateTextView(TextView tv, int position)
+		{
+			int blue = position * 25;
 
-      tv.setText(String.format(getString(R.string.item), position + 1));
-      tv.setBackgroundColor(Color.argb(255, 0, 0, blue));
-    }
-  }
+			tv.setText(String.format(getString(R.string.item), position + 1));
+			tv.setBackgroundColor(Color.argb(255, 0, 0, blue));
+		}
+	}
 }

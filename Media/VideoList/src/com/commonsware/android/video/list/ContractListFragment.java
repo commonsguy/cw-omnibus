@@ -21,33 +21,38 @@ package com.commonsware.android.video.list;
 import android.app.Activity;
 import android.app.ListFragment;
 
-public class ContractListFragment<T> extends ListFragment {
-  private T contract;
+public class ContractListFragment<T> extends ListFragment
+{
+	private T contract;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+	@SuppressWarnings("unchecked")
+	@Override
+	public void onAttach(Activity activity)
+	{
+		super.onAttach(activity);
 
-    try {
-      contract=(T)activity;
-    }
-    catch (ClassCastException e) {
-      throw new IllegalStateException(activity.getClass()
-                                              .getSimpleName()
-          + " does not implement contract interface for "
-          + getClass().getSimpleName(), e);
-    }
-  }
+		try
+		{
+			contract = (T) activity;
+		}
+		catch (ClassCastException e)
+		{
+			throw new IllegalStateException(activity.getClass().getSimpleName()
+					+ " does not implement contract interface for "
+					+ getClass().getSimpleName(), e);
+		}
+	}
 
-  @Override
-  public void onDetach() {
-    super.onDetach();
-    
-    contract=null;
-  }
+	@Override
+	public void onDetach()
+	{
+		super.onDetach();
 
-  public final T getContract() {
-    return(contract);
-  }
+		contract = null;
+	}
+
+	public final T getContract()
+	{
+		return (contract);
+	}
 }

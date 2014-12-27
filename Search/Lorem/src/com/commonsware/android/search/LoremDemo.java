@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.search;
 
@@ -18,11 +18,12 @@ import android.content.Intent;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-public class LoremDemo extends LoremBase {
-  @Override
-  ListAdapter makeMeAnAdapter(Intent intent) {
-    return(new ArrayAdapter<String>(this,
-                      android.R.layout.simple_list_item_1,
-                      items));
-  }
+public class LoremDemo extends LoremBase
+{
+	@Override
+	ListAdapter makeMeAnAdapter(Intent intent)
+	{
+		return (new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, items));
+	}
 }

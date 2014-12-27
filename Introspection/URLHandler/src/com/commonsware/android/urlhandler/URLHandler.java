@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.urlhandler;
 
@@ -22,36 +22,42 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-public class URLHandler extends Activity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+public class URLHandler extends Activity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-    TextView uri=(TextView)findViewById(R.id.uri);
-    
-    if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
-      String intentUri=(new Intent("com.commonsware.android.MY_ACTION"))
-                          .toUri(Intent.URI_INTENT_SCHEME)
-                          .toString();
-      
-      uri.setText(intentUri);
-      Log.w("URLHandler", intentUri);
-    }
-    else {
-      Uri data=getIntent().getData();
-      
-      if (data==null) {
-        uri.setText("Got com.commonsware.android.MY_ACTION Intent");
-      }
-      else {      
-        uri.setText(getIntent().getData().toString());
-      }
-    }
-  }
-  
-  public void visitSample(View v) {
-    startActivity(new Intent(Intent.ACTION_VIEW,
-                             Uri.parse("http://commonsware.com/sample")));
-  }
+		TextView uri = (TextView) findViewById(R.id.uri);
+
+		if (Intent.ACTION_MAIN.equals(getIntent().getAction()))
+		{
+			String intentUri = (new Intent("com.commonsware.android.MY_ACTION"))
+					.toUri(Intent.URI_INTENT_SCHEME).toString();
+
+			uri.setText(intentUri);
+			Log.w("URLHandler", intentUri);
+		}
+		else
+		{
+			Uri data = getIntent().getData();
+
+			if (data == null)
+			{
+				uri.setText("Got com.commonsware.android.MY_ACTION Intent");
+			}
+			else
+			{
+				uri.setText(getIntent().getData().toString());
+			}
+		}
+	}
+
+	public void visitSample(View v)
+	{
+		startActivity(new Intent(Intent.ACTION_VIEW,
+				Uri.parse("http://commonsware.com/sample")));
+	}
 }

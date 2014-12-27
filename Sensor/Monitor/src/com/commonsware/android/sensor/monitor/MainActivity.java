@@ -11,88 +11,101 @@
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
  */
-
 package com.commonsware.android.sensor.monitor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class MainActivity extends SherlockFragmentActivity implements
-    SensorsFragment.Contract {
-  private SensorManager mgr=null;
-  private SensorLogFragment log=null;
-  private SlidingPaneLayout panes=null;
+		SensorsFragment.Contract
+{
+	private SensorManager mgr = null;
+	private SensorLogFragment log = null;
+	private SlidingPaneLayout panes = null;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    mgr=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
-    log=
-        (SensorLogFragment)getSupportFragmentManager().findFragmentById(R.id.log);
+		mgr = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		log = (SensorLogFragment) getSupportFragmentManager().findFragmentById(
+				R.id.log);
 
-    panes=(SlidingPaneLayout)findViewById(R.id.panes);
-    panes.openPane();
-  }
+		panes = (SlidingPaneLayout) findViewById(R.id.panes);
+		panes.openPane();
+	}
 
-  @Override
-  public void onPause() {
-    mgr.unregisterListener(log);
-    super.onPause();
-  }
+	@Override
+	public void onPause()
+	{
+		mgr.unregisterListener(log);
+		super.onPause();
+	}
 
-  @Override
-  public void onBackPressed() {
-    if (panes.isOpen()) {
-      super.onBackPressed();
-    }
-    else {
-      panes.openPane();
-    }
-  }
+	@Override
+	public void onBackPressed()
+	{
+		if (panes.isOpen())
+		{
+			super.onBackPressed();
+		}
+		else
+		{
+			panes.openPane();
+		}
+	}
 
-  @Override
-  public List<Sensor> getSensorList() {
-    List<Sensor> result=
-        new ArrayList<Sensor>(mgr.getSensorList(Sensor.TYPE_ALL));
+	@Override
+	public List<Sensor> getSensorList()
+	{
+		List<Sensor> result = new ArrayList<Sensor>(
+				mgr.getSensorList(Sensor.TYPE_ALL));
 
-    Collections.sort(result, new Comparator<Sensor>() {
-      @Override
-      public int compare(final Sensor a, final Sensor b) {
-        return(a.toString().compareTo(b.toString()));
-      }
-    });
+		Collections.sort(result, new Comparator<Sensor>()
+		{
+			@Override
+			public int compare(final Sensor a, final Sensor b)
+			{
+				return (a.toString().compareTo(b.toString()));
+			}
+		});
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onSensorSelected(Sensor s) {
-    mgr.unregisterListener(log);
-    mgr.registerListener(log, s, SensorManager.SENSOR_DELAY_NORMAL);
-    log.init(isXYZ(s));
-    panes.closePane();
-  }
+	@Override
+	public void onSensorSelected(Sensor s)
+	{
+		mgr.unregisterListener(log);
+		mgr.registerListener(log, s, SensorManager.SENSOR_DELAY_NORMAL);
+		log.init(isXYZ(s));
+		panes.closePane();
+	}
 
-  private boolean isXYZ(Sensor s) {
-    switch (s.getType()) {
-      case Sensor.TYPE_ACCELEROMETER:
-      case Sensor.TYPE_GRAVITY:
-      case Sensor.TYPE_GYROSCOPE:
-      case Sensor.TYPE_LINEAR_ACCELERATION:
-      case Sensor.TYPE_MAGNETIC_FIELD:
-        return(true);
-    }
+	private boolean isXYZ(Sensor s)
+	{
+		switch (s.getType())
+		{
+		case Sensor.TYPE_ACCELEROMETER:
+		case Sensor.TYPE_GRAVITY:
+		case Sensor.TYPE_GYROSCOPE:
+		case Sensor.TYPE_LINEAR_ACCELERATION:
+		case Sensor.TYPE_MAGNETIC_FIELD:
+			return (true);
+		}
 
-    return(false);
-  }
+		return (false);
+	}
 }

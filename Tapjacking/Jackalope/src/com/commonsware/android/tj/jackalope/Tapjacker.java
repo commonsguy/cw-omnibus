@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.tj.jackalope;
 
@@ -24,48 +24,53 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-public class Tapjacker extends Service implements View.OnTouchListener {
-  private View v=null;
-  private WindowManager mgr=null;
-  
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    
-    v=new View(this);
-    v.setOnTouchListener(this);
-    mgr=(WindowManager)getSystemService(WINDOW_SERVICE);
-    
-    WindowManager.LayoutParams params
-      =new WindowManager.LayoutParams(
-        WindowManager.LayoutParams.FILL_PARENT,
-        WindowManager.LayoutParams.FILL_PARENT,
-        WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-        PixelFormat.TRANSPARENT);
-      
-    params.gravity=Gravity.FILL_HORIZONTAL|Gravity.FILL_VERTICAL;
-    mgr.addView(v, params);
-    
-    // stopSelf(); -- uncomment for "component-less" operation
-  }
+public class Tapjacker extends Service implements View.OnTouchListener
+{
+	private View v = null;
+	private WindowManager mgr = null;
 
-  @Override
-  public IBinder onBind(Intent intent) {
-    return(null);
-  }
+	@Override
+	public void onCreate()
+	{
+		super.onCreate();
 
-  @Override
-  public void onDestroy() {
-    mgr.removeView(v);  // comment out for "component-less" operation
-    
-    super.onDestroy();
-  }
+		v = new View(this);
+		v.setOnTouchListener(this);
+		mgr = (WindowManager) getSystemService(WINDOW_SERVICE);
 
-  public boolean onTouch(View v, MotionEvent event) {
-    Log.w("Tapjacker",
-          String.valueOf(event.getX())+":"+String.valueOf(event.getY()));
-    
-    return(false);
-  }
+		WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+				WindowManager.LayoutParams.FILL_PARENT,
+				WindowManager.LayoutParams.FILL_PARENT,
+				WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+				WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+				PixelFormat.TRANSPARENT);
+
+		params.gravity = Gravity.FILL_HORIZONTAL | Gravity.FILL_VERTICAL;
+		mgr.addView(v, params);
+
+		// stopSelf(); -- uncomment for "component-less" operation
+	}
+
+	@Override
+	public IBinder onBind(Intent intent)
+	{
+		return (null);
+	}
+
+	@Override
+	public void onDestroy()
+	{
+		mgr.removeView(v); // comment out for "component-less" operation
+
+		super.onDestroy();
+	}
+
+	public boolean onTouch(View v, MotionEvent event)
+	{
+		Log.w("Tapjacker",
+				String.valueOf(event.getX()) + ":"
+						+ String.valueOf(event.getY()));
+
+		return (false);
+	}
 }

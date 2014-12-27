@@ -13,22 +13,13 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".StringBufferActivity" android:label="@string/app_name2">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
+		
 		</activity>
 		<activity android:name=".StringBuilderActivity" android:label="@string/app_name3">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
+			
 		</activity>
 		<activity android:name=".StringFormatActivity" android:label="@string/app_name4">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
+			
 		</activity>
 
 	</application>

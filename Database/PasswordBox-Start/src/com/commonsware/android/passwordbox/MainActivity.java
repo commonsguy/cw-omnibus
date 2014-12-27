@@ -17,60 +17,71 @@ package com.commonsware.android.passwordbox;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class MainActivity extends SherlockFragmentActivity {
-  private RosterFragment roster=null;
-  private PassphraseFragment passphrase=null;
+public class MainActivity extends SherlockFragmentActivity
+{
+	private RosterFragment roster = null;
+	private PassphraseFragment passphrase = null;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    passphrase=
-        (PassphraseFragment)getSupportFragmentManager().findFragmentById(R.id.passphrase);
-    roster=
-        (RosterFragment)getSupportFragmentManager().findFragmentById(R.id.roster);
-  }
+		passphrase = (PassphraseFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.passphrase);
+		roster = (RosterFragment) getSupportFragmentManager().findFragmentById(
+				R.id.roster);
+	}
 
-  void showPassphrase() {
-    boolean needsClear=false;
+	void showPassphrase()
+	{
+		boolean needsClear = false;
 
-    if (passphrase == null) {
-      passphrase=new PassphraseFragment();
-    }
-    else {
-      needsClear=true;
-    }
+		if (passphrase == null)
+		{
+			passphrase = new PassphraseFragment();
+		}
+		else
+		{
+			needsClear = true;
+		}
 
-    if (!passphrase.isVisible()) {
-      getSupportFragmentManager().beginTransaction()
-                                 .addToBackStack(null)
-                                 .replace(R.id.passphrase, passphrase)
-                                 .commit();
-    }
+		if (!passphrase.isVisible())
+		{
+			getSupportFragmentManager().beginTransaction().addToBackStack(null)
+					.replace(R.id.passphrase, passphrase).commit();
+		}
 
-    if (needsClear) {
-      findViewById(android.R.id.content).post(new Runnable() {
-        public void run() {
-          passphrase.clear();
-        }
-      });
-    }
-  }
+		if (needsClear)
+		{
+			findViewById(android.R.id.content).post(new Runnable()
+			{
+				public void run()
+				{
+					passphrase.clear();
+				}
+			});
+		}
+	}
 
-  void showPassphrase(final int id, final String _title,
-                      final String _passphrase) {
-    showPassphrase();
+	void showPassphrase(final int id, final String _title,
+			final String _passphrase)
+	{
+		showPassphrase();
 
-    findViewById(android.R.id.content).post(new Runnable() {
-      public void run() {
-        passphrase.populate(id, _title, _passphrase);
-      }
-    });
-  }
+		findViewById(android.R.id.content).post(new Runnable()
+		{
+			public void run()
+			{
+				passphrase.populate(id, _title, _passphrase);
+			}
+		});
+	}
 
-  void savePassphrase(int id, String title, String passphrase) {
-    roster.savePassphrase(id, title, passphrase);
-    getSupportFragmentManager().popBackStack();
-  }
+	void savePassphrase(int id, String title, String passphrase)
+	{
+		roster.savePassphrase(id, title, passphrase);
+		getSupportFragmentManager().popBackStack();
+	}
 }

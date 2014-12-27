@@ -41,7 +41,6 @@
 			android:permission="com.google.android.c2dm.permission.SEND">
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-
 				<category android:name="com.commonsware.android.gcm.client"/>
 			</intent-filter>
 		</receiver>

@@ -30,96 +30,102 @@ import com.loopj.android.image.SmartImage;
 import com.loopj.android.image.SmartImageView;
 
 public class VideosFragment extends
-    ContractListFragment<VideosFragment.Contract> implements
-    LoaderManager.LoaderCallbacks<Cursor> {
+		ContractListFragment<VideosFragment.Contract> implements
+		LoaderManager.LoaderCallbacks<Cursor>
+{
 
-  @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+	@Override
+	public void onActivityCreated(Bundle state)
+	{
+		super.onActivityCreated(state);
 
-    String[] from=
-        { MediaStore.Video.Media.TITLE, MediaStore.Video.Media._ID };
-    int[] to= { android.R.id.text1, R.id.thumbnail };
-    SimpleCursorAdapter adapter=
-        new SimpleCursorAdapter(getActivity(), R.layout.row, null,
-                                from, to, 0);
+		String[] from = { MediaStore.Video.Media.TITLE,
+				MediaStore.Video.Media._ID };
+		int[] to = { android.R.id.text1, R.id.thumbnail };
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
+				R.layout.row, null, from, to, 0);
 
-    adapter.setViewBinder(new ThumbnailBinder());
-    setListAdapter(adapter);
+		adapter.setViewBinder(new ThumbnailBinder());
+		setListAdapter(adapter);
 
-    getLoaderManager().initLoader(0, null, this);
-  }
+		getLoaderManager().initLoader(0, null, this);
+	}
 
-  @Override
-  public void onListItemClick(ListView l, View v, int position, long id) {
-    CursorAdapter adapter=(CursorAdapter)getListAdapter();
-    Cursor c=(Cursor)adapter.getItem(position);
-    int uriColumn=c.getColumnIndex(MediaStore.Video.Media.DATA);
-    int mimeTypeColumn=
-        c.getColumnIndex(MediaStore.Video.Media.MIME_TYPE);
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id)
+	{
+		CursorAdapter adapter = (CursorAdapter) getListAdapter();
+		Cursor c = (Cursor) adapter.getItem(position);
+		int uriColumn = c.getColumnIndex(MediaStore.Video.Media.DATA);
+		int mimeTypeColumn = c.getColumnIndex(MediaStore.Video.Media.MIME_TYPE);
 
-    getContract().onVideoSelected(c.getString(uriColumn),
-                                  c.getString(mimeTypeColumn));
-  }
+		getContract().onVideoSelected(c.getString(uriColumn),
+				c.getString(mimeTypeColumn));
+	}
 
-  @Override
-  public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-    return(new CursorLoader(
-                            getActivity(),
-                            MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                            null, null, null,
-                            MediaStore.Video.Media.TITLE));
-  }
+	@Override
+	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1)
+	{
+		return (new CursorLoader(getActivity(),
+				MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null,
+				MediaStore.Video.Media.TITLE));
+	}
 
-  @Override
-  public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-    ((CursorAdapter)getListAdapter()).swapCursor(c);
-  }
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor c)
+	{
+		((CursorAdapter) getListAdapter()).swapCursor(c);
+	}
 
-  @Override
-  public void onLoaderReset(Loader<Cursor> loader) {
-    ((CursorAdapter)getListAdapter()).swapCursor(null);
-  }
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader)
+	{
+		((CursorAdapter) getListAdapter()).swapCursor(null);
+	}
 
-  interface Contract {
-    void onVideoSelected(String uri, String mimeType);
-  }
+	interface Contract
+	{
+		void onVideoSelected(String uri, String mimeType);
+	}
 
-  private static class ThumbnailBinder implements
-      SimpleCursorAdapter.ViewBinder {
-    @Override
-    public boolean setViewValue(View v, Cursor c, int column) {
-      if (column == c.getColumnIndex(MediaStore.Video.Media._ID)) {
-        VideoThumbnailImage thumb=
-            new VideoThumbnailImage(
-                                    c.getInt(column),
-                                    MediaStore.Video.Thumbnails.MICRO_KIND);
+	private static class ThumbnailBinder implements
+			SimpleCursorAdapter.ViewBinder
+	{
+		@Override
+		public boolean setViewValue(View v, Cursor c, int column)
+		{
+			if (column == c.getColumnIndex(MediaStore.Video.Media._ID))
+			{
+				VideoThumbnailImage thumb = new VideoThumbnailImage(
+						c.getInt(column),
+						MediaStore.Video.Thumbnails.MICRO_KIND);
 
-        ((SmartImageView)v).setImage(thumb,
-                                     R.drawable.ic_media_video_poster);
+				((SmartImageView) v).setImage(thumb,
+						R.drawable.ic_media_video_poster);
 
-        return(true);
-      }
+				return (true);
+			}
 
-      return(false);
-    }
-  }
+			return (false);
+		}
+	}
 
-  private static class VideoThumbnailImage implements SmartImage {
-    private int videoId;
-    private int thumbnailKind;
+	private static class VideoThumbnailImage implements SmartImage
+	{
+		private int videoId;
+		private int thumbnailKind;
 
-    VideoThumbnailImage(int videoId, int thumbnailKind) {
-      this.videoId=videoId;
-      this.thumbnailKind=thumbnailKind;
-    }
+		VideoThumbnailImage(int videoId, int thumbnailKind)
+		{
+			this.videoId = videoId;
+			this.thumbnailKind = thumbnailKind;
+		}
 
-    @Override
-    public Bitmap getBitmap(Context ctxt) {
-      return(MediaStore.Video.Thumbnails.getThumbnail(ctxt.getContentResolver(),
-                                                      videoId,
-                                                      thumbnailKind,
-                                                      null));
-    }
-  }
+		@Override
+		public Bitmap getBitmap(Context ctxt)
+		{
+			return (MediaStore.Video.Thumbnails.getThumbnail(
+					ctxt.getContentResolver(), videoId, thumbnailKind, null));
+		}
+	}
 }

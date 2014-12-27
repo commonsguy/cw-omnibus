@@ -28,70 +28,87 @@ import java.util.ArrayList;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public class SensorLogFragment extends SherlockListFragment implements
-    SensorEventListener {
-  private SensorLogAdapter adapter=null;
-  private boolean isXYZ=false;
+		SensorEventListener
+{
+	private SensorLogAdapter adapter = null;
+	private boolean isXYZ = false;
 
-  @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+	@Override
+	public void onActivityCreated(Bundle state)
+	{
+		super.onActivityCreated(state);
 
-    getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
-  }
+		getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
+	}
 
-  @Override
-  public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    // unused
-  }
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy)
+	{
+		// unused
+	}
 
-  @Override
-  public void onSensorChanged(SensorEvent e) {
-    Float[] values=new Float[3];
+	@Override
+	public void onSensorChanged(SensorEvent e)
+	{
+		Float[] values = new Float[3];
 
-    values[0]=e.values[0];
-    values[1]=e.values[1];
-    values[2]=e.values[2];
+		int len = e.values.length;
+		int len2 = values.length;
+		
+		for( int i = 0; i < len; i++ )
+		{
+			if( len2 > i )
+			{
+				values[i] = e.values[i];
+			}
+		}
 
-    adapter.add(values);
-  }
+		adapter.add(values);
+	}
 
-  void init(boolean isXYZ) {
-    this.isXYZ=isXYZ;
-    adapter=new SensorLogAdapter(this);
-    setListAdapter(adapter);
-  }
+	void init(boolean isXYZ)
+	{
+		this.isXYZ = isXYZ;
+		adapter = new SensorLogAdapter(this);
+		setListAdapter(adapter);
+	}
 
-  class SensorLogAdapter extends ArrayAdapter<Float[]> {
-    public SensorLogAdapter(SensorLogFragment sensorLogFragment) {
-      super(sensorLogFragment.getActivity(),
-            android.R.layout.simple_list_item_1,
-            new ArrayList<Float[]>());
-    }
+	class SensorLogAdapter extends ArrayAdapter<Float[]>
+	{
+		public SensorLogAdapter(SensorLogFragment sensorLogFragment)
+		{
+			super(sensorLogFragment.getActivity(),
+					android.R.layout.simple_list_item_1,
+					new ArrayList<Float[]>());
+		}
 
-    @SuppressLint("DefaultLocale")
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      TextView row=
-          (TextView)super.getView(position, convertView, parent);
-      String content=null;
-      Float[] values=getItem(position);
+		@SuppressLint("DefaultLocale")
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			TextView row = (TextView) super.getView(position, convertView,
+					parent);
+			String content = null;
+			Float[] values = getItem(position);
 
-      if (isXYZ) {
-        content=
-            String.format("%7.3f / %7.3f / %7.3f / %7.3f",
-                          values[0],
-                          values[1],
-                          values[2],
-                          Math.sqrt(values[0] * values[0] + values[1]
-                              * values[1] + values[2] * values[2]));
-      }
-      else {
-        content=String.format("%7.3f", values[0]);
-      }
+			if (isXYZ)
+			{
+				content = String.format(
+						"%7.3f / %7.3f / %7.3f / %7.3f",
+						values[0],
+						values[1],
+						values[2],
+						Math.sqrt(values[0] * values[0] + values[1] * values[1]
+								+ values[2] * values[2]));
+			}
+			else
+			{
+				content = String.format("%7.3f", values[0]);
+			}
 
-      row.setText(content);
+			row.setText(content);
 
-      return(row);
-    }
-  }
+			return (row);
+		}
+	}
 }

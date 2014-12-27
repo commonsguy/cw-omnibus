@@ -17,15 +17,18 @@ package com.commonsware.android.constants;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class ConstantsBrowser extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+public class ConstantsBrowser extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getSupportFragmentManager().beginTransaction()
-                                 .add(android.R.id.content,
-                                      new ConstantsFragment()).commit();
-    }
-  }
+		if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null)
+		{
+			getSupportFragmentManager().beginTransaction()
+					.add(android.R.id.content, new ConstantsFragment())
+					.commit();
+		}
+	}
 }

@@ -27,51 +27,56 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class RichTextSearchActivity extends Activity implements
-    TextView.OnEditorActionListener {
-  EditText search;
+		TextView.OnEditorActionListener
+{
+	EditText search;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-    search=(EditText)findViewById(R.id.search);
-    search.setOnEditorActionListener(this);
-  }
+		search = (EditText) findViewById(R.id.search);
+		search.setOnEditorActionListener(this);
+	}
 
-  @Override
-  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-    if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
-      searchFor(search.getText().toString());
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+	{
+		if (event == null || event.getAction() == KeyEvent.ACTION_UP)
+		{
+			searchFor(search.getText().toString());
 
-      InputMethodManager imm=
-          (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+			InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
-      imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
+			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+		}
 
-    return(true);
-  }
+		return (true);
+	}
 
-  private void searchFor(String text) {
-    TextView prose=(TextView)findViewById(R.id.prose);
-    Spannable raw=new SpannableString(prose.getText());
-    BackgroundColorSpan[] spans=raw.getSpans(0,
-                                             raw.length(),
-                                             BackgroundColorSpan.class);
+	private void searchFor(String text)
+	{
+		TextView prose = (TextView) findViewById(R.id.prose);
+		Spannable raw = new SpannableString(prose.getText());
+		BackgroundColorSpan[] spans = raw.getSpans(0, raw.length(),
+				BackgroundColorSpan.class);
 
-    for (BackgroundColorSpan span : spans) {
-      raw.removeSpan(span);
-    }
+		for (BackgroundColorSpan span : spans)
+		{
+			raw.removeSpan(span);
+		}
 
-    int index=TextUtils.indexOf(raw, text);
+		int index = TextUtils.indexOf(raw, text);
 
-    while (index >= 0) {
-      raw.setSpan(new BackgroundColorSpan(0xFF8B008B), index, index
-          + text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-      index=TextUtils.indexOf(raw, text, index + text.length());
-    }
+		while (index >= 0)
+		{
+			raw.setSpan(new BackgroundColorSpan(0xFF8B008B), index, index
+					+ text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			index = TextUtils.indexOf(raw, text, index + text.length());
+		}
 
-    prose.setText(raw);
-  }
+		prose.setText(raw);
+	}
 }

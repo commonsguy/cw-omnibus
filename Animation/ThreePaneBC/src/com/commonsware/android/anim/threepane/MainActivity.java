@@ -19,84 +19,98 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.Button;
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity {
-  private static final String KEY_MIDDLE_CONTENTS="middleContents";
-  private static final String[] items= { "lorem", "ipsum", "dolor",
-      "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
-      "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
-      "vel", "erat", "placerat", "ante", "porttitor", "sodales",
-      "pellentesque", "augue", "purus" };
-  private boolean isLeftShowing=true;
-  private SimpleListFragment middleFragment=null;
-  private ArrayList<String> middleContents=null;
-  private ThreePaneLayout root=null;
+public class MainActivity extends FragmentActivity
+{
+	private static final String KEY_MIDDLE_CONTENTS = "middleContents";
+	private static final String[] items = { "lorem", "ipsum", "dolor", "sit",
+			"amet", "consectetuer", "adipiscing", "elit", "morbi", "vel",
+			"ligula", "vitae", "arcu", "aliquet", "mollis", "etiam", "vel",
+			"erat", "placerat", "ante", "porttitor", "sodales", "pellentesque",
+			"augue", "purus" };
+	private boolean isLeftShowing = true;
+	private SimpleListFragment middleFragment = null;
+	private ArrayList<String> middleContents = null;
+	private ThreePaneLayout root = null;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    root=(ThreePaneLayout)findViewById(R.id.root);
+		root = (ThreePaneLayout) findViewById(R.id.root);
 
-    if (getSupportFragmentManager().findFragmentById(R.id.left) == null) {
-      getSupportFragmentManager().beginTransaction()
-                                 .add(R.id.left,
-                                      SimpleListFragment.newInstance(items))
-                                 .commit();
-    }
-    
-    middleFragment=
-        (SimpleListFragment)getSupportFragmentManager().findFragmentById(R.id.middle);
-  }
+		if (getSupportFragmentManager().findFragmentById(R.id.left) == null)
+		{
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.left, SimpleListFragment.newInstance(items))
+					.commit();
+		}
 
-  @Override
-  public void onBackPressed() {
-    if (!isLeftShowing) {
-      root.showLeft();
-      isLeftShowing=true;
-    }
-    else {
-      super.onBackPressed();
-    }
-  }
+		middleFragment = (SimpleListFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.middle);
+	}
 
-  @Override
-  protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    
-    outState.putStringArrayList(KEY_MIDDLE_CONTENTS, middleContents);
-  }
-  
-  @Override
-  protected void onRestoreInstanceState(Bundle inState) {
-    middleContents=inState.getStringArrayList(KEY_MIDDLE_CONTENTS);
-  }
+	@Override
+	public void onBackPressed()
+	{
+		if (!isLeftShowing)
+		{
+			root.showLeft();
+			isLeftShowing = true;
+		}
+		else
+		{
+			super.onBackPressed();
+		}
+	}
 
-  void onListItemClick(SimpleListFragment fragment, int position) {
-    if (fragment == middleFragment) {
-      ((Button)root.getRightView()).setText(middleContents.get(position));
-      
-      if (isLeftShowing) {
-        root.hideLeft();
-        isLeftShowing=false;
-      }
-    }
-    else {
-      middleContents=new ArrayList<String>();
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
 
-      for (int i=0; i < 20; i++) {
-        middleContents.add(items[position] + " #" + i);
-      }
+		outState.putStringArrayList(KEY_MIDDLE_CONTENTS, middleContents);
+	}
 
-      if (getSupportFragmentManager().findFragmentById(R.id.middle) == null) {
-        middleFragment=SimpleListFragment.newInstance(middleContents);
-        getSupportFragmentManager().beginTransaction()
-                                   .add(R.id.middle, middleFragment)
-                                   .commit();
-      }
-      else {
-        middleFragment.setContents(middleContents);
-      }
-    }
-  }
+	@Override
+	protected void onRestoreInstanceState(Bundle inState)
+	{
+		middleContents = inState.getStringArrayList(KEY_MIDDLE_CONTENTS);
+	}
+
+	void onListItemClick(SimpleListFragment fragment, int position)
+	{
+		if (fragment == middleFragment)
+		{
+			((Button) root.getRightView())
+					.setText(middleContents.get(position));
+
+			if (isLeftShowing)
+			{
+				root.hideLeft();
+				isLeftShowing = false;
+			}
+		}
+		else
+		{
+			middleContents = new ArrayList<String>();
+
+			for (int i = 0; i < 20; i++)
+			{
+				middleContents.add(items[position] + " #" + i);
+			}
+
+			if (getSupportFragmentManager().findFragmentById(R.id.middle) == null)
+			{
+				middleFragment = SimpleListFragment.newInstance(middleContents);
+				getSupportFragmentManager().beginTransaction()
+						.add(R.id.middle, middleFragment).commit();
+			}
+			else
+			{
+				middleFragment.setContents(middleContents);
+			}
+		}
+	}
 }

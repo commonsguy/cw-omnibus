@@ -17,30 +17,34 @@ package com.commonsware.android.revchron;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
-  private ReverseChronometer chrono=null;
-      
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    
-    chrono=(ReverseChronometer)findViewById(R.id.chrono);
-    chrono.setOverallDuration(90);
-    chrono.setWarningDuration(10);
-  }
-  
-  @Override
-  public void onResume() {
-    super.onResume();
-    
-    chrono.run();
-  }
-  
-  @Override
-  public void onPause() {
-    chrono.stop();
-    
-    super.onPause();
-  }
+public class MainActivity extends Activity
+{
+	private ReverseChronometer chrono = null;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		chrono = (ReverseChronometer) findViewById(R.id.chrono);
+		chrono.setOverallDuration(90);
+		chrono.setWarningDuration(10);
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+
+		chrono.run();
+	}
+
+	@Override
+	public void onPause()
+	{
+		chrono.stop();
+
+		super.onPause();
+	}
 }

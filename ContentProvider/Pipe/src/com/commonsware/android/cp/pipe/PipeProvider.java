@@ -28,104 +28,122 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 
-public class PipeProvider extends ContentProvider {
-  public static final Uri CONTENT_URI=
-      Uri.parse("content://com.commonsware.android.cp.pipe/");
-  private static final HashMap<String, String> MIME_TYPES=
-      new HashMap<String, String>();
+public class PipeProvider extends ContentProvider
+{
+	public static final Uri CONTENT_URI = Uri
+			.parse("content://com.commonsware.android.cp.pipe/");
+	private static final HashMap<String, String> MIME_TYPES = new HashMap<String, String>();
 
-  static {
-    MIME_TYPES.put(".pdf", "application/pdf");
-  }
+	static
+	{
+		MIME_TYPES.put(".pdf", "application/pdf");
+	}
 
-  @Override
-  public boolean onCreate() {
-    return(true);
-  }
+	@Override
+	public boolean onCreate()
+	{
+		return (true);
+	}
 
-  @Override
-  public String getType(Uri uri) {
-    String path=uri.toString();
+	@Override
+	public String getType(Uri uri)
+	{
+		String path = uri.toString();
 
-    for (String extension : MIME_TYPES.keySet()) {
-      if (path.endsWith(extension)) {
-        return(MIME_TYPES.get(extension));
-      }
-    }
+		for (String extension : MIME_TYPES.keySet())
+		{
+			if (path.endsWith(extension))
+			{
+				return (MIME_TYPES.get(extension));
+			}
+		}
 
-    return(null);
-  }
+		return (null);
+	}
 
-  @Override
-  public ParcelFileDescriptor openFile(Uri uri, String mode)
-                                                            throws FileNotFoundException {
-    ParcelFileDescriptor[] pipe=null;
+	@Override
+	public ParcelFileDescriptor openFile(Uri uri, String mode)
+			throws FileNotFoundException
+	{
+		ParcelFileDescriptor[] pipe = null;
 
-    try {
-      pipe=ParcelFileDescriptor.createPipe();
-      AssetManager assets=getContext().getResources().getAssets();
+		try
+		{
+			pipe = ParcelFileDescriptor.createPipe();
+			AssetManager assets = getContext().getResources().getAssets();
 
-      new TransferThread(assets.open(uri.getLastPathSegment()),
-                       new AutoCloseOutputStream(pipe[1])).start();
-    }
-    catch (IOException e) {
-      Log.e(getClass().getSimpleName(), "Exception opening pipe", e);
-      throw new FileNotFoundException("Could not open pipe for: "
-          + uri.toString());
-    }
+			new TransferThread(assets.open(uri.getLastPathSegment()),
+					new AutoCloseOutputStream(pipe[1])).start();
+		}
+		catch (IOException e)
+		{
+			Log.e(getClass().getSimpleName(), "Exception opening pipe", e);
+			throw new FileNotFoundException("Could not open pipe for: "
+					+ uri.toString());
+		}
 
-    return(pipe[0]);
-  }
+		return (pipe[0]);
+	}
 
-  @Override
-  public Cursor query(Uri url, String[] projection, String selection,
-                      String[] selectionArgs, String sort) {
-    throw new RuntimeException("Operation not supported");
-  }
+	@Override
+	public Cursor query(Uri url, String[] projection, String selection,
+			String[] selectionArgs, String sort)
+	{
+		throw new RuntimeException("Operation not supported");
+	}
 
-  @Override
-  public Uri insert(Uri uri, ContentValues initialValues) {
-    throw new RuntimeException("Operation not supported");
-  }
+	@Override
+	public Uri insert(Uri uri, ContentValues initialValues)
+	{
+		throw new RuntimeException("Operation not supported");
+	}
 
-  @Override
-  public int update(Uri uri, ContentValues values, String where,
-                    String[] whereArgs) {
-    throw new RuntimeException("Operation not supported");
-  }
+	@Override
+	public int update(Uri uri, ContentValues values, String where,
+			String[] whereArgs)
+	{
+		throw new RuntimeException("Operation not supported");
+	}
 
-  @Override
-  public int delete(Uri uri, String where, String[] whereArgs) {
-    throw new RuntimeException("Operation not supported");
-  }
+	@Override
+	public int delete(Uri uri, String where, String[] whereArgs)
+	{
+		throw new RuntimeException("Operation not supported");
+	}
 
-  static class TransferThread extends Thread {
-    InputStream in;
-    OutputStream out;
+	static class TransferThread extends Thread
+	{
+		InputStream in;
+		OutputStream out;
 
-    TransferThread(InputStream in, OutputStream out) {
-      this.in=in;
-      this.out=out;
-    }
+		TransferThread(InputStream in, OutputStream out)
+		{
+			this.in = in;
+			this.out = out;
+		}
 
-    @Override
-    public void run() {
-      byte[] buf=new byte[1024];
-      int len;
+		@Override
+		public void run()
+		{
+			byte[] buf = new byte[1024];
+			int len;
 
-      try {
-        while ((len=in.read(buf)) > 0) {
-          out.write(buf, 0, len);
-        }
+			try
+			{
+				while ((len = in.read(buf)) > 0)
+				{
+					out.write(buf, 0, len);
+				}
 
-        in.close();
-        out.flush();
-        out.close();
-      }
-      catch (IOException e) {
-        Log.e(getClass().getSimpleName(),
-              "Exception transferring file", e);
-      }
-    }
-  }
+				in.close();
+				out.flush();
+				out.close();
+			}
+			catch (IOException e)
+			{
+				Log.e(getClass().getSimpleName(),
+						"Exception transferring file", e);
+			}
+		}
+	}
 }

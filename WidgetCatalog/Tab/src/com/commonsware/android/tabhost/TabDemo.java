@@ -26,6 +26,7 @@ public class TabDemo extends Activity {
 
     TabHost tabs=(TabHost)findViewById(R.id.tabhost);
 
+    //not needed if using tabactivity
     tabs.setup();
 
     TabHost.TabSpec spec=tabs.newTabSpec("tag1");

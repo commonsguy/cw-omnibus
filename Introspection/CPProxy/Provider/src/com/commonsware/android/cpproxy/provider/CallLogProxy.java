@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.cpproxy.provider;
 
@@ -18,14 +18,17 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.CallLog;
 
-public class CallLogProxy extends AbstractCPProxy {
-  protected Uri convertUri(Uri uri) {
-    long id=ContentUris.parseId(uri);
+public class CallLogProxy extends AbstractCPProxy
+{
+	protected Uri convertUri(Uri uri)
+	{
+		long id = ContentUris.parseId(uri);
 
-    if (id >= 0) {
-      return(ContentUris.withAppendedId(CallLog.Calls.CONTENT_URI, id));
-    }
+		if (id >= 0)
+		{
+			return (ContentUris.withAppendedId(CallLog.Calls.CONTENT_URI, id));
+		}
 
-    return(CallLog.Calls.CONTENT_URI);
-  }
+		return (CallLog.Calls.CONTENT_URI);
+	}
 }

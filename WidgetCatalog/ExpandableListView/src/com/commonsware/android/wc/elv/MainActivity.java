@@ -30,79 +30,84 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.json.JSONObject;
 
-public class MainActivity extends Activity implements
-    OnChildClickListener, OnGroupClickListener, OnGroupExpandListener,
-    OnGroupCollapseListener {
-  private ExpandableListAdapter adapter=null;
+public class MainActivity extends Activity implements OnChildClickListener,
+		OnGroupClickListener, OnGroupExpandListener, OnGroupCollapseListener
+{
+	private ExpandableListAdapter adapter = null;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    InputStream raw=getResources().openRawResource(R.raw.sample);
-    BufferedReader in=new BufferedReader(new InputStreamReader(raw));
-    String str;
-    StringBuffer buf=new StringBuffer();
+		InputStream raw = getResources().openRawResource(R.raw.sample);
+		BufferedReader in = new BufferedReader(new InputStreamReader(raw));
+		String str;
+		StringBuffer buf = new StringBuffer();
 
-    try {
-      while ((str=in.readLine()) != null) {
-        buf.append(str);
-        buf.append('\n');
-      }
+		try
+		{
+			while ((str = in.readLine()) != null)
+			{
+				buf.append(str);
+				buf.append('\n');
+			}
 
-      in.close();
+			in.close();
 
-      JSONObject model=new JSONObject(buf.toString());
+			JSONObject model = new JSONObject(buf.toString());
 
-      ExpandableListView elv=(ExpandableListView)findViewById(R.id.elv);
+			ExpandableListView elv = (ExpandableListView) findViewById(R.id.elv);
 
-      adapter=new JSONExpandableListAdapter(getLayoutInflater(), model);
-      elv.setAdapter(adapter);
+			adapter = new JSONExpandableListAdapter(getLayoutInflater(), model);
+			elv.setAdapter(adapter);
 
-      elv.setOnChildClickListener(this);
-      elv.setOnGroupClickListener(this);
-      elv.setOnGroupExpandListener(this);
-      elv.setOnGroupCollapseListener(this);
-    }
-    catch (Exception e) {
-      Log.e(getClass().getName(), "Exception reading JSON", e);
-    }
-  }
+			elv.setOnChildClickListener(this);
+			elv.setOnGroupClickListener(this);
+			elv.setOnGroupExpandListener(this);
+			elv.setOnGroupCollapseListener(this);
+		}
+		catch (Exception e)
+		{
+			Log.e(getClass().getName(), "Exception reading JSON", e);
+		}
+	}
 
-  @Override
-  public boolean onChildClick(ExpandableListView parent, View v,
-                              int groupPosition, int childPosition,
-                              long id) {
-    Toast.makeText(this,
-                   adapter.getChild(groupPosition, childPosition)
-                          .toString(), Toast.LENGTH_SHORT).show();
+	@Override
+	public boolean onChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id)
+	{
+		Toast.makeText(this,
+				adapter.getChild(groupPosition, childPosition).toString(),
+				Toast.LENGTH_SHORT).show();
 
-    return(false);
-  }
+		return (false);
+	}
 
-  @Override
-  public boolean onGroupClick(ExpandableListView parent, View v,
-                              int groupPosition, long id) {
-    Toast.makeText(this, adapter.getGroup(groupPosition).toString(),
-                   Toast.LENGTH_SHORT).show();
+	@Override
+	public boolean onGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id)
+	{
+		Toast.makeText(this, adapter.getGroup(groupPosition).toString(),
+				Toast.LENGTH_SHORT).show();
 
-    return(false);
-  }
+		return (false);
+	}
 
-  @Override
-  public void onGroupExpand(int groupPosition) {
-    Toast.makeText(this,
-                   "Expanding: "
-                       + adapter.getGroup(groupPosition).toString(),
-                   Toast.LENGTH_SHORT).show();
-  }
+	@Override
+	public void onGroupExpand(int groupPosition)
+	{
+		Toast.makeText(this,
+				"Expanding: " + adapter.getGroup(groupPosition).toString(),
+				Toast.LENGTH_SHORT).show();
+	}
 
-  @Override
-  public void onGroupCollapse(int groupPosition) {
-    Toast.makeText(this,
-                   "Collapsing: "
-                       + adapter.getGroup(groupPosition).toString(),
-                   Toast.LENGTH_SHORT).show();
-  }
+	@Override
+	public void onGroupCollapse(int groupPosition)
+	{
+		Toast.makeText(this,
+				"Collapsing: " + adapter.getGroup(groupPosition).toString(),
+				Toast.LENGTH_SHORT).show();
+	}
 }

@@ -21,28 +21,30 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class EditorFragment extends SherlockFragment {
-  private static final String KEY_HINT="hint";
+public class EditorFragment extends SherlockFragment
+{
+	private static final String KEY_HINT = "hint";
 
-  static EditorFragment newInstance(String hint) {
-    EditorFragment frag=new EditorFragment();
-    Bundle args=new Bundle();
+	static EditorFragment newInstance(String hint)
+	{
+		EditorFragment frag = new EditorFragment();
+		Bundle args = new Bundle();
 
-    args.putString(KEY_HINT, hint);
-    frag.setArguments(args);
+		args.putString(KEY_HINT, hint);
+		frag.setArguments(args);
 
-    return(frag);
-  }
+		return (frag);
+	}
 
-  @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.editor, container, false);
-    EditText editor=(EditText)result.findViewById(R.id.editor);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.editor, container, false);
+		EditText editor = (EditText) result.findViewById(R.id.editor);
 
-    editor.setHint(getArguments().getString(KEY_HINT));
+		editor.setHint(getArguments().getString(KEY_HINT));
 
-    return(result);
-  }
+		return (result);
+	}
 }

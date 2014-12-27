@@ -21,46 +21,50 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-public class QuickSender extends Activity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-  }
+public class QuickSender extends Activity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+	}
 
-  public void save(View v) {
-    Intent shortcut=new Intent(Intent.ACTION_SEND);
-    TextView addr=(TextView)findViewById(R.id.addr);
-    TextView subject=(TextView)findViewById(R.id.subject);
-    TextView body=(TextView)findViewById(R.id.body);
-    TextView name=(TextView)findViewById(R.id.name);
+	public void save(View v)
+	{
+		Intent shortcutIntent = new Intent(Intent.ACTION_SEND);
+		TextView addr = (TextView) findViewById(R.id.addr);
+		TextView subject = (TextView) findViewById(R.id.subject);
+		TextView body = (TextView) findViewById(R.id.body);
+		TextView name = (TextView) findViewById(R.id.name);
 
-    if (!TextUtils.isEmpty(addr.getText())) {
-      shortcut.putExtra(Intent.EXTRA_EMAIL,
-                        new String[] { addr.getText().toString() });
-    }
+		if (!TextUtils.isEmpty(addr.getText()))
+		{
+			shortcutIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { addr.getText()
+					.toString() });
+		}
 
-    if (!TextUtils.isEmpty(subject.getText())) {
-      shortcut.putExtra(Intent.EXTRA_SUBJECT, subject.getText()
-                                                     .toString());
-    }
+		if (!TextUtils.isEmpty(subject.getText()))
+		{
+			shortcutIntent.putExtra(Intent.EXTRA_SUBJECT, subject.getText()
+					.toString());
+		}
 
-    if (!TextUtils.isEmpty(body.getText())) {
-      shortcut.putExtra(Intent.EXTRA_TEXT, body.getText().toString());
-    }
+		if (!TextUtils.isEmpty(body.getText()))
+		{
+			shortcutIntent.putExtra(Intent.EXTRA_TEXT, body.getText().toString());
+		}
 
-    shortcut.setType("text/plain");
+		shortcutIntent.setType("text/plain");
 
-    Intent result=new Intent();
+		Intent resultIntent = new Intent();
 
-    result.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcut);
-    result.putExtra(Intent.EXTRA_SHORTCUT_NAME, name.getText()
-                                                    .toString());
-    result.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    Intent.ShortcutIconResource.fromContext(this,
-                                                            R.drawable.icon));
+		resultIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+		resultIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, name.getText().toString());
+		resultIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+				Intent.ShortcutIconResource.fromContext(this, R.drawable.icon));
 
-    setResult(RESULT_OK, result);
-    finish();
-  }
+		setResult(RESULT_OK, resultIntent);
+		finish();
+	}
 }

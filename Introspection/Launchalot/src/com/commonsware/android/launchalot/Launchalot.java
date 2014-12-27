@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.launchalot;
 
@@ -27,80 +27,98 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Collections;
 import java.util.List;
 
-public class Launchalot extends ListActivity {
-  AppAdapter adapter=null;
-  
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-    
-    PackageManager pm=getPackageManager();
-    Intent main=new Intent(Intent.ACTION_MAIN, null);
-        
-    main.addCategory(Intent.CATEGORY_LAUNCHER);
+public class Launchalot extends ListActivity
+{
+	AppAdapter adapter = null;
 
-    List<ResolveInfo> launchables=pm.queryIntentActivities(main, 0);
-    
-    Collections.sort(launchables,
-                     new ResolveInfo.DisplayNameComparator(pm)); 
-    
-    adapter=new AppAdapter(pm, launchables);
-    setListAdapter(adapter);
-  }
-  
-  @Override
-  protected void onListItemClick(ListView l, View v,
-                                 int position, long id) {
-    ResolveInfo launchable=adapter.getItem(position);
-    ActivityInfo activity=launchable.activityInfo;
-    ComponentName name=new ComponentName(activity.applicationInfo.packageName,
-                                         activity.name);
-    Intent i=new Intent(Intent.ACTION_MAIN);
-    
-    i.addCategory(Intent.CATEGORY_LAUNCHER);
-    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-    i.setComponent(name);
-    
-    startActivity(i);    
-  }
-  
-  class AppAdapter extends ArrayAdapter<ResolveInfo> {
-    private PackageManager pm=null;
-    
-    AppAdapter(PackageManager pm, List<ResolveInfo> apps) {
-      super(Launchalot.this, R.layout.row, apps);
-      this.pm=pm;
-    }
-    
-    @Override
-    public View getView(int position, View convertView,
-                          ViewGroup parent) {
-      if (convertView==null) {
-        convertView=newView(parent);
-      }
-      
-      bindView(position, convertView);
-      
-      return(convertView);
-    }
-    
-    private View newView(ViewGroup parent) {
-      return(getLayoutInflater().inflate(R.layout.row, parent, false));
-    }
-    
-    private void bindView(int position, View row) {
-      TextView label=(TextView)row.findViewById(R.id.label);
-      
-      label.setText(getItem(position).loadLabel(pm));
-      
-      ImageView icon=(ImageView)row.findViewById(R.id.icon);
-      
-      icon.setImageDrawable(getItem(position).loadIcon(pm));
-    }
-  }
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+
+		PackageManager pm = getPackageManager();
+		
+		
+		Intent intent = new Intent( Intent.ACTION_SEARCH, null );
+		intent.addCategory(Intent.ACTION_DEFAULT);
+		ResolveInfo ri = pm.resolveActivity(intent, 0);
+		
+		if( ri != null )
+			Toast.makeText(this, ri.loadLabel(pm), Toast.LENGTH_LONG ).show();
+		
+		Intent main = new Intent(Intent.ACTION_MAIN, null);
+
+		main.addCategory(Intent.CATEGORY_LAUNCHER);
+
+		List<ResolveInfo> launchables = pm.queryIntentActivities(main, 0);
+
+		Collections
+				.sort(launchables, new ResolveInfo.DisplayNameComparator(pm));
+
+		adapter = new AppAdapter(pm, launchables);
+		setListAdapter(adapter);
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id)
+	{
+		ResolveInfo launchable = adapter.getItem(position);
+		ActivityInfo activity = launchable.activityInfo;
+		ComponentName name = new ComponentName(
+				activity.applicationInfo.packageName, activity.name);
+		Intent i = new Intent(Intent.ACTION_MAIN);
+
+		i.addCategory(Intent.CATEGORY_LAUNCHER);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		i.setComponent(name);
+
+		startActivity(i);
+	}
+
+	class AppAdapter extends ArrayAdapter<ResolveInfo>
+	{
+		private PackageManager pm = null;
+
+		AppAdapter(PackageManager pm, List<ResolveInfo> apps)
+		{
+			super(Launchalot.this, R.layout.row, apps);
+			this.pm = pm;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			if (convertView == null)
+			{
+				convertView = newView(parent);
+			}
+
+			bindView(position, convertView);
+
+			return (convertView);
+		}
+
+		private View newView(ViewGroup parent)
+		{
+			return (getLayoutInflater().inflate(R.layout.row, parent, false));
+		}
+
+		private void bindView(int position, View row)
+		{
+			TextView label = (TextView) row.findViewById(R.id.label);
+
+			label.setText(getItem(position).loadLabel(pm));
+
+			ImageView icon = (ImageView) row.findViewById(R.id.icon);
+
+			icon.setImageDrawable(getItem(position).loadIcon(pm));
+		}
+	}
 }

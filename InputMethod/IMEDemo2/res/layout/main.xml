@@ -11,6 +11,8 @@
     <TableRow>  
       <TextView 
         android:text="No special rules:"
+      	android:imeOptions="actionSend"
+      	android:imeActionLabel="Push"
       />
       <EditText
       />

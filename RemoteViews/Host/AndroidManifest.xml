@@ -6,7 +6,7 @@
 
 	<uses-sdk
 		android:minSdkVersion="7"
-		android:targetSdkVersion="14"/>
+		android:targetSdkVersion="19"/>
 
 	<permission
 		android:name="com.commonsware.android.rv.host.ACT_AS_HOST"
@@ -27,6 +27,7 @@
 		android:smallScreens="true"/>
 
 	<application
+	    android:allowBackup="false"
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name">
 		<activity

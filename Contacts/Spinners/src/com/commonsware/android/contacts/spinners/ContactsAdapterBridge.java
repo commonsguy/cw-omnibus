@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.contacts.spinners;
 
@@ -18,20 +18,25 @@ import android.app.Activity;
 import android.os.Build;
 import android.widget.ListAdapter;
 
-abstract class ContactsAdapterBridge {
-  abstract ListAdapter buildNameAdapter(Activity a);
-  abstract ListAdapter buildPhonesAdapter(Activity a);
-  abstract ListAdapter buildEmailAdapter(Activity a);
-  
-  public static final ContactsAdapterBridge INSTANCE=buildBridge();
-  
-  private static ContactsAdapterBridge buildBridge() {
-    int sdk=new Integer(Build.VERSION.SDK).intValue();
-    
-    if (sdk<5) {
-      return(new OldContactsAdapterBridge());
-    }
-    
-    return(new NewContactsAdapterBridge());
-  }
+abstract class ContactsAdapterBridge
+{
+	abstract ListAdapter buildNameAdapter(Activity a);
+
+	abstract ListAdapter buildPhonesAdapter(Activity a);
+
+	abstract ListAdapter buildEmailAdapter(Activity a);
+
+	public static final ContactsAdapterBridge INSTANCE = buildBridge();
+
+	private static ContactsAdapterBridge buildBridge()
+	{
+		int sdk = new Integer(Build.VERSION.SDK).intValue();
+
+		if (sdk < 5)
+		{
+			return (new OldContactsAdapterBridge());
+		}
+
+		return (new NewContactsAdapterBridge());
+	}
 }

@@ -20,20 +20,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import java.io.File;
 
-public class MainActivity extends Activity implements
-    VideosFragment.Contract {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-  }
+public class MainActivity extends Activity implements VideosFragment.Contract
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+	}
 
-  @Override
-  public void onVideoSelected(String uri, String mimeType) {
-    Uri video=Uri.fromFile(new File(uri));
-    Intent i=new Intent(Intent.ACTION_VIEW);
+	@Override
+	public void onVideoSelected(String uri, String mimeType)
+	{
+		Uri video = Uri.fromFile(new File(uri));
+		Intent i = new Intent(Intent.ACTION_VIEW);
 
-    i.setDataAndType(video, mimeType);
-    startActivity(i);
-  }
+		i.setDataAndType(video, mimeType);
+		startActivity(i);
+	}
 }

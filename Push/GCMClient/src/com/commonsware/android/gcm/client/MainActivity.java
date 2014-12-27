@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.gcm.client;
 
@@ -21,31 +21,36 @@ import android.view.View;
 import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 
-public class MainActivity extends Activity {
-  static final String SENDER_ID="this is totally fake"; // change me!
+public class MainActivity extends Activity
+{
+	static final String SENDER_ID = "this is totally fake"; // change me!
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    GCMRegistrar.checkDevice(this);
-    
-    if (BuildConfig.DEBUG) {
-      GCMRegistrar.checkManifest(this);
-    }
-  }
+		GCMRegistrar.checkDevice(this);
 
-  public void onClick(View v) {
-    final String regId=GCMRegistrar.getRegistrationId(this);
+		if (BuildConfig.DEBUG)
+		{
+			GCMRegistrar.checkManifest(this);
+		}
+	}
 
-    if (regId.length() == 0) {
-      GCMRegistrar.register(this, SENDER_ID);
-    }
-    else {
-      Log.d(getClass().getSimpleName(), "Existing registration: "
-          + regId);
-      Toast.makeText(this, regId, Toast.LENGTH_LONG).show();
-    }
-  }
+	public void onClick(View v)
+	{
+		final String regId = GCMRegistrar.getRegistrationId(this);
+
+		if (regId.length() == 0)
+		{
+			GCMRegistrar.register(this, SENDER_ID);
+		}
+		else
+		{
+			Log.d(getClass().getSimpleName(), "Existing registration: " + regId);
+			Toast.makeText(this, regId, Toast.LENGTH_LONG).show();
+		}
+	}
 }

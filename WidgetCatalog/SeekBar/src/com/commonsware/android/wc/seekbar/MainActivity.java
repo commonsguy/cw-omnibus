@@ -16,39 +16,44 @@ package com.commonsware.android.wc.seekbar;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements
-    OnSeekBarChangeListener {
-  TextView value=null;
+public class MainActivity extends Activity implements OnSeekBarChangeListener
+{
+	TextView value = null;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    value=(TextView)findViewById(R.id.value);
+		value = (TextView) findViewById(R.id.value);
 
-    SeekBar seekBar=(SeekBar)findViewById(R.id.seek_bar);
+		SeekBar seekBar = (SeekBar) findViewById(R.id.seek_bar);
 
-    seekBar.setOnSeekBarChangeListener(this);
-  }
+		seekBar.setOnSeekBarChangeListener(this);
+	}
 
-  @Override
-  public void onProgressChanged(SeekBar seekBar, int progress,
-                                boolean fromUser) {
-    value.setText(String.valueOf(progress));
-  }
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress,
+			boolean fromUser)
+	{
+		value.setText(String.valueOf(progress));
+	}
 
-  @Override
-  public void onStartTrackingTouch(SeekBar seekBar) {
-    // no-op
-  }
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar)
+	{
+		Log.e("SeekBarDemo", "start dragging");
+	}
 
-  @Override
-  public void onStopTrackingTouch(SeekBar seekBar) {
-    // no-op
-  }
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar)
+	{
+		Log.e( "SeekBarDemo", "stop dragging" );
+	}
 }

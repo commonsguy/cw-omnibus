@@ -6,7 +6,7 @@
           
   <uses-permission android:name="android.permission.READ_CONTACTS" />
   <uses-sdk android:minSdkVersion="3"
-            android:targetSdkVersion="6" />
+            android:targetSdkVersion="19" />
   <supports-screens android:largeScreens="true"
                     android:normalScreens="true"
                     android:smallScreens="false" />

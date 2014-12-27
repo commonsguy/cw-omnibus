@@ -10,9 +10,8 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
-   
 package com.commonsware.android.anim;
 
 import android.app.Activity;
@@ -21,33 +20,37 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class SlidingPanelDemo extends Activity {
-  SlidingPanel panel=null;
-  
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-    
-    panel=(SlidingPanel)findViewById(R.id.panel);
-  }
-  
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(getApplication())
-                                  .inflate(R.menu.option, menu);
+public class SlidingPanelDemo extends Activity
+{
+	SlidingPanel panel = null;
 
-    return(super.onCreateOptionsMenu(menu));
-  }
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId()==R.id.toggle) {
-      panel.toggle();
-      
-      return(true);
-    }
-    
-    return(super.onOptionsItemSelected(item));
-  }
+		panel = (SlidingPanel) findViewById(R.id.panel);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		new MenuInflater(getApplication()).inflate(R.menu.option, menu);
+
+		return (super.onCreateOptionsMenu(menu));
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (item.getItemId() == R.id.toggle)
+		{
+			panel.toggle();
+
+			return (true);
+		}
+
+		return (super.onOptionsItemSelected(item));
+	}
 }

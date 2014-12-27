@@ -5,5 +5,8 @@
   android:initialLayout="@layout/widget"
   android:autoAdvanceViewId="@+id/words"
   android:previewImage="@drawable/preview"
-  android:resizeMode="vertical"
+  
+  android:minResizeWidth="146dip"
+  android:minResizeHeight="146dip"
+  android:resizeMode="horizontal|vertical"
 />

@@ -17,23 +17,27 @@ package com.commonsware.android.pager3;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.viewpagerindicator.TabPageIndicator;
 
-public class MainActivity extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+public class MainActivity extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-    ViewPager pager=(ViewPager)findViewById(R.id.pager);
-    TabPageIndicator tabs=(TabPageIndicator)findViewById(R.id.titles);
+		ViewPager pager = (ViewPager) findViewById(R.id.pager);
+		TabPageIndicator tabs = (TabPageIndicator) findViewById(R.id.titles);
 
-    pager.setAdapter(buildAdapter());
-    tabs.setViewPager(pager);
-  }
+		pager.setAdapter(buildAdapter());
+		tabs.setViewPager(pager);
+	}
 
-  private PagerAdapter buildAdapter() {
-    return(new SampleAdapter(this, getSupportFragmentManager()));
-  }
+	private PagerAdapter buildAdapter()
+	{
+		return (new SampleAdapter(this, getSupportFragmentManager()));
+	}
 }

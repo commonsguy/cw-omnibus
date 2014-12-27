@@ -18,33 +18,40 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-public class GCMIntentService extends GCMBaseIntentServiceCompat {
-  public GCMIntentService() {
-    super("GCMIntentService");
-  }
+public class GCMIntentService extends GCMBaseIntentServiceCompat
+{
+	public GCMIntentService()
+	{
+		super("GCMIntentService");
+	}
 
-  @Override
-  protected void onMessage(Intent message) {
-    dumpEvent("onMessage", message);
-  }
+	@Override
+	protected void onMessage(Intent message)
+	{
+		dumpEvent("onMessage", message);
+	}
 
-  @Override
-  protected void onError(Intent message) {
-    dumpEvent("onError", message);
-  }
+	@Override
+	protected void onError(Intent message)
+	{
+		dumpEvent("onError", message);
+	}
 
-  @Override
-  protected void onDeleted(Intent message) {
-    dumpEvent("onDeleted", message);
-  }
+	@Override
+	protected void onDeleted(Intent message)
+	{
+		dumpEvent("onDeleted", message);
+	}
 
-  private void dumpEvent(String event, Intent message) {
-    Bundle extras=message.getExtras();
+	private void dumpEvent(String event, Intent message)
+	{
+		Bundle extras = message.getExtras();
 
-    for (String key : extras.keySet()) {
-      Log.d(getClass().getSimpleName(),
-            String.format("%s: %s=%s", event, key,
-                          extras.getString(key)));
-    }
-  }
+		for (String key : extras.keySet())
+		{
+			Log.d(getClass().getSimpleName(),
+					String.format("%s: %s=%s", event, key,
+							extras.getString(key)));
+		}
+	}
 }

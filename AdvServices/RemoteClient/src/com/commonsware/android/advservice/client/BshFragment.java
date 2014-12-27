@@ -39,6 +39,8 @@ public class BshFragment extends Fragment implements OnClickListener,
     super.onActivityCreated(savedInstanceState);
 
     setRetainInstance(true);
+    
+    //com.commonsware.android.advservice.IScript
     getActivity().getApplicationContext()
                  .bindService(new Intent(
                                          "com.commonsware.android.advservice.IScript"),

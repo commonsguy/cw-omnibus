@@ -26,96 +26,109 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends Activity implements
-    OnItemClickListener {
-  private DrawerLayout drawerLayout=null;
-  private ActionBarDrawerToggle toggle=null;
-  private LoremFragment lorem=null;
-  private ContentFragment content=null;
+public class MainActivity extends Activity implements OnItemClickListener
+{
+	private DrawerLayout drawerLayout = null;
+	private ActionBarDrawerToggle toggle = null;
+	private LoremFragment lorem = null;
+	private ContentFragment content = null;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    if (getFragmentManager().findFragmentById(R.id.content) == null) {
-      showLorem();
-    }
+		if (getFragmentManager().findFragmentById(R.id.content) == null)
+		{
+			showLorem();
+		}
 
-    ListView drawer=(ListView)findViewById(R.id.drawer);
+		ListView drawer = (ListView) findViewById(R.id.drawer);
 
-    drawer.setAdapter(new ArrayAdapter<String>(
-                                               this,
-                                               R.layout.drawer_row,
-                                               getResources().getStringArray(R.array.drawer_rows)));
-    drawer.setOnItemClickListener(this);
+		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_row,
+				getResources().getStringArray(R.array.drawer_rows)));
+		drawer.setOnItemClickListener(this);
 
-    drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-    toggle=
-        new ActionBarDrawerToggle(this, drawerLayout,
-                                  R.drawable.ic_drawer,
-                                  R.string.drawer_open,
-                                  R.string.drawer_close);
-    drawerLayout.setDrawerListener(toggle);
-    getActionBar().setDisplayHomeAsUpEnabled(true);
-    getActionBar().setHomeButtonEnabled(true);
-  }
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		
+		toggle = new ActionBarDrawerToggle(this, drawerLayout,
+				R.drawable.ic_drawer, R.string.drawer_open,
+				R.string.drawer_close);
+		
+		drawerLayout.setDrawerListener(toggle);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+	}
 
-  @Override
-  protected void onPostCreate(Bundle savedInstanceState) {
-    super.onPostCreate(savedInstanceState);
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState)
+	{
+		super.onPostCreate(savedInstanceState);
 
-    toggle.syncState();
-  }
+		toggle.syncState();
+	}
 
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
+	@Override
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+		super.onConfigurationChanged(newConfig);
 
-    toggle.onConfigurationChanged(newConfig);
-  }
+		toggle.onConfigurationChanged(newConfig);
+	}
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (toggle.onOptionsItemSelected(item)) {
-      return(true);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (toggle.onOptionsItemSelected(item))
+		{
+			return (true);
+		}
 
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 
-  @Override
-  public void onItemClick(AdapterView<?> listView, View row,
-                          int position, long id) {
-    if (position == 0) {
-      showLorem();
-    }
-    else {
-      showContent();
-    }
+	@Override
+	public void onItemClick(AdapterView<?> listView, View row, int position,
+			long id)
+	{
+		if (position == 0)
+		{
+			showLorem();
+		}
+		else
+		{
+			showContent();
+		}
 
-    drawerLayout.closeDrawers();
-  }
+		drawerLayout.closeDrawers();
+	}
 
-  private void showLorem() {
-    if (lorem == null) {
-      lorem=new LoremFragment();
-    }
+	private void showLorem()
+	{
+		if (lorem == null)
+		{
+			lorem = new LoremFragment();
+		}
 
-    if (!lorem.isVisible()) {
-      getFragmentManager().beginTransaction()
-                          .replace(R.id.content, lorem).commit();
-    }
-  }
+		if (!lorem.isVisible())
+		{
+			getFragmentManager().beginTransaction()
+					.replace(R.id.content, lorem).commit();
+		}
+	}
 
-  private void showContent() {
-    if (content == null) {
-      content=new ContentFragment();
-    }
+	private void showContent()
+	{
+		if (content == null)
+		{
+			content = new ContentFragment();
+		}
 
-    if (!content.isVisible()) {
-      getFragmentManager().beginTransaction()
-                          .replace(R.id.content, content).commit();
-    }
-  }
+		if (!content.isVisible())
+		{
+			getFragmentManager().beginTransaction()
+					.replace(R.id.content, content).commit();
+		}
+	}
 }

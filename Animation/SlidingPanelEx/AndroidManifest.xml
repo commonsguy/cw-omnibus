@@ -13,7 +13,7 @@
 		android:normalScreens="true"
 		android:smallScreens="false"/>
 
-	<application
+	<application android:allowBackup="true"
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name">
 		<activity

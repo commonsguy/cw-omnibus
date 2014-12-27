@@ -23,41 +23,45 @@ import android.widget.SeekBar;
 import com.actionbarsherlock.app.SherlockFragment;
 
 abstract public class FragmentBase extends SherlockFragment implements
-    SeekBar.OnSeekBarChangeListener {
-  abstract void setImageBackground(ImageView image);
-  
-  private ImageView image=null;
+		SeekBar.OnSeekBarChangeListener
+{
+	abstract void setImageBackground(ImageView image);
 
-  @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    setRetainInstance(true);
+	private ImageView image = null;
 
-    View result=inflater.inflate(R.layout.scaleclip, container, false);
-    SeekBar bar=((SeekBar)result.findViewById(R.id.level));
-    
-    bar.setOnSeekBarChangeListener(this);
-    image=(ImageView)result.findViewById(R.id.image);
-    setImageBackground(image);
-    image.setImageLevel(bar.getProgress());
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		setRetainInstance(true);
 
-    return(result);
-  }
-  
-  @Override
-  public void onProgressChanged(SeekBar seekBar, int progress,
-                                boolean fromUser) {
-    image.setImageLevel(progress);
-  }
+		View result = inflater.inflate(R.layout.scaleclip, container, false);
+		SeekBar bar = ((SeekBar) result.findViewById(R.id.level));
 
-  @Override
-  public void onStartTrackingTouch(SeekBar seekBar) {
-    // no-op
-  }
+		bar.setOnSeekBarChangeListener(this);
+		image = (ImageView) result.findViewById(R.id.image);
+		setImageBackground(image);
+		image.setImageLevel(bar.getProgress());
 
-  @Override
-  public void onStopTrackingTouch(SeekBar seekBar) {
-    // no-op
-  }
+		return (result);
+	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress,
+			boolean fromUser)
+	{
+		image.setImageLevel(progress);
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar)
+	{
+		// no-op
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar)
+	{
+		// no-op
+	}
 }

@@ -26,65 +26,71 @@ import android.widget.EditText;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class PassphraseFragment extends SherlockFragment implements
-    OnClickListener, OnCheckedChangeListener {
-  private EditText passphrase=null;
-  private EditText title=null;
-  private int id=-1;
+		OnClickListener, OnCheckedChangeListener
+{
+	private EditText passphrase = null;
+	private EditText title = null;
+	private int id = -1;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.passphrase, container, false);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.passphrase, container, false);
 
-    result.findViewById(R.id.save).setOnClickListener(this);
-    title=(EditText)result.findViewById(R.id.title);
-    passphrase=(EditText)result.findViewById(R.id.passphrase);
+		result.findViewById(R.id.save).setOnClickListener(this);
+		title = (EditText) result.findViewById(R.id.title);
+		passphrase = (EditText) result.findViewById(R.id.passphrase);
 
-    CompoundButton cb=
-        (CompoundButton)result.findViewById(R.id.show_passphrase);
+		CompoundButton cb = (CompoundButton) result
+				.findViewById(R.id.show_passphrase);
 
-    cb.setOnCheckedChangeListener(this);
+		cb.setOnCheckedChangeListener(this);
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onClick(View v) {
-    getActivityContract().savePassphrase(id,
-                                         title.getText().toString(),
-                                         passphrase.getText()
-                                                   .toString());
-  }
+	@Override
+	public void onClick(View v)
+	{
+		getActivityContract().savePassphrase(id, title.getText().toString(),
+				passphrase.getText().toString());
+	}
 
-  @Override
-  public void onCheckedChanged(CompoundButton cb, boolean isChecked) {
-    int start=passphrase.getSelectionStart();
-    int end=passphrase.getSelectionEnd();
+	@Override
+	public void onCheckedChanged(CompoundButton cb, boolean isChecked)
+	{
+		int start = passphrase.getSelectionStart();
+		int end = passphrase.getSelectionEnd();
 
-    if (isChecked) {
-      passphrase.setTransformationMethod(null);
-    }
-    else {
-      passphrase.setTransformationMethod(new PasswordTransformationMethod());
-    }
+		if (isChecked)
+		{
+			passphrase.setTransformationMethod(null);
+		}
+		else
+		{
+			passphrase.setTransformationMethod(new PasswordTransformationMethod());
+		}
 
-    passphrase.setSelection(start, end);
-  }
+		passphrase.setSelection(start, end);
+	}
 
-  void populate(int id, String _title, String _passphrase) {
-    this.id=id;
-    title.setText(_title);
-    passphrase.setText(_passphrase);
-  }
+	void populate(int id, String _title, String _passphrase)
+	{
+		this.id = id;
+		title.setText(_title);
+		passphrase.setText(_passphrase);
+	}
 
-  void clear() {
-    id=-1;
-    title.setText("");
-    passphrase.setText("");
-  }
+	void clear()
+	{
+		id = -1;
+		title.setText("");
+		passphrase.setText("");
+	}
 
-  private MainActivity getActivityContract() {
-    return((MainActivity)getActivity());
-  }
+	private MainActivity getActivityContract()
+	{
+		return ((MainActivity) getActivity());
+	}
 }

@@ -15,15 +15,18 @@
 package com.commonsware.android.sysevents.battery;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
 import android.os.BatteryManager;
-import android.widget.ProgressBar;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class BatteryMonitor extends Activity {
   private ProgressBar bar=null;
@@ -44,8 +47,18 @@ public class BatteryMonitor extends Activity {
   public void onResume() {
     super.onResume();
     
+    /**
+     * catches the current status....
+     	IntentFilter filter = new IntentFilter( Intent.ACTION_BATTERY_CHANGED);
+    	readBattery( registerReceiver(null, filter ) );
+     */
+    
+    
     registerReceiver(onBatteryChanged,
                       new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    
+    registerReceiver(connectedReceiver, new IntentFilter( Intent.ACTION_POWER_CONNECTED ));
+    registerReceiver(disconnectedReceiver, new IntentFilter( Intent.ACTION_POWER_DISCONNECTED ));
   }
   
   @Override
@@ -53,11 +66,12 @@ public class BatteryMonitor extends Activity {
     super.onPause();
     
     unregisterReceiver(onBatteryChanged);
+    unregisterReceiver(disconnectedReceiver);
   }
   
-  BroadcastReceiver onBatteryChanged=new BroadcastReceiver() {
-    public void onReceive(Context context, Intent intent) {
-      int pct=100*intent.getIntExtra("level", 1)/intent.getIntExtra("scale", 1);
+  private void readBattery( Intent intent )
+  {
+	  int pct=100*intent.getIntExtra("level", 1)/intent.getIntExtra("scale", 1);
       
       bar.setProgress(pct);
       level.setText(String.valueOf(pct));
@@ -83,6 +97,33 @@ public class BatteryMonitor extends Activity {
           status.setImageResource(R.drawable.unplugged);
           break;
       }
+  }
+  
+  BroadcastReceiver onBatteryChanged=new BroadcastReceiver() {
+    public void onReceive(Context context, Intent intent) {
+    	BatteryMonitor.this.readBattery(intent);
     }
   };
+  
+  
+  BroadcastReceiver connectedReceiver = new BroadcastReceiver()
+	{
+		
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			Toast.makeText(context, "connected", Toast.LENGTH_SHORT).show();
+		}
+	};
+	
+	
+	BroadcastReceiver disconnectedReceiver = new BroadcastReceiver()
+	{
+		
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			Toast.makeText(context, "disconnected", Toast.LENGTH_SHORT).show();
+		}
+	};
 }

@@ -16,7 +16,9 @@ package com.commonsware.android.animator.obj;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Debug;
 import android.widget.TextView;
+
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
@@ -34,7 +36,8 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    word=(TextView)findViewById(R.id.word);
+    word=(TextView)findViewById(R.id.word); 
+    		
     
     ValueAnimator positionAnim = ObjectAnimator.ofInt(this, "wordPosition", 0, 24);
     positionAnim.setDuration(12500);
@@ -43,7 +46,30 @@ public class MainActivity extends Activity {
     positionAnim.start();
   }
   
-  public void setWordPosition(int position) {
+  
+  
+  @Override
+protected void onPause()
+{
+	// TODO Auto-generated method stub
+	super.onPause();
+	
+	Debug.stopMethodTracing(); 
+}
+
+
+
+@Override
+protected void onResume()
+{
+	// TODO Auto-generated method stub
+	super.onResume();
+	Debug.startMethodTracing();
+}
+
+
+
+public void setWordPosition(int position) {
     this.position=position;
     word.setText(items[position]);
   }

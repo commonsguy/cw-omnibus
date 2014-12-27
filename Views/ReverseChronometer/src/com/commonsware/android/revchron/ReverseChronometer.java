@@ -20,59 +20,69 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class ReverseChronometer extends TextView implements Runnable {
-  long startTime=0L;
-  long overallDuration=0L;
-  long warningDuration=0L;
+public class ReverseChronometer extends TextView implements Runnable
+{
+	long startTime = 0L;
+	long overallDuration = 0L;
+	long warningDuration = 0L;
 
-  public ReverseChronometer(Context context, AttributeSet attrs) {
-    super(context, attrs);
+	public ReverseChronometer(Context context, AttributeSet attrs)
+	{
+		super(context, attrs);
 
-    reset();
-  }
+		reset();
+	}
 
-  @Override
-  public void run() {
-    long elapsedSeconds=
-        (SystemClock.elapsedRealtime() - startTime) / 1000;
+	@Override
+	public void run()
+	{
+		long elapsedSeconds = (SystemClock.elapsedRealtime() - startTime) / 1000;
 
-    if (elapsedSeconds < overallDuration) {
-      long remainingSeconds=overallDuration - elapsedSeconds;
-      long minutes=remainingSeconds / 60;
-      long seconds=remainingSeconds - (60 * minutes);
+		if (elapsedSeconds < overallDuration)
+		{
+			long remainingSeconds = overallDuration - elapsedSeconds;
+			long minutes = remainingSeconds / 60;
+			long seconds = remainingSeconds - (60 * minutes);
 
-      setText(String.format("%d:%02d", minutes, seconds));
+			setText(String.format("%d:%02d", minutes, seconds));
 
-      if (warningDuration > 0 && remainingSeconds < warningDuration) {
-        setTextColor(0xFFFF6600); // orange
-      }
-      else {
-        setTextColor(Color.BLACK);
-      }
+			if (warningDuration > 0 && remainingSeconds < warningDuration)
+			{
+				setTextColor(0xFFFF6600); // orange
+			}
+			else
+			{
+				setTextColor(Color.BLACK);
+			}
 
-      postDelayed(this, 1000);
-    }
-    else {
-      setText("0:00");
-      setTextColor(Color.RED);
-    }
-  }
+			postDelayed(this, 1000);
+		}
+		else
+		{
+			setText("0:00");
+			setTextColor(Color.RED);
+		}
+	}
 
-  public void reset() {
-    startTime=SystemClock.elapsedRealtime();
-    setText("--:--");
-    setTextColor(Color.BLACK);
-  }
+	public void reset()
+	{
+		startTime = SystemClock.elapsedRealtime();
+		setText("--:--");
+		setTextColor(Color.BLACK);
+	}
 
-  public void stop() {
-    removeCallbacks(this);
-  }
+	public void stop()
+	{
+		removeCallbacks(this);
+	}
 
-  public void setOverallDuration(long overallDuration) {
-    this.overallDuration=overallDuration;
-  }
+	public void setOverallDuration(long overallDuration)
+	{
+		this.overallDuration = overallDuration;
+	}
 
-  public void setWarningDuration(long warningDuration) {
-    this.warningDuration=warningDuration;
-  }
+	public void setWarningDuration(long warningDuration)
+	{
+		this.warningDuration = warningDuration;
+	}
 }

@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.clipmon;
 
@@ -21,34 +21,38 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements
-    OnPrimaryClipChangedListener {
-  private ClipboardManager cm=null;
-  private TextView lastClip=null;
+		OnPrimaryClipChangedListener
+{
+	private ClipboardManager cm = null;
+	private TextView lastClip = null;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    lastClip=(TextView)findViewById(R.id.last_clip);
-    cm=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
-  }
-  
-  @Override
-  public void onResume() {
-    super.onResume();
-    cm.addPrimaryClipChangedListener(this);
-  }
-  
-  @Override
-  public void onPause() {
-    cm.removePrimaryClipChangedListener(this);
-    super.onPause();
-  }
+		lastClip = (TextView) findViewById(R.id.last_clip);
+		cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+	}
 
-  @Override
-  public void onPrimaryClipChanged() {
-    lastClip.setText(cm.getPrimaryClip().getItemAt(0)
-                       .coerceToText(this));
-  }
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		cm.addPrimaryClipChangedListener(this);
+	}
+
+	@Override
+	public void onPause()
+	{
+		cm.removePrimaryClipChangedListener(this);
+		super.onPause();
+	}
+
+	@Override
+	public void onPrimaryClipChanged()
+	{
+		lastClip.setText(cm.getPrimaryClip().getItemAt(0).coerceToText(this));
+	}
 }

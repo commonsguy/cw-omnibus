@@ -10,38 +10,46 @@
 	
 	From _Tuning Android Applications_
 		http://commonsware.com/AndTuning
-*/
+ */
 
 package com.commonsware.android.tuning.prefs;
 
+import info.juanmendez.android.sdk.SDKSupport;
 import android.content.SharedPreferences;
 import android.os.Build;
 
-abstract public class AbstractPrefsPersistStrategy {
+abstract public class AbstractPrefsPersistStrategy
+{
 	abstract void persistAsync(SharedPreferences.Editor editor);
-	
-	private static final AbstractPrefsPersistStrategy INSTANCE=initImpl();
-	
-	public static void persist(SharedPreferences.Editor editor) {
+
+	private static final AbstractPrefsPersistStrategy INSTANCE = initImpl();
+
+	public static void persist(SharedPreferences.Editor editor)
+	{
 		INSTANCE.persistAsync(editor);
 	}
-	
-	private static AbstractPrefsPersistStrategy initImpl() {
-		int sdk=new Integer(Build.VERSION.SDK).intValue();
-		
-		if (sdk<Build.VERSION_CODES.HONEYCOMB) {
-			return(new CommitAsyncStrategy());
+
+	private static AbstractPrefsPersistStrategy initImpl()
+	{
+
+		if (!SDKSupport.honeyOrHigher())
+		{
+			return (new CommitAsyncStrategy());
 		}
-		
-		return(new ApplyStrategy());
+
+		return new ApplyStrategy();
 	}
 
-	static class CommitAsyncStrategy extends AbstractPrefsPersistStrategy {
+	static class CommitAsyncStrategy extends AbstractPrefsPersistStrategy
+	{
 		@Override
-		void persistAsync(final SharedPreferences.Editor editor) {
-			(new Thread() {
+		void persistAsync(final SharedPreferences.Editor editor)
+		{
+			(new Thread()
+			{
 				@Override
-				public void run() {
+				public void run()
+				{
 					editor.commit();
 				}
 			}).start();

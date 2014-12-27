@@ -19,31 +19,37 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class SampleAdapter extends FragmentPagerAdapter {
-  static private final int TITLES[]={R.string.scale, R.string.clip};
-  private Context ctxt=null;
+public class SampleAdapter extends FragmentPagerAdapter
+{
+	static private final int TITLES[] = { R.string.scale, R.string.clip };
+	private Context ctxt = null;
 
-  public SampleAdapter(Context ctxt, FragmentManager mgr) {
-    super(mgr);
-    this.ctxt=ctxt;
-  }
+	public SampleAdapter(Context ctxt, FragmentManager mgr)
+	{
+		super(mgr);
+		this.ctxt = ctxt;
+	}
 
-  @Override
-  public int getCount() {
-    return(2);
-  }
+	@Override
+	public int getCount()
+	{
+		return (2);
+	}
 
-  @Override
-  public Fragment getItem(int position) {
-    if (position==0) {
-      return(new ScaleFragment());
-    }
-    
-    return(new ClipFragment());
-  }
+	@Override
+	public Fragment getItem(int position)
+	{
+		if (position == 0)
+		{
+			return (new ScaleFragment());
+		}
 
-  @Override
-  public String getPageTitle(int position) {
-    return(ctxt.getString(TITLES[position]));
-  }
+		return (new ClipFragment());
+	}
+
+	@Override
+	public String getPageTitle(int position)
+	{
+		return (ctxt.getString(TITLES[position]));
+	}
 }

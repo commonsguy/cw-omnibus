@@ -14,10 +14,16 @@
 
 package com.commonsware.android.flipper2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 public class FlipperDemo2 extends Activity {
@@ -28,6 +34,8 @@ public class FlipperDemo2 extends Activity {
                           "vel", "erat", "placerat", "ante",
                           "porttitor", "sodales", "pellentesque",
                           "augue", "purus"};
+  
+  
   ViewFlipper flipper;
   
   @Override
@@ -35,14 +43,23 @@ public class FlipperDemo2 extends Activity {
     super.onCreate(icicle);
     setContentView(R.layout.main);
     
+    LayoutParams p = new LayoutParams( LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT );
+    
     flipper=(ViewFlipper)findViewById(R.id.details);
     
+    Integer[] colors = { Color.BLACK, Color.BLUE, Color.DKGRAY, Color.GRAY, Color.GREEN, Color.LTGRAY, Color.RED, Color.YELLOW, Color.LTGRAY };
+    
     for (String item : items) {
-      Button btn=new Button(this);
+    	
+      TextView t = new TextView(this);
+      t.setLayoutParams(p);
+      t.setText( item );
       
-      btn.setText(item);
-      
-      flipper.addView(btn,
+      t.setGravity( Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL );
+      t.setBackgroundColor( colors[(int)(Math.random() * (colors.length-1))] );
+      t.setTextColor(colors[(int)(Math.random() * (colors.length-1))]);
+   
+      flipper.addView(t,
                       new ViewGroup.LayoutParams(
                               ViewGroup.LayoutParams.FILL_PARENT,
                               ViewGroup.LayoutParams.FILL_PARENT));

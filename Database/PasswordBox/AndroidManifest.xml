@@ -5,8 +5,8 @@
 	android:versionName="1.0" xmlns:tools="http://schemas.android.com/tools">
 
 	<uses-sdk
-		android:minSdkVersion="7"
-		android:targetSdkVersion="16"
+		android:minSdkVersion="8"
+		android:targetSdkVersion="19"
 		tools:ignore="OldTargetApi"/>
 
 	<application

@@ -19,15 +19,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-public class FilesCPDemo extends Activity {
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+public class FilesCPDemo extends Activity
+{
+	@Override
+	public void onCreate(Bundle icicle)
+	{
+		super.onCreate(icicle);
 
-    Intent i=new Intent(Intent.ACTION_VIEW, Uri.parse(FileProvider.CONTENT_URI + "test.pdf"));
+		Intent i = new Intent(Intent.ACTION_VIEW,
+				Uri.parse(FileProvider.CONTENT_URI + "test.pdf"));
 
-    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    startActivity(i);
-    finish();
-  }
+		i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		startActivity(i);
+		finish();
+	}
 }

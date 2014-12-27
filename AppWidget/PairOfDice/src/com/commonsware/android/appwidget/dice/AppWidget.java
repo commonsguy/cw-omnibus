@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.appwidget.dice;
 
@@ -22,39 +22,68 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-public class AppWidget extends AppWidgetProvider {
-  private static final int[] IMAGES={R.drawable.die_1,R.drawable.die_2,
-                                      R.drawable.die_3,R.drawable.die_4,
-                                      R.drawable.die_5,R.drawable.die_6};
-  
-  @Override
-  public void onUpdate(Context ctxt, AppWidgetManager mgr,
-                        int[] appWidgetIds) {
-    ComponentName me=new ComponentName(ctxt, AppWidget.class);
-      
-    mgr.updateAppWidget(me, buildUpdate(ctxt, appWidgetIds));
-  }
-  
-  private RemoteViews buildUpdate(Context ctxt, int[] appWidgetIds) {
-    RemoteViews updateViews=new RemoteViews(ctxt.getPackageName(),
-                                            R.layout.widget);
-  
-    Intent i=new Intent(ctxt, AppWidget.class);
-    
-    i.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-    i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-    
-    PendingIntent pi=PendingIntent.getBroadcast(ctxt, 0 , i,
-                                                PendingIntent.FLAG_UPDATE_CURRENT);
-    
-    updateViews.setImageViewResource(R.id.left_die,
-                                     IMAGES[(int)(Math.random()*6)]); 
-    updateViews.setOnClickPendingIntent(R.id.left_die, pi);
-    updateViews.setImageViewResource(R.id.right_die,
-                                     IMAGES[(int)(Math.random()*6)]); 
-    updateViews.setOnClickPendingIntent(R.id.right_die, pi);
-    updateViews.setOnClickPendingIntent(R.id.background, pi);
-    
-    return(updateViews);
-  }
+public class AppWidget extends AppWidgetProvider
+{
+	private static final int[] IMAGES = { R.drawable.die_1, R.drawable.die_2,
+			R.drawable.die_3, R.drawable.die_4, R.drawable.die_5,
+			R.drawable.die_6 };
+
+	@Override
+	public void onUpdate(Context ctxt, AppWidgetManager mgr, int[] appWidgetIds)
+	{
+		ComponentName me = new ComponentName(ctxt, AppWidget.class);
+		mgr.updateAppWidget(me, buildUpdate(ctxt, appWidgetIds));
+	}
+
+	private RemoteViews buildUpdate(Context ctxt, int[] appWidgetIds)
+	{
+		RemoteViews updateViews = new RemoteViews(ctxt.getPackageName(),
+				R.layout.widget);
+
+		Intent i = new Intent(ctxt, AppWidget.class);
+
+		i.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+
+		PendingIntent pi = PendingIntent.getBroadcast(ctxt, 0, i,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+
+		updateViews.setImageViewResource(R.id.left_die,
+				IMAGES[(int) (Math.random() * 6)]);
+		updateViews.setOnClickPendingIntent(R.id.left_die, pi);
+		updateViews.setImageViewResource(R.id.right_die,
+				IMAGES[(int) (Math.random() * 6)]);
+		updateViews.setOnClickPendingIntent(R.id.right_die, pi);
+		updateViews.setOnClickPendingIntent(R.id.background, pi);
+
+		return (updateViews);
+	}
+
+	@Override
+	public void onDeleted(Context context, int[] appWidgetIds)
+	{
+		// TODO Auto-generated method stub
+		super.onDeleted(context, appWidgetIds);
+	}
+
+	@Override
+	public void onDisabled(Context context)
+	{
+		// TODO Auto-generated method stub
+		super.onDisabled(context);
+	}
+
+	@Override
+	public void onEnabled(Context context)
+	{
+		// TODO Auto-generated method stub
+		super.onEnabled(context);
+	}
+
+	@Override
+	public void onReceive(Context context, Intent intent)
+	{
+		// TODO Auto-generated method stub
+		super.onReceive(context, intent);
+	}
 }

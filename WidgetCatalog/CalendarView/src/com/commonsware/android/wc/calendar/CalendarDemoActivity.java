@@ -16,6 +16,7 @@ package com.commonsware.android.wc.calendar;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.Toast;
@@ -33,6 +34,10 @@ public class CalendarDemoActivity extends Activity implements
 
     calendar=(CalendarView)findViewById(R.id.calendar);
     calendar.setOnDateChangeListener(this);
+    
+    GregorianCalendar c = new GregorianCalendar( 1974, 11, 20 );
+    
+    calendar.setDate( c.getTimeInMillis() );
   }
 
   @Override

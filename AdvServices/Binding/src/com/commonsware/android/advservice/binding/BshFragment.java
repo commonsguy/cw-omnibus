@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,64 +15,72 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class BshFragment extends SherlockFragment implements
-    OnClickListener, ServiceConnection {
-  private IScript service=null;
-  private Button btn=null;
+public class BshFragment extends SherlockFragment implements OnClickListener,
+		ServiceConnection
+{
+	private IScript service = null;
+	private Button btn = null;
 
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=inflater.inflate(R.layout.main, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		View result = inflater.inflate(R.layout.main, container, false);
 
-    btn=(Button)result.findViewById(R.id.eval);
-    btn.setOnClickListener(this);
-    btn.setEnabled(service!=null);
+		btn = (Button) result.findViewById(R.id.eval);
+		btn.setOnClickListener(this);
+		btn.setEnabled(service != null);
 
-    setRetainInstance(true);
+		setRetainInstance(true);
 
-    return(result);
-  }
+		return (result);
+	}
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 
-    getActivity().getApplicationContext()
-                 .bindService(new Intent(getActivity(),
-                                         BshService.class), this,
-                              Context.BIND_AUTO_CREATE);
-  }
+		getActivity().getApplicationContext().bindService(
+				new Intent(getActivity(), BshService.class), this,
+				Context.BIND_AUTO_CREATE);
+	}
 
-  @Override
-  public void onDestroy() {
-    getActivity().getApplicationContext().unbindService(this);
-    disconnect();
+	@Override
+	public void onDestroy()
+	{
+	
+		Log.d("ServiceBindingDemo", "destroyed BshFragment");
+		getActivity().getApplicationContext().unbindService(this);
+		disconnect();
 
-    super.onDestroy();
-  }
+		super.onDestroy();
+	}
 
-  @Override
-  public void onClick(View view) {
-    EditText script=(EditText)getView().findViewById(R.id.script);
-    String src=script.getText().toString();
+	@Override
+	public void onClick(View view)
+	{
+		EditText script = (EditText) getView().findViewById(R.id.script);
+		String src = script.getText().toString();
 
-    service.executeScript(src);
-  }
+		service.executeScript(src);
+	}
 
-  @Override
-  public void onServiceConnected(ComponentName className, IBinder binder) {
-    service=(IScript)binder;
-    btn.setEnabled(true);
-  }
+	@Override
+	public void onServiceConnected(ComponentName className, IBinder binder)
+	{
+		service = (IScript) binder;
+		btn.setEnabled(true);
+	}
 
-  @Override
-  public void onServiceDisconnected(ComponentName className) {
-    disconnect();
-  }
+	@Override
+	public void onServiceDisconnected(ComponentName className)
+	{
+		disconnect();
+	}
 
-  private void disconnect() {
-    service=null;
-    btn.setEnabled(false);
-  }
+	private void disconnect()
+	{
+		service = null;
+		btn.setEnabled(false);
+	}
 }

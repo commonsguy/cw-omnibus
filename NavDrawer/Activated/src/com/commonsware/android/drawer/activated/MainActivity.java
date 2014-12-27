@@ -27,155 +27,177 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends Activity implements
-    OnItemClickListener, LoremFragment.Contract,
-    OnBackStackChangedListener {
-  static private final String STATE_CHECKED=
-      "com.commonsware.android.drawer.simple.STATE_CHECKED";
-  private DrawerLayout drawerLayout=null;
-  private ActionBarDrawerToggle toggle=null;
-  private LoremFragment lorem=null;
-  private ContentFragment content=null;
-  private ListView drawer=null;
-  private StuffFragment stuff=null;
+public class MainActivity extends Activity implements OnItemClickListener,
+		LoremFragment.Contract, OnBackStackChangedListener
+{
+	static private final String STATE_CHECKED = "com.commonsware.android.drawer.simple.STATE_CHECKED";
+	private DrawerLayout drawerLayout = null;
+	private ActionBarDrawerToggle toggle = null;
+	private LoremFragment lorem = null;
+	private ContentFragment content = null;
+	private ListView drawer = null;
+	private StuffFragment stuff = null;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    if (getFragmentManager().findFragmentById(R.id.content) == null) {
-      showLorem();
-    }
+		if (getFragmentManager().findFragmentById(R.id.content) == null)
+		{
+			showLorem();
+		}
 
-    getFragmentManager().addOnBackStackChangedListener(this);
+		getFragmentManager().addOnBackStackChangedListener(this);
 
-    drawer=(ListView)findViewById(R.id.drawer);
-    drawer.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		drawer = (ListView) findViewById(R.id.drawer);
+		drawer.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-    String[] rows=getResources().getStringArray(R.array.drawer_rows);
+		String[] rows = getResources().getStringArray(R.array.drawer_rows);
 
-    drawer.setAdapter(new ArrayAdapter<String>(this,
-                                               R.layout.drawer_row,
-                                               rows));
+		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_row,
+				rows));
 
-    if (savedInstanceState == null) {
-      drawer.setItemChecked(0, true); // starting here
-    }
+		if (savedInstanceState == null)
+		{
+			drawer.setItemChecked(0, true); // starting here
+		}
 
-    drawer.setOnItemClickListener(this);
+		drawer.setOnItemClickListener(this);
 
-    drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-    toggle=
-        new ActionBarDrawerToggle(this, drawerLayout,
-                                  R.drawable.ic_drawer,
-                                  R.string.drawer_open,
-                                  R.string.drawer_close);
-    drawerLayout.setDrawerListener(toggle);
-    getActionBar().setDisplayHomeAsUpEnabled(true);
-    getActionBar().setHomeButtonEnabled(true);
-  }
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		toggle = new ActionBarDrawerToggle(this, drawerLayout,
+				R.drawable.ic_drawer, R.string.drawer_open,
+				R.string.drawer_close);
+		drawerLayout.setDrawerListener(toggle);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+	}
 
-  @Override
-  public void onSaveInstanceState(Bundle state) {
-    super.onSaveInstanceState(state);
+	@Override
+	public void onSaveInstanceState(Bundle state)
+	{
+		super.onSaveInstanceState(state);
 
-    state.putInt(STATE_CHECKED, drawer.getCheckedItemPosition());
-  }
+		state.putInt(STATE_CHECKED, drawer.getCheckedItemPosition());
+	}
 
-  @Override
-  public void onRestoreInstanceState(Bundle state) {
-    int position=state.getInt(STATE_CHECKED, -1);
+	@Override
+	public void onRestoreInstanceState(Bundle state)
+	{
+		int position = state.getInt(STATE_CHECKED, -1);
 
-    if (position > -1) {
-      drawer.setItemChecked(position, true);
-    }
-  }
+		if (position > -1)
+		{
+			drawer.setItemChecked(position, true);
+		}
+	}
 
-  @Override
-  protected void onPostCreate(Bundle savedInstanceState) {
-    super.onPostCreate(savedInstanceState);
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState)
+	{
+		super.onPostCreate(savedInstanceState);
 
-    toggle.syncState();
-  }
+		toggle.syncState();
+	}
 
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
+	@Override
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+		super.onConfigurationChanged(newConfig);
 
-    toggle.onConfigurationChanged(newConfig);
-  }
+		toggle.onConfigurationChanged(newConfig);
+	}
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (toggle.onOptionsItemSelected(item)) {
-      return(true);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (toggle.onOptionsItemSelected(item))
+		{
+			return (true);
+		}
 
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 
-  @Override
-  public void onItemClick(AdapterView<?> listView, View row,
-                          int position, long id) {
-    if (position == 0) {
-      showLorem();
-    }
-    else {
-      showContent();
-    }
+	@Override
+	public void onItemClick(AdapterView<?> listView, View row, int position,
+			long id)
+	{
+		if (position == 0)
+		{
+			showLorem();
+		}
+		else
+		{
+			showContent();
+		}
 
-    drawerLayout.closeDrawers();
-  }
+		drawerLayout.closeDrawers();
+	}
 
-  @Override
-  public void onBackStackChanged() {
-    if (lorem.isVisible()) {
-      drawer.setItemChecked(0, true);
-    }
-    else if (content != null && content.isVisible()) {
-      drawer.setItemChecked(1, true);
-    }
-  }
+	@Override
+	public void onBackStackChanged()
+	{
+		if (lorem != null && lorem.isVisible())
+		{
+			drawer.setItemChecked(0, true);
+		}
+		else
+		if (content != null && content.isVisible())
+		{
+			drawer.setItemChecked(1, true);
+		}
+		
+	}
 
-  @Override
-  public void wordClicked() {
-    int toClear=drawer.getCheckedItemPosition();
+	@Override
+	public void wordClicked()
+	{
+		int toClear = drawer.getCheckedItemPosition();
 
-    if (toClear >= 0) {
-      drawer.setItemChecked(toClear, false);
-    }
+		if (toClear >= 0)
+		{
+			drawer.setItemChecked(toClear, false);
+		}
 
-    if (stuff == null) {
-      stuff=new StuffFragment();
-    }
+		if (stuff == null)
+		{
+			stuff = new StuffFragment();
+		}
 
-    getFragmentManager().beginTransaction()
-                        .replace(R.id.content, stuff)
-                        .addToBackStack(null).commit();
-  }
+		getFragmentManager().beginTransaction().replace(R.id.content, stuff)
+				.addToBackStack(null).commit();
+	}
 
-  private void showLorem() {
-    if (lorem == null) {
-      lorem=new LoremFragment();
-    }
+	private void showLorem()
+	{
+		if (lorem == null)
+		{
+			lorem = new LoremFragment();
+		}
 
-    if (!lorem.isVisible()) {
-      getFragmentManager().popBackStack();
-      getFragmentManager().beginTransaction()
-                          .replace(R.id.content, lorem).commit();
-    }
-  }
+		if (!lorem.isVisible())
+		{
+			getFragmentManager().popBackStack();
+			getFragmentManager().beginTransaction()
+					.replace(R.id.content, lorem).commit();
+		}
+	}
 
-  private void showContent() {
-    if (content == null) {
-      content=new ContentFragment();
-    }
+	private void showContent()
+	{
+		if (content == null)
+		{
+			content = new ContentFragment();
+		}
 
-    if (!content.isVisible()) {
-      getFragmentManager().popBackStack();
-      getFragmentManager().beginTransaction()
-                          .replace(R.id.content, content).commit();
-    }
-  }
+		if (!content.isVisible())
+		{
+			getFragmentManager().popBackStack();
+			getFragmentManager().beginTransaction()
+					.replace(R.id.content, content).commit();
+		}
+	}
 }

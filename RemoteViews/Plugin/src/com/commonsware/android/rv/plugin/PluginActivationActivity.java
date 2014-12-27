@@ -18,12 +18,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class PluginActivationActivity extends Activity {
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+public class PluginActivationActivity extends Activity
+{
+	@Override
+	public void onCreate(Bundle icicle)
+	{
+		super.onCreate(icicle);
 
-    Toast.makeText(this, R.string.activated, Toast.LENGTH_LONG).show();
-    finish();
-  }
+		Toast.makeText(this, R.string.activated, Toast.LENGTH_LONG).show();
+		finish();
+	}
 }

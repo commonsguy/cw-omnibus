@@ -15,65 +15,73 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public class SensorListFragment extends SherlockListFragment implements
-    SensorEventListener {
-  private SensorManager mgr=null;
-  private ArrayAdapter<Sensor> adapter=null;
+		SensorEventListener
+{
+	private SensorManager mgr = null;
+	private ArrayAdapter<Sensor> adapter = null;
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
 
-    setRetainInstance(true);
+		setRetainInstance(true);
 
-    mgr=
-        (SensorManager)getActivity().getSystemService(Context.SENSOR_SERVICE);
-    adapter=new SensorListAdapter();
+		mgr = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+		adapter = new SensorListAdapter();
 
-    setListAdapter(adapter);
-  }
-  
-  @Override
-  public void onPause() {
-    mgr.unregisterListener(this);
-    super.onPause();
-  }
+		setListAdapter(adapter);
+	}
 
-  @Override
-  public void onListItemClick(ListView l, View v, int position, long id) {
-    mgr.unregisterListener(this);
-    mgr.registerListener(this, adapter.getItem(position),
-                         SensorManager.SENSOR_DELAY_NORMAL);
-  }
+	@Override
+	public void onPause()
+	{
+		mgr.unregisterListener(this);
+		super.onPause();
+	}
 
-  @Override
-  public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    // TODO Auto-generated method stub
-  }
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id)
+	{
+		mgr.unregisterListener(this);
+		mgr.registerListener(this, adapter.getItem(position),
+				SensorManager.SENSOR_DELAY_NORMAL);
+	}
 
-  @Override
-  public void onSensorChanged(SensorEvent event) {
-    mgr.unregisterListener(this);
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy)
+	{
+		// TODO Auto-generated method stub
+	}
 
-    Toast.makeText(getActivity(),
-                   String.format(getActivity().getString(R.string.toast_template),
-                                 event.values[0], event.values[1],
-                                 event.values[2]), Toast.LENGTH_LONG)
-         .show();
-  }
+	@Override
+	public void onSensorChanged(SensorEvent event)
+	{
+		mgr.unregisterListener(this);
 
-  private class SensorListAdapter extends ArrayAdapter<Sensor> {
-    SensorListAdapter() {
-      super(getActivity(), android.R.layout.simple_list_item_1,
-            mgr.getSensorList(Sensor.TYPE_ALL));
-    }
+		Toast.makeText(
+				getActivity(),
+				String.format(getActivity().getString(R.string.toast_template),
+						event.values[0], event.values[1], event.values[2]),
+				Toast.LENGTH_LONG).show();
+	}
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      View result=super.getView(position, convertView, parent);
+	private class SensorListAdapter extends ArrayAdapter<Sensor>
+	{
+		SensorListAdapter()
+		{
+			super(getActivity(), android.R.layout.simple_list_item_1, mgr
+					.getSensorList(Sensor.TYPE_ALL));
+		}
 
-      ((TextView)result).setText(getItem(position).getName());
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			View result = super.getView(position, convertView, parent);
 
-      return(result);
-    }
-  }
+			((TextView) result).setText(getItem(position).getName());
+
+			return (result);
+		}
+	}
 }

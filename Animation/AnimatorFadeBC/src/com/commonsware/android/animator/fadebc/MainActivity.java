@@ -14,10 +14,10 @@
    
 package com.commonsware.android.animator.fadebc;
 
+import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
-import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 public class MainActivity extends Activity implements Runnable {
   private static int PERIOD=2000;

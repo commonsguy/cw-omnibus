@@ -4,13 +4,15 @@
           package="com.commonsware.android.sysevents.battery"
           xmlns:android="http://schemas.android.com/apk/res/android">
           
-  <uses-sdk android:minSdkVersion="3"
-            android:targetSdkVersion="6" />
+  <uses-sdk android:minSdkVersion="4"
+            android:targetSdkVersion="19" />
   <supports-screens android:largeScreens="false"
                     android:normalScreens="true"
                     android:smallScreens="false" />
   <application android:icon="@drawable/cw"
-               android:label="@string/app_name">
+               android:label="@string/app_name"
+               android:allowBackup="false"
+               >
     <activity android:label="@string/app_name"
               android:name=".BatteryMonitor">
       <intent-filter>

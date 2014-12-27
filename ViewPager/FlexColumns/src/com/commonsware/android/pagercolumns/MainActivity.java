@@ -25,87 +25,98 @@ import com.commonsware.cwac.pager.SimplePageDescriptor;
 import com.commonsware.cwac.pager.v4.ArrayPagerAdapter;
 import com.viewpagerindicator.TabPageIndicator;
 
-public class MainActivity extends SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+public class MainActivity extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-    ViewPager pager=(ViewPager)findViewById(R.id.pager);
+		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 
-    if (pager == null) {
-      if (getSupportFragmentManager().findFragmentById(R.id.editor1) == null) {
-        SamplePagerAdapter adapter=buildAdapter();
-        FragmentTransaction ft=
-            getSupportFragmentManager().beginTransaction();
+		if (pager == null)
+		{
+			if (getSupportFragmentManager().findFragmentById(R.id.editor1) == null)
+			{
+				SamplePagerAdapter adapter = buildAdapter();
+				FragmentTransaction ft = getSupportFragmentManager()
+						.beginTransaction();
 
-        populateColumn(getSupportFragmentManager(), ft, adapter, 0,
-                       R.id.editor1);
-        populateColumn(getSupportFragmentManager(), ft, adapter, 1,
-                       R.id.editor2);
-        populateColumn(getSupportFragmentManager(), ft, adapter, 2,
-                       R.id.editor3);
-        ft.commit();
-      }
-    }
-    else {
-      SamplePagerAdapter adapter=buildAdapter();
-      TabPageIndicator tabs=(TabPageIndicator)findViewById(R.id.titles);
+				FragmentManager fm = getSupportFragmentManager();
+				populateColumn(fm, ft, adapter, 0, R.id.editor1);
+				populateColumn(fm, ft, adapter, 1, R.id.editor2);
+				populateColumn(fm, ft, adapter, 2, R.id.editor3);
+				ft.commit();
+			}
+		}
+		else
+		{
+			SamplePagerAdapter adapter = buildAdapter();
+			TabPageIndicator tabs = (TabPageIndicator) findViewById(R.id.titles);
 
-      pager.setAdapter(adapter);
-      tabs.setViewPager(pager);
-    }
-  }
+			pager.setAdapter(adapter);
+			tabs.setViewPager(pager);
+		}
+	}
 
-  private SamplePagerAdapter buildAdapter() {
-    ArrayList<PageDescriptor> pages=new ArrayList<PageDescriptor>();
+	private SamplePagerAdapter buildAdapter()
+	{
+		ArrayList<PageDescriptor> pages = new ArrayList<PageDescriptor>();
 
-    for (int i=0; i < 3; i++) {
-      pages.add(new SimplePageDescriptor(buildTag(i), buildTitle(i)));
-    }
+		for (int i = 0; i < 3; i++)
+		{
+			pages.add(new SimplePageDescriptor(buildTag(i), buildTitle(i)));
+		}
 
-    return(new SamplePagerAdapter(getSupportFragmentManager(), pages));
-  }
+		return (new SamplePagerAdapter(getSupportFragmentManager(), pages));
+	}
 
-  private String buildTag(int position) {
-    return("editor" + String.valueOf(position));
-  }
+	private String buildTag(int position)
+	{
+		return ("editor" + String.valueOf(position));
+	}
 
-  private String buildTitle(int position) {
-    return(String.format(getString(R.string.hint), position + 1));
-  }
+	private String buildTitle(int position)
+	{
+		return (String.format(getString(R.string.hint), position + 1));
+	}
 
-  private void populateColumn(FragmentManager fm,
-                              FragmentTransaction ft,
-                              SamplePagerAdapter adapter, int position,
-                              int slot) {
-    EditorFragment f=adapter.getExistingFragment(position);
+	private void populateColumn(FragmentManager fm, FragmentTransaction ft,
+			SamplePagerAdapter adapter, int position, int slot)
+	{
+		EditorFragment f = adapter.getExistingFragment(position);
 
-    if (f == null) {
-      f=adapter.createFragment(buildTitle(position));
-    }
-    else {
-      fm.beginTransaction().remove(f).commit();
-      fm.executePendingTransactions();
-    }
+		if (f == null)
+		{
+			f = adapter.createFragment(buildTitle(position));
+		}
+		else
+		{
+			fm.beginTransaction().remove(f).commit();
+			fm.executePendingTransactions();
+		}
 
-    ft.add(slot, f, buildTag(position));
-  }
+		ft.add(slot, f, buildTag(position));
+	}
 
-  static class SamplePagerAdapter extends
-      ArrayPagerAdapter<EditorFragment> {
-    public SamplePagerAdapter(FragmentManager fragmentManager,
-                              ArrayList<PageDescriptor> descriptors) {
-      super(fragmentManager, descriptors);
-    }
+	static class SamplePagerAdapter extends ArrayPagerAdapter<EditorFragment>
+	{
+		public SamplePagerAdapter(FragmentManager fragmentManager,
+				ArrayList<PageDescriptor> descriptors)
+		{
+			super(fragmentManager, descriptors);
+		}
 
-    @Override
-    protected EditorFragment createFragment(PageDescriptor desc) {
-      return(createFragment(desc.getTitle()));
-    }
+		@Override
+		protected EditorFragment createFragment(PageDescriptor desc)
+		{
+			return (createFragment(desc.getTitle()));
+		}
 
-    EditorFragment createFragment(String title) {
-      return(EditorFragment.newInstance(title));
-    }
-  }
+		EditorFragment createFragment(String title)
+		{
+			return (EditorFragment.newInstance(title));
+		}
+	}
 }

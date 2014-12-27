@@ -10,7 +10,7 @@
 	
 	From _Tuning Android Applications_
 		http://commonsware.com/AndTuning
-*/
+ */
 
 package com.commonsware.android.tuning.prefs;
 
@@ -20,20 +20,23 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.TextView;
 
-public class PrefsPersistActivity extends Activity {
-	private static final String KEY="counter";
-	
+public class PrefsPersistActivity extends Activity
+{
+	private static final String KEY = "counter";
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-		SharedPreferences prefs=
-			PreferenceManager.getDefaultSharedPreferences(this);
-		int counter=prefs.getInt(KEY, 0);
-		
-		((TextView)findViewById(R.id.value)).setText(String.valueOf(counter));
-		
-		AbstractPrefsPersistStrategy.persist(prefs.edit().putInt(KEY, counter+1));
+
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		int counter = prefs.getInt(KEY, 0);
+
+		((TextView) findViewById(R.id.value)).setText(String.valueOf(counter));
+
+		AbstractPrefsPersistStrategy.persist(prefs.edit().putInt(KEY,
+				counter + 1));
 	}
 }

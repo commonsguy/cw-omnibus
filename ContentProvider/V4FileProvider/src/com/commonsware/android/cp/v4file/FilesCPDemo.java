@@ -25,45 +25,51 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class FilesCPDemo extends Activity {
-  private static final String AUTHORITY="com.commonsware.android.cp.v4file";
-      
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+public class FilesCPDemo extends Activity
+{
+	private static final String AUTHORITY = "com.commonsware.android.cp.v4file";
 
-    File f=new File(getFilesDir(), "test.pdf");
+	@Override
+	public void onCreate(Bundle icicle)
+	{
+		super.onCreate(icicle);
 
-    if (!f.exists()) {
-      AssetManager assets=getResources().getAssets();
+		File f = new File(getFilesDir(), "test.pdf");
 
-      try {
-        copy(assets.open("test.pdf"), f);
-      }
-      catch (IOException e) {
-        Log.e("FileProvider", "Exception copying from assets", e);
-      }
-    }
+		if (!f.exists())
+		{
+			AssetManager assets = getResources().getAssets();
 
-    Intent i=
-        new Intent(Intent.ACTION_VIEW,
-                   FileProvider.getUriForFile(this, AUTHORITY, f));
+			try
+			{
+				copy(assets.open("test.pdf"), f);
+			}
+			catch (IOException e)
+			{
+				Log.e("FileProvider", "Exception copying from assets", e);
+			}
+		}
 
-    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    startActivity(i);
-    finish();
-  }
+		Intent i = new Intent(Intent.ACTION_VIEW, FileProvider.getUriForFile(
+				this, AUTHORITY, f));
 
-  static private void copy(InputStream in, File dst) throws IOException {
-    FileOutputStream out=new FileOutputStream(dst);
-    byte[] buf=new byte[1024];
-    int len;
+		i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		startActivity(i);
+		finish();
+	}
 
-    while ((len=in.read(buf)) > 0) {
-      out.write(buf, 0, len);
-    }
+	static private void copy(InputStream in, File dst) throws IOException
+	{
+		FileOutputStream out = new FileOutputStream(dst);
+		byte[] buf = new byte[1024];
+		int len;
 
-    in.close();
-    out.close();
-  }
+		while ((len = in.read(buf)) > 0)
+		{
+			out.write(buf, 0, len);
+		}
+
+		in.close();
+		out.close();
+	}
 }

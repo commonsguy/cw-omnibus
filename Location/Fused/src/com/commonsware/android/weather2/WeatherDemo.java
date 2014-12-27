@@ -14,6 +14,7 @@
 
 package com.commonsware.android.weather2;
 
+import info.juanmendez.android.utils.Trace;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -23,70 +24,93 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-public class WeatherDemo extends SherlockFragmentActivity {
-  protected static final String TAG_ERROR_DIALOG_FRAGMENT="errorDialog";
+public class WeatherDemo extends SherlockFragmentActivity
+{
+	protected static final String TAG_ERROR_DIALOG_FRAGMENT = "errorDialog";
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		Trace.setTAG("FuseLocationDemo");
+		super.onCreate(savedInstanceState);
 
-    if (readyToGo()) {
-      if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
-        getSupportFragmentManager().beginTransaction()
-                                   .add(android.R.id.content,
-                                        new WeatherFragment()).commit();
-      }
-    }
-  }
+		if (readyToGo())
+		{
+			if (getSupportFragmentManager().findFragmentById(
+					android.R.id.content) == null)
+			{
+				getSupportFragmentManager().beginTransaction()
+						.add(android.R.id.content, new WeatherFragment())
+						.commit();
+			}
+		}
+	}
 
-  protected boolean readyToGo() {
-    int status=
-        GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+	protected boolean readyToGo()
+	{
+		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+		
+		Trace.warn("Ready? " + ( status == ConnectionResult.SUCCESS ? "true":"false") , this );
 
-    if (status == ConnectionResult.SUCCESS) {
-      return(true);
-    }
-    else if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
-      ErrorDialogFragment.newInstance(status)
-                         .show(getSupportFragmentManager(),
-                               TAG_ERROR_DIALOG_FRAGMENT);
-    }
-    else {
-      Toast.makeText(this, R.string.no_fused, Toast.LENGTH_LONG).show();
-      finish();
-    }
+		if (status == ConnectionResult.SUCCESS)
+		{
+			return (true);
+		}
+		else
+		if (GooglePlayServicesUtil.isUserRecoverableError(status))
+		{
+			ErrorDialogFragment.newInstance(status).show(
+					getSupportFragmentManager(), TAG_ERROR_DIALOG_FRAGMENT);
+		}
+		else
+		{
+			Toast.makeText(this, R.string.no_fused, Toast.LENGTH_LONG)
+					.show();
+			finish();
+		}
 
-    return(false);
-  }
+		return (false);
+	}
 
-  public static class ErrorDialogFragment extends DialogFragment {
-    static final String ARG_STATUS="status";
+	/**
+	 * reminder of dialog fragment: https://www.youtube.com/watch?v=bkUHeXCX8XM
+	 * @author Juan
+	 * 1680
+	 *
+	 */
+	public static class ErrorDialogFragment extends DialogFragment
+	{
+		static final String ARG_STATUS = "status";
 
-    static ErrorDialogFragment newInstance(int status) {
-      Bundle args=new Bundle();
+		static ErrorDialogFragment newInstance(int status)
+		{
+			Bundle args = new Bundle();
 
-      args.putInt(ARG_STATUS, status);
+			args.putInt(ARG_STATUS, status);
 
-      ErrorDialogFragment result=new ErrorDialogFragment();
+			ErrorDialogFragment result = new ErrorDialogFragment();
 
-      result.setArguments(args);
+			result.setArguments(args);
 
-      return(result);
-    }
+			return (result);
+		}
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-      Bundle args=getArguments();
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState)
+		{
+			Bundle args = getArguments();
 
-      return GooglePlayServicesUtil.getErrorDialog(args.getInt(ARG_STATUS),
-                                                   getActivity(), 0);
-    }
+			return GooglePlayServicesUtil.getErrorDialog(
+					args.getInt(ARG_STATUS), getActivity(), 0);
+		}
 
-    @Override
-    public void onDismiss(DialogInterface dlg) {
-      if (getActivity() != null) {
-        getActivity().finish();
-      }
-    }
-  }
+		@Override
+		public void onDismiss(DialogInterface dlg)
+		{
+			if (getActivity() != null)
+			{
+				getActivity().finish();
+			}
+		}
+	}
 }

@@ -21,40 +21,45 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import java.util.Locale;
 
-public class AppWidget extends AppWidgetProvider {
-  // based on http://stackoverflow.com/a/18552461/115145
-  
-  @Override
-  public void onUpdate(Context context,
-                       AppWidgetManager appWidgetManager,
-                       int[] appWidgetIds) {
-    super.onUpdate(context, appWidgetManager, appWidgetIds);
+public class AppWidget extends AppWidgetProvider
+{
+	// based on http://stackoverflow.com/a/18552461/115145
 
-    for (int appWidgetId : appWidgetIds) {
-      Bundle options=appWidgetManager.getAppWidgetOptions(appWidgetId);
+	@Override
+	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
+			int[] appWidgetIds)
+	{
+		super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-      onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId,
-                                options);
-    }
-  }
+		for (int appWidgetId : appWidgetIds)
+		{
+			Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
 
-  @Override
-  public void onAppWidgetOptionsChanged(Context ctxt,
-                                        AppWidgetManager mgr,
-                                        int appWidgetId,
-                                        Bundle newOptions) {
-    RemoteViews updateViews=
-        new RemoteViews(ctxt.getPackageName(), R.layout.widget);
-    String msg=
-        String.format(Locale.getDefault(),
-                      "[%d-%d] x [%d-%d]",
-                      newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),
-                      newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
-                      newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT),
-                      newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT));
+			onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId,
+					options);
+		}
+	}
 
-    updateViews.setTextViewText(R.id.size, msg);
+	@Override
+	public void onAppWidgetOptionsChanged(Context ctxt, AppWidgetManager mgr,
+			int appWidgetId, Bundle newOptions)
+	{
+		RemoteViews updateViews = new RemoteViews(ctxt.getPackageName(),
+				R.layout.widget);
+		String msg = String
+				.format(Locale.getDefault(),
+						"[%d-%d] x [%d-%d]",
+						newOptions
+								.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH),
+						newOptions
+								.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
+						newOptions
+								.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT),
+						newOptions
+								.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT));
 
-    mgr.updateAppWidget(appWidgetId, updateViews);
-  }
+		updateViews.setTextViewText(R.id.size, msg);
+
+		mgr.updateAppWidget(appWidgetId, updateViews);
+	}
 }

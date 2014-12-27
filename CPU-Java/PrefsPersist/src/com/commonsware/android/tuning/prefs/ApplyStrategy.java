@@ -10,16 +10,21 @@
 	
 	From _Tuning Android Applications_
 		http://commonsware.com/AndTuning
-*/
+ */
 
 package com.commonsware.android.tuning.prefs;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences.Editor;
+import android.os.Build;
 
-public class ApplyStrategy extends AbstractPrefsPersistStrategy {
+public class ApplyStrategy extends AbstractPrefsPersistStrategy
+{
 
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@Override
-	void persistAsync(Editor editor) {
+	void persistAsync(Editor editor)
+	{
 		editor.apply();
 	}
 }

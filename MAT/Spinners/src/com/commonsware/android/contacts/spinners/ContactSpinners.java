@@ -10,57 +10,79 @@
 	
 	From _The Busy Coder's Guide to Android Development_
 		http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.contacts.spinners;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.Spinner;
 
-public class ContactSpinners extends ListActivity
-	implements AdapterView.OnItemSelectedListener {
-	private static String[] options={"Contact Names",
-																		"Contact Names & Numbers",
-																		"Contact Names & Email Addresses"};
-	private ListAdapter[] listAdapters=new ListAdapter[3];
+public class ContactSpinners extends ListActivity implements
+		AdapterView.OnItemSelectedListener
+{
+	private static String[] options = { "Contact Names",
+			"Contact Names & Numbers", "Contact Names & Email Addresses" };
+	private ListAdapter[] listAdapters = new ListAdapter[3];
 
+	  @Override
+	  protected void onPause()
+	  {
+	  	// TODO Auto-generated method stub
+	  	super.onPause();
+	  	
+	  	//Debug.stopMethodTracing(); 
+	  }
+
+	  @Override
+	  protected void onResume()
+	  {
+	  	// TODO Auto-generated method stub
+	  	super.onResume();
+	  	//Debug.startMethodTracing("yourstring");
+	  }
+	  	  
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		initListAdapters();
-		
-		Spinner spin=(Spinner)findViewById(R.id.spinner);
+
+		Spinner spin = (Spinner) findViewById(R.id.spinner);
 		spin.setOnItemSelectedListener(this);
-		
-		ArrayAdapter<String> aa=new ArrayAdapter<String>(this,
-															android.R.layout.simple_spinner_item,
-															options);
-		
-		aa.setDropDownViewResource(
-						android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<String> aa = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, options);
+
+		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spin.setAdapter(aa);
 	}
-	
-	public void onItemSelected(AdapterView<?> parent,
-																View v, int position, long id) {
+
+	public void onItemSelected(AdapterView<?> parent, View v, int position,
+			long id)
+	{
 		setListAdapter(listAdapters[position]);
 	}
-	
-	public void onNothingSelected(AdapterView<?> parent) {
+
+	public void onNothingSelected(AdapterView<?> parent)
+	{
 		// ignore
 	}
-	
-	private void initListAdapters() {
-		listAdapters[0]=ContactsAdapterBridge.INSTANCE.buildNameAdapter(this);
-		listAdapters[1]=ContactsAdapterBridge.INSTANCE.buildPhonesAdapter(this);
-		listAdapters[2]=ContactsAdapterBridge.INSTANCE.buildEmailAdapter(this);
+
+	private void initListAdapters()
+	{
+		listAdapters[0] = ContactsAdapterBridge.INSTANCE.buildNameAdapter(this);
+		listAdapters[1] = ContactsAdapterBridge.INSTANCE
+				.buildPhonesAdapter(this);
+		listAdapters[2] = ContactsAdapterBridge.INSTANCE
+				.buildEmailAdapter(this);
 	}
-	
+
 }

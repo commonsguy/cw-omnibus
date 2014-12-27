@@ -16,14 +16,21 @@ package com.commonsware.android.drawer;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 public class DrawerDemo extends Activity
 {
+	ImageView img;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        img = (ImageView) findViewById(R.id.content);
+        
+        img.setImageResource( R.drawable.cat );
     }
 }

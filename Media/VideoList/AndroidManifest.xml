@@ -11,8 +11,8 @@
 		android:xlargeScreens="true"/>
 
 	<uses-sdk
-		android:minSdkVersion="11"
-		android:targetSdkVersion="17"/>
+		android:minSdkVersion="14"
+		android:targetSdkVersion="19"/>
 
 	<application
 		android:allowBackup="false"
@@ -29,10 +29,7 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity
-			android:name=".VideoPlayerActivity"
-			android:label="@string/app_name">
-		</activity>
+		
 	</application>
 
 </manifest>

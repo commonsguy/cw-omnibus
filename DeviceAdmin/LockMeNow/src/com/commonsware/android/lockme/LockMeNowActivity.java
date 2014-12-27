@@ -21,30 +21,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class LockMeNowActivity extends Activity {
-  private DevicePolicyManager mgr=null;
-  private ComponentName cn=null;
+public class LockMeNowActivity extends Activity
+{
+	private DevicePolicyManager mgr = null;
+	private ComponentName cn = null;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.main);
-    cn=new ComponentName(this, AdminReceiver.class);
-    mgr=(DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
-  }
+		setContentView(R.layout.main);
+		cn = new ComponentName(this, AdminReceiver.class);
+		mgr = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
+	}
 
-  public void lockMeNow(View v) {
-    if (mgr.isAdminActive(cn)) {
-      mgr.lockNow();
-    }
-    else {
-      Intent intent=
-          new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-      intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, cn);
-      intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                      getString(R.string.device_admin_explanation));
-      startActivity(intent);
-    }
-  }
+	public void lockMeNow(View v)
+	{
+		if (mgr.isAdminActive(cn))
+		{
+			mgr.lockNow();
+		}
+		else
+		{
+			Intent intent = new Intent(
+					DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+			intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, cn);
+			intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+					getString(R.string.device_admin_explanation));
+			startActivity(intent);
+		}
+	}
 }

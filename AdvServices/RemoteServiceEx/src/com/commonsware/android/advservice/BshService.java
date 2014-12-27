@@ -24,67 +24,84 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class BshService extends Service {
-  private final ExecutorService executor=
-      new ThreadPoolExecutor(1, 1, 60, TimeUnit.SECONDS,
-                             new LinkedBlockingQueue<Runnable>());
-  private final Interpreter i=new Interpreter();
+public class BshService extends Service
+{
+	private final ExecutorService executor = new ThreadPoolExecutor(1, 1, 60,
+			TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+	private final Interpreter i = new Interpreter();
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
+	@Override
+	public void onCreate()
+	{
+		super.onCreate();
 
-    try {
-      i.set("context", this);
-    }
-    catch (bsh.EvalError e) {
-      Log.e("BshService", "Error executing script", e);
-    }
-  }
+		try
+		{
+			i.set("context", this);
+		}
+		catch (bsh.EvalError e)
+		{
+			Log.e("BshService", "Error executing script", e);
+		}
+	}
 
-  @Override
-  public IBinder onBind(Intent intent) {
-    return(new BshBinder());
-  }
+	@Override
+	public IBinder onBind(Intent intent)
+	{
+		return (new BshBinder());
+	}
 
-  @Override
-  public void onDestroy() {
-    executor.shutdown();
-    
-    super.onDestroy();
-  }
+	@Override
+	public void onDestroy()
+	{
+		executor.shutdown();
 
-  private class ExecuteScriptJob implements Runnable {
-    IScriptResult cb;
-    String script;
+		super.onDestroy();
+	}
 
-    ExecuteScriptJob(String script, IScriptResult cb) {
-      this.script=script;
-      this.cb=cb;
-    }
+	private class BshBinder extends IScript.Stub
+	{
+		@Override
+		public void executeScript(String script, IScriptResult cb)
+		{
+			executor.execute(new ExecuteScriptJob(script, cb));
+		}
+	};
+	
+	private class ExecuteScriptJob implements Runnable
+	{
+		IScriptResult cb;
+		String script;
 
-    @Override
-    public void run() {
-      try {
-        cb.success(i.eval(script).toString());
-      }
-      catch (Throwable e) {
-        Log.e("BshService", "Error executing script", e);
+		ExecuteScriptJob(String script, IScriptResult cb)
+		{
+			this.script = script;
+			this.cb = cb;
+		}
 
-        try {
-          cb.failure(e.getMessage());
-        }
-        catch (Throwable t) {
-          Log.e("BshService", "Error returning exception to client", t);
-        }
-      }
-    }
-  }
+		@Override
+		public void run()
+		{
+			try
+			{
+				cb.success(i.eval(script).toString());
+			}
+			catch (Throwable e)
+			{
+				Log.e("BshService", "Error executing script", e);
 
-  private class BshBinder extends IScript.Stub {
-    @Override
-    public void executeScript(String script, IScriptResult cb) {
-      executor.execute(new ExecuteScriptJob(script, cb));
-    }
-  };
+				try
+				{
+					cb.failure(e.getMessage());
+				}
+				catch (Throwable t)
+				{
+					Log.e("BshService", "Error returning exception to client",
+							t);
+				}
+			}
+		}
+	}
+
+	
 }

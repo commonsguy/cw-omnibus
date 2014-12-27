@@ -28,90 +28,109 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RemoteViews;
 
-public class RemoteViewsHostActivity extends Activity {
-  public static final String ACTION_CALL_FOR_PLUGINS=
-      "com.commonsware.android.rv.host.CALL_FOR_PLUGINS";
-  public static final String ACTION_REGISTER_PLUGIN=
-      "com.commonsware.android.rv.host.REGISTER_PLUGIN";
-  public static final String ACTION_CALL_FOR_CONTENT=
-      "com.commonsware.android.rv.host.CALL_FOR_CONTENT";
-  public static final String ACTION_DELIVER_CONTENT=
-      "com.commonsware.android.rv.host.DELIVER_CONTENT";
-  public static final String EXTRA_COMPONENT="component";
-  public static final String EXTRA_CONTENT="content";
-  public static final String PERM_ACT_AS_PLUGIN=
-      "com.commonsware.android.rv.host.ACT_AS_PLUGIN";
-  private ComponentName pluginCN=null;
+public class RemoteViewsHostActivity extends Activity
+{
+	public static final String ACTION_CALL_FOR_PLUGINS = "com.commonsware.android.rv.host.CALL_FOR_PLUGINS";
+	public static final String ACTION_REGISTER_PLUGIN = "com.commonsware.android.rv.host.REGISTER_PLUGIN";
+	public static final String ACTION_CALL_FOR_CONTENT = "com.commonsware.android.rv.host.CALL_FOR_CONTENT";
+	public static final String ACTION_DELIVER_CONTENT = "com.commonsware.android.rv.host.DELIVER_CONTENT";
+	public static final String EXTRA_COMPONENT = "component";
+	public static final String EXTRA_CONTENT = "content";
+	public static final String PERM_ACT_AS_PLUGIN = "com.commonsware.android.rv.host.ACT_AS_PLUGIN";
+	
+	private ComponentName pluginCN = null;
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-  }
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+	}
 
-  @Override
-  public void onResume() {
-    super.onResume();
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 
-    IntentFilter pluginFilter=new IntentFilter();
+		IntentFilter pluginFilter = new IntentFilter();
 
-    pluginFilter.addAction(ACTION_REGISTER_PLUGIN);
-    pluginFilter.addAction(ACTION_DELIVER_CONTENT);
+		pluginFilter.addAction(ACTION_REGISTER_PLUGIN);
+		pluginFilter.addAction(ACTION_DELIVER_CONTENT);
 
-    registerReceiver(plugin, pluginFilter, PERM_ACT_AS_PLUGIN, null);
+		registerReceiver(plugin, pluginFilter, PERM_ACT_AS_PLUGIN, null);
 
-    if (pluginCN == null) {
-      sendBroadcast(new Intent(ACTION_CALL_FOR_PLUGINS));
-    }
-  }
+		if (pluginCN == null)
+		{
+			sendBroadcast(new Intent(ACTION_CALL_FOR_PLUGINS));
+		}
+	}
 
-  @Override
-  public void onPause() {
-    unregisterReceiver(plugin);
+	@Override
+	public void onPause()
+	{
+		unregisterReceiver(plugin);
 
-    super.onPause();
-  }
+		super.onPause();
+	}
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    new MenuInflater(this).inflate(R.menu.options, menu);
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		new MenuInflater(this).inflate(R.menu.options, menu);
 
-    return(super.onCreateOptionsMenu(menu));
-  }
+		return (super.onCreateOptionsMenu(menu));
+	}
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (R.id.refresh == item.getItemId()) {
-      refreshPlugin();
-      return(true);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (R.id.refresh == item.getItemId())
+		{
+			refreshPlugin();
+			return (true);
+		}
 
-    return(super.onOptionsItemSelected(item));
-  }
+		return (super.onOptionsItemSelected(item));
+	}
 
-  private void refreshPlugin() {
-    Intent call=new Intent(ACTION_CALL_FOR_CONTENT);
+	private void refreshPlugin()
+	{
+		Intent call = new Intent(ACTION_CALL_FOR_CONTENT);
 
-    call.setComponent(pluginCN);
-    sendBroadcast(call);
-  }
+		/**
+		 *  the specified class will always be used regardless of the other fields. 
+		 *  You should only set this value when you know you absolutely want a specific 
+		 *  class to be used; otherwise it is better to let the system find the appropriate 
+		 *  class so that you will respect the installed applications and user preferences
+		 */
+		call.setComponent(pluginCN);
+		sendBroadcast(call);
+	}
 
-  private BroadcastReceiver plugin=new BroadcastReceiver() {
-    @Override
-    public void onReceive(Context ctxt, Intent i) {
-      if (ACTION_REGISTER_PLUGIN.equals(i.getAction())) {
-        pluginCN=(ComponentName)i.getParcelableExtra(EXTRA_COMPONENT);
-      }
-      else if (ACTION_DELIVER_CONTENT.equals(i.getAction())) {
-        RemoteViews rv=(RemoteViews)i.getParcelableExtra(EXTRA_CONTENT);
-        ViewGroup frame=(ViewGroup)findViewById(android.R.id.content);
+	private BroadcastReceiver plugin = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context ctxt, Intent i)
+		{
+			if (ACTION_REGISTER_PLUGIN.equals(i.getAction()))
+			{
+				pluginCN = (ComponentName) i
+						.getParcelableExtra(EXTRA_COMPONENT);
+			}
+			else
+			if (ACTION_DELIVER_CONTENT.equals(i.getAction()))
+			{
+				RemoteViews rv = (RemoteViews) i
+						.getParcelableExtra(EXTRA_CONTENT);
+				ViewGroup frame = (ViewGroup) findViewById(android.R.id.content);
 
-        frame.removeAllViews();
+				frame.removeAllViews();
 
-        View pluginView=rv.apply(RemoteViewsHostActivity.this, frame);
+				View pluginView = rv.apply(RemoteViewsHostActivity.this,
+						frame);
 
-        frame.addView(pluginView);
-      }
-    }
-  };
+				frame.addView(pluginView);
+			}
+		}
+	};
 }

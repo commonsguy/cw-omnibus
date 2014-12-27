@@ -21,46 +21,54 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
-  static final String SENDER_ID="this is so fake"; // change
-                                                   // me!
+public class MainActivity extends Activity
+{
+	static final String SENDER_ID = "this is so fake"; // change
+														// me!
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    GCMRegistrarCompat.checkDevice(this);
+		GCMRegistrarCompat.checkDevice(this);
 
-    if (BuildConfig.DEBUG) {
-      GCMRegistrarCompat.checkManifest(this);
-    }
-  }
+		if (BuildConfig.DEBUG)
+		{
+			GCMRegistrarCompat.checkManifest(this);
+		}
+	}
 
-  public void onClick(View v) {
-    final String regId=GCMRegistrarCompat.getRegistrationId(this);
+	public void onClick(View v)
+	{
+		final String regId = GCMRegistrarCompat.getRegistrationId(this);
 
-    if (regId.length() == 0) {
-      new RegisterTask(this).execute(SENDER_ID);
-    }
-    else {
-      Log.d(getClass().getSimpleName(), "Existing registration: "
-          + regId);
-      Toast.makeText(this, regId, Toast.LENGTH_LONG).show();
-    }
-  }
+		if (regId.length() == 0)
+		{
+			new RegisterTask(this).execute(SENDER_ID);
+		}
+		else
+		{
+			Log.d(getClass().getSimpleName(), "Existing registration: " + regId);
+			Toast.makeText(this, regId, Toast.LENGTH_LONG).show();
+		}
+	}
 
-  private static class RegisterTask extends
-      GCMRegistrarCompat.BaseRegisterTask {
+	private static class RegisterTask extends
+			GCMRegistrarCompat.BaseRegisterTask
+	{
 
-    RegisterTask(Context context) {
-      super(context);
-    }
+		RegisterTask(Context context)
+		{
+			super(context);
+		}
 
-    @Override
-    public void onPostExecute(String regid) {
-      Log.d(getClass().getSimpleName(), "registered as: " + regid);
-      Toast.makeText(context, regid, Toast.LENGTH_LONG).show();
-    }
-  }
+		@Override
+		public void onPostExecute(String regid)
+		{
+			Log.d(getClass().getSimpleName(), "registered as: " + regid);
+			Toast.makeText(context, regid, Toast.LENGTH_LONG).show();
+		}
+	}
 }

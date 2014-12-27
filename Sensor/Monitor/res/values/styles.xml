@@ -1,7 +1,0 @@
-<resources>
-
-	<style name="AppBaseTheme" parent="Theme.Sherlock.Light"></style>
-
-	<style name="AppTheme" parent="AppBaseTheme"></style>
-
-</resources>

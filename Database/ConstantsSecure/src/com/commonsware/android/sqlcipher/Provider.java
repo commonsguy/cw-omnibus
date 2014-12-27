@@ -62,9 +62,9 @@ public class Provider extends ContentProvider {
   }
 
   @Override
-  public Bundle call(String method, String arg, Bundle extras) {
-    if (SET_KEY_METHOD.equals(method) && arg != null) {
-      key=arg;
+  public Bundle call(String method, String _key, Bundle extras) {
+    if (SET_KEY_METHOD.equals(method) && _key != null) {
+      key=_key;
     }
 
     return(null);

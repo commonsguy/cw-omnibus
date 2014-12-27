@@ -16,9 +16,11 @@ package com.commonsware.android.scaleclip;
 
 import android.widget.ImageView;
 
-public class ClipFragment extends FragmentBase {
-  @Override
-  void setImageBackground(ImageView image) {
-    image.setImageResource(R.drawable.clip);
-  }
+public class ClipFragment extends FragmentBase
+{
+	@Override
+	void setImageBackground(ImageView image)
+	{
+		image.setImageResource(R.drawable.clip);
+	}
 }

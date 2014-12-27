@@ -19,19 +19,21 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class ViewPagerIndicatorActivity extends
-    SherlockFragmentActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+public class ViewPagerIndicatorActivity extends SherlockFragmentActivity
+{
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
 
-    ViewPager pager=(ViewPager)findViewById(R.id.pager);
+		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 
-    pager.setAdapter(buildAdapter());
-  }
+		pager.setAdapter(buildAdapter());
+	}
 
-  private PagerAdapter buildAdapter() {
-    return(new SampleAdapter(this, getSupportFragmentManager()));
-  }
+	private PagerAdapter buildAdapter()
+	{
+		return (new SampleAdapter(this, getSupportFragmentManager()));
+	}
 }

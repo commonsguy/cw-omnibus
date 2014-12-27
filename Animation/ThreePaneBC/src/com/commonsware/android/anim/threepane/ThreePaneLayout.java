@@ -25,100 +25,119 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
-public class ThreePaneLayout extends LinearLayout {
-  private static final int ANIM_DURATION=500;
-  private View left=null;
-  private View middle=null;
-  private View right=null;
-  private int leftWidth=-1;
-  private int middleWidthNormal=-1;
+public class ThreePaneLayout extends LinearLayout
+{
+	private static final int ANIM_DURATION = 500;
+	private View left = null;
+	private View middle = null;
+	private View right = null;
+	private int leftWidth = -1;
+	private int middleWidthNormal = -1;
 
-  public ThreePaneLayout(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    initSelf();
-  }
+	public ThreePaneLayout(Context context, AttributeSet attrs)
+	{
+		super(context, attrs);
+		initSelf();
+	}
 
-  void initSelf() {
-    setOrientation(HORIZONTAL);
-  }
+	void initSelf()
+	{
+		setOrientation(HORIZONTAL);
+	}
 
-  @Override
-  public void onFinishInflate() {
-    super.onFinishInflate();
+	@Override
+	public void onFinishInflate()
+	{
+		super.onFinishInflate();
 
-    left=getChildAt(0);
-    middle=getChildAt(1);
-    right=getChildAt(2);
-  }
+		left = getChildAt(0);
+		middle = getChildAt(1);
+		right = getChildAt(2);
+	}
 
-  public View getLeftView() {
-    return(left);
-  }
+	public View getLeftView()
+	{
+		return (left);
+	}
 
-  public View getMiddleView() {
-    return(middle);
-  }
+	public View getMiddleView()
+	{
+		return (middle);
+	}
 
-  public View getRightView() {
-    return(right);
-  }
+	public View getRightView()
+	{
+		return (right);
+	}
 
-  public void hideLeft() {
-    if (leftWidth == -1) {
-      leftWidth=left.getWidth();
-      middleWidthNormal=middle.getWidth();
-      resetWidget(left, leftWidth);
-      resetWidget(middle, middleWidthNormal);
-      resetWidget(right, middleWidthNormal);
-      requestLayout();
-    }
+	public void hideLeft()
+	{
+		if (leftWidth == -1)
+		{
+			leftWidth = left.getWidth();
+			middleWidthNormal = middle.getWidth();
+			resetWidget(left, leftWidth);
+			resetWidget(middle, middleWidthNormal);
+			resetWidget(right, middleWidthNormal);
+			requestLayout();
+		}
 
-    translateWidgets(-1 * leftWidth, left, middle, right);
+		translateWidgets(-1 * leftWidth, left, middle, right);
 
-    ObjectAnimator.ofInt(this, "middleWidth", middleWidthNormal,
-                         leftWidth).setDuration(ANIM_DURATION).start();
-  }
+		ObjectAnimator.ofInt(this, "middleWidth", middleWidthNormal, leftWidth)
+				.setDuration(ANIM_DURATION).start();
+	}
 
-  public void showLeft() {
-    translateWidgets(leftWidth, left, middle, right);
+	public void showLeft()
+	{
+		translateWidgets(leftWidth, left, middle, right);
 
-    ObjectAnimator.ofInt(this, "middleWidth", leftWidth,
-                         middleWidthNormal).setDuration(ANIM_DURATION)
-                  .start();
-  }
+		ObjectAnimator.ofInt(this, "middleWidth", leftWidth, middleWidthNormal)
+				.setDuration(ANIM_DURATION).start();
+	}
 
-  @SuppressWarnings("unused")
-  private void setMiddleWidth(int value) {
-    middle.getLayoutParams().width=value;
-    requestLayout();
-  }
+	@SuppressWarnings("unused")
+	private void setMiddleWidth(int value)
+	{
+		middle.getLayoutParams().width = value;
+		requestLayout();
+	}
 
-  @TargetApi(11)
-  private void translateWidgets(int deltaX, View... views) {
-    for (final View v : views) {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-        v.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-      }
+	@TargetApi(11)
+	private void translateWidgets(int deltaX, View... views)
+	{
+		final boolean gingerOrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+		
+		
+		for (final View v : views)
+		{
+			if (gingerOrHigher)
+			{
+				v.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+			}
 
-      ViewPropertyAnimator.animate(v).translationXBy(deltaX)
-                          .setDuration(ANIM_DURATION)
-                          .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                                v.setLayerType(View.LAYER_TYPE_NONE,
-                                               null);
-                              }
-                            }
-                          });
-    }
-  }
+			ViewPropertyAnimator.animate(v).translationXBy(deltaX)
+					.setDuration(ANIM_DURATION)
+					.setListener(new AnimatorListenerAdapter()
+					{
+						@Override
+						public void onAnimationEnd(Animator animation)
+						{
+							if (gingerOrHigher)
+							{
+								v.setLayerType(View.LAYER_TYPE_NONE, null);
+							}
+						}
+					});
+		}
+	}
 
-  private void resetWidget(View v, int width) {
-    LinearLayout.LayoutParams p=
-        (LinearLayout.LayoutParams)v.getLayoutParams();
+	private void resetWidget(View v, int width)
+	{
+		LinearLayout.LayoutParams p = (LinearLayout.LayoutParams) v
+				.getLayoutParams();
 
-    p.width=width;
-    p.weight=0;
-  }
+		p.width = width;
+		p.weight = 0;
+	}
 }

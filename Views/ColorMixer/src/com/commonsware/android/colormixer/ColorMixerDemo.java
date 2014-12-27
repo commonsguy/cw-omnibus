@@ -10,7 +10,7 @@
   
   From _The Busy Coder's Guide to Android Development_
     http://commonsware.com/Android
-*/
+ */
 
 package com.commonsware.android.colormixer;
 
@@ -18,25 +18,28 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class ColorMixerDemo extends Activity {
-  private TextView color=null;
-  
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
-    setContentView(R.layout.main);
-    
-    color=(TextView)findViewById(R.id.color);
-    
-    ColorMixer mixer=(ColorMixer)findViewById(R.id.mixer);
-    
-    mixer.setOnColorChangedListener(onColorChange);
-  }
-  
-  private ColorMixer.OnColorChangedListener onColorChange=
-    new ColorMixer.OnColorChangedListener() {
-    public void onColorChange(int argb) {
-      color.setText(Integer.toHexString(argb));
-    }
-  };
+public class ColorMixerDemo extends Activity
+{
+	private TextView color = null;
+
+	@Override
+	public void onCreate(Bundle icicle)
+	{
+		super.onCreate(icicle);
+		setContentView(R.layout.main);
+
+		color = (TextView) findViewById(R.id.color);
+
+		ColorMixer mixer = (ColorMixer) findViewById(R.id.mixer);
+
+		mixer.setOnColorChangedListener(onColorChange);
+	}
+
+	private ColorMixer.OnColorChangedListener onColorChange = new ColorMixer.OnColorChangedListener()
+	{
+		public void onColorChange(int argb)
+		{
+			color.setText(Integer.toHexString(argb));
+		}
+	};
 }

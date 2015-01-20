@@ -55,6 +55,19 @@ can download and set up ActionBarSherlock yourself in your Eclipse workspace,
 then go into Project Properties and point the
 book's project to use your copy of the ActionBarSherlock library project.
 
+- Some of these projects are not set up to support Eclipse, because
+the nature of the project is to demonstrate something specific for
+Android Studio or Gradle for Android.
+
+- Some of these projects are not set up to support Eclipse, as Eclipse
+is no longer officially supported by Google, and so the author of the
+book is focusing more on Android Studio. If the project looks like an
+Eclipse-style project (e.g., has `res/` and the manifest in the project
+root directory), but it lacks the Eclipse `.classpath` and `.project`
+files, you should be able to import the code into Eclipse anyway. However,
+you will have to set up your own links to libraries that the project
+depends upon (e.g., `appcompat-v7`).
+
 - Many of the book samples, and ActionBarSherlock, require your Java compiler
 compliance level to be set to 1.6, so code can use the `@Override` annotation
 on interface method implementations. You can find this in Project Properties,

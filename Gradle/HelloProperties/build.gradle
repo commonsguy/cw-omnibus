@@ -21,7 +21,7 @@ subprojects {
 
     android {
 				compileSdkVersion 19
-				buildToolsVersion "21.1.2"
+				buildToolsVersion BUILD_TOOLS_VERSION
 
         def signingPropFile = rootProject.file('signing.properties')
 

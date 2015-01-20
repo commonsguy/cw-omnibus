@@ -54,8 +54,8 @@ public class PlaybackFragment extends Fragment {
     setRetainInstance(true);
     setHasOptionsMenu(true);
     selector=
-        new MediaRouteSelector.Builder().addControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK)
-                                        .build();
+        new MediaRouteSelector.Builder()
+            .addControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK).build();
   }
 
   @Override

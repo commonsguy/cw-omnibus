@@ -18,6 +18,9 @@ import android.content.Context;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 class DatabaseHelper extends SQLiteAssetHelper {
+  static final String TITLE="title";
+  static final String VALUE="value";
+  static final String TABLE="constants";
   private static final String DATABASE_NAME="constants.db";
 
   public DatabaseHelper(Context context) {

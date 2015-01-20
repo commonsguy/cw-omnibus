@@ -14,24 +14,40 @@
 
 package com.commonsware.android.video.list;
 
+import android.app.Activity;
 import android.app.LoaderManager;
-import android.content.Context;
+import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import com.loopj.android.image.SmartImage;
-import com.loopj.android.image.SmartImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class VideosFragment extends
     ContractListFragment<VideosFragment.Contract> implements
-    LoaderManager.LoaderCallbacks<Cursor> {
+    LoaderManager.LoaderCallbacks<Cursor>,
+    SimpleCursorAdapter.ViewBinder {
+  private ImageLoader imageLoader;
+
+  @Override
+  public void onAttach(Activity host) {
+    super.onAttach(host);
+
+    ImageLoaderConfiguration ilConfig=
+        new ImageLoaderConfiguration.Builder(getActivity()).build();
+
+    imageLoader=ImageLoader.getInstance();
+    imageLoader.init(ilConfig);
+  }
 
   @Override
   public void onActivityCreated(Bundle state) {
@@ -44,7 +60,7 @@ public class VideosFragment extends
         new SimpleCursorAdapter(getActivity(), R.layout.row, null,
                                 from, to, 0);
 
-    adapter.setViewBinder(new ThumbnailBinder());
+    adapter.setViewBinder(this);
     setListAdapter(adapter);
 
     getLoaderManager().initLoader(0, null, this);
@@ -81,45 +97,25 @@ public class VideosFragment extends
     ((CursorAdapter)getListAdapter()).swapCursor(null);
   }
 
+  @Override
+  public boolean setViewValue(View v, Cursor c, int column) {
+    if (column == c.getColumnIndex(MediaStore.Video.Media._ID)) {
+      Uri video=
+          ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+              c.getInt(column));
+      DisplayImageOptions opts=new DisplayImageOptions.Builder()
+          .showImageOnLoading(R.drawable.ic_media_video_poster)
+          .build();
+
+      imageLoader.displayImage(video.toString(), (ImageView)v, opts);
+
+      return(true);
+    }
+
+    return(false);
+  }
+
   interface Contract {
     void onVideoSelected(String uri, String mimeType);
-  }
-
-  private static class ThumbnailBinder implements
-      SimpleCursorAdapter.ViewBinder {
-    @Override
-    public boolean setViewValue(View v, Cursor c, int column) {
-      if (column == c.getColumnIndex(MediaStore.Video.Media._ID)) {
-        VideoThumbnailImage thumb=
-            new VideoThumbnailImage(
-                                    c.getInt(column),
-                                    MediaStore.Video.Thumbnails.MICRO_KIND);
-
-        ((SmartImageView)v).setImage(thumb,
-                                     R.drawable.ic_media_video_poster);
-
-        return(true);
-      }
-
-      return(false);
-    }
-  }
-
-  private static class VideoThumbnailImage implements SmartImage {
-    private int videoId;
-    private int thumbnailKind;
-
-    VideoThumbnailImage(int videoId, int thumbnailKind) {
-      this.videoId=videoId;
-      this.thumbnailKind=thumbnailKind;
-    }
-
-    @Override
-    public Bitmap getBitmap(Context ctxt) {
-      return(MediaStore.Video.Thumbnails.getThumbnail(ctxt.getContentResolver(),
-                                                      videoId,
-                                                      thumbnailKind,
-                                                      null));
-    }
   }
 }

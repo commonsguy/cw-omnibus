@@ -4,7 +4,7 @@
 	android:orientation="horizontal"
 	android:padding="8dp">
 
-	<com.loopj.android.image.SmartImageView
+	<ImageView
 		android:id="@+id/thumbnail"
 		android:layout_width="64dp"
 		android:layout_height="64dp"

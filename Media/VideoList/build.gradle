@@ -6,10 +6,15 @@ buildscript {
         classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
+
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 }
 
 android {

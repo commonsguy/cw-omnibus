@@ -30,13 +30,10 @@ import com.squareup.picasso.Target;
 public class PresoPresenter extends Presenter {
   private static final int CARD_WIDTH=400;
   private static final int CARD_HEIGHT=300;
-  private static Context ctxt;
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent) {
-    ctxt=parent.getContext();
-
-    ImageCardView cardView=new ImageCardView(ctxt);
+    ImageCardView cardView=new ImageCardView(parent.getContext());
 
     cardView.setFocusable(true);
     cardView.setFocusableInTouchMode(true);
@@ -83,10 +80,10 @@ public class PresoPresenter extends Presenter {
     }
 
     protected void updateCardViewImage(String path) {
-      Picasso.with(ctxt)
+      Picasso.with(cardView.getContext())
               .load("file://" + path)
-              .resize(convertDpToPixel(ctxt, CARD_WIDTH),
-                  convertDpToPixel(ctxt, CARD_HEIGHT))
+              .resize(convertDpToPixel(cardView.getContext(), CARD_WIDTH),
+                  convertDpToPixel(cardView.getContext(), CARD_HEIGHT))
               .into(viewTarget);
     }
   }
@@ -100,7 +97,9 @@ public class PresoPresenter extends Presenter {
 
     @Override
     public void onBitmapLoaded(Bitmap bmp, Picasso.LoadedFrom lf) {
-      Drawable bmpDrawable=new BitmapDrawable(ctxt.getResources(), bmp);
+      Drawable bmpDrawable=
+          new BitmapDrawable(imageCardView.getContext().getResources(),
+                             bmp);
 
       imageCardView.setMainImage(bmpDrawable);
     }
@@ -112,7 +111,7 @@ public class PresoPresenter extends Presenter {
 
     @Override
     public void onPrepareLoad(Drawable d) {
-      // no-op
+      imageCardView.setMainImage(d);
     }
   }
 }

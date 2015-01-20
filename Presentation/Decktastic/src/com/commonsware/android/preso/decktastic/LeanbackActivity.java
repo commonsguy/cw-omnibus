@@ -15,11 +15,8 @@
 package com.commonsware.android.preso.decktastic;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Process;
-import de.greenrobot.event.EventBus;
 
 public class LeanbackActivity extends Activity {
   @Override

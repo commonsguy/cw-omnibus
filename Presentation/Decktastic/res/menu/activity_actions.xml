@@ -5,14 +5,16 @@
 
   <item
       android:id="@+id/countdown"
-      android:actionViewClass="com.commonsware.android.preso.decktastic.ReverseChronometer"
+      android:actionViewClass=
+        "com.commonsware.android.preso.decktastic.ReverseChronometer"
       android:showAsAction="always"
       android:title="This Should Not Be Needed">
   </item>
   <item
     android:id="@+id/route_provider"
     android:title="@string/media_route_provider"
-    android:actionProviderClass="com.commonsware.cwac.mediarouter.MediaRouteActionProvider"
+    android:actionProviderClass=
+      "com.commonsware.cwac.mediarouter.app.MediaRouteActionProvider"
     android:showAsAction="always"/>
   <item
       android:id="@+id/first"

@@ -96,7 +96,7 @@ public class EmPubLiteActivity extends Activity {
     adapter=new ContentsAdapter(this, contents);
     pager.setAdapter(adapter);
     findViewById(R.id.progressBar1).setVisibility(View.GONE);
-    findViewById(R.id.pager).setVisibility(View.VISIBLE);
+    pager.setVisibility(View.VISIBLE);
   }
 
   private void setupStrictMode() {

@@ -4,7 +4,7 @@
 	android:versionName="1.0">
 
 	<uses-sdk
-		android:minSdkVersion="8"
+		android:minSdkVersion="13"
 		android:targetSdkVersion="15"/>
 	<supports-screens android:largeScreens="true" android:smallScreens="true" android:normalScreens="true" android:xlargeScreens="true"/>
 	<uses-permission android:name="android.permission.VIBRATE"/>

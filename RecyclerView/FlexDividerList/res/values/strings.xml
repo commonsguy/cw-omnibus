@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RecyclerView Flex Divider List</string>
+    <string name="size_template">Size: %d</string>
+    <string name="icon">Icon</string>
+</resources>

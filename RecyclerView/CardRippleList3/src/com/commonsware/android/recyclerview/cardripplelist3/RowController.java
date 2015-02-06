@@ -47,10 +47,10 @@ class RowController extends RecyclerView.ViewHolder
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-          View rippledThingy=v.findViewById(R.id.row_content);
-          rippledThingy
-              .getBackground()
-              .setHotspot(event.getX(), event.getY());
+          v
+            .findViewById(R.id.row_content)
+            .getBackground()
+            .setHotspot(event.getX(), event.getY());
 
           return(false);
         }

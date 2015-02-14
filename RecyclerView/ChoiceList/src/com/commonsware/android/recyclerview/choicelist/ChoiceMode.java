@@ -17,7 +17,6 @@ package com.commonsware.android.recyclerview.choicelist;
 import android.os.Bundle;
 
 public interface ChoiceMode {
-  boolean isSingleChoice();
   void setChecked(int position, boolean isChecked);
   boolean isChecked(int position);
   void onSaveInstanceState(Bundle state);

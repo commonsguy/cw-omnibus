@@ -21,11 +21,6 @@ public class MultiChoiceMode implements ChoiceMode {
   private ParcelableSparseBooleanArray checkStates=new ParcelableSparseBooleanArray();
 
   @Override
-  public boolean isSingleChoice() {
-    return(false);
-  }
-
-  @Override
   public void setChecked(int position, boolean isChecked) {
     checkStates.put(position, isChecked);
   }

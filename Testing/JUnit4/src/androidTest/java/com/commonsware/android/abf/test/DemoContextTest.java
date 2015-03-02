@@ -17,6 +17,7 @@ package com.commonsware.android.abf.test;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
+import android.test.UiThreadTest;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.commonsware.android.abf.R;
@@ -32,10 +33,16 @@ public class DemoContextTest {
 
   @Before
   public void init() {
-    LayoutInflater inflater=LayoutInflater
-        .from(InstrumentationRegistry.getTargetContext());
+    InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+      @Override
+      public void run() {
+        LayoutInflater inflater=LayoutInflater
+            .from(InstrumentationRegistry.getTargetContext());
 
-    root=inflater.inflate(R.layout.add, null);
+        root=inflater.inflate(R.layout.add, null);
+      }
+    });
+
     root.measure(800, 480);
     root.layout(0, 0, 800, 480);
 
@@ -44,11 +51,13 @@ public class DemoContextTest {
 
   @Test
   public void exists() {
+    init();
     Assert.assertNotNull(field);
   }
 
   @Test
   public void position() {
+    init();
     Assert.assertEquals(0, field.getTop());
     Assert.assertEquals(0, field.getLeft());
   }

@@ -41,17 +41,12 @@ public class DemoActivityRuleTest {
   @Before
   public void init() {
     list=(ListView)main.get().findViewById(android.R.id.list);
+    main.instrumentation().setInTouchMode(true);
   }
 
   @Test
   public void listCount() {
     Assert.assertEquals(25, list.getAdapter().getCount());
-  }
-
-  @Test
-  public void keyEvents() {
-    sendKeys("4*DPAD_DOWN");
-    Assert.assertEquals(4, list.getSelectedItemPosition());
   }
 
   // following cloned from AOSP with slight modifications

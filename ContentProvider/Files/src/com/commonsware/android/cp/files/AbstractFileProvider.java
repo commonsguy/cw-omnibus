@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2014 CommonsWare, LLC
+  Copyright (c) 2014-2015 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import com.commonsware.cwac.provider.LegacyCompatCursorWrapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -54,7 +55,7 @@ abstract class AbstractFileProvider extends ContentProvider {
       }
     }
 
-    return(cursor);
+    return(new LegacyCompatCursorWrapper(cursor));
   }
 
   @Override

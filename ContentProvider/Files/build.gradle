@@ -8,7 +8,14 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 
+repositories {
+    maven {
+        url "https://repo.commonsware.com.s3.amazonaws.com"
+    }
+}
+
 dependencies {
+    compile 'com.commonsware.cwac:provider:0.2.4'
 }
 
 android {

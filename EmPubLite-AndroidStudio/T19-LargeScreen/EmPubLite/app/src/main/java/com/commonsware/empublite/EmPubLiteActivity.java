@@ -193,7 +193,7 @@ public class EmPubLiteActivity extends Activity implements
       }
 
       getFragmentManager().beginTransaction().addToBackStack(null)
-          .replace(R.id.sidebar, about).commit();
+          .replace(R.id.sidebar, about, ABOUT).commit();
     }
     else {
       Intent i=new Intent(this, SimpleContentActivity.class);
@@ -212,7 +212,7 @@ public class EmPubLiteActivity extends Activity implements
       }
 
       getFragmentManager().beginTransaction().addToBackStack(null)
-          .replace(R.id.sidebar, help).commit();
+          .replace(R.id.sidebar, help, HELP).commit();
     }
     else {
       Intent i=new Intent(this, SimpleContentActivity.class);

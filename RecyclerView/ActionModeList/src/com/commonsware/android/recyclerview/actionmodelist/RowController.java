@@ -12,7 +12,7 @@
  http://commonsware.com/Android
  */
 
-package com.commonsware.android.recyclerview.choicelist;
+package com.commonsware.android.recyclerview.actionmodelist;
 
 import android.annotation.TargetApi;
 import android.os.Build;

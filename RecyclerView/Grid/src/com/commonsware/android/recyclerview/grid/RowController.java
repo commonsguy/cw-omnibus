@@ -12,36 +12,31 @@
  http://commonsware.com/Android
  */
 
-package com.commonsware.android.recyclerview.choicelist;
+package com.commonsware.android.recyclerview.grid;
 
 import android.annotation.TargetApi;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 class RowController extends RecyclerView.ViewHolder
-    implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-  private ChoiceCapableAdapter adapter;
-  private TextView label=null;
-  private TextView size=null;
-  private ImageView icon=null;
-  private String template=null;
-  private CheckBox cb=null;
+    implements View.OnClickListener {
+  TextView label=null;
+  TextView size=null;
+  ImageView icon=null;
+  String template=null;
 
-  RowController(ChoiceCapableAdapter adapter, View row) {
+  RowController(View row) {
     super(row);
 
-    this.adapter=adapter;
     label=(TextView)row.findViewById(R.id.label);
     size=(TextView)row.findViewById(R.id.size);
     icon=(ImageView)row.findViewById(R.id.icon);
-    cb=(CheckBox)row.findViewById(R.id.cb);
 
     template=size.getContext().getString(R.string.size_template);
 
@@ -52,17 +47,15 @@ class RowController extends RecyclerView.ViewHolder
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-          v
-              .findViewById(R.id.row_content)
-              .getBackground()
-              .setHotspot(event.getX(), event.getY());
+        v
+          .findViewById(R.id.row_content)
+          .getBackground()
+          .setHotspot(event.getX(), event.getY());
 
           return(false);
         }
       });
     }
-
-    cb.setOnCheckedChangeListener(this);
   }
 
   @Override
@@ -70,11 +63,6 @@ class RowController extends RecyclerView.ViewHolder
     Toast.makeText(v.getContext(),
         String.format("Clicked on position %d", getPosition()),
         Toast.LENGTH_SHORT).show();
-  }
-
-  @Override
-  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-    adapter.onChecked(getPosition(), isChecked);
   }
 
   void bindModel(String item) {
@@ -87,7 +75,5 @@ class RowController extends RecyclerView.ViewHolder
     else {
       icon.setImageResource(R.drawable.ok);
     }
-
-    cb.setChecked(adapter.isChecked(getPosition()));
   }
 }

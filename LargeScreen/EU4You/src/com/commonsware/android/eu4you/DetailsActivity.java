@@ -27,8 +27,8 @@ public class DetailsActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    details=
-        (DetailsFragment)getFragmentManager().findFragmentById(R.id.details);
+    details=(DetailsFragment)getFragmentManager()
+                               .findFragmentById(android.R.id.content);
 
     if (details == null) {
       details=new DetailsFragment();

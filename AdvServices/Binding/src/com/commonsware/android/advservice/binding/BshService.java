@@ -20,34 +20,35 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+
 import bsh.EvalError;
 import bsh.Interpreter;
 
 public class BshService extends Service {
-  @Override
-  public IBinder onBind(Intent intent) {
-    return(new BshBinder(this));
-  }
-
-  private static class BshBinder extends Binder implements IScript {
-    private Interpreter i=new Interpreter();
-
-    BshBinder(Context ctxt) {
-      try {
-        i.set("context", ctxt);
-      }
-      catch (EvalError e) {
-        Log.e("BshService", "Error executing script", e);
-      }
+    @Override
+    public IBinder onBind(Intent intent) {
+        return (new BshBinder(this));
     }
 
-    public void executeScript(String script) {
-      try {
-        i.eval(script);
-      }
-      catch (bsh.EvalError e) {
-        Log.e("BshService", "Error executing script", e);
-      }
+    private static class BshBinder extends Binder implements IScript {
+        private Interpreter i = new Interpreter();
+
+        BshBinder(Context ctxt) {
+            try {
+                i.set("context", ctxt);
+            } catch (EvalError e) {
+                Log.e("BshService", "Error executing script", e);
+            }
+        }
+
+        public void executeScript(String script) {
+            try {
+                i.eval(script);
+            } catch (bsh.EvalError e) {
+                Log.e("BshService", "Error executing script", e);
+            }
+        }
     }
-  };
+
+    ;
 }

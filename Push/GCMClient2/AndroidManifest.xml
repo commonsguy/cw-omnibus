@@ -13,14 +13,6 @@
 		android:smallScreens="true"
 		android:xlargeScreens="true"/>
 
-<!--
-	<permission
-		android:name="com.commonsware.android.gcm.client.permission.C2D_MESSAGE"
-		android:protectionLevel="signature"/>
-
-	<uses-permission android:name="com.commonsware.android.gcm.client.permission.C2D_MESSAGE"/>
--->
-
   <permission
     android:name="${applicationId}.permission.C2D_MESSAGE"
     android:protectionLevel="signature" />

@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2013 CommonsWare, LLC
+  Copyright (c) 2013-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -18,10 +18,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import com.google.gson.JsonObject;
+import de.greenrobot.event.EventBus;
 
-public class MainActivity extends Activity implements
-    QuestionsFragment.Contract {
+public class MainActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -34,11 +33,20 @@ public class MainActivity extends Activity implements
   }
 
   @Override
-  public void showItem(JsonObject item) {
-    Intent iCanHazBrowser=
-        new Intent(Intent.ACTION_VIEW, Uri.parse(item.get("link")
-                                                     .getAsString()));
+  public void onResume() {
+    super.onResume();
+    EventBus.getDefault().register(this);
+  }
 
-    startActivity(iCanHazBrowser);
+  @Override
+  public void onPause() {
+    EventBus.getDefault().unregister(this);
+    super.onPause();
+  }
+
+  public void onEventMainThread(QuestionClickedEvent event) {
+    startActivity(new Intent(Intent.ACTION_VIEW,
+                             Uri.parse(event.item.get("link")
+                                                 .getAsString())));
   }
 }

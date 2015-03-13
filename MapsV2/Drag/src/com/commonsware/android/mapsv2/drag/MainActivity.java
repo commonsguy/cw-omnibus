@@ -14,34 +14,24 @@
 
 package com.commonsware.android.mapsv2.drag;
 
-import android.app.ActionBar;
-import android.app.ActionBar.OnNavigationListener;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
-import java.util.ArrayList;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AbstractMapActivity implements
-    OnNavigationListener, OnInfoWindowClickListener,
+    OnMapReadyCallback, OnInfoWindowClickListener,
     OnMarkerDragListener {
-  private static final String STATE_NAV="nav";
-  private static final int[] MAP_TYPE_NAMES= { R.string.normal,
-      R.string.hybrid, R.string.satellite, R.string.terrain };
-  private static final int[] MAP_TYPES= { GoogleMap.MAP_TYPE_NORMAL,
-      GoogleMap.MAP_TYPE_HYBRID, GoogleMap.MAP_TYPE_SATELLITE,
-      GoogleMap.MAP_TYPE_TERRAIN };
-  private GoogleMap map=null;
+  private boolean needsInit=false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -53,57 +43,40 @@ public class MainActivity extends AbstractMapActivity implements
       MapFragment mapFrag=
           (MapFragment)getFragmentManager().findFragmentById(R.id.map);
 
-      mapFrag.setRetainInstance(true);
-      initListNav();
-
-      map=mapFrag.getMap();
-
       if (savedInstanceState == null) {
-        CameraUpdate center=
-            CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
-                                                     -73.98180484771729));
-        CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
-
-        map.moveCamera(center);
-        map.animateCamera(zoom);
-
-        addMarker(map, 40.748963847316034, -73.96807193756104,
-                  R.string.un, R.string.united_nations);
-        addMarker(map, 40.76866299974387, -73.98268461227417,
-                  R.string.lincoln_center,
-                  R.string.lincoln_center_snippet);
-        addMarker(map, 40.765136435316755, -73.97989511489868,
-                  R.string.carnegie_hall, R.string.practice_x3);
-        addMarker(map, 40.70686417491799, -74.01572942733765,
-                  R.string.downtown_club, R.string.heisman_trophy);
+        needsInit=true;
       }
 
-      map.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
-      map.setOnInfoWindowClickListener(this);
-      map.setOnMarkerDragListener(this);
+      mapFrag.setRetainInstance(true);
+      mapFrag.getMapAsync(this);
     }
   }
 
   @Override
-  public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-    map.setMapType(MAP_TYPES[itemPosition]);
+  public void onMapReady(final GoogleMap map) {
+    if (needsInit) {
+      CameraUpdate center=
+          CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
+              -73.98180484771729));
+      CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
 
-    return(true);
-  }
+      map.moveCamera(center);
+      map.animateCamera(zoom);
 
-  @Override
-  public void onSaveInstanceState(Bundle savedInstanceState) {
-    super.onSaveInstanceState(savedInstanceState);
+      addMarker(map, 40.748963847316034, -73.96807193756104,
+                R.string.un, R.string.united_nations);
+      addMarker(map, 40.76866299974387, -73.98268461227417,
+                R.string.lincoln_center,
+                R.string.lincoln_center_snippet);
+      addMarker(map, 40.765136435316755, -73.97989511489868,
+                R.string.carnegie_hall, R.string.practice_x3);
+      addMarker(map, 40.70686417491799, -74.01572942733765,
+                R.string.downtown_club, R.string.heisman_trophy);
+    }
 
-    savedInstanceState.putInt(STATE_NAV,
-                              getActionBar().getSelectedNavigationIndex());
-  }
-
-  @Override
-  public void onRestoreInstanceState(Bundle savedInstanceState) {
-    super.onRestoreInstanceState(savedInstanceState);
-
-    getActionBar().setSelectedNavigationItem(savedInstanceState.getInt(STATE_NAV));
+    map.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
+    map.setOnInfoWindowClickListener(this);
+    map.setOnMarkerDragListener(this);
   }
 
   @Override
@@ -134,37 +107,8 @@ public class MainActivity extends AbstractMapActivity implements
     LatLng position=marker.getPosition();
 
     Log.d(getClass().getSimpleName(), String.format("Dragged to %f:%f",
-                                                    position.latitude,
-                                                    position.longitude));
-  }
-
-  private void initListNav() {
-    ArrayList<String> items=new ArrayList<String>();
-    ArrayAdapter<String> nav=null;
-    ActionBar bar=getActionBar();
-
-    for (int type : MAP_TYPE_NAMES) {
-      items.add(getString(type));
-    }
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-      nav=
-          new ArrayAdapter<String>(
-                                   bar.getThemedContext(),
-                                   android.R.layout.simple_spinner_item,
-                                   items);
-    }
-    else {
-      nav=
-          new ArrayAdapter<String>(
-                                   this,
-                                   android.R.layout.simple_spinner_item,
-                                   items);
-    }
-
-    nav.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-    bar.setListNavigationCallbacks(nav, this);
+        position.latitude,
+        position.longitude));
   }
 
   private void addMarker(GoogleMap map, double lat, double lon,

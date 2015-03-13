@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="replies">
+        <item>Hello</item>
+        <item>World</item>
+    </string-array>
+</resources>

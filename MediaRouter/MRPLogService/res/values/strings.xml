@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">MRPLogService</string>
+	<string name="route_provider_title">Cast!</string>
+  <string name="active">MediaRouteProvider activated!</string>
+
+</resources>

@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2013 CommonsWare, LLC
+  Copyright (c) 2013-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,6 +14,7 @@
 
 package com.commonsware.android.retrofit;
 
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -25,13 +26,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class QuestionsFragment extends
-    ContractListFragment<QuestionsFragment.Contract> implements
+public class QuestionsFragment extends ListFragment implements
     Callback<SOQuestions> {
   @Override
   public View onCreateView(LayoutInflater inflater,
@@ -55,7 +56,9 @@ public class QuestionsFragment extends
 
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
-    getContract().showItem(((ItemsAdapter)getListAdapter()).getItem(position));
+    Item item=((ItemsAdapter)getListAdapter()).getItem(position);
+
+    EventBus.getDefault().post(new QuestionClickedEvent(item));
   }
 
   @Override
@@ -85,9 +88,5 @@ public class QuestionsFragment extends
 
       return(row);
     }
-  }
-
-  interface Contract {
-    void showItem(Item item);
   }
 }

@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,15 +14,16 @@
 
 package com.commonsware.android.async;
 
-import java.util.ArrayList;
+import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockListFragment;
+import java.util.ArrayList;
 
-public class AsyncDemoFragment extends SherlockListFragment {
+public class AsyncDemoFragment extends ListFragment {
   private static final String[] items= { "lorem", "ipsum", "dolor",
       "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
@@ -33,8 +34,8 @@ public class AsyncDemoFragment extends SherlockListFragment {
   private AddStringTask task=null;
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
 
@@ -48,28 +49,38 @@ public class AsyncDemoFragment extends SherlockListFragment {
         new ArrayAdapter<String>(getActivity(),
                                  android.R.layout.simple_list_item_1,
                                  model);
+  }
+
+  @Override
+  public void onViewCreated(View v, Bundle savedInstanceState) {
+    super.onViewCreated(v, savedInstanceState);
 
     getListView().setScrollbarFadingEnabled(false);
     setListAdapter(adapter);
   }
 
   @Override
-  public void onDestroy() {
+  synchronized public void onDestroy() {
     if (task != null) {
       task.cancel(false);
     }
-    
+
     super.onDestroy();
+  }
+
+  synchronized private void clearTask() {
+    task=null;
   }
 
   class AddStringTask extends AsyncTask<Void, String, Void> {
     @Override
     protected Void doInBackground(Void... unused) {
       for (String item : items) {
-        if (!isCancelled()) {
-          publishProgress(item);
-          SystemClock.sleep(400);
-        }
+        if (isCancelled())
+          break;
+        
+        publishProgress(item);
+        SystemClock.sleep(400);
       }
 
       return(null);
@@ -77,7 +88,9 @@ public class AsyncDemoFragment extends SherlockListFragment {
 
     @Override
     protected void onProgressUpdate(String... item) {
-      adapter.add(item[0]);
+      if (!isCancelled()) {
+        adapter.add(item[0]);
+      }
     }
 
     @Override
@@ -86,8 +99,8 @@ public class AsyncDemoFragment extends SherlockListFragment {
         Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
              .show();
       }
-      
-      task=null;
+
+      clearTask();
     }
   }
 }

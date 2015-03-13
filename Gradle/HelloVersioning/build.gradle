@@ -3,19 +3,18 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.0'
+        classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "19.0.1"
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
 
     def versionPropsFile = file('version.properties')
 
@@ -51,7 +50,7 @@ android {
 
     buildTypes {
         debug {
-          packageNameSuffix ".d"
+          applicationIdSuffix ".d"
           versionNameSuffix "-debug"
         }
 
@@ -62,16 +61,19 @@ android {
         mezzanine.initWith(buildTypes.release)
 
         mezzanine {
-            packageNameSuffix ".mezz"
+            applicationIdSuffix ".mezz"
             debuggable true
             signingConfig signingConfigs.release
         }
 
-        applicationVariants.all { v ->
-            def f = v.outputFile
-            def fname = f.name.replace(".apk",
-                                       "-${defaultConfig.versionName}.apk")
-            v.outputFile = new File(f.parent, fname) 
+        // from http://stackoverflow.com/a/27068573/115145
+
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                output.outputFile = new File(
+                        output.outputFile.parent,
+                        output.outputFile.name.replace(".apk", "-${variant.versionName}.apk"))
+            }
         }
     }
 }

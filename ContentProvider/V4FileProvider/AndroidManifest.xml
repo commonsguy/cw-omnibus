@@ -6,20 +6,13 @@
 	android:versionName="1.0">
 
 	<uses-sdk
-		android:minSdkVersion="7"
-		android:targetSdkVersion="11"/>
+		android:minSdkVersion="15"
+		android:targetSdkVersion="15"/>
 
 	<supports-screens
 		android:largeScreens="true"
 		android:normalScreens="true"
 		android:smallScreens="true"/>
-
-	<permission
-		android:name="com.commonsware.android.cp.v4file.READ"
-		android:description="@string/perm_read"
-		android:label="@string/perm_read_label"/>
-
-	<uses-permission android:name="com.commonsware.android.cp.v4file.READ"/>
 
 	<application
 		android:allowBackup="false"
@@ -37,11 +30,10 @@
 		</activity>
 
 		<provider
-			android:name="android.support.v4.content.FileProvider"
+			android:name="LegacyCompatFileProvider"
 			android:authorities="com.commonsware.android.cp.v4file"
 			android:exported="false"
-			android:grantUriPermissions="true"
-			android:readPermission="com.commonsware.android.cp.v4file.READ">
+			android:grantUriPermissions="true">
 			<meta-data
 				android:name="android.support.FILE_PROVIDER_PATHS"
 				android:resource="@xml/provider_paths"/>

@@ -1,17 +1,32 @@
 <?xml version="1.0"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.commonsware.android.weather" android:versionCode="1" android:versionName="1.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.weather"
+	android:versionCode="1"
+	android:versionName="1.0">
 
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
-	<supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
+	<supports-screens
+		android:anyDensity="true"
+		android:largeScreens="true"
+		android:normalScreens="true"
+		android:smallScreens="true"/>
 
-	<uses-sdk android:minSdkVersion="7" android:targetSdkVersion="14"/>
+	<uses-sdk
+		android:minSdkVersion="14"
+		android:targetSdkVersion="14"/>
 
-	<uses-feature android:name="android.hardware.location.gps" android:required="true"/>
+	<uses-feature
+		android:name="android.hardware.location.gps"
+		android:required="true"/>
 
-	<application android:icon="@drawable/ic_launcher" android:theme="@style/Theme.Sherlock.Light">
-		<activity android:name=".WeatherDemo" android:label="WeatherDemo">
+	<application
+		android:icon="@drawable/ic_launcher"
+		android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
+		<activity
+			android:name=".WeatherDemo"
+			android:label="WeatherDemo">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 

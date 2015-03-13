@@ -19,17 +19,28 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class PageMapFragment extends MapFragment {
+public class PageMapFragment extends MapFragment implements
+    OnMapReadyCallback {
+  private boolean needsInit=false;
+
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    GoogleMap map=getMap();
-
     if (savedInstanceState == null) {
+      needsInit=true;
+    }
+
+    getMapAsync(this);
+  }
+
+  @Override
+  public void onMapReady(final GoogleMap map) {
+    if (needsInit) {
       CameraUpdate center=
           CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
                                                    -73.98180484771729));

@@ -52,7 +52,6 @@ public class MainActivity extends Activity {
 
     b.setAutoCancel(true)
      .setDefaults(Notification.DEFAULT_ALL)
-     .setWhen(System.currentTimeMillis())
      .setContentTitle(getString(R.string.download_complete))
      .setContentText(getString(R.string.fun))
      .setContentIntent(buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))

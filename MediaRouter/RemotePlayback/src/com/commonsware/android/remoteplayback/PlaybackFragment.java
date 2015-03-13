@@ -45,6 +45,7 @@ public class PlaybackFragment extends Fragment {
   private RemotePlaybackClient client=null;
   private boolean isPlaying=false;
   private boolean isPaused=false;
+  private Menu menu=null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +54,8 @@ public class PlaybackFragment extends Fragment {
     setRetainInstance(true);
     setHasOptionsMenu(true);
     selector=
-        new MediaRouteSelector.Builder().addControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK)
-                                        .build();
+        new MediaRouteSelector.Builder()
+            .addControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK).build();
   }
 
   @Override
@@ -103,23 +104,10 @@ public class PlaybackFragment extends Fragment {
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    this.menu=menu;
     inflater.inflate(R.menu.main, menu);
 
-    if (client != null) {
-      if (isPlaying) {
-        menu.findItem(R.id.stop).setVisible(true);
-
-        if (isPaused) {
-          menu.findItem(R.id.play).setVisible(true);
-        }
-        else {
-          menu.findItem(R.id.pause).setVisible(true);
-        }
-      }
-      else {
-        menu.findItem(R.id.play).setVisible(true);
-      }
-    }
+    updateMenu();
 
     MenuItem item=menu.findItem(R.id.route_provider);
     MediaRouteActionProvider provider=
@@ -153,6 +141,16 @@ public class PlaybackFragment extends Fragment {
     return(super.onOptionsItemSelected(item));
   }
 
+  private void updateMenu() {
+    if (menu != null) {
+      menu.findItem(R.id.stop).setVisible(client != null && isPlaying);
+      menu.findItem(R.id.pause).setVisible(client != null && isPlaying
+                                               && !isPaused);
+      menu.findItem(R.id.play)
+          .setVisible(client != null && (!isPlaying || isPaused));
+    }
+  }
+
   private void play() {
     logToTranscript(getActivity().getString(R.string.play_requested));
 
@@ -163,7 +161,7 @@ public class PlaybackFragment extends Fragment {
                            String itemId, MediaItemStatus itemStatus) {
         logToTranscript(getActivity().getString(R.string.playing));
         isPlaying=true;
-        getActivity().supportInvalidateOptionsMenu();
+        updateMenu();
       }
 
       @Override
@@ -230,7 +228,7 @@ public class PlaybackFragment extends Fragment {
           public void onResult(Bundle data, String sessionId,
                                MediaSessionStatus sessionStatus) {
             logToTranscript(getActivity().getString(R.string.session_started));
-            getActivity().supportInvalidateOptionsMenu();
+            updateMenu();
           }
 
           @Override
@@ -257,7 +255,10 @@ public class PlaybackFragment extends Fragment {
       logToTranscript(getActivity().getString(R.string.session_ending));
       EndSessionCallback endCB=new EndSessionCallback();
 
-      client.endSession(null, endCB);
+      if (client.isSessionManagementSupported()) {
+        client.endSession(null, endCB);
+      }
+
       transcript.postDelayed(endCB, 1000);
     }
   }
@@ -278,50 +279,52 @@ public class PlaybackFragment extends Fragment {
     }
   };
 
-  class RunnableSessionActionCallback extends SessionActionCallback
-      implements Runnable {
+  abstract class RunnableSessionActionCallback extends
+      SessionActionCallback implements Runnable {
+    abstract protected void doWork();
+
+    private boolean hasRun=false;
+
     @Override
     public void onResult(Bundle data, String sessionId,
                          MediaSessionStatus sessionStatus) {
+      transcript.removeCallbacks(this);
       run();
     }
 
     @Override
     public void run() {
-      transcript.removeCallbacks(this);
+      if (!hasRun) {
+        hasRun=true;
+        doWork();
+      }
     }
   }
 
   private class PauseCallback extends RunnableSessionActionCallback {
     @Override
-    public void run() {
-      super.run();
-
+    protected void doWork() {
       isPaused=true;
-      getActivity().supportInvalidateOptionsMenu();
+      updateMenu();
       logToTranscript(getActivity().getString(R.string.paused));
     }
   }
 
   private class ResumeCallback extends RunnableSessionActionCallback {
     @Override
-    public void run() {
-      super.run();
-
+    protected void doWork() {
       isPaused=false;
-      getActivity().supportInvalidateOptionsMenu();
+      updateMenu();
       logToTranscript(getActivity().getString(R.string.resumed));
     }
   }
 
   private class StopCallback extends RunnableSessionActionCallback {
     @Override
-    public void run() {
-      super.run();
-
+    protected void doWork() {
       isPlaying=false;
       isPaused=false;
-      getActivity().supportInvalidateOptionsMenu();
+      updateMenu();
       logToTranscript(getActivity().getString(R.string.stopped));
     }
   }
@@ -329,14 +332,12 @@ public class PlaybackFragment extends Fragment {
   private class EndSessionCallback extends
       RunnableSessionActionCallback {
     @Override
-    public void run() {
-      super.run();
-
+    protected void doWork() {
       client.release();
       client=null;
 
       if (getActivity() != null) {
-        getActivity().supportInvalidateOptionsMenu();
+        updateMenu();
         logToTranscript(getActivity().getString(R.string.session_ended));
       }
     }

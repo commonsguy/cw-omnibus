@@ -14,10 +14,10 @@
 
 package com.commonsware.android.eu4you;
 
+import android.app.Activity;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class DetailsActivity extends SherlockFragmentActivity {
+public class DetailsActivity extends Activity {
   public static final String EXTRA_URL=
       "com.commonsware.android.eu4you.EXTRA_URL";
   private String url=null;
@@ -27,13 +27,13 @@ public class DetailsActivity extends SherlockFragmentActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    details=
-        (DetailsFragment)getSupportFragmentManager().findFragmentById(R.id.details);
+    details=(DetailsFragment)getFragmentManager()
+                               .findFragmentById(android.R.id.content);
 
     if (details == null) {
       details=new DetailsFragment();
 
-      getSupportFragmentManager().beginTransaction()
+      getFragmentManager().beginTransaction()
                                  .add(android.R.id.content, details)
                                  .commit();
     }

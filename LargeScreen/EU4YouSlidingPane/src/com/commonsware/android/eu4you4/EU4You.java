@@ -14,11 +14,11 @@
 
 package com.commonsware.android.eu4you4;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class EU4You extends SherlockFragmentActivity implements
+public class EU4You extends Activity implements
     CountriesFragment.Contract {
   private DetailsFragment details=null;
   private SlidingPaneLayout panes=null;
@@ -29,7 +29,7 @@ public class EU4You extends SherlockFragmentActivity implements
     setContentView(R.layout.main);
 
     details=
-        (DetailsFragment)getSupportFragmentManager().findFragmentById(R.id.details);
+        (DetailsFragment)getFragmentManager().findFragmentById(R.id.details);
     panes=(SlidingPaneLayout)findViewById(R.id.panes);
     panes.openPane();
   }

@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -15,6 +15,7 @@
 package com.commonsware.android.downmgr;
 
 import android.app.DownloadManager;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,9 +29,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class DownloadFragment extends SherlockFragment implements
+public class DownloadFragment extends Fragment implements
     View.OnClickListener {
   private DownloadManager mgr=null;
   private long lastDownload=-1L;
@@ -141,7 +141,7 @@ public class DownloadFragment extends SherlockFragment implements
 
       Toast.makeText(getActivity(), statusMessage(c), Toast.LENGTH_LONG)
            .show();
-      
+
       c.close();
     }
   }
@@ -151,29 +151,28 @@ public class DownloadFragment extends SherlockFragment implements
 
     switch (c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS))) {
       case DownloadManager.STATUS_FAILED:
-        msg=getSherlockActivity().getString(R.string.download_failed);
+        msg=getActivity().getString(R.string.download_failed);
         break;
 
       case DownloadManager.STATUS_PAUSED:
-        msg=getSherlockActivity().getString(R.string.download_paused);
+        msg=getActivity().getString(R.string.download_paused);
         break;
 
       case DownloadManager.STATUS_PENDING:
-        msg=getSherlockActivity().getString(R.string.download_pending);
+        msg=getActivity().getString(R.string.download_pending);
         break;
 
       case DownloadManager.STATUS_RUNNING:
-        msg=
-            getSherlockActivity().getString(R.string.download_in_progress);
+        msg=getActivity().getString(R.string.download_in_progress);
         break;
 
       case DownloadManager.STATUS_SUCCESSFUL:
-        msg=getSherlockActivity().getString(R.string.download_complete);
+        msg=getActivity().getString(R.string.download_complete);
         break;
 
       default:
         msg=
-            getSherlockActivity().getString(R.string.download_is_nowhere_in_sight);
+            getActivity().getString(R.string.download_is_nowhere_in_sight);
         break;
     }
 

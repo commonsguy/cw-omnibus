@@ -1,28 +1,25 @@
 package com.commonsware.empublite;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.List;
 
 public class BookContents {
-  JSONObject raw=null;
-  JSONArray chapters;
-
-  BookContents(JSONObject raw) {
-    this.raw=raw;
-    chapters=raw.optJSONArray("chapters");
-  }
-
+  String title;
+  List<BookContents.Chapter> chapters;
+  
   int getChapterCount() {
-    return(chapters.length());
+    return(chapters.size());
   }
 
   String getChapterFile(int position) {
-    JSONObject chapter=chapters.optJSONObject(position);
-
-    return(chapter.optString("file"));
+    return(chapters.get(position).file);
   }
 
   String getTitle() {
-    return(raw.optString("title"));
+    return(title);
+  }
+  
+  static class Chapter {
+    String file;
+    String title;
   }
 }

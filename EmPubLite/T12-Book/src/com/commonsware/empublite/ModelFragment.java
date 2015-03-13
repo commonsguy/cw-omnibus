@@ -1,91 +1,65 @@
 package com.commonsware.empublite;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Build;
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Process;
 import android.util.Log;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import com.actionbarsherlock.app.SherlockFragment;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import de.greenrobot.event.EventBus;
 
-public class ModelFragment extends SherlockFragment {
+public class ModelFragment extends Fragment {
   private BookContents contents=null;
-  private ContentsLoadTask contentsTask=null;
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
-    deliverModel();
   }
 
-  synchronized private void deliverModel() {
-    if (contents != null) {
-      ((EmPubLiteActivity)getActivity()).setupPager(contents);
-    }
-    else {
-      if (contents == null && contentsTask == null) {
-        contentsTask=new ContentsLoadTask();
-        executeAsyncTask(contentsTask,
-                         getActivity().getApplicationContext());
-      }
+  @Override
+  public void onAttach(Activity host) {
+    super.onAttach(host);
+
+    if (contents == null) {
+      new LoadThread(host.getAssets()).start();
     }
   }
-
-  @TargetApi(11)
-  static public <T> void executeAsyncTask(AsyncTask<T, ?, ?> task,
-                                          T... params) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
-    }
-    else {
-      task.execute(params);
-    }
+  
+  public BookContents getBook() {
+    return(contents);
   }
 
-  private class ContentsLoadTask extends AsyncTask<Context, Void, Void> {
-    private BookContents localContents=null;
-    private Exception e=null;
+  private class LoadThread extends Thread {
+    private AssetManager assets=null;
+
+    LoadThread(AssetManager assets) {
+      super();
+
+      this.assets=assets;
+      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+    }
 
     @Override
-    protected Void doInBackground(Context... ctxt) {
+    public void run() {
+      Gson gson=new Gson();
+
       try {
-        StringBuilder buf=new StringBuilder();
-        InputStream json=ctxt[0].getAssets().open("book/contents.json");
-        BufferedReader in=
-            new BufferedReader(new InputStreamReader(json));
-        String str;
+        InputStream is=assets.open("book/contents.json");
+        BufferedReader reader=
+            new BufferedReader(new InputStreamReader(is));
 
-        while ((str=in.readLine()) != null) {
-          buf.append(str);
-        }
-
-        in.close();
-
-        localContents=new BookContents(new JSONObject(buf.toString()));
+        contents=gson.fromJson(reader, BookContents.class);
+        EventBus.getDefault().post(new BookLoadedEvent(contents));
       }
-      catch (Exception e) {
-        this.e=e;
-      }
-
-      return(null);
-    }
-
-    @Override
-    public void onPostExecute(Void arg0) {
-      if (e == null) {
-        ModelFragment.this.contents=localContents;
-        ModelFragment.this.contentsTask=null;
-        deliverModel();
-      }
-      else {
-        Log.e(getClass().getSimpleName(), "Exception loading contents",
-              e);
+      catch (IOException e) {
+        Log.e(getClass().getSimpleName(), "Exception parsing JSON", e);
       }
     }
   }

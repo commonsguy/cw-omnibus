@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class DownloadFragment extends Fragment implements
 
     b=(Button)result.findViewById(R.id.button);
     b.setOnClickListener(this);
-    
+
     return(result);
   }
 
@@ -46,15 +47,16 @@ public class DownloadFragment extends Fragment implements
   public void onResume() {
     super.onResume();
 
-    IntentFilter f=
-        new IntentFilter(Downloader.ACTION_COMPLETE);
+    IntentFilter f=new IntentFilter(Downloader.ACTION_COMPLETE);
 
-    getActivity().registerReceiver(onEvent, f);
+    LocalBroadcastManager.getInstance(getActivity())
+                         .registerReceiver(onEvent, f);
   }
 
   @Override
   public void onPause() {
-    getActivity().unregisterReceiver(onEvent);
+    LocalBroadcastManager.getInstance(getActivity())
+                         .unregisterReceiver(onEvent);
 
     super.onPause();
   }
@@ -69,7 +71,7 @@ public class DownloadFragment extends Fragment implements
 
     getActivity().startService(i);
   }
-  
+
   private BroadcastReceiver onEvent=new BroadcastReceiver() {
     public void onReceive(Context ctxt, Intent i) {
       b.setEnabled(true);

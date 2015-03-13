@@ -1,7 +1,7 @@
 package com.commonsware.empublite;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import android.app.Activity;
 
-public class SimpleContentActivity extends SherlockFragmentActivity {
+public class SimpleContentActivity extends Activity {
 
 }

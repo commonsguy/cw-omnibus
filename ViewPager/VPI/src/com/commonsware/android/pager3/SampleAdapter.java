@@ -15,9 +15,9 @@
 package com.commonsware.android.pager3;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentPagerAdapter;
 
 public class SampleAdapter extends FragmentPagerAdapter {
   Context ctxt=null;

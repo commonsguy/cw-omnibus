@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,6 +14,7 @@
 
 package com.commonsware.android.pref1header;
 
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,9 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class PreferenceContentsFragment extends SherlockFragment {
+public class PreferenceContentsFragment extends Fragment {
   private TextView checkbox=null;
   private TextView ringtone=null;
   private TextView checkbox2=null;
@@ -51,9 +51,12 @@ public class PreferenceContentsFragment extends SherlockFragment {
     SharedPreferences prefs=
         PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-    checkbox.setText(new Boolean(prefs.getBoolean("checkbox", false)).toString());
+    checkbox.setText(Boolean.valueOf(prefs.getBoolean("checkbox", false))
+                            .toString());
     ringtone.setText(prefs.getString("ringtone", "<unset>"));
-    checkbox2.setText(new Boolean(prefs.getBoolean("checkbox2", false)).toString());
+    checkbox2.setText(Boolean.valueOf(prefs.getBoolean("checkbox2",
+                                                       false))
+                             .toString());
     text.setText(prefs.getString("text", "<unset>"));
     list.setText(prefs.getString("list", "<unset>"));
   }

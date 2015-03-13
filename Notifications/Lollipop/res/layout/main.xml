@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:stretchColumns="1">
+
+    <TableRow>
+        <TextView
+            android:text="@string/type_label"/>
+
+        <Spinner
+            android:id="@+id/type"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="@string/delay_label"/>
+
+        <SeekBar
+            android:id="@+id/delay"
+            android:progress="5"
+            android:max="30"/>
+    </TableRow>
+
+    <Button
+        android:text="@string/notify_button"
+        android:id="@+id/download"
+        android:onClick="notifyMe"/>
+</TableLayout>

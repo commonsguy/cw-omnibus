@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Decktastic</string>
+    <string name="show_presentation">Show Presentation</string>
+    <string name="first">Go To First Slide</string>
+    <string name="last">Go To Last Slide</string>
+    <string name="media_route_provider">Media Route Provider</string>
+
+</resources>

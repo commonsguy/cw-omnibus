@@ -14,17 +14,15 @@
 
 package com.commonsware.android.tabpager;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class ViewPagerFragmentDemoActivity extends
-    SherlockFragmentActivity implements TabListener,
+    Activity implements ActionBar.TabListener,
     OnPageChangeListener {
   private static final String KEY_POSITION="position";
   private ViewPager pager=null;
@@ -35,10 +33,10 @@ public class ViewPagerFragmentDemoActivity extends
     setContentView(R.layout.main);
 
     pager=(ViewPager)findViewById(R.id.pager);
-    pager.setAdapter(new SampleAdapter(getSupportFragmentManager()));
+    pager.setAdapter(new SampleAdapter(getFragmentManager()));
     pager.setOnPageChangeListener(this);
 
-    ActionBar bar=getSupportActionBar();
+    ActionBar bar=getActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
     for (int i=0; i < 10; i++) {
@@ -63,19 +61,19 @@ public class ViewPagerFragmentDemoActivity extends
   }
 
   @Override
-  public void onTabSelected(Tab tab, FragmentTransaction ft) {
+  public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
     Integer position=(Integer)tab.getTag();
 
     pager.setCurrentItem(position);
   }
 
   @Override
-  public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+  public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
     // no-op
   }
 
   @Override
-  public void onTabReselected(Tab tab, FragmentTransaction ft) {
+  public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
     // no-op
   }
 
@@ -91,6 +89,6 @@ public class ViewPagerFragmentDemoActivity extends
 
   @Override
   public void onPageSelected(int position) {
-    getSupportActionBar().setSelectedNavigationItem(position);
+    getActionBar().setSelectedNavigationItem(position);
   }
 }

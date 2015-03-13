@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import com.commonsware.cwac.provider.LegacyCompatCursorWrapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -54,7 +55,7 @@ abstract class AbstractFileProvider extends ContentProvider {
       }
     }
 
-    return(cursor);
+    return(new LegacyCompatCursorWrapper(cursor));
   }
 
   @Override
@@ -92,7 +93,7 @@ abstract class AbstractFileProvider extends ContentProvider {
     byte[] buf=new byte[1024];
     int len;
 
-    while ((len=in.read(buf)) > 0) {
+    while ((len=in.read(buf)) >= 0) {
       out.write(buf, 0, len);
     }
 

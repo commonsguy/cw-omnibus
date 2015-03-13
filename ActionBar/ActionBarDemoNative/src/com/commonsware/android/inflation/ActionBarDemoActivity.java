@@ -23,11 +23,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import java.util.ArrayList;
 
-
-public class ActionBarDemoActivity extends ListActivity
-    implements TextView.OnEditorActionListener {
+public class ActionBarDemoActivity extends ListActivity {
   private static final String[] items= { "lorem", "ipsum", "dolor",
       "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
@@ -47,49 +46,37 @@ public class ActionBarDemoActivity extends ListActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.actions, menu);
 
-    configureActionItem(menu);
-
     return(super.onCreateOptionsMenu(menu));
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.reset) {
-      initAdapter();
-      return(true);
+    switch(item.getItemId()) {
+      case R.id.add:
+        addWord();
+
+        return(true);
+
+      case R.id.reset:
+        initAdapter();
+
+        return(true);
+
+      case R.id.about:
+        Toast.makeText(this, R.string.about_toast, Toast.LENGTH_LONG)
+             .show();
+
+        return(true);
     }
 
     return(super.onOptionsItemSelected(item));
   }
 
-  @Override
-  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-    if (event == null || event.getAction() == KeyEvent.ACTION_UP) {
-      adapter.add(v.getText().toString());
-      v.setText("");
-
-      InputMethodManager imm=
-          (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-
-      imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
-
-    return(true);
-  }
-
-  private void configureActionItem(Menu menu) {
-    EditText add=
-        (EditText)menu.findItem(R.id.add).getActionView()
-                      .findViewById(R.id.title);
-
-    add.setOnEditorActionListener(this);
-  }
-
   private void initAdapter() {
     words=new ArrayList<String>();
 
-    for (String s : items) {
-      words.add(s);
+    for (int i=0;i<5;i++) {
+      words.add(items[i]);
     }
 
     adapter=
@@ -98,5 +85,11 @@ public class ActionBarDemoActivity extends ListActivity
                                  words);
 
     setListAdapter(adapter);
+  }
+
+  private void addWord() {
+    if (adapter.getCount()<items.length) {
+      adapter.add(items[adapter.getCount()]);
+    }
   }
 }

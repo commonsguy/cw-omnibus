@@ -63,7 +63,7 @@ public class Downloader extends IntentService {
         byte[] buffer=new byte[8192];
         int len=0;
 
-        while ((len=in.read(buffer)) > 0) {
+        while ((len=in.read(buffer)) >= 0) {
           out.write(buffer, 0, len);
         }
 
@@ -86,8 +86,7 @@ public class Downloader extends IntentService {
                                  Exception e) {
     NotificationCompat.Builder b=new NotificationCompat.Builder(this);
 
-    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
-     .setWhen(System.currentTimeMillis());
+    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
 
     if (e == null) {
       b.setContentTitle(getString(R.string.download_complete))

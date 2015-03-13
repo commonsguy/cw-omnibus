@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RecyclerView Action Mode List</string>
+    <string name="size_template">Size: %d</string>
+    <string name="icon">Icon</string>
+    <string name="context_title">Modify Word</string>
+</resources>

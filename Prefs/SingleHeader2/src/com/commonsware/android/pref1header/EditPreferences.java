@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,24 +14,10 @@
 
 package com.commonsware.android.pref1header;
 
+import android.preference.PreferenceActivity;
 import java.util.List;
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
-public class EditPreferences extends SherlockPreferenceActivity {
-  @SuppressWarnings("deprecation")
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    if (Build.VERSION.SDK_INT<Build.VERSION_CODES.HONEYCOMB) {
-      addPreferencesFromResource(R.xml.preferences);
-    }
-  }
-  
-  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class EditPreferences extends PreferenceActivity {
   @Override
   public void onBuildHeaders(List<Header> target) {
     loadHeadersFromResource(R.xml.preference_headers, target);

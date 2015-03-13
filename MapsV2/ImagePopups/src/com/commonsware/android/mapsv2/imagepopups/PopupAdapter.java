@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2013 CommonsWare, LLC
+  Copyright (c) 2013-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,6 +14,7 @@
 
 package com.commonsware.android.mapsv2.imagepopups;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -28,13 +29,13 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 class PopupAdapter implements InfoWindowAdapter {
+  private View popup=null;
   private LayoutInflater inflater=null;
-  private HashMap<String, View> contentsCache=
-      new HashMap<String, View>();
   private HashMap<String, Uri> images=null;
   private Context ctxt=null;
   private int iconWidth=-1;
   private int iconHeight=-1;
+  private Marker lastMarker=null;
 
   PopupAdapter(Context ctxt, LayoutInflater inflater,
                HashMap<String, Uri> images) {
@@ -53,13 +54,16 @@ class PopupAdapter implements InfoWindowAdapter {
     return(null);
   }
 
+  @SuppressLint("InflateParams")
   @Override
   public View getInfoContents(Marker marker) {
-    View popup=contentsCache.get(marker.getId());
-
     if (popup == null) {
       popup=inflater.inflate(R.layout.popup, null);
-      contentsCache.put(marker.getId(), popup);
+    }
+
+    if (lastMarker == null
+        || !lastMarker.getId().equals(marker.getId())) {
+      lastMarker=marker;
 
       TextView tv=(TextView)popup.findViewById(R.id.title);
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Document Provider Demo</string>
+	<string name="activated">Provider activated!</string>
+    <string name="open">Open</string>
+    <string name="root">Demo Provider Root</string>
+
+</resources>

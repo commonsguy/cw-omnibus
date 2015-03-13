@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,37 +14,53 @@
 
 package com.commonsware.android.constants;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.ListFragment;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class ConstantsFragment extends SherlockListFragment implements
+public class ConstantsFragment extends ListFragment implements
     DialogInterface.OnClickListener {
   private DatabaseHelper db=null;
-
+  private Cursor current=null;
+  
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    
     setHasOptionsMenu(true);
     setRetainInstance(true);
+  }
 
-    db=new DatabaseHelper(getActivity());
-    new LoadCursorTask().execute();
+  @Override
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    SimpleCursorAdapter adapter=
+        new SimpleCursorAdapter(getActivity(), R.layout.row,
+            current, new String[] {
+            DatabaseHelper.TITLE,
+            DatabaseHelper.VALUE },
+            new int[] { R.id.title, R.id.value },
+            0);
+
+    setListAdapter(adapter);
+
+    if (current==null) {
+      db=new DatabaseHelper(getActivity());
+      new LoadCursorTask().execute();
+    }
   }
 
   @Override
@@ -64,10 +80,9 @@ public class ConstantsFragment extends SherlockListFragment implements
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.add:
-        add();
-        return(true);
+    if (item.getItemId()==R.id.add) {
+      add();
+      return(true);
     }
 
     return(super.onOptionsItemSelected(item));
@@ -95,77 +110,42 @@ public class ConstantsFragment extends SherlockListFragment implements
     new InsertTask().execute(values);
   }
 
-  private Cursor doQuery() {
-    String query=
-        String.format("SELECT ROWID AS _id, %s, %s FROM %s ORDER BY %s",
-                      DatabaseHelper.TITLE, DatabaseHelper.VALUE,
-                      DatabaseHelper.TABLE, DatabaseHelper.TITLE);
-
-    return(db.getReadableDatabase().rawQuery(query, null));
-  }
-
-  private class LoadCursorTask extends AsyncTask<Void, Void, Void> {
-    private Cursor constantsCursor=null;
-
+  abstract private class BaseTask<T> extends AsyncTask<T, Void, Cursor> {
     @Override
-    protected Void doInBackground(Void... params) {
-      constantsCursor=doQuery();
-      constantsCursor.getCount();
-
-      return(null);
+    public void onPostExecute(Cursor result) {
+      ((CursorAdapter)getListAdapter()).changeCursor(result);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onPostExecute(Void arg0) {
-      SimpleCursorAdapter adapter;
+    protected Cursor doQuery() {
+      Cursor result=
+          db
+              .getReadableDatabase()
+              .query(DatabaseHelper.TABLE,
+                  new String[] {"ROWID AS _id",
+                                DatabaseHelper.TITLE,
+                                DatabaseHelper.VALUE},
+                  null, null, null, null, DatabaseHelper.TITLE);
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-        adapter=
-            new SimpleCursorAdapter(
-                                    getActivity(),
-                                    R.layout.row,
-                                    constantsCursor,
-                                    new String[] {
-                                        DatabaseHelper.TITLE,
-                                        DatabaseHelper.VALUE },
-                                    new int[] { R.id.title, R.id.value },
-                                    0);
-      }
-      else {
-        adapter=
-            new SimpleCursorAdapter(
-                                    getActivity(),
-                                    R.layout.row,
-                                    constantsCursor,
-                                    new String[] {
-                                        DatabaseHelper.TITLE,
-                                        DatabaseHelper.VALUE },
-                                    new int[] { R.id.title, R.id.value });
-      }
+      result.getCount();
 
-      setListAdapter(adapter);
+      return(result);
     }
   }
 
-  private class InsertTask extends AsyncTask<ContentValues, Void, Void> {
-    private Cursor constantsCursor=null;
-
+  private class LoadCursorTask extends BaseTask<Void> {
     @Override
-    protected Void doInBackground(ContentValues... values) {
+    protected Cursor doInBackground(Void... params) {
+      return(doQuery());
+    }
+  }
+
+  private class InsertTask extends BaseTask<ContentValues> {
+    @Override
+    protected Cursor doInBackground(ContentValues... values) {
       db.getWritableDatabase().insert(DatabaseHelper.TABLE,
                                       DatabaseHelper.TITLE, values[0]);
 
-      constantsCursor=doQuery();
-      constantsCursor.getCount();
-
-      return(null);
-    }
-
-    @Override
-    public void onPostExecute(Void arg0) {
-      ((CursorAdapter)getListAdapter()).changeCursor(constantsCursor);
+      return(doQuery());
     }
   }
 }

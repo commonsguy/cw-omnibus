@@ -14,12 +14,12 @@
 
 package com.commonsware.android.frw;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class FilesDemoActivity extends SherlockFragmentActivity {
+public class FilesDemoActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

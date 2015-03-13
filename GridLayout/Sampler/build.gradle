@@ -3,29 +3,27 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.10.+'
+        classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-		compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-		compile 'com.android.support:support-v4:19.1.0'
-		compile 'com.android.support:gridlayout-v7:19.1.0'
+	compile 'com.android.support:gridlayout-v7:19.1.0'
+    compile 'com.android.support:support-v13:21.0.3'
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "19.0.1"
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
 
-		defaultConfig {
-			targetSdkVersion 17
-		}
+    defaultConfig {
+        targetSdkVersion 17
+    }
 
     sourceSets {
         main {

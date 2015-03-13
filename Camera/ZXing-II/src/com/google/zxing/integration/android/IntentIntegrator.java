@@ -25,6 +25,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -139,21 +140,41 @@ public class IntentIntegrator {
       );
   
   private final Activity activity;
+  private final Fragment fragment;
+
   private String title;
   private String message;
   private String buttonYes;
   private String buttonNo;
   private List<String> targetApplications;
-  private final Map<String,Object> moreExtras;
-  
+  private final Map<String,Object> moreExtras = new HashMap<String,Object>(3);
+
+  /**
+   * @param activity {@link Activity} invoking the integration
+   */
   public IntentIntegrator(Activity activity) {
     this.activity = activity;
+    this.fragment = null;
+    initializeConfiguration();
+  }
+
+  /**
+   * @param fragment {@link Fragment} invoking the integration.
+   *  {@link #startActivityForResult(Intent, int)} will be called on the {@link Fragment} instead
+   *  of an {@link Activity}
+   */
+  public IntentIntegrator(Fragment fragment) {
+    this.activity = fragment.getActivity();
+    this.fragment = fragment;
+    initializeConfiguration();
+  }
+
+  private void initializeConfiguration() {
     title = DEFAULT_TITLE;
     message = DEFAULT_MESSAGE;
     buttonYes = DEFAULT_YES;
     buttonNo = DEFAULT_NO;
     targetApplications = TARGET_ALL_KNOWN;
-    moreExtras = new HashMap<String,Object>(3);
   }
   
   public String getTitle() {
@@ -228,21 +249,50 @@ public class IntentIntegrator {
   }
 
   /**
-   * Initiates a scan for all known barcode types.
+   * Initiates a scan for all known barcode types with the default camera.
+   *
+   * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
+   *   if a prompt was needed, or null otherwise.
    */
   public final AlertDialog initiateScan() {
-    return initiateScan(ALL_CODE_TYPES);
+    return initiateScan(ALL_CODE_TYPES, -1);
+  }
+  
+  /**
+   * Initiates a scan for all known barcode types with the specified camera.
+   *
+   * @param cameraId camera ID of the camera to use. A negative value means "no preference".
+   * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
+   *   if a prompt was needed, or null otherwise.
+   */
+  public final AlertDialog initiateScan(int cameraId) {
+    return initiateScan(ALL_CODE_TYPES, cameraId);
   }
 
   /**
-   * Initiates a scan only for a certain set of barcode types, given as strings corresponding
+   * Initiates a scan, using the default camera, only for a certain set of barcode types, given as strings corresponding
    * to their names in ZXing's {@code BarcodeFormat} class like "UPC_A". You can supply constants
    * like {@link #PRODUCT_CODE_TYPES} for example.
    *
+   * @param desiredBarcodeFormats names of {@code BarcodeFormat}s to scan for
+   * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
+   *   if a prompt was needed, or null otherwise.
+   */
+  public final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats) {
+    return initiateScan(desiredBarcodeFormats, -1);
+  }
+  
+  /**
+   * Initiates a scan, using the specified camera, only for a certain set of barcode types, given as strings corresponding
+   * to their names in ZXing's {@code BarcodeFormat} class like "UPC_A". You can supply constants
+   * like {@link #PRODUCT_CODE_TYPES} for example.
+   *
+   * @param desiredBarcodeFormats names of {@code BarcodeFormat}s to scan for
+   * @param cameraId camera ID of the camera to use. A negative value means "no preference".
    * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
    *   if a prompt was needed, or null otherwise
    */
-  public final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats) {
+  public final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats, int cameraId) {
     Intent intentScan = new Intent(BS_PACKAGE + ".SCAN");
     intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
@@ -257,6 +307,11 @@ public class IntentIntegrator {
         joinedByComma.append(format);
       }
       intentScan.putExtra("SCAN_FORMATS", joinedByComma.toString());
+    }
+	
+    // check requested camera ID
+    if (cameraId >= 0) {
+      intentScan.putExtra("SCAN_CAMERA_ID", cameraId);
     }
 
     String targetAppPackage = findTargetAppPackage(intentScan);
@@ -281,7 +336,11 @@ public class IntentIntegrator {
    * @see android.app.Fragment#startActivityForResult(Intent, int)
    */
   protected void startActivityForResult(Intent intent, int code) {
-    activity.startActivityForResult(intent, code);
+    if (fragment == null) {
+      activity.startActivityForResult(intent, code);
+    } else {
+      fragment.startActivityForResult(intent, code);
+    }
   }
   
   private String findTargetAppPackage(Intent intent) {
@@ -314,21 +373,30 @@ public class IntentIntegrator {
     downloadDialog.setPositiveButton(buttonYes, new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialogInterface, int i) {
-        String packageName = targetApplications.get(0);
+        String packageName;
+        if (targetApplications.contains(BS_PACKAGE)) {
+          // Prefer to suggest download of BS if it's anywhere in the list
+          packageName = BS_PACKAGE;
+        } else {
+          // Otherwise, first option:
+          packageName = targetApplications.get(0);
+        }
         Uri uri = Uri.parse("market://details?id=" + packageName);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         try {
-          activity.startActivity(intent);
+          if (fragment == null) {
+            activity.startActivity(intent);
+          } else {
+            fragment.startActivity(intent);
+          }
         } catch (ActivityNotFoundException anfe) {
           // Hmm, market is not installed
           Log.w(TAG, "Google Play is not installed; cannot install " + packageName);
         }
       }
     });
-    downloadDialog.setNegativeButton(buttonNo, new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialogInterface, int i) {}
-    });
+    downloadDialog.setNegativeButton(buttonNo, null);
+    downloadDialog.setCancelable(true);
     return downloadDialog.show();
   }
 
@@ -337,6 +405,9 @@ public class IntentIntegrator {
    * <p>Call this from your {@link Activity}'s
    * {@link Activity#onActivityResult(int, int, Intent)} method.</p>
    *
+   * @param requestCode request code from {@code onActivityResult()}
+   * @param resultCode result code from {@code onActivityResult()}
+   * @param intent {@link Intent} from {@code onActivityResult()}
    * @return null if the event handled here was not related to this class, or
    *  else an {@link IntentResult} containing the result of the scan. If the user cancelled scanning,
    *  the fields will be null.
@@ -364,6 +435,10 @@ public class IntentIntegrator {
 
   /**
    * Defaults to type "TEXT_TYPE".
+   *
+   * @param text the text string to encode as a barcode
+   * @return the {@link AlertDialog} that was shown to the user prompting them to download the app
+   *   if a prompt was needed, or null otherwise
    * @see #shareText(CharSequence, CharSequence)
    */
   public final AlertDialog shareText(CharSequence text) {
@@ -393,7 +468,11 @@ public class IntentIntegrator {
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
     attachMoreExtras(intent);
-    activity.startActivity(intent);
+    if (fragment == null) {
+      activity.startActivity(intent);
+    } else {
+      fragment.startActivity(intent);
+    }
     return null;
   }
   

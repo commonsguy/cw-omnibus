@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2013 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,26 +14,12 @@
 
 package com.commonsware.android.preffragsbc;
 
-import java.util.List;
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import java.util.List;
 
-public class EditPreferences extends SherlockPreferenceActivity {
-  @SuppressWarnings("deprecation")
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-      addPreferencesFromResource(R.xml.preferences);
-      addPreferencesFromResource(R.xml.preferences2);
-    }
-  }
-
-  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class EditPreferences extends PreferenceActivity {
   @Override
   public void onBuildHeaders(List<Header> target) {
     loadHeadersFromResource(R.xml.preference_headers, target);
@@ -45,11 +31,10 @@ public class EditPreferences extends SherlockPreferenceActivity {
         || Second.class.getName().equals(fragmentName)) {
       return(true);
     }
-    
+
     return(false);
   }
 
-  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public static class First extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +44,6 @@ public class EditPreferences extends SherlockPreferenceActivity {
     }
   }
 
-  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public static class Second extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {

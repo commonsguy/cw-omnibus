@@ -15,6 +15,7 @@
 package com.commonsware.android.eu4you2;
 
 import android.os.Bundle;
+import android.webkit.WebViewFragment;
 
 public class DetailsFragment extends WebViewFragment {
   private static final String STATE_URL="url";

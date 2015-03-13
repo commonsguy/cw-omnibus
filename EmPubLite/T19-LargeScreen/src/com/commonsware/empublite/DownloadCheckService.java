@@ -1,28 +1,34 @@
 package com.commonsware.empublite;
 
-import android.app.DownloadManager;
+import android.app.IntentService;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
-import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.NoSubscriberEvent;
+import retrofit.RestAdapter;
 
 public class DownloadCheckService extends WakefulIntentService {
-  public static final String PREF_PENDING_UPDATE="pendingUpdateDir";
-  public static final String UPDATE_FILENAME="book.zip";
-  private static final String UPDATE_BASEDIR="updates";
-  private static final String UPDATE_URL=
-      "http://misc.commonsware.com/empublite-update.json";
+  private static final String OUR_BOOK_DATE="20120418";
+  private static final String UPDATE_FILENAME="book.zip";
+  public static final String UPDATE_BASEDIR="updates";
+  private static final int NOTIFY_ID=1337;
 
   public DownloadCheckService() {
     super("DownloadCheckService");
@@ -30,78 +36,121 @@ public class DownloadCheckService extends WakefulIntentService {
 
   @Override
   protected void doWakefulWork(Intent intent) {
-    BufferedReader reader=null;
-
     try {
-      URL url=new URL(UPDATE_URL);
-      HttpURLConnection c=(HttpURLConnection)url.openConnection();
+      String url=getUpdateUrl();
 
-      c.setRequestMethod("GET");
-      c.setReadTimeout(15000);
-      c.connect();
+      if (url != null) {
+        File book=download(url);
+        File updateDir=new File(getFilesDir(), UPDATE_BASEDIR);
 
-      reader=
-          new BufferedReader(new InputStreamReader(c.getInputStream()));
+        updateDir.mkdirs();
+        unzip(book, updateDir);
+        book.delete();
 
-      StringBuilder buf=new StringBuilder();
-      String line=null;
-
-      while ((line=reader.readLine()) != null) {
-        buf.append(line + "\n");
+        EventBus.getDefault().register(this);
+        EventBus.getDefault().post(new BookUpdatedEvent());
+        EventBus.getDefault().unregister(this);
       }
-
-      checkDownloadInfo(buf.toString());
     }
     catch (Exception e) {
       Log.e(getClass().getSimpleName(),
-            "Exception retrieving update info", e);
+          "Exception downloading update", e);
+    }
+  }
+
+  public void onEvent(NoSubscriberEvent event) {
+    NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
+    Intent toLaunch=new Intent(this, EmPubLiteActivity.class);
+    PendingIntent pi=PendingIntent.getActivity(this, 0, toLaunch, 0);
+
+    builder.setAutoCancel(true).setContentIntent(pi)
+        .setContentTitle(getString(R.string.update_complete))
+        .setContentText(getString(R.string.update_desc))
+        .setSmallIcon(android.R.drawable.stat_sys_download_done)
+        .setTicker(getString(R.string.update_complete));
+
+    NotificationManager mgr=
+        ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
+
+    mgr.notify(NOTIFY_ID, builder.build());
+  }
+
+  private String getUpdateUrl() {
+    RestAdapter restAdapter=
+        new RestAdapter.Builder().setEndpoint("http://commonsware.com")
+            .build();
+    BookUpdateInterface updateInterface=
+        restAdapter.create(BookUpdateInterface.class);
+    BookUpdateInfo info=updateInterface.update();
+
+    if (info.updatedOn.compareTo(OUR_BOOK_DATE) > 0) {
+      return(info.updateUrl);
+    }
+
+    return(null);
+  }
+
+  private File download(String url) throws MalformedURLException,
+      IOException {
+    File output=new File(getFilesDir(), UPDATE_FILENAME);
+
+    if (output.exists()) {
+      output.delete();
+    }
+
+    HttpURLConnection c=
+        (HttpURLConnection)new URL(url).openConnection();
+    FileOutputStream fos=new FileOutputStream(output.getPath());
+    BufferedOutputStream out=new BufferedOutputStream(fos);
+
+    try {
+      InputStream in=c.getInputStream();
+      byte[] buffer=new byte[16384];
+      int len=0;
+
+      while ((len=in.read(buffer)) > 0) {
+        out.write(buffer, 0, len);
+      }
+
+      out.flush();
     }
     finally {
-      if (reader != null) {
-        try {
-          reader.close();
+      fos.getFD().sync();
+      out.close();
+      c.disconnect();
+    }
+
+    return(output);
+  }
+
+  private static void unzip(File src, File dest) throws IOException {
+    InputStream is=new FileInputStream(src);
+    ZipInputStream zis=new ZipInputStream(new BufferedInputStream(is));
+    ZipEntry ze;
+
+    dest.mkdirs();
+
+    while ((ze=zis.getNextEntry()) != null) {
+      byte[] buffer=new byte[16384];
+      int count;
+      FileOutputStream fos=
+          new FileOutputStream(new File(dest, ze.getName()));
+      BufferedOutputStream out=new BufferedOutputStream(fos);
+
+      try {
+        while ((count=zis.read(buffer)) != -1) {
+          out.write(buffer, 0, count);
         }
-        catch (IOException e) {
-          Log.e(getClass().getSimpleName(),
-                "Exception closing HUC reader", e);
-        }
+        out.flush();
       }
+      finally {
+        fos.getFD().sync();
+        out.close();
+      }
+
+      zis.closeEntry();
     }
-  }
 
-  static File getUpdateBaseDir(Context ctxt) {
-    return(new File(ctxt.getFilesDir(), UPDATE_BASEDIR));
-  }
-
-  private void checkDownloadInfo(String raw) throws JSONException {
-    JSONObject json=new JSONObject(raw);
-    String version=json.names().getString(0);
-    File localCopy=new File(getUpdateBaseDir(this), version);
-
-    if (!localCopy.exists()) {
-      PreferenceManager.getDefaultSharedPreferences(this)
-                       .edit()
-                       .putString(PREF_PENDING_UPDATE,
-                                  localCopy.getAbsolutePath()).commit();
-
-      String url=json.getString(version);
-      DownloadManager mgr=
-          (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-      DownloadManager.Request req=
-          new DownloadManager.Request(Uri.parse(url));
-
-      Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                 .mkdirs();
-
-      req.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI
-                                     | DownloadManager.Request.NETWORK_MOBILE)
-         .setAllowedOverRoaming(false)
-         .setTitle(getString(R.string.update_title))
-         .setDescription(getString(R.string.update_description))
-         .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
-                                            UPDATE_FILENAME);
-
-      mgr.enqueue(req);
-    }
+    zis.close();
   }
 }

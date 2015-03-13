@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2012 CommonsWare, LLC
+  Copyright (c) 2008-2014 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,14 +14,13 @@
 
 package com.commonsware.android.pref1header;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuItem;
 
-
-public class FragmentsDemo extends SherlockFragmentActivity {
+public class FragmentsDemo extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -30,7 +29,7 @@ public class FragmentsDemo extends SherlockFragmentActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater().inflate(R.menu.actions, menu);
+    getMenuInflater().inflate(R.menu.actions, menu);
 
     return(super.onCreateOptionsMenu(menu));
   }

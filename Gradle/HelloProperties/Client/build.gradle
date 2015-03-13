@@ -1,22 +1,8 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.0'
-    }
-}
-
-apply plugin: 'android'
-
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion BUILD_TOOLS_VERSION
-
     sourceSets {
         main {
             aidl.srcDirs=[rootProject.file('aidl')]

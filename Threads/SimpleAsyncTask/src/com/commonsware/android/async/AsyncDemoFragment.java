@@ -14,14 +14,14 @@
 
 package com.commonsware.android.async;
 
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import java.util.ArrayList;
-import com.actionbarsherlock.app.SherlockListFragment;
 
-public class AsyncDemoFragment extends SherlockListFragment {
+public class AsyncDemoFragment extends ListFragment {
   private static final String[] items= { "lorem", "ipsum", "dolor",
       "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",

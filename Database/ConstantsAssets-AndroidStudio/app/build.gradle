@@ -1,0 +1,17 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+}
+

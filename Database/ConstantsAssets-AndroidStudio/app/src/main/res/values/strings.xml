@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Constants Assets Demo</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_title">Add Constant</string>
+    <string name="delete_title">Delete Constant: Are You Sure?</string>
+    <string name="add">Add</string>
+</resources>

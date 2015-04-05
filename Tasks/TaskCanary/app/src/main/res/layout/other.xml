@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <Button
+    android:id="@+id/firstTop"
+    android:text="@string/first_button_caption"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:onClick="firstTop"/>
+
+  <Button
+    android:id="@+id/firstTask"
+    android:text="@string/second_button_caption"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:onClick="firstTask"/>
+
+  <Button
+    android:id="@+id/secondTop"
+    android:text="@string/third_button_caption"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:onClick="secondTop"/>
+
+  <Button
+    android:id="@+id/secondTask"
+    android:text="@string/fourth_button_caption"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:onClick="secondTask"/>
+
+  <Button
+    android:id="@+id/settingsTop"
+    android:text="@string/fifth_button_caption"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:onClick="settingsTop"/>
+
+  <Button
+    android:id="@+id/settingsTask"
+    android:text="@string/sixth_button_caption"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:onClick="settingsTask"/>
+</LinearLayout>

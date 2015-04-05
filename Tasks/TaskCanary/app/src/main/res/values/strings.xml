@@ -1,0 +1,11 @@
+<resources>
+  <string name="app_name">TaskCanary</string>
+  <string name="action_settings">Settings</string>
+  <string name="first_button_caption">1st Activity, CLEAR_TOP|SINGLE_TOP</string>
+  <string name="second_button_caption">1st Activity, CLEAR_TASK|NEW_TASK</string>
+  <string name="third_button_caption">2nd Activity, CLEAR_TOP|SINGLE_TOP</string>
+  <string name="fourth_button_caption">2nd Activity, CLEAR_TASK|NEW_TASK</string>
+  <string name="fifth_button_caption">Settings Activity, CLEAR_TOP|SINGLE_TOP</string>
+  <string name="sixth_button_caption">Settings Activity, CLEAR_TASK|NEW_TASK</string>
+  <string name="action_other">Other Activity</string>
+</resources>

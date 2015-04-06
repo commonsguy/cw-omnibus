@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">Reparent Demo</string>
+  <string name="msg_main">This is the ReparentDemo main activity</string>
+  <string name="msg_reparent">This is the ReparentDemo reparentable activity</string>
+</resources>

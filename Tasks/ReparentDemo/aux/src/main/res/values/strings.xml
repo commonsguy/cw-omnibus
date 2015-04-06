@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">Reparent Demo Aux</string>
+  <string name="btn_main">Launch ReparentableActivity</string>
+</resources>

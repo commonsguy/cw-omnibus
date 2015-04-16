@@ -29,7 +29,7 @@ public class AsyncDemoFragment extends ListFragment {
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
       "vel", "erat", "placerat", "ante", "porttitor", "sodales",
       "pellentesque", "augue", "purus" };
-  private ArrayList<String> model=null;
+  private ArrayList<String> model=new ArrayList<String>();
   private ArrayAdapter<String> adapter=null;
   private AddStringTask task=null;
 
@@ -39,11 +39,8 @@ public class AsyncDemoFragment extends ListFragment {
 
     setRetainInstance(true);
 
-    if (model == null) {
-      model=new ArrayList<String>();
-      task=new AddStringTask();
-      task.execute();
-    }
+    task=new AddStringTask();
+    task.execute();
 
     adapter=
         new ArrayAdapter<String>(getActivity(),
@@ -60,16 +57,12 @@ public class AsyncDemoFragment extends ListFragment {
   }
 
   @Override
-  synchronized public void onDestroy() {
+  public void onDestroy() {
     if (task != null) {
       task.cancel(false);
     }
 
     super.onDestroy();
-  }
-
-  synchronized private void clearTask() {
-    task=null;
   }
 
   class AddStringTask extends AsyncTask<Void, String, Void> {
@@ -95,12 +88,10 @@ public class AsyncDemoFragment extends ListFragment {
 
     @Override
     protected void onPostExecute(Void unused) {
-      if (!isCancelled()) {
-        Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
-             .show();
-      }
+      Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
+           .show();
 
-      clearTask();
+      task=null;
     }
   }
 }

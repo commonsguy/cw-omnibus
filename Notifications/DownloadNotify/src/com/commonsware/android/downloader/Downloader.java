@@ -57,6 +57,7 @@ public class Downloader extends IntentService {
       HttpURLConnection c=(HttpURLConnection)url.openConnection();
       FileOutputStream fos=new FileOutputStream(output.getPath());
       BufferedOutputStream out=new BufferedOutputStream(fos);
+      String mimeType=c.getHeaderField("Content-type");
 
       try {
         InputStream in=c.getInputStream();
@@ -75,14 +76,14 @@ public class Downloader extends IntentService {
         c.disconnect();
       }
 
-      raiseNotification(i, output, null);
+      raiseNotification(mimeType, output, null);
     }
     catch (IOException e2) {
-      raiseNotification(i, null, e2);
+      raiseNotification(null, null, e2);
     }
   }
 
-  private void raiseNotification(Intent inbound, File output,
+  private void raiseNotification(String mimeType, File output,
                                  Exception e) {
     NotificationCompat.Builder b=new NotificationCompat.Builder(this);
 
@@ -96,7 +97,7 @@ public class Downloader extends IntentService {
 
       Intent outbound=new Intent(Intent.ACTION_VIEW);
 
-      outbound.setDataAndType(Uri.fromFile(output), inbound.getType());
+      outbound.setDataAndType(Uri.fromFile(output), mimeType);
 
       b.setContentIntent(PendingIntent.getActivity(this, 0, outbound, 0));
     }

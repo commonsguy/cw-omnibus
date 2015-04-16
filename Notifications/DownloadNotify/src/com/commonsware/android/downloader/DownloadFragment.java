@@ -42,8 +42,7 @@ public class DownloadFragment extends Fragment implements
   public void onClick(View v) {
     Intent i=new Intent(getActivity(), Downloader.class);
 
-    i.setDataAndType(Uri.parse("http://commonsware.com/Android/excerpt.pdf"),
-                     "application/pdf");
+    i.setData(Uri.parse("http://commonsware.com/Android/excerpt.pdf"));
 
     getActivity().startService(i);
     getActivity().finish();

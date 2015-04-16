@@ -26,7 +26,7 @@ public class DemoJobService extends JobService {
   public boolean onStartJob(JobParameters params) {
     PersistableBundle pb=params.getExtras();
 
-    if (pb.getInt(MainActivity.KEY_DOWNLOAD_AS_AN_INT, 0)==1) {
+    if (pb.getBoolean(MainActivity.KEY_DOWNLOAD, false)) {
       job=new DownloadThread(params);
       job.start();
 

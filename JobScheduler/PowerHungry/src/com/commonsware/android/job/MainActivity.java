@@ -35,7 +35,7 @@ public class MainActivity extends Activity
       AlarmManager.INTERVAL_HOUR
   };
   private static final int JOB_ID=1337;
-  static final String KEY_DOWNLOAD_AS_AN_INT="isDownload";
+  static final String KEY_DOWNLOAD="isDownload";
   private Spinner type=null;
   private Spinner period=null;
   private Switch download=null;
@@ -133,7 +133,7 @@ public class MainActivity extends Activity
       PersistableBundle pb=new PersistableBundle();
 
       if (download.isChecked()) {
-        pb.putInt(KEY_DOWNLOAD_AS_AN_INT, 1);
+        pb.putBoolean(KEY_DOWNLOAD, true);
         b.setExtras(pb).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
       } else {
         b.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE);

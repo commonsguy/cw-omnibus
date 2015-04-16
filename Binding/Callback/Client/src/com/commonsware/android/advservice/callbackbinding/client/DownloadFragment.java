@@ -70,28 +70,30 @@ public class DownloadFragment extends Fragment implements
   public void onAttach(Activity host) {
     super.onAttach(host);
 
-    appContext=(Application)host.getApplicationContext();
+    if (appContext == null) {
+      appContext=(Application)host.getApplicationContext();
 
-    Intent implicit=new Intent(IDownload.class.getName());
-    List<ResolveInfo> matches=host.getPackageManager()
-                                  .queryIntentServices(implicit, 0);
+      Intent implicit=new Intent(IDownload.class.getName());
+      List<ResolveInfo> matches=host.getPackageManager()
+                                    .queryIntentServices(implicit, 0);
 
-    if (matches.size()==0) {
-      Toast.makeText(host, "Cannot find a matching service!",
-                      Toast.LENGTH_LONG).show();
-    }
-    else if (matches.size()>1) {
-      Toast.makeText(host, "Found multiple matching services!",
-                      Toast.LENGTH_LONG).show();
-    }
-    else {
-      Intent explicit=new Intent(implicit);
-      ServiceInfo svcInfo=matches.get(0).serviceInfo;
-      ComponentName cn=new ComponentName(svcInfo.applicationInfo.packageName,
-                                         svcInfo.name);
+      if (matches.size() == 0) {
+        Toast.makeText(host, "Cannot find a matching service!",
+            Toast.LENGTH_LONG).show();
+      }
+      else if (matches.size() > 1) {
+        Toast.makeText(host, "Found multiple matching services!",
+            Toast.LENGTH_LONG).show();
+      }
+      else {
+        Intent explicit=new Intent(implicit);
+        ServiceInfo svcInfo=matches.get(0).serviceInfo;
+        ComponentName cn=new ComponentName(svcInfo.applicationInfo.packageName,
+                                            svcInfo.name);
 
-      explicit.setComponent(cn);
-      appContext.bindService(explicit, this, Context.BIND_AUTO_CREATE);
+        explicit.setComponent(cn);
+        appContext.bindService(explicit, this, Context.BIND_AUTO_CREATE);
+      }
     }
   }
 

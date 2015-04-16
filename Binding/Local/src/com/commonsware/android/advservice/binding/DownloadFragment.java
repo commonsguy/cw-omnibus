@@ -47,10 +47,12 @@ public class DownloadFragment extends Fragment implements
   public void onAttach(Activity host) {
     super.onAttach(host);
 
-    appContext=(Application)host.getApplicationContext();
-    appContext.bindService(new Intent(getActivity(),
-                                      DownloadService.class), this,
-                            Context.BIND_AUTO_CREATE);
+    if (appContext==null) {
+      appContext=(Application)host.getApplicationContext();
+      appContext.bindService(new Intent(getActivity(),
+                                          DownloadService.class),
+                              this, Context.BIND_AUTO_CREATE);
+    }
   }
 
   @Override

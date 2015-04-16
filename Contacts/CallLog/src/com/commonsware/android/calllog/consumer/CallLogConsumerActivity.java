@@ -40,45 +40,42 @@ public class CallLogConsumerActivity extends ListActivity implements
     adapter=
         new SimpleCursorAdapter(this, R.layout.row, null, new String[] {
             CallLog.Calls.NUMBER, CallLog.Calls.DATE }, new int[] {
-            R.id.number, R.id.date });
+            R.id.number, R.id.date }, 0);
 
     adapter.setViewBinder(this);
     setListAdapter(adapter);
     getLoaderManager().initLoader(0, null, this);
   }
 
+  @Override
   public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
     return(new CursorLoader(this, CallLog.Calls.CONTENT_URI,
                             PROJECTION, null, null, CallLog.Calls.DATE
                                 + " DESC"));
   }
 
+  @Override
   public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
     adapter.swapCursor(cursor);
   }
 
+  @Override
   public void onLoaderReset(Loader<Cursor> loader) {
     adapter.swapCursor(null);
   }
 
   @Override
   public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-    long time=0;
-    String formattedTime=null;
+    if (columnIndex==2) {
+      long time=cursor.getLong(columnIndex);
+      String formattedTime=DateUtils.formatDateTime(this, time,
+                              DateUtils.FORMAT_ABBREV_RELATIVE);
 
-    switch (columnIndex) {
-      case 2:
-        time=cursor.getLong(columnIndex);
-        formattedTime=
-            DateUtils.formatDateTime(this, time,
-                                     DateUtils.FORMAT_ABBREV_RELATIVE);
-        ((TextView)view).setText(formattedTime);
-        break;
+      ((TextView)view).setText(formattedTime);
 
-      default:
-        return(false);
+      return(true);
     }
 
-    return(true);
+    return(false);
   }
 }

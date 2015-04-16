@@ -10,8 +10,8 @@
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme"
-        android:uiOptions="none"
-        tools:replace="android:uiOptions">
+        android:supportsRtl="false"
+        tools:replace="android:supportsRtl">
       <activity android:name="com.commonsware.android.merger.lib.ThisActivityDoesNotExist">
         <intent-filter>
           <action android:name="com.commonsware.android.merger.SOMETHING_VANILLA" />

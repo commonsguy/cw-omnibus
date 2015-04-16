@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
@@ -29,6 +28,7 @@ public class ModelFragment extends Fragment {
   @Override
   public void onAttach(Activity host) {
     super.onAttach(host);
+
     if (contents == null) {
       new LoadThread(host).start();
     }
@@ -49,13 +49,13 @@ public class ModelFragment extends Fragment {
       super();
 
       this.ctxt=ctxt.getApplicationContext();
-      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
     }
 
     @Override
     public void run() {
       prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
 
+      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
       Gson gson=new Gson();
 
       try {

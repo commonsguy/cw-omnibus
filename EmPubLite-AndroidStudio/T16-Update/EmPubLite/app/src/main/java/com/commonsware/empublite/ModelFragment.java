@@ -67,11 +67,12 @@ public class ModelFragment extends Fragment {
       super();
 
       this.ctxt=ctxt.getApplicationContext();
-      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
     }
 
     @Override
     public void run() {
+      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+
       prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
 
       Gson gson=new Gson();

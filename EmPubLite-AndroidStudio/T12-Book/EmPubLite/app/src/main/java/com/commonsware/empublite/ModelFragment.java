@@ -41,11 +41,11 @@ public class ModelFragment extends Fragment {
       super();
 
       this.assets=assets;
-      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
     }
 
     @Override
     public void run() {
+      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
       Gson gson=new Gson();
 
       try {

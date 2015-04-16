@@ -49,11 +49,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     LoadThread(int position) {
       super();
       this.position=position;
-      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
     }
 
     @Override
     public void run() {
+      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+
       String[] args={String.valueOf(position)};
       Cursor c=
           getReadableDatabase().rawQuery("SELECT prose FROM notes WHERE position = ? ", args);
@@ -76,11 +77,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       super();
       this.position=position;
       this.prose=prose;
-      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
     }
 
     @Override
     public void run() {
+      Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+
       String[] args={String.valueOf(position), prose};
       getWritableDatabase().execSQL("INSERT OR REPLACE INTO notes (position, prose) VALUES (?, ?)",
           args);

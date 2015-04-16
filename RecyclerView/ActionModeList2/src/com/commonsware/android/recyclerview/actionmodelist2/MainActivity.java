@@ -176,7 +176,7 @@ public class MainActivity extends RecyclerViewActivity {
     void onChecked(int position, boolean isChecked) {
       super.onChecked(position, isChecked);
 
-      if (getCheckedCount()>0) {
+      if (isChecked) {
         if (activeMode==null) {
           activeMode=startActionMode(this);
         }

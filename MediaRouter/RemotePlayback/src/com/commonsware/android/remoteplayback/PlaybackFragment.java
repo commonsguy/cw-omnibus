@@ -81,18 +81,18 @@ public class PlaybackFragment extends Fragment {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     router.addCallback(selector, cb,
                        MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY);
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     router.removeCallback(cb);
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override

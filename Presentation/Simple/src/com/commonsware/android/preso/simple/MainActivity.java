@@ -41,8 +41,8 @@ public class MainActivity extends Activity {
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
   @Override
-  protected void onResume() {
-    super.onResume();
+  protected void onStart() {
+    super.onStart();
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
       if (cb==null) {
@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
   @Override
-  protected void onPause() {
+  protected void onStop() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
       clearPreso();
 
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
       }
     }
 
-    super.onPause();
+    super.onStop();
   }
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)

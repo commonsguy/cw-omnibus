@@ -43,8 +43,8 @@ public class MainActivity extends Activity {
   }
 
   @Override
-  protected void onResume() {
-    super.onResume();
+  protected void onStart() {
+    super.onStart();
 
     if (cb == null) {
       cb=new RouteCallback();
@@ -56,14 +56,14 @@ public class MainActivity extends Activity {
   }
 
   @Override
-  protected void onPause() {
+  protected void onStop() {
     clearPreso(false);
 
     if (router != null) {
       router.removeCallback(cb);
     }
 
-    super.onPause();
+    super.onStop();
   }
 
   private void handleRoute(RouteInfo route) {

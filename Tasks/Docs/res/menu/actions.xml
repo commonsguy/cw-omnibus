@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/add"
+    android:showAsAction="ifRoom"
+    android:icon="@drawable/content_new"
+    android:title="@string/add"></item>
+  <item
+    android:id="@+id/launch"
+    android:showAsAction="never"
+    android:title="@string/launch">
+  </item>
+  <item
+    android:id="@+id/split"
+    android:icon="@drawable/content_split"
+    android:showAsAction="ifRoom"
+    android:title="@string/split">
+  </item>
+  <item
+    android:id="@+id/remove"
+    android:showAsAction="ifRoom"
+    android:icon="@drawable/content_remove"
+    android:title="@string/remove"></item>
+  <item
+    android:id="@+id/swap"
+    android:showAsAction="ifRoom"
+    android:icon="@drawable/av_repeat"
+    android:title="@string/swap"></item>
+
+</menu>

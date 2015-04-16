@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Documents Demo</string>
+	<string name="hint">Editor #%d</string>
+	<string name="split">Fork</string>
+	<string name="add">Add Before</string>
+	<string name="remove">Remove</string>
+	<string name="swap">Swap</string>
+  <string name="launch">Launch</string>
+  <string name="editor_activity_title_prefix">"Editing "</string>
+
+</resources>

@@ -51,13 +51,11 @@ public class DemoContextTest {
 
   @Test
   public void exists() {
-    init();
     Assert.assertNotNull(field);
   }
 
   @Test
   public void position() {
-    init();
     Assert.assertEquals(0, field.getTop());
     Assert.assertEquals(0, field.getLeft());
   }

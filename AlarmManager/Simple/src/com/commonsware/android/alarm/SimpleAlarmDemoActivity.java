@@ -20,6 +20,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.Toast;
 
 public class SimpleAlarmDemoActivity extends Activity {
@@ -51,6 +52,7 @@ public class SimpleAlarmDemoActivity extends Activity {
                                   Intent data) {
     if (requestCode == ALARM_ID) {
       Toast.makeText(this, R.string.toast, Toast.LENGTH_SHORT).show();
+      Log.d(getClass().getSimpleName(), "I ran!");
     }
   }
 }

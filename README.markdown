@@ -1,5 +1,24 @@
-Welcome to the source code for _The Busy Coder's Guide to Android
-Development_!
+Welcome to the source code for [_The Busy Coder's Guide to Android Development_](https://commonsware.com/Android)!
+
+## About the Book
+
+_The Busy Coder's Guide to Android Development_ is a book covering Android application development, from basics
+through advanced capabilities. It is updated several times a year and is available through
+[the Warescription](https://commonsware.com/warescription) program. Subscribers also have access to office
+hours chats and other benefits.
+
+This repository contains the source code for the hundreds of sample apps profiled in the book. These 
+samples are updated as the book is, with `git` tags applied to tie sample code versions to book
+versions.
+
+The book, and the samples, were written by Mark Murphy. You may also have run into him through
+Stack Overflow:
+
+<a href="http://stackoverflow.com/users/115145/commonsware">
+<img src="http://stackoverflow.com/users/flair/115145.png" width="208" height="58" alt="profile for CommonsWare at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for CommonsWare at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
+</a>
+
+## About the Code
 
 All of the source code in this archive is licensed under the
 Apache 2.0 license except as noted.

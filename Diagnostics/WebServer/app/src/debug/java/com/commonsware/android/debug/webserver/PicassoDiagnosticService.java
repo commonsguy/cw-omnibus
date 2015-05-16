@@ -27,6 +27,7 @@ import com.github.jknack.handlebars.context.FieldValueResolver;
 import com.github.jknack.handlebars.io.AbstractTemplateLoader;
 import com.github.jknack.handlebars.io.StringTemplateSource;
 import com.github.jknack.handlebars.io.TemplateSource;
+import com.koushikdutta.async.AsyncServer;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
@@ -64,6 +65,7 @@ public class PicassoDiagnosticService extends Service {
   @Override
   public void onDestroy() {
     server.stop();
+    AsyncServer.getDefault().stop(); // no, really, I mean stop
 
     super.onDestroy();
   }

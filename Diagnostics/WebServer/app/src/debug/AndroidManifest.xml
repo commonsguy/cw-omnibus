@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.debug.webserver">
+
+	<application>
+		<activity
+			android:name="PicassoDiagnosticActivity"
+			android:label="@string/picasso_diagnostics"
+			android:theme="@android:style/Theme.NoDisplay"
+			android:taskAffinity="com.commonsware.android.debug.activity.PicassoDiagnosticActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+		<service android:name="PicassoDiagnosticService" />
+	</application>
+
+</manifest>

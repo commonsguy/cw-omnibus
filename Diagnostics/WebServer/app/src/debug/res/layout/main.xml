@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:shrinkColumns="1"
+    android:stretchColumns="1">
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/last_updated"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Updated"/>
+
+      <TextView
+        android:id="@+id/last_updated_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/avg_download_size"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Average Download Size"/>
+
+      <TextView
+        android:id="@+id/avg_download_size_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/avg_orig_size"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Average Original Bitmap Size"/>
+
+      <TextView
+        android:id="@+id/avg_orig_size_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/avg_xform_size"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Average Transformed Bitmap Size"/>
+
+      <TextView
+        android:id="@+id/avg_xform_size_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/cache_hits"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cache Hits"/>
+
+      <TextView
+        android:id="@+id/cache_hits_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/cache_misses"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cache Misses"/>
+
+      <TextView
+        android:id="@+id/cache_misses_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/download_count"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download Count"/>
+
+      <TextView
+        android:id="@+id/download_count_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/max_size"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max Size"/>
+
+      <TextView
+        android:id="@+id/max_size_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/orig_bitmap_count"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Original Bitmap Count"/>
+
+      <TextView
+        android:id="@+id/orig_bitmap_count_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/size"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Size"/>
+
+      <TextView
+        android:id="@+id/size_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/total_dl_size"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Download Size"/>
+
+      <TextView
+        android:id="@+id/total_dl_size_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/total_orig_size"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Original Size"/>
+
+      <TextView
+        android:id="@+id/total_orig_size_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/total_xform_size"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Transformed Size"/>
+
+      <TextView
+        android:id="@+id/total_xform_size_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:id="@+id/xform_count"
+        style="@style/TableText.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transformed Count"/>
+
+      <TextView
+        android:id="@+id/xform_count_value"
+        style="@style/TableText.Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+  </TableLayout>
+</ScrollView>

@@ -49,7 +49,7 @@
       android:layout_width="96px"
       android:layout_height="96px"
       android:text="Hi!"
-      android:textSize="5pt"
+      android:textSize="10sp"
       android:background="@drawable/button"
     />
   </LinearLayout>

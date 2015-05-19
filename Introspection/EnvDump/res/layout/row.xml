@@ -7,18 +7,18 @@
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
-    android:paddingLeft="2px"
-    android:paddingTop="2px"
-    android:paddingBottom="2px"
-    android:paddingRight="5px"
+    android:paddingLeft="2dip"
+    android:paddingTop="2dip"
+    android:paddingBottom="2dip"
+    android:paddingRight="5dip"
   />
   <TextView
     android:id="@+id/label"
     android:layout_width="match_parent" 
     android:layout_height="wrap_content"
     android:layout_toRightOf="@id/icon"
-    android:textSize="11pt"
-    android:paddingTop="2px"
-    android:paddingBottom="2px"
+    android:textSize="24sp"
+    android:paddingTop="2dip"
+    android:paddingBottom="2dip"
   />
 </RelativeLayout>

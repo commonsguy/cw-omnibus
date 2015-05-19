@@ -14,7 +14,7 @@
     android:layout_toRightOf="@id/swatch"
     android:layout_marginLeft="4dip"
     android:text="@string/red"
-    android:textSize="10pt"
+    android:textSize="24sp"
   />
   <SeekBar android:id="@+id/red"
     android:layout_width="match_parent"
@@ -32,7 +32,7 @@
     android:layout_marginLeft="4dip"
     android:layout_marginTop="4dip"
     android:text="@string/green"
-    android:textSize="10pt"
+    android:textSize="24sp"
   />
   <SeekBar android:id="@+id/green"
     android:layout_width="match_parent"
@@ -50,7 +50,7 @@
     android:layout_marginLeft="4dip"
     android:layout_marginTop="4dip"
     android:text="@string/blue"
-    android:textSize="10pt"
+    android:textSize="24sp"
   />
   <SeekBar android:id="@+id/blue"
     android:layout_width="match_parent"

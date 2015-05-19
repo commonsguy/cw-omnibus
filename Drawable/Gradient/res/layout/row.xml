@@ -4,8 +4,8 @@
   android:id="@+id/label"
   android:layout_width="match_parent" 
   android:layout_height="match_parent"
-  android:textSize="12pt"
-  android:paddingTop="2px"
-  android:paddingBottom="2px"
+  android:textSize="24sp"
+  android:paddingTop="2dip"
+  android:paddingBottom="2dip"
   android:gravity="center"
 />

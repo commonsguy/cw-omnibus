@@ -16,7 +16,7 @@
     android:id="@+id/label"
     android:layout_width="match_parent" 
     android:layout_height="wrap_content"
-    android:textSize="11pt"
+    android:textSize="24sp"
     android:layout_margin="2dp"
     android:layout_gravity="center_vertical"
   />

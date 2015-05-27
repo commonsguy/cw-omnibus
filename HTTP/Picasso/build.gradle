@@ -13,9 +13,9 @@ repositories {
 }
 
 dependencies {
-    compile 'de.greenrobot:eventbus:2.2.1'
-    compile 'com.squareup.picasso:picasso:2.3.3'
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
 }
 
 android {

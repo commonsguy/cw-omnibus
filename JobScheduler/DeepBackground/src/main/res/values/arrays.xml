@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="types">
+        <item>Exact Alarm</item>
+        <item>Inexact Alarm</item>
+        <item>JobScheduler</item>
+    </string-array>
+    <string-array name="periods">
+        <item>1 Minute</item>
+        <item>15 Minutes</item>
+        <item>30 Minutes</item>
+        <item>60 Minutes</item>
+    </string-array>
+</resources>

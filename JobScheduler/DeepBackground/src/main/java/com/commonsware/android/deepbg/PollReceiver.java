@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
+import java.lang.reflect.Field;
 
 public class PollReceiver extends WakefulBroadcastReceiver {
   static final String EXTRA_PERIOD="period";
@@ -46,7 +47,7 @@ public class PollReceiver extends WakefulBroadcastReceiver {
     }
   }
 
-  @TargetApi(Build.VERSION_CODES.KITKAT)
+  @TargetApi(Build.VERSION_CODES.MNC)
   static void scheduleExactAlarm(Context ctxt, AlarmManager alarms,
                                  long period, boolean isDownload) {
     Intent i=buildBaseIntent(ctxt)
@@ -54,6 +55,16 @@ public class PollReceiver extends WakefulBroadcastReceiver {
         .putExtra(EXTRA_IS_DOWNLOAD, isDownload);
     PendingIntent pi=PendingIntent.getBroadcast(ctxt, 0, i, 0);
 
+    Log.e("PollReceiver", String.valueOf(Build.VERSION.SDK_INT));
+    Log.e("PollReceiver", String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+//    Log.e("PollReceiver", String.valueOf(Build.VERSION.PREVIEW_SDK_INT));
+    Log.e("PollReceiver", String.valueOf(putMarzipanInYourPiePlateBingo()));
+
+    if (putMarzipanInYourPiePlateBingo()) {
+      Log.e("PollReceiver", "allow while idle");
+      alarms.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+          SystemClock.elapsedRealtime() + period, pi);
+    }
     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT) {
       alarms.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,
           SystemClock.elapsedRealtime() + period, pi);
@@ -70,7 +81,7 @@ public class PollReceiver extends WakefulBroadcastReceiver {
     PendingIntent pi=PendingIntent.getBroadcast(ctxt, 0, i, 0);
 
     alarms.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-        SystemClock.elapsedRealtime()+period, period, pi);
+        SystemClock.elapsedRealtime() + period, period, pi);
   }
 
   static void cancelAlarm(Context ctxt, AlarmManager alarms) {
@@ -88,5 +99,27 @@ public class PollReceiver extends WakefulBroadcastReceiver {
     return(PendingIntent
         .getBroadcast(ctxt, 0, buildBaseIntent(ctxt),
             PendingIntent.FLAG_NO_CREATE)!=null);
+  }
+
+  static private boolean putMarzipanInYourPiePlateBingo() {
+    boolean result=false;
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP_MR1) {
+      try {
+        Field f=Build.VERSION.class.getField("PREVIEW_SDK_INT");
+
+        if (f.getInt(null)>0) {
+          result=true;
+        }
+      }
+      catch (NoSuchFieldException e) {
+        // no problem, must really be API 22
+      }
+      catch (IllegalAccessException e) {
+        // ummm... this shouldn't happen
+      }
+    }
+
+    return(result);
   }
 }

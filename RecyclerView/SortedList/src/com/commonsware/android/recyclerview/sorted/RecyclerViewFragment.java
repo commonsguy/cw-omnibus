@@ -23,7 +23,8 @@ import android.view.ViewGroup;
 
 public class RecyclerViewFragment extends Fragment {
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
     RecyclerView rv=new RecyclerView(getActivity());
 
     rv.setHasFixedSize(true);

@@ -44,9 +44,9 @@ class RowController extends RecyclerView.ViewHolder
 
   @Override
   public void onClick(View v) {
-    boolean isCheckedNow=adapter.isChecked(getPosition());
+    boolean isCheckedNow=adapter.isChecked(getAdapterPosition());
 
-    adapter.onChecked(getPosition(), !isCheckedNow);
+    adapter.onChecked(getAdapterPosition(), !isCheckedNow);
     row.setActivated(!isCheckedNow);
   }
 
@@ -61,6 +61,6 @@ class RowController extends RecyclerView.ViewHolder
       icon.setImageResource(R.drawable.ok);
     }
 
-    row.setActivated(adapter.isChecked(getPosition()));
+    row.setActivated(adapter.isChecked(getAdapterPosition()));
   }
 }

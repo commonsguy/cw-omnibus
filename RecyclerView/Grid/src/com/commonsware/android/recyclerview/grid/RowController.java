@@ -61,7 +61,7 @@ class RowController extends RecyclerView.ViewHolder
   @Override
   public void onClick(View v) {
     Toast.makeText(v.getContext(),
-        String.format("Clicked on position %d", getPosition()),
+        String.format("Clicked on position %d", getAdapterPosition()),
         Toast.LENGTH_SHORT).show();
   }
 

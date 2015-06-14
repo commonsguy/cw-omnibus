@@ -68,13 +68,13 @@ class RowController extends RecyclerView.ViewHolder
   @Override
   public void onClick(View v) {
     Toast.makeText(v.getContext(),
-        String.format("Clicked on position %d", getPosition()),
+        String.format("Clicked on position %d", getAdapterPosition()),
         Toast.LENGTH_SHORT).show();
   }
 
   @Override
   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-    adapter.onChecked(getPosition(), isChecked);
+    adapter.onChecked(getAdapterPosition(), isChecked);
   }
 
   void bindModel(String item) {
@@ -88,6 +88,6 @@ class RowController extends RecyclerView.ViewHolder
       icon.setImageResource(R.drawable.ok);
     }
 
-    cb.setChecked(adapter.isChecked(getPosition()));
+    cb.setChecked(adapter.isChecked(getAdapterPosition()));
   }
 }

@@ -36,6 +36,7 @@ import android.widget.SimpleCursorAdapter;
 public class ConstantsFragment extends ListFragment implements
     DialogInterface.OnClickListener {
   private DatabaseHelper db=null;
+  private AsyncTask task=null;
 
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
@@ -45,15 +46,20 @@ public class ConstantsFragment extends ListFragment implements
     setRetainInstance(true);
 
     db=new DatabaseHelper(getActivity());
-    new LoadCursorTask(getActivity().getApplicationContext()).execute();
+    task=new LoadCursorTask(getActivity().getApplicationContext());
+    task.execute();
   }
 
   @Override
   public void onDestroy() {
-    super.onDestroy();
+    if (task != null) {
+      task.cancel(false);
+    }
 
     ((CursorAdapter)getListAdapter()).getCursor().close();
     db.close();
+
+    super.onDestroy();
   }
 
   @Override
@@ -93,7 +99,8 @@ public class ConstantsFragment extends ListFragment implements
     values.put(DatabaseHelper.TITLE, title.getText().toString());
     values.put(DatabaseHelper.VALUE, value.getText().toString());
 
-    new InsertTask().execute(values);
+    task=new InsertTask();
+    task.execute(values);
   }
 
   private Cursor doQuery() {

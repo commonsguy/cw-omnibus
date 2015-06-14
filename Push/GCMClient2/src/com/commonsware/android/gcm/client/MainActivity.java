@@ -24,6 +24,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
   static final String SENDER_ID="this is so fake"; // change
                                                    // me!
+  private RegisterTask task=null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -37,11 +38,21 @@ public class MainActivity extends Activity {
     }
   }
 
+  @Override
+  public void onDestroy() {
+    if (task != null) {
+      task.cancel(false);
+    }
+
+    super.onDestroy();
+  }
+
   public void onClick(View v) {
     final String regId=GCMRegistrarCompat.getRegistrationId(this);
 
     if (regId.length() == 0) {
-      new RegisterTask(this).execute(SENDER_ID);
+      task=new RegisterTask(this);
+      task.execute(SENDER_ID);
     }
     else {
       Log.d(getClass().getSimpleName(), "Existing registration: "

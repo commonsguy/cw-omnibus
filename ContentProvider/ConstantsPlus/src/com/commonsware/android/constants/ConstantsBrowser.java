@@ -36,12 +36,23 @@ public class ConstantsBrowser extends ListActivity implements OnClickListener {
   private static final String[] PROJECTION=new String[] {
       Provider.Constants._ID, Provider.Constants.TITLE,
       Provider.Constants.VALUE };
+  private AsyncTask task=null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    new LoadCursorTask().execute();
+    task=new LoadCursorTask();
+    task.execute();
+  }
+
+  @Override
+  public void onDestroy() {
+    if (task != null) {
+      task.cancel(false);
+    }
+
+    super.onDestroy();
   }
 
   @Override
@@ -73,7 +84,7 @@ public class ConstantsBrowser extends ListActivity implements OnClickListener {
     values.put(DatabaseHelper.TITLE, title.getText().toString());
     values.put(DatabaseHelper.VALUE, value.getText().toString());
 
-    new InsertTask().execute(values);
+    task=new InsertTask().execute(values);
   }
 
   private void add() {

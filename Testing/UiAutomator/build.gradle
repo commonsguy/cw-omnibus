@@ -10,12 +10,12 @@ buildscript {
 apply plugin: 'com.android.application'
 
 repositories {
-    mavenCentral() // required for testing-support-lib dependencies
+    mavenCentral() // this or jcenter() required for testing-support-lib dependencies
 }
 
 dependencies {
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.0.0'
+    androidTestCompile 'com.android.support.test:rules:0.3'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
 }
 
 android {

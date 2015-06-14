@@ -15,9 +15,9 @@
 package com.commonsware.android.swytch;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
-public class SwitchDemo extends ActionBarActivity {
+public class SwitchDemo extends AppCompatActivity {
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);

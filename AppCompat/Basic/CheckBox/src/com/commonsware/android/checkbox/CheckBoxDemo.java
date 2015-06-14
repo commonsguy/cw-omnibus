@@ -15,11 +15,11 @@
 package com.commonsware.android.checkbox;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-public class CheckBoxDemo extends ActionBarActivity implements
+public class CheckBoxDemo extends AppCompatActivity implements
     CompoundButton.OnCheckedChangeListener {
   CheckBox cb;
 

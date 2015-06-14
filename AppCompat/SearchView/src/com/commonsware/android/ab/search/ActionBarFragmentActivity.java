@@ -15,9 +15,9 @@
 package com.commonsware.android.ab.search;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
-public class ActionBarFragmentActivity extends ActionBarActivity {
+public class ActionBarFragmentActivity extends AppCompatActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

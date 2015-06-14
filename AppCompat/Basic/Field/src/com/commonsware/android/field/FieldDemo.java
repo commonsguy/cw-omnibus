@@ -15,9 +15,9 @@
 package com.commonsware.android.field;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
-public class FieldDemo extends ActionBarActivity {
+public class FieldDemo extends AppCompatActivity {
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);

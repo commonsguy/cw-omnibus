@@ -17,7 +17,7 @@ package com.commonsware.android.sap;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,7 +26,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity implements
+public class MainActivity extends AppCompatActivity implements
     ShareActionProvider.OnShareTargetSelectedListener, TextWatcher {
   private ShareActionProvider share=null;
   private Intent shareIntent=new Intent(Intent.ACTION_SEND);

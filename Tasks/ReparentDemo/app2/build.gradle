@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.commonsware.android.tasks.reparent.aux"
+        applicationId "com.commonsware.android.tasks.reparent.app2"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1

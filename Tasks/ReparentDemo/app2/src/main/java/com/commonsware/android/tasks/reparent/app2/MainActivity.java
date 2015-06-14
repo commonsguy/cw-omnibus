@@ -12,7 +12,7 @@
  http://commonsware.com/Android
  */
 
-package com.commonsware.android.tasks.reparent.aux;
+package com.commonsware.android.tasks.reparent.app2;
 
 import android.app.Activity;
 import android.content.Intent;

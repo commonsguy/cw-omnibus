@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
   
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
 */
 
 package com.commonsware.android.urlhandler;
@@ -52,6 +52,6 @@ public class URLHandler extends Activity {
   
   public void visitSample(View v) {
     startActivity(new Intent(Intent.ACTION_VIEW,
-                             Uri.parse("http://commonsware.com/sample")));
+                             Uri.parse("https://commonsware.com/sample")));
   }
 }

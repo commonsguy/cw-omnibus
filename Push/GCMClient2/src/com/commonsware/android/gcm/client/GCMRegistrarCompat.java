@@ -10,7 +10,7 @@
   language governing permissions and limitations under the License.
   
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
  */
 
 package com.commonsware.android.gcm.client;

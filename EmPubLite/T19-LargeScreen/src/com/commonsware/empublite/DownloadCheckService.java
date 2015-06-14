@@ -77,7 +77,7 @@ public class DownloadCheckService extends WakefulIntentService {
 
   private String getUpdateUrl() {
     RestAdapter restAdapter=
-        new RestAdapter.Builder().setEndpoint("http://commonsware.com")
+        new RestAdapter.Builder().setEndpoint("https://commonsware.com")
             .build();
     BookUpdateInterface updateInterface=
         restAdapter.create(BookUpdateInterface.class);

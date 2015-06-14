@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
 	
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
  */
 
 package com.commonsware.android.foredown;
@@ -42,7 +42,7 @@ public class DownloadFragment extends Fragment implements
   public void onClick(View v) {
     Intent i=new Intent(getActivity(), Downloader.class);
 
-    i.setDataAndType(Uri.parse("http://commonsware.com/Android/excerpt.pdf"),
+    i.setDataAndType(Uri.parse("https://commonsware.com/Android/excerpt.pdf"),
                      "application/pdf");
 
     getActivity().startService(i);

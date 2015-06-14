@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
   
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
  */
 
 package com.commonsware.android.print;
@@ -109,7 +109,7 @@ public class MainActivity extends Activity {
   private void printWebPage() {
     WebView print=prepPrintWebView(getString(R.string.web_page));
 
-    print.loadUrl("http://commonsware.com/Android");
+    print.loadUrl("https://commonsware.com/Android");
   }
 
   private void printReport() {

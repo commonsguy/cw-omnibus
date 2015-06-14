@@ -9,7 +9,7 @@
 	language governing permissions and limitations under the License.
 	
 	From _Tuning Android Applications_
-		http://commonsware.com/AndTuning
+		https://commonsware.com/AndTuning
 */
 
 package com.commonsware.android.tuning.aidl2;

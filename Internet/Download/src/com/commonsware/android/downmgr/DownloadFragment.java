@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
 	
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
  */
 
 package com.commonsware.android.downmgr;
@@ -88,7 +88,7 @@ public class DownloadFragment extends Fragment implements
   }
 
   private void startDownload(View v) {
-    Uri uri=Uri.parse("http://commonsware.com/misc/test.mp4");
+    Uri uri=Uri.parse("https://commonsware.com/misc/test.mp4");
 
     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                .mkdirs();

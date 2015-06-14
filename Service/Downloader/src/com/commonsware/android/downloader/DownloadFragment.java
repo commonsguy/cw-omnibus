@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
 	
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
  */
 
 package com.commonsware.android.downloader;
@@ -67,7 +67,7 @@ public class DownloadFragment extends Fragment implements
 
     Intent i=new Intent(getActivity(), Downloader.class);
 
-    i.setData(Uri.parse("http://commonsware.com/Android/excerpt.pdf"));
+    i.setData(Uri.parse("https://commonsware.com/Android/excerpt.pdf"));
 
     getActivity().startService(i);
   }

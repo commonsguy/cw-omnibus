@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
   
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
 */
 package com.commonsware.android.defdet;
 
@@ -32,7 +32,7 @@ public class DefaultDetectorActivity extends Activity {
     PackageManager mgr=getPackageManager();
     Intent i=
         new Intent(Intent.ACTION_VIEW,
-                   Uri.parse("http://commonsware.com"));
+                   Uri.parse("https://commonsware.com"));
     ResolveInfo test=
         mgr.resolveActivity(i, PackageManager.MATCH_DEFAULT_ONLY);
 

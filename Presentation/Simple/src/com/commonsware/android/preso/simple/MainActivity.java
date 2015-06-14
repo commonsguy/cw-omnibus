@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
   
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
  */
 
 package com.commonsware.android.preso.simple;
@@ -133,7 +133,7 @@ public class MainActivity extends Activity {
 
       WebView wv=new WebView(getContext());
 
-      wv.loadUrl("http://commonsware.com");
+      wv.loadUrl("https://commonsware.com");
 
       setContentView(wv);
     }

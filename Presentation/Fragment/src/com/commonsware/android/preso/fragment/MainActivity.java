@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
   
   From _The Busy Coder's Guide to Android Development_
-    http://commonsware.com/Android
+    https://commonsware.com/Android
  */
 
 package com.commonsware.android.preso.fragment;
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
 
   private PresentationFragment buildPreso(Display display) {
     return(SamplePresentationFragment.newInstance(this, display,
-                                                  "http://commonsware.com"));
+                                                  "https://commonsware.com"));
   }
 
   private class RouteCallback extends SimpleCallback {

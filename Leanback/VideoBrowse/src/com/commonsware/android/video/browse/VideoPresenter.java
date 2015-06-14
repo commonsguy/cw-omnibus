@@ -9,7 +9,7 @@
  language governing permissions and limitations under the License.
 
  From _The Busy Coder's Guide to Android Development_
- http://commonsware.com/Android
+ https://commonsware.com/Android
  */
 
 // inspired by https://github.com/googlesamples/androidtv-Leanback/blob/master/app/src/main/java/com/example/android/tvleanback/CardPresenter.java

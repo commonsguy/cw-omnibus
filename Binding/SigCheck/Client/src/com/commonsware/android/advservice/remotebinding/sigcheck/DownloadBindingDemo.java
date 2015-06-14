@@ -9,7 +9,7 @@
   language governing permissions and limitations under the License.
   
   From _The Busy Coder's Guide to Advanced Android Development_
-    http://commonsware.com/AdvAndroid
+    https://commonsware.com/AdvAndroid
  */
 
 package com.commonsware.android.advservice.remotebinding.sigcheck;

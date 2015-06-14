@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.koushikdutta.ion:ion:1.1.8'
+    compile 'com.koushikdutta.ion:ion:2+'
     compile 'de.greenrobot:eventbus:2.2.1'
 }
 

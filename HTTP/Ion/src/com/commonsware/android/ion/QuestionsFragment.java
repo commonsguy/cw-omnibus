@@ -45,8 +45,8 @@ public class QuestionsFragment extends ListFragment implements
 
     setRetainInstance(true);
 
-    Ion.with(getActivity(),
-             "https://api.stackexchange.com/2.1/questions?"
+    Ion.with(getActivity())
+       .load("https://api.stackexchange.com/2.1/questions?"
                  + "order=desc&sort=creation&site=stackoverflow&"
                  + "tagged=android").asJsonObject().setCallback(this);
 

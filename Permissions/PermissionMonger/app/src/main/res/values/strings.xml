@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Permission Monger</string>
+    <string name="label_access_fine_location">ACCESS_FINE_LOCATION</string>
+    <string name="label_camera">CAMERA</string>
+    <string name="label_internet">INTERNET</string>
+    <string name="label_contacts">READ_CONTACTS</string>
+    <string name="label_storage">WRITE_EXTERNAL_STORAGE</string>
+    <string name="menu_camera">Camera</string>
+    <string name="menu_contacts">Contacts</string>
+    <string name="menu_location">Location</string>
+    <string name="toast_bzzzt">Sorry, but we cannot do this, because you did not give us permission!</string>
+    <string name="toast_camera">Smile!</string>
+    <string name="toast_contacts">A friend slapped you with a trout</string>
+    <string name="toast_location">No matter where you go, there you are</string>
+
+</resources>

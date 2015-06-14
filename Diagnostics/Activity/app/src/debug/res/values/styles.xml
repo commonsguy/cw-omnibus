@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="TableText">
+    <item name="android:textSize">12sp</item>
+    <item name="android:layout_margin">8dp</item>
+  </style>
+
+  <style name="TableText.Title">
+    <item name="android:textStyle">bold</item>
+  </style>
+
+  <style name="TableText.Value">
+    <item name="android:typeface">monospace</item>
+  </style>
+</resources>

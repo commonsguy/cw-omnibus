@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Picasso Demo DEBUG</string>
+	<string name="picasso_diagnostics">Picasso Diagnostics</string>
+
+</resources>

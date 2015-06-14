@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:shrinkColumns="0"
+    android:stretchColumns="0">
+
+    <TableRow>
+
+      <TextView
+        style="@style/TableText.Title"
+        android:text="@string/label_access_fine_location"/>
+
+      <TextView
+        android:id="@+id/location_value"
+        style="@style/TableText.Value"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        style="@style/TableText.Title"
+        android:text="@string/label_camera"/>
+
+      <TextView
+        android:id="@+id/camera_value"
+        style="@style/TableText.Value"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        style="@style/TableText.Title"
+        android:text="@string/label_internet"/>
+
+      <TextView
+        android:id="@+id/internet_value"
+        style="@style/TableText.Value"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        style="@style/TableText.Title"
+        android:text="@string/label_contacts"/>
+
+      <TextView
+        android:id="@+id/contacts_value"
+        style="@style/TableText.Value"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        style="@style/TableText.Title"
+        android:text="@string/label_storage"/>
+
+      <TextView
+        android:id="@+id/storage_value"
+        style="@style/TableText.Value"/>
+    </TableRow>
+
+  </TableLayout>
+</ScrollView>

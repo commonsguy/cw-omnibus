@@ -42,9 +42,9 @@ public class ConstantsBrowser extends ListActivity implements OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    task=new LoadCursorTask();
-    task.execute();
+    task=new LoadCursorTask().execute();
   }
+
 
   @Override
   public void onDestroy() {

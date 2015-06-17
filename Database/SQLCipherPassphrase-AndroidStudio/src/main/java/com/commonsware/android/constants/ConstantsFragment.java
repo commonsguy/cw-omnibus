@@ -46,9 +46,9 @@ public class ConstantsFragment extends ListFragment implements
     setRetainInstance(true);
 
     db=new DatabaseHelper(getActivity());
-    task=new LoadCursorTask(getActivity().getApplicationContext());
-    task.execute();
+    task=new LoadCursorTask(getActivity().getApplicationContext()).execute();
   }
+
 
   @Override
   public void onDestroy() {
@@ -99,9 +99,9 @@ public class ConstantsFragment extends ListFragment implements
     values.put(DatabaseHelper.TITLE, title.getText().toString());
     values.put(DatabaseHelper.VALUE, value.getText().toString());
 
-    task=new InsertTask();
-    task.execute(values);
+    task=new InsertTask().execute(values);
   }
+
 
   private Cursor doQuery() {
     return(db.getReadableDatabase().rawQuery("SELECT _id, title, value "

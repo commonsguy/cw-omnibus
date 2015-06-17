@@ -60,10 +60,10 @@ public class ConstantsFragment extends ListFragment implements
 
     if (current==null) {
       db=new DatabaseHelper(getActivity());
-      task=new LoadCursorTask();
-      task.execute();
+      task=new LoadCursorTask().execute();
     }
   }
+
 
   @Override
   public void onDestroy() {
@@ -113,9 +113,9 @@ public class ConstantsFragment extends ListFragment implements
     values.put(DatabaseHelper.TITLE, title.getText().toString());
     values.put(DatabaseHelper.VALUE, value.getText().toString());
 
-    task=new InsertTask();
-    task.execute(values);
+    task=new InsertTask().execute(values);
   }
+
 
   abstract private class BaseTask<T> extends AsyncTask<T, Void, Cursor> {
     @Override

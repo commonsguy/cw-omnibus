@@ -77,6 +77,7 @@ public class MainActivity extends RecyclerViewActivity implements
 
     void setVideos(Cursor videos) {
       this.videos=videos;
+      notifyDataSetChanged();
     }
 
     @Override

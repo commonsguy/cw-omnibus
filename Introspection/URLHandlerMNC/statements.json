@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.commonsware.android.urlhandler",
+      "sha256_cert_fingerprints": ["A9:99:84:D8:09:79:10:BB:96:56:85:73:69:32:15:07:F5:D1:4E:92:CA:32:AE:F9:E1:50:82:53:60:5B:CB:E3"]
+    }
+  }
+]
+

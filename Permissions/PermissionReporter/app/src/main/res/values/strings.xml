@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Permission Reporter</string>
+	<string name="normal">Normal</string>
+	<string name="dangerous">Dangerous</string>
+	<string name="signature">Signature</string>
+	<string name="other">Other</string>
+	<string name="msg_no_perms">There are no permissions of this type!</string>
+
+</resources>

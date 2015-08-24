@@ -9,7 +9,7 @@ buildscript {
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'com.google.android.gms:play-services-maps:6.5.87'
+    compile 'com.google.android.gms:play-services-maps:7.5.0'
 }
 
 android {

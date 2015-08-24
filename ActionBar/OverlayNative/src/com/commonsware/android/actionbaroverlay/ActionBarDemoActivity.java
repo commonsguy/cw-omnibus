@@ -45,7 +45,6 @@ public class ActionBarDemoActivity extends ListActivity {
         getResources().getDrawable(R.drawable.action_bar_background);
 
     getActionBar().setBackgroundDrawable(d);
-    getActionBar().setSplitBackgroundDrawable(d);
   }
 
   @Override

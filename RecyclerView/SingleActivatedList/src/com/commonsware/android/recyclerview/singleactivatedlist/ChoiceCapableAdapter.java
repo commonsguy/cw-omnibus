@@ -36,7 +36,7 @@ abstract public class
 
       if (checked>=0) {
         RowController row=
-            (RowController)rv.findViewHolderForPosition(checked);
+            (RowController)rv.findViewHolderForAdapterPosition(checked);
 
         if (row!=null) {
           row.setChecked(false);

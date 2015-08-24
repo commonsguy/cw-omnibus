@@ -1,0 +1,15 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+  compile project(':zxing')
+}
+
+android {
+  compileSdkVersion 22
+  buildToolsVersion "22.0.1"
+
+	defaultConfig {
+      minSdkVersion 15
+      targetSdkVersion 18
+	}
+}

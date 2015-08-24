@@ -1,22 +1,20 @@
 package com.commonsware.empublite;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import java.util.List;
 
-public class Preferences extends PreferenceActivity {
+public class Preferences extends Activity {
   @Override
-  public void onBuildHeaders(List<Header> target) {
-    loadHeadersFromResource(R.xml.preference_headers, target);
-  }
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-  @Override
-  protected boolean isValidFragment(String fragmentName) {
-    if (Display.class.getName().equals(fragmentName)) {
-      return(true);
+    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
+      getFragmentManager()
+          .beginTransaction()
+          .add(android.R.id.content, new Display())
+          .commit();
     }
-    return(false);
   }
 
   public static class Display extends PreferenceFragment {

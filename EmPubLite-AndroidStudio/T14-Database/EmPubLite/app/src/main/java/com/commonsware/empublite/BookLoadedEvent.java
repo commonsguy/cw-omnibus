@@ -8,6 +8,6 @@ public class BookLoadedEvent {
   }
 
   public BookContents getBook() {
-    return (contents);
+    return(contents);
   }
 }

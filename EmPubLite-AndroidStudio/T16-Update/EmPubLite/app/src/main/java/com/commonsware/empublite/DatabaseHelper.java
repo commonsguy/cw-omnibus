@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       singleton=new DatabaseHelper(ctxt.getApplicationContext());
     }
 
-    return (singleton);
+    return(singleton);
   }
 
   private DatabaseHelper(Context ctxt) {

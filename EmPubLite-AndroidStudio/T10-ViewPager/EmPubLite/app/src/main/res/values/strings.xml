@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">EmPub Lite</string>
-    <string name="help">Help</string>
-    <string name="about">About</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="app_name">EmPub Lite</string>
+  <string name="help">Help</string>
+  <string name="about">About</string>
 
 </resources>

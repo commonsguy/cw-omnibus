@@ -33,27 +33,23 @@ public class EmPubLiteActivity extends Activity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case android.R.id.home:
-        return (true);
-
       case R.id.about:
-        Intent i = new Intent(this, SimpleContentActivity.class);
-
-        i.putExtra(SimpleContentActivity.EXTRA_FILE,
-            "file:///android_asset/misc/about.html");
+        Intent i = new Intent(this, SimpleContentActivity.class)
+            .putExtra(SimpleContentActivity.EXTRA_FILE,
+                "file:///android_asset/misc/about.html");
         startActivity(i);
 
-        return (true);
+        return(true);
 
       case R.id.help:
-        i = new Intent(this, SimpleContentActivity.class);
-
-        i.putExtra(SimpleContentActivity.EXTRA_FILE,
-            "file:///android_asset/misc/help.html");
+        i = new Intent(this, SimpleContentActivity.class)
+            .putExtra(SimpleContentActivity.EXTRA_FILE,
+                "file:///android_asset/misc/help.html");
         startActivity(i);
 
-        return (true);
+        return(true);
     }
-    return (super.onOptionsItemSelected(item));
+
+    return(super.onOptionsItemSelected(item));
   }
 }

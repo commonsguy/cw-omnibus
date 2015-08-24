@@ -57,6 +57,29 @@ public class NoteFragment extends Fragment implements TextWatcher {
   }
 
   @Override
+  public void onResume() {
+    super.onResume();
+
+    EventBus.getDefault().register(this);
+
+    if (TextUtils.isEmpty(editor.getText())) {
+      DatabaseHelper db=DatabaseHelper.getInstance(getActivity());
+      db.loadNote(getPosition());
+    }
+  }
+
+  @Override
+  public void onPause() {
+    DatabaseHelper.getInstance(getActivity())
+        .updateNote(getPosition(),
+            editor.getText().toString());
+
+    EventBus.getDefault().unregister(this);
+
+    super.onPause();
+  }
+
+  @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.notes, menu);
 
@@ -81,29 +104,6 @@ public class NoteFragment extends Fragment implements TextWatcher {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
-
-    EventBus.getDefault().register(this);
-
-    if (TextUtils.isEmpty(editor.getText())) {
-      DatabaseHelper db=DatabaseHelper.getInstance(getActivity());
-      db.loadNote(getPosition());
-    }
-  }
-
-  @Override
-  public void onPause() {
-    DatabaseHelper.getInstance(getActivity())
-        .updateNote(getPosition(),
-            editor.getText().toString());
-
-    EventBus.getDefault().unregister(this);
-
-    super.onPause();
-  }
-
-  @Override
   public void afterTextChanged(Editable s) {
     shareIntent.putExtra(Intent.EXTRA_TEXT, s.toString());
   }
@@ -119,7 +119,8 @@ public class NoteFragment extends Fragment implements TextWatcher {
                             int count) {
     // ignored
   }
-
+  
+  @SuppressWarnings("unused")
   public void onEventMainThread(NoteLoadedEvent event) {
     if (event.getPosition() == getPosition()) {
       editor.setText(event.getProse());

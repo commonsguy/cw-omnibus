@@ -42,28 +42,10 @@ public class NoteFragment extends Fragment {
                            ViewGroup container,
                            Bundle savedInstanceState) {
     View result=inflater.inflate(R.layout.editor, container, false);
+
     editor=(EditText)result.findViewById(R.id.editor);
 
     return(result);
-  }
-
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.notes, menu);
-
-    super.onCreateOptionsMenu(menu, inflater);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.delete) {
-      editor.setText(null);
-      getContract().closeNotes();
-
-      return(true);
-    }
-
-    return(super.onOptionsItemSelected(item));
   }
 
   @Override
@@ -89,6 +71,26 @@ public class NoteFragment extends Fragment {
     super.onPause();
   }
 
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.notes, menu);
+
+    super.onCreateOptionsMenu(menu, inflater);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.delete) {
+      editor.setText(null);
+      getContract().closeNotes();
+
+      return(true);
+    }
+
+    return(super.onOptionsItemSelected(item));
+  }
+
+  @SuppressWarnings("unused")
   public void onEventMainThread(NoteLoadedEvent event) {
     if (event.getPosition() == getPosition()) {
       editor.setText(event.getProse());

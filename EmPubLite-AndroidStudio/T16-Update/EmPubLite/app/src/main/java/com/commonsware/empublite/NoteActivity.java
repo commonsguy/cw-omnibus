@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 
-public class NoteActivity extends Activity implements
-    NoteFragment.Contract {
+public class NoteActivity extends Activity implements NoteFragment.Contract {
   public static final String EXTRA_POSITION="position";
 
   @Override
@@ -17,12 +16,14 @@ public class NoteActivity extends Activity implements
 
       if (position >= 0) {
         Fragment f=NoteFragment.newInstance(position);
+
         getFragmentManager().beginTransaction()
             .add(android.R.id.content, f).commit();
       }
     }
   }
 
+  @Override
   public void closeNotes() {
     finish();
   }

@@ -33,9 +33,6 @@ public class EmPubLiteActivity extends Activity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case android.R.id.home:
-        return (true);
-
       case R.id.about:
         Intent i = new Intent(this, SimpleContentActivity.class);
         startActivity(i);

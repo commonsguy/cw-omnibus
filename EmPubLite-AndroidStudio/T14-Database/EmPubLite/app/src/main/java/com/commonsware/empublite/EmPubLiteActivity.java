@@ -28,30 +28,30 @@ public class EmPubLiteActivity extends Activity {
 
     setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
-
-    getActionBar().setHomeButtonEnabled(true);
   }
 
   @Override
   public void onResume() {
     super.onResume();
-
     EventBus.getDefault().register(this);
 
     if (adapter==null) {
-      mfrag=
-          (ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
+      mfrag=(ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
 
-      if (mfrag == null) {
+      if (mfrag==null) {
         mfrag=new ModelFragment();
-        getFragmentManager().beginTransaction().add(mfrag, MODEL).commit();
+
+        getFragmentManager()
+            .beginTransaction()
+            .add(mfrag, MODEL)
+            .commit();
       }
-      else if (mfrag.getBook() != null) {
+      else if (mfrag.getBook()!=null) {
         setupPager(mfrag.getBook());
       }
     }
 
-    if (mfrag.getPrefs() != null) {
+    if (mfrag.getPrefs()!=null) {
       pager.setKeepScreenOn(mfrag.getPrefs()
           .getBoolean(PREF_KEEP_SCREEN_ON, false));
     }
@@ -61,7 +61,7 @@ public class EmPubLiteActivity extends Activity {
   public void onPause() {
     EventBus.getDefault().unregister(this);
 
-    if (mfrag.getPrefs() != null) {
+    if (mfrag.getPrefs()!=null) {
       int position=pager.getCurrentItem();
 
       mfrag.getPrefs().edit().putInt(PREF_LAST_POSITION, position)
@@ -81,24 +81,18 @@ public class EmPubLiteActivity extends Activity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case android.R.id.home:
-        pager.setCurrentItem(0, false);
-        return(true);
-
       case R.id.about:
-        Intent i=new Intent(this, SimpleContentActivity.class);
-
-        i.putExtra(SimpleContentActivity.EXTRA_FILE,
-            "file:///android_asset/misc/about.html");
+        Intent i = new Intent(this, SimpleContentActivity.class)
+            .putExtra(SimpleContentActivity.EXTRA_FILE,
+                "file:///android_asset/misc/about.html");
         startActivity(i);
 
         return(true);
 
       case R.id.help:
-        i=new Intent(this, SimpleContentActivity.class);
-
-        i.putExtra(SimpleContentActivity.EXTRA_FILE,
-            "file:///android_asset/misc/help.html");
+        i = new Intent(this, SimpleContentActivity.class)
+            .putExtra(SimpleContentActivity.EXTRA_FILE,
+                "file:///android_asset/misc/help.html");
         startActivity(i);
 
         return(true);
@@ -119,6 +113,7 @@ public class EmPubLiteActivity extends Activity {
     return(super.onOptionsItemSelected(item));
   }
 
+  @SuppressWarnings("unused")
   public void onEventMainThread(BookLoadedEvent event) {
     setupPager(event.getBook());
   }
@@ -130,7 +125,8 @@ public class EmPubLiteActivity extends Activity {
     pager.setVisibility(View.VISIBLE);
 
     SharedPreferences prefs=mfrag.getPrefs();
-    if (prefs != null) {
+
+    if (prefs!=null) {
       if (prefs.getBoolean(PREF_SAVE_LAST_POSITION, false)) {
         pager.setCurrentItem(prefs.getInt(PREF_LAST_POSITION, 0));
       }
@@ -141,13 +137,12 @@ public class EmPubLiteActivity extends Activity {
 
   private void setupStrictMode() {
     StrictMode.ThreadPolicy.Builder builder=
-        new StrictMode.ThreadPolicy.Builder().detectNetwork();
+        new StrictMode.ThreadPolicy.Builder()
+            .detectAll()
+            .penaltyLog();
 
     if (BuildConfig.DEBUG) {
-      builder.penaltyDeath();
-    }
-    else {
-      builder.penaltyLog();
+      builder.penaltyFlashScreen();
     }
 
     StrictMode.setThreadPolicy(builder.build());

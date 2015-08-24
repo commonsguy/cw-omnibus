@@ -23,8 +23,6 @@ public class EmPubLiteActivity extends Activity {
 
     setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
-
-    getActionBar().setHomeButtonEnabled(true);
   }
 
   @Override
@@ -36,11 +34,15 @@ public class EmPubLiteActivity extends Activity {
       ModelFragment mfrag=
           (ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
 
-      if (mfrag == null) {
-        getFragmentManager().beginTransaction()
-            .add(new ModelFragment(), MODEL).commit();
+      if (mfrag==null) {
+        mfrag=new ModelFragment();
+
+        getFragmentManager()
+            .beginTransaction()
+            .add(mfrag, MODEL)
+            .commit();
       }
-      else if (mfrag.getBook() != null) {
+      else if (mfrag.getBook()!=null) {
         setupPager(mfrag.getBook());
       }
     }
@@ -62,24 +64,18 @@ public class EmPubLiteActivity extends Activity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case android.R.id.home:
-        pager.setCurrentItem(0, false);
-        return(true);
-
       case R.id.about:
-        Intent i=new Intent(this, SimpleContentActivity.class);
-
-        i.putExtra(SimpleContentActivity.EXTRA_FILE,
-            "file:///android_asset/misc/about.html");
+        Intent i = new Intent(this, SimpleContentActivity.class)
+            .putExtra(SimpleContentActivity.EXTRA_FILE,
+                "file:///android_asset/misc/about.html");
         startActivity(i);
 
         return(true);
 
       case R.id.help:
-        i=new Intent(this, SimpleContentActivity.class);
-
-        i.putExtra(SimpleContentActivity.EXTRA_FILE,
-            "file:///android_asset/misc/help.html");
+        i = new Intent(this, SimpleContentActivity.class)
+            .putExtra(SimpleContentActivity.EXTRA_FILE,
+                "file:///android_asset/misc/help.html");
         startActivity(i);
 
         return(true);
@@ -88,6 +84,7 @@ public class EmPubLiteActivity extends Activity {
     return(super.onOptionsItemSelected(item));
   }
 
+  @SuppressWarnings("unused")
   public void onEventMainThread(BookLoadedEvent event) {
     setupPager(event.getBook());
   }
@@ -101,13 +98,12 @@ public class EmPubLiteActivity extends Activity {
 
   private void setupStrictMode() {
     StrictMode.ThreadPolicy.Builder builder=
-        new StrictMode.ThreadPolicy.Builder().detectNetwork();
+        new StrictMode.ThreadPolicy.Builder()
+            .detectAll()
+            .penaltyLog();
 
     if (BuildConfig.DEBUG) {
-      builder.penaltyDeath();
-    }
-    else {
-      builder.penaltyLog();
+      builder.penaltyFlashScreen();
     }
 
     StrictMode.setThreadPolicy(builder.build());

@@ -29,16 +29,16 @@ public class ModelFragment extends Fragment {
   public void onAttach(Activity host) {
     super.onAttach(host);
 
-    if (contents == null) {
+    if (contents==null) {
       new LoadThread(host).start();
     }
   }
 
-  public BookContents getBook() {
+  synchronized public BookContents getBook() {
     return(contents);
   }
 
-  public SharedPreferences getPrefs() {
+  synchronized public SharedPreferences getPrefs() {
     return(prefs);
   }
 
@@ -53,7 +53,9 @@ public class ModelFragment extends Fragment {
 
     @Override
     public void run() {
-      prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
+      synchronized(this) {
+        prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
+      }
 
       Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
       Gson gson=new Gson();
@@ -63,7 +65,10 @@ public class ModelFragment extends Fragment {
         BufferedReader reader=
             new BufferedReader(new InputStreamReader(is));
 
-        contents=gson.fromJson(reader, BookContents.class);
+        synchronized(this) {
+          contents=gson.fromJson(reader, BookContents.class);
+        }
+
         EventBus.getDefault().post(new BookLoadedEvent(contents));
       }
       catch (IOException e) {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
@@ -34,7 +33,7 @@ public class ModelFragment extends Fragment {
 
     EventBus.getDefault().register(this);
 
-    if (contents == null) {
+    if (contents==null) {
       new LoadThread(host).start();
     }
   }
@@ -46,18 +45,19 @@ public class ModelFragment extends Fragment {
     super.onDetach();
   }
 
-  public BookContents getBook() {
+  @SuppressWarnings("unused")
+  public void onEventBackgroundThread(BookUpdatedEvent event) {
+    if (getActivity()!=null) {
+      new LoadThread(getActivity()).start();
+    }
+  }
+
+  synchronized public BookContents getBook() {
     return(contents);
   }
 
-  public SharedPreferences getPrefs() {
+  synchronized public SharedPreferences getPrefs() {
     return(prefs);
-  }
-
-  public void onEventBackgroundThread(BookUpdatedEvent event) {
-    if (getActivity() != null) {
-      new LoadThread(getActivity()).start();
-    }
   }
 
   private class LoadThread extends Thread {
@@ -73,7 +73,9 @@ public class ModelFragment extends Fragment {
     public void run() {
       Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 
-      prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
+      synchronized(this) {
+        prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
+      }
 
       Gson gson=new Gson();
       File baseDir=
@@ -93,7 +95,10 @@ public class ModelFragment extends Fragment {
         BufferedReader reader=
             new BufferedReader(new InputStreamReader(is));
 
-        contents=gson.fromJson(reader, BookContents.class);
+        synchronized(this) {
+          contents=gson.fromJson(reader, BookContents.class);
+        }
+
         is.close();
 
         if (baseDir.exists()) {

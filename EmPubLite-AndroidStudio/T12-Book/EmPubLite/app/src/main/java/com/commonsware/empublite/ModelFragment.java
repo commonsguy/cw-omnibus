@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Process;
+import android.preference.PreferenceFragment;
 import android.util.Log;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
@@ -25,13 +26,14 @@ public class ModelFragment extends Fragment {
   @Override
   public void onAttach(Activity host) {
     super.onAttach(host);
-    if (contents == null) {
+
+    if (contents==null) {
       new LoadThread(host.getAssets()).start();
     }
   }
 
-  public BookContents getBook() {
-    return (contents);
+  synchronized public BookContents getBook() {
+    return(contents);
   }
 
   private class LoadThread extends Thread {
@@ -53,7 +55,10 @@ public class ModelFragment extends Fragment {
         BufferedReader reader=
             new BufferedReader(new InputStreamReader(is));
 
-        contents=gson.fromJson(reader, BookContents.class);
+        synchronized(this) {
+          contents=gson.fromJson(reader, BookContents.class);
+        }
+
         EventBus.getDefault().post(new BookLoadedEvent(contents));
       }
       catch (IOException e) {

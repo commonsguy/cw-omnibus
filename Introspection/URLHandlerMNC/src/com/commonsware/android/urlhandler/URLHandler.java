@@ -35,6 +35,6 @@ public class URLHandler extends Activity {
   
   public void visitSample(View v) {
     startActivity(new Intent(Intent.ACTION_VIEW,
-                             Uri.parse("http://misc.commonsware.com/molecule.png")));
+                             Uri.parse("https://commonsware.com/Android/")));
   }
 }

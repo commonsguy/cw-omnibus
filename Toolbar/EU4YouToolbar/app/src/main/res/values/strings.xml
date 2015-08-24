@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">EU4You Toolbar</string>
+
+  <string name="austria">Austria</string>
+  <string name="belgium">Belgium</string>
+  <string name="bulgaria">Bulgaria</string>
+  <string name="cyprus">Cyprus</string>
+  <string name="czech_republic">Czech Republic</string>
+  <string name="denmark">Denmark</string>
+  <string name="estonia">Estonia</string>
+  <string name="finland">Finland</string>
+  <string name="france">France</string>
+  <string name="germany">Germany</string>
+  <string name="greece">Greece</string>
+  <string name="hungary">Hungary</string>
+  <string name="ireland">Ireland</string>
+  <string name="italy">Italy</string>
+  <string name="latvia">Latvia</string>
+  <string name="lithuania">Lithuania</string>
+  <string name="luxembourg">Luxembourg</string>
+  <string name="malta">Malta</string>
+  <string name="netherlands">Netherlands</string>
+  <string name="poland">Poland</string>
+  <string name="portugal">Portugal</string>
+  <string name="romania">Romania</string>
+  <string name="slovakia">Slovakia</string>
+  <string name="slovenia">Slovenia</string>
+  <string name="spain">Spain</string>
+  <string name="sweden">Sweden</string>
+  <string name="united_kingdom">United Kingdom</string>
+
+  <string name="austria_url">https://en.m.wikipedia.org/wiki/Austria</string>
+  <string name="belgium_url">https://en.m.wikipedia.org/wiki/Belgium</string>
+  <string name="bulgaria_url">https://en.m.wikipedia.org/wiki/Bulgaria</string>
+  <string name="cyprus_url">https://en.m.wikipedia.org/wiki/Cyprus</string>
+  <string name="czech_republic_url">https://en.m.wikipedia.org/wiki/Czech_republic</string>
+  <string name="denmark_url">https://en.m.wikipedia.org/wiki/Denmark</string>
+  <string name="estonia_url">https://en.m.wikipedia.org/wiki/Estonia</string>
+  <string name="finland_url">https://en.m.wikipedia.org/wiki/Finland</string>
+  <string name="france_url">https://en.m.wikipedia.org/wiki/France</string>
+  <string name="germany_url">https://en.m.wikipedia.org/wiki/Germany</string>
+  <string name="greece_url">https://en.m.wikipedia.org/wiki/Greece</string>
+  <string name="hungary_url">https://en.m.wikipedia.org/wiki/Hungary</string>
+  <string name="ireland_url">https://en.m.wikipedia.org/wiki/Ireland</string>
+  <string name="italy_url">https://en.m.wikipedia.org/wiki/Italy</string>
+  <string name="latvia_url">https://en.m.wikipedia.org/wiki/Latvia</string>
+  <string name="lithuania_url">https://en.m.wikipedia.org/wiki/Lithuania</string>
+  <string name="luxembourg_url">https://en.m.wikipedia.org/wiki/Luxembourg</string>
+  <string name="malta_url">https://en.m.wikipedia.org/wiki/Malta</string>
+  <string name="netherlands_url">https://en.m.wikipedia.org/wiki/Netherlands</string>
+  <string name="poland_url">https://en.m.wikipedia.org/wiki/Poland</string>
+  <string name="portugal_url">https://en.m.wikipedia.org/wiki/Portugal</string>
+  <string name="romania_url">https://en.m.wikipedia.org/wiki/Romania</string>
+  <string name="slovakia_url">https://en.m.wikipedia.org/wiki/Slovakia</string>
+  <string name="slovenia_url">https://en.m.wikipedia.org/wiki/Slovenia</string>
+  <string name="spain_url">https://en.m.wikipedia.org/wiki/Spain</string>
+  <string name="sweden_url">https://en.m.wikipedia.org/wiki/Sweden</string>
+  <string name="united_kingdom_url">https://en.m.wikipedia.org/wiki/United_kingdom</string>
+  <string name="menu_fwd">Forward</string>
+  <string name="menu_back">Back</string>
+  <string name="menu_reload">Refresh</string>
+</resources>

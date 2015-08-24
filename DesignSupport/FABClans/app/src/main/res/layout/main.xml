@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:fab="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <ListView
+    android:id="@android:id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:drawSelectorOnTop="false"
+    />
+
+  <com.github.clans.fab.FloatingActionButton
+    android:id="@+id/refresh"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_refresh_black_24dp"
+    android:layout_marginBottom="@dimen/fab_margin"
+    android:layout_marginRight="@dimen/fab_margin"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"/>
+
+  <com.github.clans.fab.FloatingActionMenu
+    android:id="@+id/settings"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@id/refresh"
+    android:layout_alignRight="@id/refresh"
+    android:layout_marginBottom="@dimen/fam_bottom_margin"
+    fab:menu_colorNormal="@color/fam"
+    fab:menu_colorPressed="@color/fam_pressed"
+    fab:menu_icon="@drawable/ic_action_settings">
+
+    <com.github.clans.fab.FloatingActionButton
+      android:id="@+id/settings_item"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_switch_camera"
+      fab:fab_colorNormal="@color/fam"
+      fab:fab_colorPressed="@color/fam_pressed"
+      fab:fab_size="mini"/>
+
+  </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>

@@ -1,0 +1,15 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.wrapp.floatlabelededittext:library:0.0.6'
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+	defaultConfig {
+        minSdkVersion 15
+		targetSdkVersion 18
+	}
+}

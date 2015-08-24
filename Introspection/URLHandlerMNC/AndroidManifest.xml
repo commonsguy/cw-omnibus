@@ -45,8 +45,8 @@
         <category android:name="android.intent.category.BROWSABLE"/>
 
         <data
-          android:host="misc.commonsware.com"
-          android:scheme="http"/>
+          android:host="commonsware.com"
+          android:scheme="https"/>
       </intent-filter>
     </activity>
   </application>

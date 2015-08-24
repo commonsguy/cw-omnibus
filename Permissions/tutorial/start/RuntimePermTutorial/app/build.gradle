@@ -1,0 +1,22 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        url "https://repo.commonsware.com.s3.amazonaws.com"
+    }
+}
+
+dependencies {
+    compile 'com.commonsware.cwac:cam2:0.2.+'
+    compile 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
+}
+
+android {
+  compileSdkVersion 22
+  buildToolsVersion "22.0.1"
+  
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 15
+	}
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<TableRow>
+
+		<TextView
+			style="@style/label"
+			android:text="@string/checkbox"/>
+
+		<TextView
+			android:id="@+id/checkbox"
+			style="@style/value"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			style="@style/label"
+			android:text="@string/ringtone"/>
+
+		<TextView
+			android:id="@+id/ringtone"
+			style="@style/value"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			style="@style/label"
+			android:text="@string/checkbox2"/>
+
+		<TextView
+			android:id="@+id/checkbox2"
+			style="@style/value"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			style="@style/label"
+			android:text="@string/text"/>
+
+		<TextView
+			android:id="@+id/text"
+			style="@style/value"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			style="@style/label"
+			android:text="@string/list"/>
+
+		<TextView
+			android:id="@+id/list"
+			style="@style/value"/>
+	</TableRow>
+
+</TableLayout>

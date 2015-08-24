@@ -1,0 +1,34 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <CheckBoxPreference
+    android:key="checkbox"
+    android:summary="@string/pref1summary"
+    android:title="@string/pref1title"/>
+
+  <RingtonePreference
+    android:key="ringtone"
+    android:showDefault="true"
+    android:showSilent="true"
+    android:summary="@string/pref2summary"
+    android:title="@string/pref2title"/>
+
+  <EditTextPreference
+    android:dialogTitle="@string/dialogtitle"
+    android:key="text"
+    android:summary="@string/pref3summary"
+    android:title="@string/pref3title"/>
+
+  <ListPreference
+    android:dialogTitle="@string/listdialogtitle"
+    android:entries="@array/cities"
+    android:entryValues="@array/airport_codes"
+    android:key="list"
+    android:summary="@string/pref4summary"
+    android:title="@string/pref4title"/>
+
+  <PreferenceScreen
+    android:fragment="com.commonsware.android.preffragsbc.EditPreferences$Second"
+    android:key="unused"
+    android:title="@string/nested_title"/>
+
+</PreferenceScreen>

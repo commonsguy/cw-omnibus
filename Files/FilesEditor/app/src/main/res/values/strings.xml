@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Files Editor Demo</string>
+	<string name="internal">Internal</string>
+	<string name="external">External</string>
+	<string name="pub">Public</string>
+
+</resources>

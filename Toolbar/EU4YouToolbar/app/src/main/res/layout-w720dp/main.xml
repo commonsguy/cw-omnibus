@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  <FrameLayout
+    android:id="@+id/countries"
+    android:layout_weight="30"
+    android:layout_width="0px"
+    android:layout_height="match_parent"
+  />
+  <FrameLayout
+    android:id="@+id/details"
+    android:layout_weight="70"
+    android:layout_width="0px"
+    android:layout_height="match_parent"
+  />
+</LinearLayout>

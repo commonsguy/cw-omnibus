@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+  <com.wrapp.floatlabelededittext.FloatLabeledEditText
+    android:id="@+id/til"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+      android:id="@+id/url"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="@string/url"
+      android:inputType="textUri"/>
+  </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+  <Button
+    android:id="@+id/browse"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:onClick="showMe"
+    android:text="@string/show_me"/>
+
+</LinearLayout>

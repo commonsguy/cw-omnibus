@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="cities">
+    <item>Philadelphia</item>
+    <item>Pittsburgh</item>
+    <item>Allentown/Bethlehem</item>
+    <item>Erie</item>
+    <item>Reading</item>
+    <item>Scranton</item>
+    <item>Lancaster</item>
+    <item>Altoona</item>
+    <item>Harrisburg</item>
+  </string-array>
+  <string-array name="airport_codes">
+    <item>PHL</item>
+    <item>PIT</item>
+    <item>ABE</item>
+    <item>ERI</item>
+    <item>RDG</item>
+    <item>AVP</item>
+    <item>LNS</item>
+    <item>AOO</item>
+    <item>MDT</item>
+  </string-array>
+</resources>

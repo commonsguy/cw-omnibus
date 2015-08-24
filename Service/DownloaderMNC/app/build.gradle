@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.android.support:support-v13:22.2.0'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 18
+        versionCode 1
+        versionName "1.0"
+    }
+
+    productFlavors {
+        https {
+            resValue "bool", "usesCleartextTraffic", "false"
+            buildConfigField "String", "DOWNLOAD_URL", '"https://commonsware.com/misc/molecule.png"'
+            buildConfigField "boolean", "APPLY_STRICT_MODE", "false"
+        }
+
+        httpValidated {
+            resValue "bool", "usesCleartextTraffic", "false"
+            buildConfigField "String", "DOWNLOAD_URL", '"http://commonsware.com/misc/molecule.png"'
+            buildConfigField "boolean", "APPLY_STRICT_MODE", "false"
+        }
+
+        http {
+            resValue "bool", "usesCleartextTraffic", "true"
+            buildConfigField "String", "DOWNLOAD_URL", '"http://commonsware.com/misc/molecule.png"'
+            buildConfigField "boolean", "APPLY_STRICT_MODE", "false"
+        }
+
+        httpRuntime {
+            resValue "bool", "usesCleartextTraffic", "true"
+            buildConfigField "String", "DOWNLOAD_URL", '"http://commonsware.com/misc/molecule.png"'
+            buildConfigField "boolean", "APPLY_STRICT_MODE", "true"
+        }
+    }
+}

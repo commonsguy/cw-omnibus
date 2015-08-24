@@ -4,5 +4,5 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:onClick="visitSample"
-  android:text="Visit misc.commonsware.com"
+  android:text="Visit commonsware.com"
 />

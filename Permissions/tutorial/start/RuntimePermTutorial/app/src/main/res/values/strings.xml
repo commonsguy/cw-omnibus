@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Runtime Perm Tutorial</string>
+    <string name="msg_pic_taken">Picture taken!</string>
+    <string name="msg_vid_recorded">Video recorded!</string>
+</resources>

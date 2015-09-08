@@ -40,8 +40,11 @@ class DownloadJob implements Runnable {
   private SharedPreferences prefs;
 
   static void log(Context ctxt, String msg) {
-    File log=new File(ctxt.getExternalCacheDir(), "deep_background.log");
+    log(new File(ctxt.getCacheDir(), "deep_background_internal.log"), msg);
+    log(new File(ctxt.getExternalCacheDir(), "deep_background_external.log"), msg);
+  }
 
+  static void log(File log, String msg) {
     Log.d("DownloadLog", "Logging to "+log.getAbsolutePath());
 
     log.getParentFile().mkdirs();
@@ -119,6 +122,7 @@ class DownloadJob implements Runnable {
         }
 
         out.flush();
+        DownloadJob.log(app, "Download completed");
       }
       finally {
         fos.getFD().sync();

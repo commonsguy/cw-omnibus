@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">AntiDoze Demo</string>
+	<string name="notif_stop">Stop</string>
+
+</resources>

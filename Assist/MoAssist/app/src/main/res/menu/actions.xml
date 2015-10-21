@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+    android:id="@+id/fixed"
+    android:title="@string/menu_fixed"
+    android:checkable="true"
+    android:checked="true"
+    android:showAsAction="never"/>
+</menu>

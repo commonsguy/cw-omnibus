@@ -1,0 +1,6 @@
+<resources>
+  <string name="app_name">WebSocket Server Demo</string>
+  <string name="menu_record">Start</string>
+  <string name="menu_stop">Stop</string>
+  <string name="notify_stop">Stop</string>
+</resources>

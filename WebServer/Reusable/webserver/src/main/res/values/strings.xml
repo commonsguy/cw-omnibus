@@ -1,0 +1,4 @@
+<resources>
+  <string name="notify_stop">Stop</string>
+  <string name="service_action">com.commonsware.android.webserver.WEB_SERVER_SERVICE</string>
+</resources>

@@ -1,0 +1,27 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.koushikdutta.async:androidasync:2.1.6'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.android.support:support-v13:23.0.0'
+    compile 'com.github.jknack:handlebars:2.2.2'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 repositories {
     maven {
-        url "https://repo.commonsware.com.s3.amazonaws.com"
+        url "https://s3.amazonaws.com/repo.commonsware.com"
     }
 }
 
@@ -18,5 +18,5 @@ android {
   defaultConfig {
     minSdkVersion 15
     targetSdkVersion 15
-	}
+  }
 }

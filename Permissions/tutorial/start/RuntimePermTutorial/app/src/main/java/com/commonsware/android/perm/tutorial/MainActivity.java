@@ -14,16 +14,11 @@ public class MainActivity extends Activity {
   private static final int RESULT_PICTURE_TAKEN=1337;
   private static final int RESULT_VIDEO_RECORDED=1338;
   private File rootDir;
-  private View takePicture;
-  private View recordVideo;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
-
-    takePicture=findViewById(R.id.take_picture);
-    recordVideo=findViewById(R.id.record_video);
 
     File downloads=Environment
         .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);

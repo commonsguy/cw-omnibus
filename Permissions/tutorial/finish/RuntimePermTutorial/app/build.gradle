@@ -2,19 +2,20 @@ apply plugin: 'com.android.application'
 
 repositories {
     maven {
-        url "https://repo.commonsware.com.s3.amazonaws.com"
+        url "https://s3.amazonaws.com/repo.commonsware.com"
     }
 }
 
 dependencies {
     compile 'com.commonsware.cwac:cam2:0.2.+'
     compile 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
+    compile 'com.android.support:support-v4:23.0.1'
 }
 
 android {
   compileSdkVersion 23
   buildToolsVersion "23.0.0"
-
+  
   defaultConfig {
     minSdkVersion 15
     targetSdkVersion 23

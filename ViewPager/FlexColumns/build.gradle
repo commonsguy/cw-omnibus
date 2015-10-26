@@ -13,7 +13,7 @@ repositories {
         url "http://dl.bintray.com/populov/maven"
     }
     maven {
-        url "https://repo.commonsware.com.s3.amazonaws.com"
+        url "https://s3.amazonaws.com/repo.commonsware.com"
     }
 	mavenCentral()
 }

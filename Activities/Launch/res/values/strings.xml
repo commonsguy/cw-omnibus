@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Launch Demo</string>
-  <string name="location">Location:</string>
-  <string name="show_me">Show Me!</string>
-  <string name="lat">Latitude</string>
-  <string name="lon">Longitude</string>
-</resources>

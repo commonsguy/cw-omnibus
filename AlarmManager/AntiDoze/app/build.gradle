@@ -13,4 +13,14 @@ android {
         minSdkVersion 19
 		targetSdkVersion 23
 	}
+
+    productFlavors {
+        foreground {
+            buildConfigField "boolean", "IS_FOREGROUND", "true"
+        }
+
+        normal {
+            buildConfigField "boolean", "IS_FOREGROUND", "false"
+        }
+    }
 }

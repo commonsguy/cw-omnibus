@@ -51,7 +51,11 @@ public class ScheduledService extends Service
     wakeLock=mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
       getClass().getSimpleName());
     wakeLock.acquire();
-    foregroundify();
+
+    if (BuildConfig.IS_FOREGROUND) {
+      foregroundify();
+    }
+
     log=new File(getExternalFilesDir(null), "antidoze-log.txt");
     log.getParentFile().mkdirs();
     sched.scheduleAtFixedRate(this, 0, 15, TimeUnit.SECONDS);

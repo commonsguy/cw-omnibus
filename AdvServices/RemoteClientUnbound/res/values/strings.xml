@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">BshServiceDemo</string>
-    <string name="private_broadcast">Private Broadcast</string>
-    <string name="pending_result">Pending Result</string>
-</resources>

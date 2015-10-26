@@ -26,7 +26,7 @@ public class DownloadDemo extends Activity {
     super.onCreate(savedInstanceState);
     
     StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                                .detectAll()
+                                .detectNetwork()
                                 .penaltyDeath()
                                 .build());
     

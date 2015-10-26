@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-	<string name="app_name">MapsV2 Sherlock Demo</string>
-	<string name="legal">Legal Notices</string>
-  <string name="no_maps">Google Maps V2 not available!</string>
-	
-</resources>

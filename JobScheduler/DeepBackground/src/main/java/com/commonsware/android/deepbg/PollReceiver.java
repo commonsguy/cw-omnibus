@@ -59,7 +59,7 @@ public class PollReceiver extends WakefulBroadcastReceiver {
       alarms.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,
           SystemClock.elapsedRealtime() + period, pi);
     }
-    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT) {
+    else if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT) {
       alarms.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,
           SystemClock.elapsedRealtime() + period, pi);
     }

@@ -14,92 +14,73 @@
 
 package com.commonsware.android.debug.webserver;
 
-import android.app.Service;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.text.format.DateUtils;
-import android.util.Log;
+import com.commonsware.android.webserver.WebServerService;
 import com.github.jknack.handlebars.Context;
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.context.FieldValueResolver;
-import com.github.jknack.handlebars.io.AbstractTemplateLoader;
-import com.github.jknack.handlebars.io.StringTemplateSource;
-import com.github.jknack.handlebars.io.TemplateSource;
-import com.koushikdutta.async.AsyncServer;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.StatsSnapshot;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
-public class PicassoDiagnosticService extends Service {
-  private AsyncHttpServer server;
-  private Handlebars handlebars;
-  private Template t;
-
+public class PicassoDiagnosticService extends WebServerService {
   @Override
-  public void onCreate() {
-    super.onCreate();
+  protected boolean configureRoutes(AsyncHttpServer server) {
+    server.get("/stop", new StopRequestCallback());
 
-    handlebars=new Handlebars(new AssetTemplateLoader(getAssets()));
-    server=new AsyncHttpServer();
-
-    try {
-      t=handlebars.compile("picasso.hbs");
-      server.get("/", new MainRequestCallback());
-      server.get("/stop", new StopRequestCallback());
-      server.listen(4999);
-    }
-    catch (IOException e) {
-      Log.e(getClass().getSimpleName(),
-          "Exception starting Web server", e);
-    }
+    return(true);
   }
 
   @Override
-  public void onDestroy() {
-    server.stop();
-    AsyncServer.getDefault().stop(); // no, really, I mean stop
-
-    super.onDestroy();
+  protected int getPort() {
+    return(4999);
   }
 
   @Override
-  public IBinder onBind(Intent intent) {
-    return(null);
+  protected int getMaxIdleTimeSeconds() {
+    return(120);
   }
 
-  private class MainRequestCallback implements HttpServerRequestCallback {
-    @Override
-    public void onRequest(AsyncHttpServerRequest request, AsyncHttpServerResponse response) {
-      try {
-        StatsSnapshot ss=Picasso
-            .with(PicassoDiagnosticService.this)
-            .getSnapshot();
-        String formattedTime=DateUtils.formatDateTime(PicassoDiagnosticService.this,
-            ss.timeStamp,
-            DateUtils.FORMAT_SHOW_TIME);
+  @Override
+  protected int getMaxSequentialInvalidRequests() {
+    return(10);
+  }
 
-        Context ctxt=Context
-            .newBuilder(ss)
-            .combine("formattedTime", formattedTime)
-            .resolver(FieldValueResolver.INSTANCE)
-            .build();
+  @Override
+  protected void buildForegroundNotification(NotificationCompat.Builder b) {
+    Intent iActivity=new Intent(this, PicassoDiagnosticActivity.class);
+    PendingIntent piActivity=PendingIntent.getActivity(this, 0,
+      iActivity, 0);
 
-        response.send(t.apply(ctxt));
-        ctxt.destroy();
-      }
-      catch (IOException e) {
-        Log.e(getClass().getSimpleName(),
-            "Exception serving Web page", e);
-      }
+    b.setContentTitle(getString(R.string.app_name))
+      .setContentIntent(piActivity)
+      .setSmallIcon(R.drawable.ic_launcher)
+      .setTicker(getString(R.string.app_name));
+  }
+
+  @Override
+  protected Context getContextForPath(String relpath) {
+    if ("picasso.hbs".equals(relpath)) {
+      StatsSnapshot ss=Picasso
+        .with(PicassoDiagnosticService.this)
+        .getSnapshot();
+      String formattedTime=DateUtils.formatDateTime(PicassoDiagnosticService.this,
+        ss.timeStamp,
+        DateUtils.FORMAT_SHOW_TIME);
+
+      return(Context
+        .newBuilder(ss)
+        .combine("formattedTime", formattedTime)
+        .resolver(FieldValueResolver.INSTANCE)
+        .build());
     }
+
+    throw new IllegalStateException("Did not recognize "+relpath);
   }
 
   private class StopRequestCallback implements HttpServerRequestCallback {
@@ -108,36 +89,5 @@ public class PicassoDiagnosticService extends Service {
       response.send("Goodbye, cruel world!");
       stopSelf();
     }
-  }
-
-  private static class AssetTemplateLoader
-      extends AbstractTemplateLoader {
-    private final AssetManager mgr;
-
-    AssetTemplateLoader(AssetManager mgr) {
-      this.mgr=mgr;
-    }
-
-    @Override
-    public TemplateSource sourceAt(String s) throws IOException {
-      return(new StringTemplateSource(s, slurp(mgr.open(s))));
-    }
-  }
-
-  // inspired by http://stackoverflow.com/a/309718/115145
-
-  public static String slurp(final InputStream is) throws IOException {
-    final char[] buffer=new char[1024];
-    final StringBuilder out=new StringBuilder();
-    final InputStreamReader in=new InputStreamReader(is, "UTF-8");
-
-    while (true) {
-      int rsz=in.read(buffer, 0, buffer.length);
-      if (rsz < 0)
-        break;
-      out.append(buffer, 0, rsz);
-    }
-
-    return(out.toString());
   }
 }

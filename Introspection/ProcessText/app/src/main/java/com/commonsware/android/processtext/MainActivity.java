@@ -32,13 +32,15 @@ public class MainActivity extends Activity {
         search=getIntent().getStringExtra(Intent.EXTRA_PROCESS_TEXT);
 
         if (search==null) {
-          search=getIntent().getStringExtra(Intent.EXTRA_PROCESS_TEXT_READONLY);
+          search=getIntent()
+            .getStringExtra(Intent.EXTRA_PROCESS_TEXT_READONLY);
         }
       }
 
       getFragmentManager()
         .beginTransaction()
-        .add(android.R.id.content, QuestionsFragment.newInstance(search))
+        .add(android.R.id.content,
+          QuestionsFragment.newInstance(search))
         .commit();
     }
   }

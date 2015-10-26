@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/search"
+		android:actionViewClass="android.widget.SearchView"
+		android:icon="@drawable/ic_action_search"
+		android:showAsAction="ifRoom|collapseActionView"
+		android:title="@string/filter">
+	</item>
+
+</menu>

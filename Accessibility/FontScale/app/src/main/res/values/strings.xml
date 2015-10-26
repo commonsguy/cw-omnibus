@@ -1,0 +1,16 @@
+<resources>
+
+	<string name="app_name">Font Scale</string>
+	<string name="hello_world">Hello world!</string>
+	<string name="menu_settings">Settings</string>
+	<string name="title_activity_main">Font Scale</string>
+	<string name="normal_30px">30px Normal</string>
+	<string name="bold_30px">30px Bold</string>
+	<string name="font_scale">Font Scale</string>
+	<string name="normal_30dp">30dp Normal</string>
+	<string name="bold_30dp">30dp Bold</string>
+	<string name="normal_30sp">30sp Normal</string>
+	<string name="bold_30sp">30sp Bold</string>
+	<string name="exception_font_scale">Exception reading FONT_SCALE</string>
+
+</resources>

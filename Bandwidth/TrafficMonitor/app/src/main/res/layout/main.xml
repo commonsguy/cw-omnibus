@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/table"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<Button
+		android:onClick="takeSnapshot"
+		android:text="Take Snapshot"/>
+
+	<TableRow>
+
+		<TextView
+			android:layout_column="1"
+			android:layout_gravity="right"
+			android:text="@string/received"
+			android:textSize="20sp"/>
+
+		<TextView
+			android:layout_gravity="right"
+			android:text="@string/sent"
+			android:textSize="20sp"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			android:layout_marginRight="@dimen/margin_right"
+			android:gravity="right"
+			android:text="@string/latest"
+			android:textSize="20sp"
+			android:textStyle="bold"/>
+
+		<TextView
+			android:id="@+id/latest_rx"
+			android:layout_marginRight="@dimen/margin_right"
+			android:gravity="right"
+			android:textSize="20sp"/>
+
+		<TextView
+			android:id="@+id/latest_tx"
+			android:gravity="right"
+			android:textSize="20sp"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			android:layout_marginRight="@dimen/margin_right"
+			android:gravity="right"
+			android:text="@string/previous"
+			android:textSize="20sp"
+			android:textStyle="bold"/>
+
+		<TextView
+			android:id="@+id/previous_rx"
+			android:layout_marginRight="@dimen/margin_right"
+			android:gravity="right"
+			android:textSize="20sp"/>
+
+		<TextView
+			android:id="@+id/previous_tx"
+			android:gravity="right"
+			android:textSize="20sp"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			android:layout_marginRight="@dimen/margin_right"
+			android:gravity="right"
+			android:text="@string/delta"
+			android:textSize="20sp"
+			android:textStyle="bold"/>
+
+		<TextView
+			android:id="@+id/delta_rx"
+			android:layout_marginRight="@dimen/margin_right"
+			android:gravity="right"
+			android:textSize="20sp"/>
+
+		<TextView
+			android:id="@+id/delta_tx"
+			android:gravity="right"
+			android:textSize="20sp"/>
+	</TableRow>
+
+</TableLayout>

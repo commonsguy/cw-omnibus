@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Linear Percent Demo</string>
+  <string name="fifty_percent">Fifty Percent</string>
+  <string name="thirty_percent">Thirty Percent</string>
+  <string name="twenty_percent">Twenty Percent</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+
+	<string name="app_name">Full-Screen Demo</string>
+	<string name="title_activity_main">Full-Screen Demo</string>
+	<string name="display_normal">Display Normal</string>
+	<string name="display_low_profile">Display Low Profile</string>
+	<string name="display_hide_navigation">Display Hide Navigation</string>
+	<string name="hide_status_bar">Hide Status Bar</string>
+	<string name="display_full_screen">Display Full-Screen</string>
+	<string name="something_at_the_bottom">Something At the Bottom</string>
+
+</resources>

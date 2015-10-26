@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <TextView
+  	android:id="@+id/label"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_alignBaseline="@+id/entry"
+  	android:layout_alignParentLeft="true"
+  	android:layout_marginLeft="4dip"
+  	android:text="@string/url"/>
+
+  <EditText
+  	android:id="@id/entry"
+  	android:layout_width="match_parent"
+  	android:layout_height="wrap_content"
+  	android:layout_alignParentTop="true"
+  	android:layout_toRightOf="@id/label"
+  	android:inputType="text"/>
+
+  <Button
+  	android:id="@+id/ok"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_alignRight="@id/entry"
+  	android:layout_below="@id/entry"
+  	android:text="@string/ok"/>
+
+  <Button
+  	android:id="@+id/cancel"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_alignTop="@id/ok"
+  	android:layout_toLeftOf="@id/ok"
+  	android:text="@string/cancel"/>
+
+</RelativeLayout>

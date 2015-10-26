@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">V4 FileProvider Demo</string>
+    <string name="perm_read">Ability to read files from this app</string>
+    <string name="perm_read_label">Read Files</string>
+</resources>

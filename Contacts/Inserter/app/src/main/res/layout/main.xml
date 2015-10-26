@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1"
+  >
+  <TableRow>
+    <TextView 
+      android:text="First name:"
+    />
+    <EditText android:id="@+id/name"
+    />
+  </TableRow>
+  <TableRow>
+    <TextView 
+      android:text="Phone:"
+    />
+    <EditText android:id="@+id/phone"
+      android:inputType="phone"
+    />
+  </TableRow>
+  <Button android:id="@+id/insert" android:text="Insert!" />
+</TableLayout>

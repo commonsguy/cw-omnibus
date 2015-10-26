@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.commonsware.android.appwidget.lorem"
+	android:versionCode="1"
+	android:versionName="1.0">
+
+	<uses-sdk
+		android:minSdkVersion="14"
+		android:targetSdkVersion="19"/>
+
+	<uses-feature
+		android:name="android.software.app_widgets"
+		android:required="true"/>
+
+	<application
+		android:allowBackup="false"
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name">
+		<activity
+			android:name="LoremActivity"
+			android:label="@string/app_name"
+			android:theme="@android:style/Theme.NoDisplay">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+
+		<receiver
+			android:name="WidgetProvider"
+			android:icon="@drawable/ic_launcher"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+			</intent-filter>
+
+			<meta-data
+				android:name="android.appwidget.provider"
+				android:resource="@xml/widget_provider"/>
+		</receiver>
+
+		<service
+			android:name="WidgetService"
+			android:permission="android.permission.BIND_REMOTEVIEWS"/>
+	</application>
+
+</manifest>

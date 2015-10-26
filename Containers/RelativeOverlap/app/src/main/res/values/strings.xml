@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Overlap Demo</string>
+  <string name="big">I AM BIG</string>
+  <string name="small">I am small</string>
+</resources>

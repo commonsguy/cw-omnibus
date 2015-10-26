@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+  <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="0">
+    <TableRow>
+      <View
+        android:layout_height="80dip"
+        android:background="#000000"/>
+      <TextView android:text="#000000"
+        android:paddingLeft="4dip"
+        android:layout_gravity="center_vertical" />
+    </TableRow>
+    <TableRow>
+      <View
+        android:layout_height="80dip"
+        android:background="#440000" />
+      <TextView android:text="#440000"
+        android:paddingLeft="4dip"
+        android:layout_gravity="center_vertical" />
+    </TableRow>
+    <TableRow>
+      <View
+        android:layout_height="80dip"
+        android:background="#884400" />
+      <TextView android:text="#884400"
+        android:paddingLeft="4dip"
+        android:layout_gravity="center_vertical" />
+    </TableRow>
+    <TableRow>
+      <View
+        android:layout_height="80dip"
+        android:background="#aa8844" />
+      <TextView android:text="#aa8844"
+        android:paddingLeft="4dip"
+        android:layout_gravity="center_vertical" />
+    </TableRow>
+    <TableRow>
+      <View
+        android:layout_height="80dip"
+        android:background="#ffaa88" />
+      <TextView android:text="#ffaa88"
+        android:paddingLeft="4dip"
+        android:layout_gravity="center_vertical" />
+    </TableRow>
+    <TableRow>
+      <View
+        android:layout_height="80dip"
+        android:background="#ffffaa" />
+      <TextView android:text="#ffffaa"
+        android:paddingLeft="4dip"
+        android:layout_gravity="center_vertical" />
+    </TableRow>
+    <TableRow>
+      <View
+        android:layout_height="80dip"
+        android:background="#ffffff" />
+      <TextView android:text="#ffffff"
+        android:paddingLeft="4dip"
+        android:layout_gravity="center_vertical" />
+    </TableRow>
+  </TableLayout>
+</ScrollView>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="options">
+    <item>Contact Names</item>
+    <item>Contact Names &amp; Numbers</item>
+    <item>Contact Names &amp; Email Addresses</item>
+  </string-array>
+</resources>

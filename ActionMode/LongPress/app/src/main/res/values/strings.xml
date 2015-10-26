@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Action Mode MC Long Press Demo</string>
+  <string name="context_title">Modify Word</string>
+  <string name="add">Add</string>
+  <string name="reset">Reset</string>
+  <string name="about">About</string>
+  <string name="about_toast">A sample app from a balding guy</string>
+</resources>

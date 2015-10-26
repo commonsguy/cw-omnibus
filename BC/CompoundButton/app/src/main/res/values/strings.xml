@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">CompoundButton Demo</string>
+	<string name="hello_world">Here is a CompoundButton:</string>
+	<string name="_switch">Switch</string>
+	<string name="toggle">Toggle Button</string>
+
+</resources>

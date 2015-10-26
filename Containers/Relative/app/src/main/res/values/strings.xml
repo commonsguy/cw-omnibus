@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">RelativeLayoutDemo</string>
+  <string name="url">URL:</string>
+  <string name="ok">OK</string>
+  <string name="cancel">Cancel</string>
+</resources>

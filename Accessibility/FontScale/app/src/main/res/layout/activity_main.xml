@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/LinearLayout1"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="@string/normal_30px"
+		android:textSize="30px"
+		tools:context=".MainActivity"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/bold_30px"
+		android:textSize="30px"
+		android:textStyle="bold"
+		tools:context=".MainActivity"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="@string/normal_30dp"
+		android:textSize="30dp"
+		tools:context=".MainActivity"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/bold_30dp"
+		android:textSize="30dp"
+		android:textStyle="bold"
+		tools:context=".MainActivity"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="@string/normal_30sp"
+		android:textSize="30sp"
+		tools:context=".MainActivity"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/bold_30sp"
+		android:textSize="30sp"
+		android:textStyle="bold"
+		tools:context=".MainActivity"/>
+
+</LinearLayout>

@@ -1,0 +1,6 @@
+<resources>
+  <declare-styleable name="SlidingPanel">
+    <attr name="speed" format="integer" />
+    <attr name="targetHeight" format="dimension" />
+  </declare-styleable>
+</resources>

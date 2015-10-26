@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="app_name">inSampleSize Demo</string>
+<string name="flower_large">Flower, Large</string>
+<string name="logo_large">CommonsWare Logo, Large</string>
+<string name="flower_small">Flower, Small</string>
+<string name="logo_small">CommonsWare Logo, Small</string>
+<string name="title">inSampleSize = %d</string>
+	
+
+</resources>

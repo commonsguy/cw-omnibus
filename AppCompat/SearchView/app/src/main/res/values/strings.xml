@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SearchView Demo</string>
+    <string name="add">Add</string>
+    <string name="reset">Reset</string>
+    <string name="filter">Filter</string>
+</resources>

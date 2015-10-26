@@ -1,0 +1,23 @@
+<com.commonsware.android.anim.threepane.ThreePaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/root"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<FrameLayout
+		android:id="@+id/left"
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_weight="3"/>
+
+	<FrameLayout
+		android:id="@+id/middle"
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_weight="7"/>
+
+	<Button
+		android:layout_width="0dp"
+		android:layout_height="match_parent"/>
+
+</com.commonsware.android.anim.threepane.ThreePaneLayout>

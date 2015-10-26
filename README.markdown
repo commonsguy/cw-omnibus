@@ -31,12 +31,12 @@ actual directory names.
 
 ## Using in Android Studio
 
-Most of the projects should have a `build.gradle` file suitable for
+All of the projects should have a `build.gradle` file suitable for
 importing the project into Android Studio. Note, though, that you
 may need to adjust the `compileSdkVersion` in `build.gradle` if it
 requests an SDK that you have not downloaded and do not wish to
 download. Similarly, you may need to adjust the `buildToolsVersion`
-value to refer to a version of the "Build-tools" that you have downloaded
+value to refer to a version of the build tools that you have downloaded
 from the SDK Manager.
 
 The samples also have stub Gradle wrapper files, enough to allow for
@@ -50,48 +50,15 @@ Right now, you will need your own local installation of Gradle 2.1
 in order to build the projects from the command line, as the repository
 does not contain `gradlew` or its corresponding JAR for security reasons.
 
-## Using in Eclipse
+## Projects Structure
 
-These projects can be imported using the normal Eclipse import process. That
-being said, importing *all* the projects is probably a **really bad idea**, simply
-because there are so many of them. Import select projects, if and when you need
-them.
+Projects in this book have a mix of structures. Some use the new
+Android Studio structure. Others use the older Eclipse structure.
+The Eclipse-style projects, though, are set up to still be able
+to be imported into Android Studio &mdash; it is just that the files will
+be in the directory structure used by Eclipse rather than in Android Studio's
+natural structure.
 
-Note, though, that you will have to fix some things up, particularly if you
-are getting errors:
-
-- The build target of the project may be an Android SDK that you do not have
-installed. You will need to set the project build target to something that
-you have, by means of Project Properties.
-
-- A few of these projects use [ActionBarSherlock](http://actionbarsherlock.com) or
-other Android library projects. You will need to attach a suitable copy of those
-projects to your app. For example, 
-there is a copy of a compatible ActionBarSherlock in `external/`, and the 
-project files are set up to reference that copy. If you import it first, your
-imports of other sample apps should go more smoothly. Alternatively, you 
-can download and set up ActionBarSherlock yourself in your Eclipse workspace,
-then go into Project Properties and point the
-book's project to use your copy of the ActionBarSherlock library project.
-
-- Some of these projects are not set up to support Eclipse, because
-the nature of the project is to demonstrate something specific for
-Android Studio or Gradle for Android.
-
-- Some of these projects are not set up to support Eclipse, as Eclipse
-is no longer officially supported by Google, and so the author of the
-book is focusing more on Android Studio. If the project looks like an
-Eclipse-style project (e.g., has `res/` and the manifest in the project
-root directory), but it lacks the Eclipse `.classpath` and `.project`
-files, you should be able to import the code into Eclipse anyway. However,
-you will have to set up your own links to libraries that the project
-depends upon (e.g., `appcompat-v7`).
-
-- Many of the book samples, and ActionBarSherlock, require your Java compiler
-compliance level to be set to 1.6, so code can use the `@Override` annotation
-on interface method implementations. You can find this in Project Properties,
-in the Java Compiler area.
-
-- Restarting Eclipse, for whatever reason, can clear up some undefined problems
-indicated by red exclamation marks over the project name in the Project Explorer.
-
+Slowly, this book is being converted over to having all projects use
+the Android Studio structure. This process should be completed sometime
+in 2016.

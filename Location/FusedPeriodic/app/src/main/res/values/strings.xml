@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Weather Demo #3</string>
+  <string name="url">http://www.weather.gov/forecasts/xml/sample_products/browser_interface/ndfdXMLclient.php?&amp;lat=%1$f&amp;lon=%2$f&amp;product=time-series&amp;begin=2004-01-01T00:00:00&amp;end=2020-12-03T00:00:00&amp;temp=temp&amp;icons=icons</string>
+  <string name="error">Error fetching weather: %s</string>
+  <string name="no_fused">The fused location provider is not available</string>
+  <string name="icon">Forecast Icon</string>
+  <string name="settings_resolution_fail_msg">Location settings are busted</string>
+  <string name="location_req_success_msg">Location requests succeeded, apparently...</string>
+  <string name="legal">Legal Notices</string>
+  <string name="msg_no_perm">Sorry! This demo cannot run without permission!</string>
+</resources>

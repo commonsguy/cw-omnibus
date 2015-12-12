@@ -1,0 +1,6 @@
+<resources>
+  <string name="app_name">andcorder</string>
+  <string name="notify_record">Record</string>
+  <string name="notify_stop">Stop</string>
+  <string name="notify_shutdown">Shutdown</string>
+</resources>

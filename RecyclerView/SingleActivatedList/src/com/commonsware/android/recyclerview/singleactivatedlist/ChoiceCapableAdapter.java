@@ -58,4 +58,13 @@ abstract public class
   void onRestoreInstanceState(Bundle state) {
     choiceMode.onRestoreInstanceState(state);
   }
+
+  @Override
+  public void onViewAttachedToWindow(T holder) {
+    super.onViewAttachedToWindow(holder);
+
+    if (holder.getAdapterPosition()!=choiceMode.getCheckedPosition()) {
+      ((RowController)holder).setChecked(false);
+    }
+  }
 }

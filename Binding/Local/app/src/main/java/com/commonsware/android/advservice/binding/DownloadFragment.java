@@ -28,6 +28,11 @@ public class DownloadFragment extends Fragment implements
     super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
+
+    appContext=(Application)getActivity().getApplicationContext();
+    appContext.bindService(new Intent(getActivity(),
+        DownloadService.class),
+      this, Context.BIND_AUTO_CREATE);
   }
 
   @Override
@@ -41,18 +46,6 @@ public class DownloadFragment extends Fragment implements
     btn.setEnabled(binding!=null);
 
     return(result);
-  }
-
-  @Override
-  public void onAttach(Activity host) {
-    super.onAttach(host);
-
-    if (appContext==null) {
-      appContext=(Application)host.getApplicationContext();
-      appContext.bindService(new Intent(getActivity(),
-                                          DownloadService.class),
-                              this, Context.BIND_AUTO_CREATE);
-    }
   }
 
   @Override

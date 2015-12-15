@@ -14,14 +14,12 @@
 
 package com.commonsware.android.advservice.remotebinding.sigcheck;
 
-import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.os.Bundle;
@@ -36,7 +34,6 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.commonsware.android.advservice.remotebinding.IDownload;
 import com.commonsware.cwac.security.SignatureUtils;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class DownloadFragment extends Fragment implements
@@ -51,6 +48,46 @@ public class DownloadFragment extends Fragment implements
     super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
+
+    appContext=(Application)getActivity().getApplicationContext();
+
+    Intent implicit=new Intent(IDownload.class.getName());
+    List<ResolveInfo> matches=getActivity().getPackageManager()
+      .queryIntentServices(implicit, 0);
+
+    if (matches.size() == 0) {
+      Toast.makeText(getActivity(), "Cannot find a matching service!",
+        Toast.LENGTH_LONG).show();
+    }
+    else if (matches.size() > 1) {
+      Toast.makeText(getActivity(), "Found multiple matching services!",
+        Toast.LENGTH_LONG).show();
+    }
+    else {
+      ServiceInfo svcInfo=matches.get(0).serviceInfo;
+
+      try {
+        String otherHash=SignatureUtils.getSignatureHash(getActivity(),
+          svcInfo.applicationInfo.packageName);
+        String expected=getActivity().getString(R.string.expected_sig_hash);
+
+        if (expected.equals(otherHash)) {
+          Intent explicit=new Intent(implicit);
+          ComponentName cn=new ComponentName(svcInfo.applicationInfo.packageName,
+            svcInfo.name);
+
+          explicit.setComponent(cn);
+          appContext.bindService(explicit, this, Context.BIND_AUTO_CREATE);
+        }
+        else {
+          Toast.makeText(getActivity(), "Unexpected signature found!",
+            Toast.LENGTH_LONG).show();
+        }
+      }
+      catch (Exception e) {
+        Log.e(getClass().getSimpleName(), "Exception trying to get signature hash", e);
+      }
+    }
   }
 
   @Override
@@ -64,53 +101,6 @@ public class DownloadFragment extends Fragment implements
     btn.setEnabled(binding!=null);
 
     return(result);
-  }
-
-  @Override
-  public void onAttach(Activity host) {
-    super.onAttach(host);
-
-    if (appContext==null) {
-      appContext=(Application)host.getApplicationContext();
-
-      Intent implicit=new Intent(IDownload.class.getName());
-      List<ResolveInfo> matches=host.getPackageManager()
-                                    .queryIntentServices(implicit, 0);
-
-      if (matches.size() == 0) {
-        Toast.makeText(host, "Cannot find a matching service!",
-            Toast.LENGTH_LONG).show();
-      }
-      else if (matches.size() > 1) {
-        Toast.makeText(host, "Found multiple matching services!",
-            Toast.LENGTH_LONG).show();
-      }
-      else {
-        ServiceInfo svcInfo=matches.get(0).serviceInfo;
-
-        try {
-          String otherHash=SignatureUtils.getSignatureHash(getActivity(),
-              svcInfo.applicationInfo.packageName);
-          String expected=getActivity().getString(R.string.expected_sig_hash);
-
-          if (expected.equals(otherHash)) {
-            Intent explicit=new Intent(implicit);
-            ComponentName cn=new ComponentName(svcInfo.applicationInfo.packageName,
-                svcInfo.name);
-
-            explicit.setComponent(cn);
-            appContext.bindService(explicit, this, Context.BIND_AUTO_CREATE);
-          }
-          else {
-            Toast.makeText(host, "Unexpected signature found!",
-                Toast.LENGTH_LONG).show();
-          }
-        }
-        catch (Exception e) {
-          Log.e(getClass().getSimpleName(), "Exception trying to get signature hash", e);
-        }
-      }
-    }
   }
 
   @Override

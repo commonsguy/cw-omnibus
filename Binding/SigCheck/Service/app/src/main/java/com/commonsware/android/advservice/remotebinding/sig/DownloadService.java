@@ -15,12 +15,16 @@
 package com.commonsware.android.advservice.remotebinding.sig;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import com.commonsware.android.advservice.remotebinding.IDownload;
+import com.commonsware.cwac.security.SignatureUtils;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,13 +36,49 @@ import java.net.URL;
 public class DownloadService extends Service {
   @Override
   public IBinder onBind(Intent intent) {
-    return(new DownloadBinder());
+    return(new DownloadBinder(this));
   }
 
   private static class DownloadBinder extends IDownload.Stub {
+    private final PackageManager pm;
+    private final String expectedHash;
+    private final Context ctxt;
+
+    public DownloadBinder(Context ctxt) {
+      this.ctxt=ctxt.getApplicationContext();
+      this.pm=this.ctxt.getPackageManager();
+      this.expectedHash=this.ctxt.getString(
+        R.string.expected_sig_hash);
+    }
+
     @Override
     public void download(String url) {
-      new DownloadThread(url).start();
+      boolean ok=false;
+
+      for (String pkg :
+        pm.getPackagesForUid(Binder.getCallingUid())) {
+        try {
+          String otherHash=
+            SignatureUtils.getSignatureHash(ctxt, pkg);
+
+          if (expectedHash.equals(otherHash)) {
+            ok=true;
+            break;
+          }
+        }
+        catch (Exception e) {
+          Log.e(getClass().getSimpleName(),
+            "Exception finding signature hash", e);
+        }
+      }
+
+      if (ok) {
+        new DownloadThread(url).start();
+      }
+      else {
+        Log.e(getClass().getSimpleName(),
+          "Could not validate client signature");
+      }
     }
   }
 

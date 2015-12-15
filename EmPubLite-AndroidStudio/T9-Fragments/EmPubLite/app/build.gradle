@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.commonsware.empublite"
@@ -25,5 +25,5 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.commonsware.cwac:security:0.5.2'
-    compile 'com.android.support:support-v13:21.0.3'
+    compile 'com.android.support:support-v13:23.1.1'
 }

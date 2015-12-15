@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="button">Button</string>
+  <string name="app_name">ACRA Demo</string>
+	<string name="msg_kaboom">Where\'s the kaboom?
+There was supposed to be an Earth-shattering kaboom!</string>
+  <string name="msg_acra_toast">Oops! We crashed! Hold on...</string>
+  <string name="msg_acra_dialog">Something went \"kaboom!\", and
+we would like to know what so we can fix it!</string>
+  <string name="msg_acra_comment_prompt">What were you doing
+when the app crashed?</string>
+  <string name="msg_acra_email_prompt">Let us know how to contact you,
+if you would like follow-up on this issue!</string>
+  <string name="msg_acra_notify_ticker">Oops! We crashed!</string>
+  <string name="msg_acra_notify_title">Something went \"kaboom!\"</string>
+  <string name="msg_acra_notify_text">Tap here to let us know what went wrong</string>
+
+</resources>

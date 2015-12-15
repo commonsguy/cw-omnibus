@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">PercentFrameLayout Demo</string>
+	<string name="title_percent">Percent</string>
+	<string name="title_weight">Weight</string>
+	<string name="menu_perf">Perf Test</string>
+	<string name="title_percent_rl">PercentRelativeLayout</string>
+	<string name="title_percent_grid">Percent Grid</string>
+	<string name="title_weight_grid">Weight Grid</string>
+
+</resources>

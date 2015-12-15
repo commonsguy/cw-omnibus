@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/backup"
+    android:icon="@drawable/ic_backup_white_24dp"
+    android:title="@string/menu_backup"/>
+  <item
+    android:id="@+id/restore"
+    android:icon="@drawable/ic_restore_white_24dp"
+    android:title="@string/menu_restore"/>
+</menu>

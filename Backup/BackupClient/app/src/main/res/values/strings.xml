@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Backup Demo</string>
+	<string name="internal">Internal</string>
+	<string name="external">External</string>
+	<string name="pub">Public</string>
+	<string name="menu_backup">Backup</string>
+	<string name="menu_restore">Restore</string>
+	<string name="msg_roster_failure">Could not get backup roster</string>
+	<string name="msg_backup_completed">Backup completed!</string>
+	<string name="msg_backup_failed">Sorry, but we were unable to complete your backup</string>
+	<string name="msg_restore_failed">Sorry, but we could not restore your data -- please reinstall the app</string>
+
+</resources>

@@ -1,0 +1,29 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'io.karim:materialtabs:2.0.2'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.android.support:support-v13:23.1.0'
+}
+
+android {
+  compileSdkVersion 23
+  buildToolsVersion "23.0.1"
+
+  defaultConfig {
+    minSdkVersion 19
+    targetSdkVersion 19
+  }
+
+  buildTypes {
+    debug {
+        buildConfigField "String", "URL_SERVER", '"http://10.0.2.2:4567"'
+    }
+
+    release {
+      buildConfigField "String", "URL_SERVER", '"http://10.0.2.2:4567"'
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<voice-interaction-service
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:recognitionService="com.commonsware.tapoffnow.AssistLoggerService"
+  android:sessionService="com.commonsware.tapoffnow.AssistLoggerSessionService"
+  android:supportsAssist="true"/>
+
+<!--
+  android:settingsActivity="com.android.test.voiceinteraction.SettingsActivity"
+-->

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FF00FFFF"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Top Left"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="7%"
+    app:layout_marginTopPercent="7%"
+    app:layout_widthPercent="24%"/>
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FF00FFFF"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Center Left"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="7%"
+    app:layout_marginTopPercent="38%"
+    app:layout_widthPercent="24%"/>
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FF00FFFF"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Bottom Left"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="7%"
+    app:layout_marginTopPercent="69%"
+    app:layout_widthPercent="24%"/>
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FFFF00FF"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Top Center"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="38%"
+    app:layout_marginTopPercent="7%"
+    app:layout_widthPercent="24%"/>
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FFFF00FF"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Center"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="38%"
+    app:layout_marginTopPercent="38%"
+    app:layout_widthPercent="24%"/>
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FFFF00FF"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Bottom Center"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="38%"
+    app:layout_marginTopPercent="69%"
+    app:layout_widthPercent="24%"/>
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FFFFFF00"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Top Right"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="69%"
+    app:layout_marginTopPercent="7%"
+    app:layout_widthPercent="24%"/>
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FFFFFF00"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Center Right"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="69%"
+    app:layout_marginTopPercent="38%"
+    app:layout_widthPercent="24%"/>
+
+  <!--suppress AndroidDomInspection -->
+  <TextView
+    android:background="#FFFFFF00"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="Bottom Right"
+    android:textColor="@android:color/black"
+    app:layout_heightPercent="24%"
+    app:layout_marginLeftPercent="69%"
+    app:layout_marginTopPercent="69%"
+    app:layout_widthPercent="24%"/>
+</android.support.percent.PercentFrameLayout>

@@ -14,13 +14,6 @@
 
 package com.commonsware.android.tuning.downloader;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
@@ -29,6 +22,13 @@ import android.os.Environment;
 import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Downloader extends IntentService {
 	public static final String EXTRA_MESSENGER="com.commonsware.android.downloader.EXTRA_MESSENGER";
@@ -44,22 +44,9 @@ public class Downloader extends IntentService {
 		
 		client=new DefaultHttpClient();
 	}
-	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		
-		client.getConnectionManager().shutdown();
-	}
 
 	@Override	
 	public void onHandleIntent(Intent i) {
-	  Intent trepn=new Intent("com.quicinc.Trepn.UpdateAppState"); 
-	  
-	  trepn.putExtra("com.quicinc.Trepn.UpdateAppState.Value",
-	                       1337); 
-	  sendBroadcast(trepn);
-	  
 		HttpGet getMethod=new HttpGet(i.getData().toString());
 		int result=Activity.RESULT_CANCELED;
 		

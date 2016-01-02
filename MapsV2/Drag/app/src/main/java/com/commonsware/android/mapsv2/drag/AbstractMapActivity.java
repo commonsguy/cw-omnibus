@@ -30,7 +30,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 public class AbstractMapActivity extends Activity {
-  protected static final String TAG_ERROR_DIALOG_FRAGMENT="errorDialog";
+  static final String TAG_ERROR_DIALOG_FRAGMENT="errorDialog";
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {

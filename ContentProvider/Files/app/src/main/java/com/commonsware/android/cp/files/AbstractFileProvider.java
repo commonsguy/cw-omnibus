@@ -87,7 +87,7 @@ abstract class AbstractFileProvider extends ContentProvider {
     throw new RuntimeException("Operation not supported");
   }
 
-  static protected void copy(InputStream in, File dst)
+  static void copy(InputStream in, File dst)
                                                       throws IOException {
     FileOutputStream out=new FileOutputStream(dst);
     byte[] buf=new byte[1024];

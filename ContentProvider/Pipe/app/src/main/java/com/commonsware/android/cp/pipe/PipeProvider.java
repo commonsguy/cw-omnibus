@@ -35,7 +35,7 @@ public class PipeProvider extends AbstractFileProvider {
 
   @Override
   public ParcelFileDescriptor openFile(Uri uri, String mode)
-                                                            throws FileNotFoundException {
+    throws FileNotFoundException {
     ParcelFileDescriptor[] pipe=null;
 
     try {

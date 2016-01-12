@@ -1,0 +1,11 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.0.1'
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+}

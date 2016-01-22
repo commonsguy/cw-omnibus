@@ -1,0 +1,10 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.android.support:support-v13:22.0.0'
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+}

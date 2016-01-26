@@ -1,9 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item
-    android:state_selected="true"
-    android:drawable="@drawable/orange_sel_marker"
-  />
-  <item
-    android:drawable="@drawable/orange_marker"
-  />
-</selector>

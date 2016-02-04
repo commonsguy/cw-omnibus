@@ -1,0 +1,10 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+	compile 'com.android.support:mediarouter-v7:19.1.0'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
+}

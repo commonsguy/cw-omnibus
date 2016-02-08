@@ -1,0 +1,25 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        applicationId "com.commonsware.android.databind.static"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+

@@ -49,7 +49,13 @@ public class FileProvider extends AbstractFileProvider {
   @Override
   public ParcelFileDescriptor openFile(Uri uri, String mode)
                                                             throws FileNotFoundException {
-    File f=new File(getContext().getFilesDir(), uri.getPath());
+    File root=getContext().getFilesDir();
+    File f=new File(root, uri.getPath()).getAbsoluteFile();
+
+    if (!f.getPath().startsWith(root.getPath())) {
+      throw new
+        SecurityException("Resolved path jumped beyond root");
+    }
 
     if (f.exists()) {
       return(ParcelFileDescriptor.open(f, parseMode(mode)));

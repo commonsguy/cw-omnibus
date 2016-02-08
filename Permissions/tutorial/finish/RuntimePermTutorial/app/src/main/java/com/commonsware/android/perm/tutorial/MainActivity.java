@@ -75,9 +75,9 @@ public class MainActivity extends Activity {
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
+    outState.putBoolean(STATE_IN_PERMISSION, isInPermission);
 
     if (breadcrust.getVisibility()==View.VISIBLE) {
-      outState.putBoolean(STATE_IN_PERMISSION, isInPermission);
       outState.putCharSequence(STATE_BREADCRUST,
         breadcrust.getText());
     }

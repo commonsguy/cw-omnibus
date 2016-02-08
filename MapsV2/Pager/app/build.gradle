@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'com.google.android.gms:play-services-maps:8.1.0'
-    compile 'com.android.support:support-v13:22.2.1'
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.android.support:support-v13:23.1.1'
 }
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.0"
+    buildToolsVersion "23.0.2"
 
 	defaultConfig {
         minSdkVersion 14

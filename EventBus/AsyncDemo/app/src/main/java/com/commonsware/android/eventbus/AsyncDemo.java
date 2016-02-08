@@ -15,6 +15,8 @@
 package com.commonsware.android.eventbus;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 public class AsyncDemo extends Activity {
@@ -25,25 +27,28 @@ public class AsyncDemo extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    mFrag=
-        (ModelFragment)getFragmentManager().findFragmentByTag(MODEL_TAG);
+    FragmentManager mgr=getFragmentManager();
+    FragmentTransaction trans=mgr.beginTransaction();
+
+    mFrag=(ModelFragment)mgr.findFragmentByTag(MODEL_TAG);
 
     if (mFrag == null) {
       mFrag=new ModelFragment();
-
-      getFragmentManager().beginTransaction().add(mFrag, MODEL_TAG)
-                          .commit();
+      trans.add(mFrag, MODEL_TAG);
     }
 
     AsyncDemoFragment demo=
-        (AsyncDemoFragment)getFragmentManager().findFragmentById(android.R.id.content);
+        (AsyncDemoFragment)mgr.findFragmentById(android.R.id.content);
 
     if (demo == null) {
       demo=new AsyncDemoFragment();
-      getFragmentManager().beginTransaction()
-                          .add(android.R.id.content, demo).commit();
+      trans.add(android.R.id.content, demo);
     }
 
     demo.setModel(mFrag.getModel());
+
+    if (!trans.isEmpty()) {
+      trans.commit();
+    }
   }
 }

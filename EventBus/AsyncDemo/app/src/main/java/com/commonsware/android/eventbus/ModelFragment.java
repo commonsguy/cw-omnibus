@@ -18,6 +18,8 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.os.SystemClock;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import de.greenrobot.event.EventBus;
 
 public class ModelFragment extends Fragment {
@@ -26,7 +28,8 @@ public class ModelFragment extends Fragment {
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
       "vel", "erat", "placerat", "ante", "porttitor", "sodales",
       "pellentesque", "augue", "purus" };
-  private ArrayList<String> model=new ArrayList<String>();
+  private List<String> model=
+    Collections.synchronizedList(new ArrayList<String>());
   private boolean isStarted=false;
 
   @Override

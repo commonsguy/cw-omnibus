@@ -32,6 +32,44 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp"
+        android:text="nodpi"
+        android:textStyle="bold"
+        android:typeface="monospace"/>
+
+      <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:background="#ffffffff"
+        android:src="@drawable/nodpi"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:text="nodpi/xxhdpi"
+        android:textStyle="bold"
+        android:typeface="monospace"/>
+
+      <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:background="#ffffffff"
+        android:src="@drawable/nodpi_and_xx"/>
+    </TableRow>
+
+    <TableRow>
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
         android:text="anydpi/xxhdpi"
         android:textStyle="bold"
         android:typeface="monospace"/>

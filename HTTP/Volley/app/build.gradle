@@ -1,0 +1,13 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile project(':volley')
+    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.android.support:support-v4:23.1.1'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
+}

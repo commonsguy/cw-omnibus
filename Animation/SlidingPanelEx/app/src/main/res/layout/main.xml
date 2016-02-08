@@ -7,30 +7,30 @@
   <com.commonsware.android.anim2.SlidingPanel
     android:id="@+id/panel"
     android:layout_width="match_parent"
-    android:layout_height="75px"
+    android:layout_height="75dp"
     android:orientation="horizontal"
     app:speed="250"
-    app:targetHeight="75px"
+    app:targetHeight="75dp"
     android:visibility="invisible"
     android:background="#22FFFFFF"
     android:layout_alignParentBottom="true"
     >
     <Button
-      android:layout_width="0px"
+      android:layout_width="0dp"
       android:layout_weight="1"
-      android:layout_height="75px"
+      android:layout_height="75dp"
       android:text="Button #1"
     />
     <Button
-      android:layout_width="0px"
+      android:layout_width="0dp"
       android:layout_weight="1"
-      android:layout_height="75px"
+      android:layout_height="75dp"
       android:text="Button #2"
     />
     <Button
-      android:layout_width="0px"
+      android:layout_width="0dp"
       android:layout_weight="1"
-      android:layout_height="75px"
+      android:layout_height="75dp"
       android:text="Button #3"
     />
   </com.commonsware.android.anim2.SlidingPanel>

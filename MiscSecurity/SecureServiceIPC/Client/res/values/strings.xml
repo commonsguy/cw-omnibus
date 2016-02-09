@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-	<string name="app_name">Secure Service IPC Demo Client</string>
-	<string name="enable_verification">Enable verification</string>
-	<string name="test_command">Test Command</string>
-	<string name="test_binding">Test Binding</string>
-
-</resources>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Ordered Broadcast Demo</string>
-    <string name="notify_title">You Care About This!</string>
-    <string name="notify_text">...but not enough to keep the activity running</string>
-    <string name="notify_ticker">Yoo-hoo! Wake up!</string>
-</resources>

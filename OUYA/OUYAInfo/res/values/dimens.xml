@@ -1,6 +1,0 @@
-<resources>
-
-	<dimen name="ouya_horizontal_padding">96px</dimen>
-	<dimen name="ouya_vertical_padding">54px</dimen>
-
-</resources>

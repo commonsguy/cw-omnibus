@@ -1,0 +1,18 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+	    url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+	compile 'com.mcxiaoke.viewpagerindicator:library:2.4.1@aar'
+	compile 'com.commonsware.cwac:presentation:0.4.+'
+	compile 'com.android.support:support-v13:21.0.3'
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+}

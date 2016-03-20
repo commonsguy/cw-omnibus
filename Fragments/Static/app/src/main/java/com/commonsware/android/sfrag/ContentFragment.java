@@ -16,6 +16,7 @@ package com.commonsware.android.sfrag;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class ContentFragment extends Fragment implements
     super.onAttach(a);
     Log.d(getClass().getSimpleName(), "onAttach()");
   }
-  
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

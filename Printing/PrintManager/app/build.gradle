@@ -1,0 +1,18 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'com.samskivert:jmustache:1.9'
+    compile 'com.android.support:support-v13:21.0.3'
+    compile 'com.commonsware.cwac:layouts:0.4.+'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
+}

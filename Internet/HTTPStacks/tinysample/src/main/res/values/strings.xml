@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">NetCipher Tiny Demo</string>
+  <string name="msg_timeout">Tor not available; timed out</string>
+  <string name="msg_crash">Ick! We crashed!</string>
+
+</resources>

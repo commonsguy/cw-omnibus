@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
+    compile 'de.greenrobot:eventbus:2.4.1'
+    compile 'com.google.code.gson:gson:2.5'
+    compile 'io.karim:materialtabs:2.0.2'
+    compile 'com.android.support:support-v13:23.1.1'
+    compile project(':libnetcipher')
+    compile project(':netcipher-httpclient')
+    compile project(':netcipher-hurl')
+    compile project(':netcipher-volley')
+    compile project(':netcipher-okhttp3')
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.0.2'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        testApplicationId "com.commonsware.android.http.tests"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}

@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+
+repositories {
+  maven {
+    url "https://s3.amazonaws.com/repo.commonsware.com"
+  }
+}
+
+dependencies {
+  compile project(':libnetcipher')
+  compile 'com.commonsware.cwac:security:0.6.3'
+}
+
+android {
+  compileSdkVersion 23
+  buildToolsVersion "23.0.2"
+
+  lintOptions {
+    abortOnError false
+  }
+}

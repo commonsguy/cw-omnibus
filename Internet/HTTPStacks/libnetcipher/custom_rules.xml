@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="custom_rules">
+
+  <property name="name" value="netcipher" />
+  <target name="-getgitdetails" >
+    <exec executable="git" outputproperty="git.describe">
+      <arg value="describe"/>
+    </exec>
+    <exec executable="git" outputproperty="git.revision">
+      <arg value="rev-parse"/>
+      <arg value="HEAD"/>
+    </exec>
+    <property name="jar.name" value="${name}-${git.describe}" />
+    <property name="javadoc.jar" value="${jar.name}-javadoc.jar" />
+    <property name="source.jar" value="${jar.name}-source.jar" />
+    <property name="pom" value="${jar.name}-source.jar" />
+  </target>
+
+  <target name="-pre-clean" depends="-getgitdetails">
+    <property name="delete.pattern" value="${jar.name}*.jar*" />
+    <echo message="deleting ${delete.pattern}" />
+    <delete failonerror="false">
+      <fileset dir="." includes="${delete.pattern}" />
+    </delete>
+  </target>
+
+  <target name="-create-manifest">
+    <echo message="Creating custom MANIFEST.MF" />
+    <manifest file="MANIFEST.MF">
+      <attribute name="Extension-Name" value="info.guardianproject.${name}"/>
+      <attribute name="Implementation-Vendor" value="Guardian Project"/>
+      <attribute name="Implementation-Title" value="NetCipher"/>
+      <attribute name="Implementation-URL" value="https://dev.guardianproject.info/projects/${name}"/>
+      <attribute name="Implementation-Git-URL" value="https://github.com/guardianproject/${name}"/>
+    </manifest>
+    <replaceregexp file="MANIFEST.MF"
+                   match="\nCreated-By:.*?\n"
+                   replace=""
+                   flags="m"/>
+  </target>
+
+  <target name="-pre-build"  depends="-getgitdetails,-create-manifest">
+    <echo message="running" />
+  </target>
+
+  <target name="javadoc" description="Generate Javadocs" depends="-pre-build">
+    <property name="javadoc.dir" value="${out.dir}/javadoc" />
+    <javadoc sourcepath="${source.dir}"
+             classpath="${toString:project.all.jars.path}:${toString:project.target.class.path}"
+             destdir="${javadoc.dir}"
+             packagenames="info.guardianproject.*"
+             windowtitle="${ant.project.name}"
+             linkoffline="https://developer.android.com/reference ${sdk.dir}/docs/reference"
+             linksource="true"
+             doctitle="${ant.project.name}" />
+    <jar destfile="${javadoc.jar}"
+         manifest="MANIFEST.MF"
+         basedir="${javadoc.dir}">
+    </jar>
+  </target>
+
+  <target name="source" description="Generate Javadocs" depends="-build-setup,-getgitdetails">
+    <jar destfile="${source.jar}"
+         manifest="MANIFEST.MF"
+         includes="info/**"
+         basedir="${source.dir}">
+    </jar>
+    <delete file="${source.jar}.asc"/>
+  </target>
+
+  <target name="pom" description="Generate maven .pom" depends="-build-setup,-getgitdetails">
+    <property name="pom.file" value="${jar.name}.pom" />
+    <copy file="${name}.pom" tofile="${pom.file}" />
+    <replaceregexp file="${pom.file}"
+                   match="&lt;version&gt;.*&lt;/version&gt;"
+                   replace="&lt;version&gt;${git.describe}&lt;/version&gt;"
+                   byline="true" />
+  </target>
+
+  <target name="-post-build" depends="-getgitdetails">
+    <condition property="build.is.debug" value="true" else="false">
+      <equals arg1="${build.target}" arg2="debug" />
+    </condition>
+    <if condition="${build.is.debug}">
+      <then>
+        <property name="release.jar" value="${jar.name}-debug.jar" />
+      </then>
+      <else>
+        <property name="release.jar" value="${jar.name}.jar" />
+      </else>
+    </if>
+    <property file="${sdk.dir}/tools/source.properties" />
+    <delete file="${release.jar}"/>
+    <jar destfile="${release.jar}"
+         manifest="MANIFEST.MF"
+         includes="info/**"
+         basedir="${out.classes.absolute.dir}">
+    </jar>
+  </target>
+
+  <target name="release-all" depends="clean,release,javadoc,source,pom" />
+  
+</project>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">VectorDrawable Demo</string>
+	<string name="tab_native">Native</string>
+	<string name="tab_compat">Compat</string>
+	<string name="icon">Vector Icon</string>
+</resources>

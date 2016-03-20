@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">HTTP Demo</string>
+  <string name="title_hurl">HURL</string>
+  <string name="title_hurl_tor">HURL + Tor</string>
+  <string name="title_httpclient">HttpClient</string>
+  <string name="title_httpclient_tor">HttpClient + Tor</string>
+  <string name="title_volley">Volley</string>
+  <string name="title_volley_tor">Volley + Tor</string>
+  <string name="title_okhttp3">OkHttp3</string>
+  <string name="title_okhttp3_tor">OkHttp3 + Tor</string>
+  <string name="title_retrofit">Retrofit</string>
+  <string name="title_retrofit_tor">Retrofit + Tor</string>
+  <string name="msg_timeout">Tor not available; timed out</string>
+  <string name="msg_no_orbot">Orbot not installed!</string>
+  <string name="menu_orbot">Install Orbot</string>
+  <string name="msg_orbot_not_installed">Orbot not yet installed!</string>
+  <string name="msg_orbot_installed">Orbot installed, trying to connect...</string>
+  <string name="orbot_sig_hash_play">A4:54:B8:7A:18:47:A8:9E:D7:F5:E7:0F:BA:6B:BA:96:F3:EF:29:C2:6E:09:81:20:4F:E3:47:BF:23:1D:FD:5B</string>
+  <string name="orbot_sig_hash_fdroid">A7:02:07:92:4F:61:FF:09:37:1D:54:84:14:5C:4B:EE:77:2C:55:C1:9E:EE:23:2F:57:70:E1:82:71:F7:CB:AE</string>
+  <string name="msg_orbot_disabled">Orbot is stopped at the moment...</string>
+  <string name="msg_orbot_starting">Orbot is starting...</string>
+  <string name="msg_orbot_stopping">Orbot is stopping...</string>
+
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+
+	<string name="app_name">Remote Input Sample</string>
+  <string name="talk">Talk to Me!</string>
+  <string name="title">Remote Input Test</string>
+
+</resources>

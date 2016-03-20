@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JobScheduler Content Demo</string>
+    <string name="msg_no_perm">Sorry! Cannot proceed without permission!</string>
+    <string name="msg_add">Now, add a contact!</string>
+</resources>

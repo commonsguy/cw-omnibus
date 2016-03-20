@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion 23
+  buildToolsVersion "23.0.2"
+
+  lintOptions {
+    abortOnError false
+  }
+}
+
+repositories {
+  maven {
+    url "https://s3.amazonaws.com/repo.commonsware.com"
+  }
+}
+
+dependencies {
+  compile project(':libnetcipher')
+  compile project(':netcipher-hurl')
+  compile 'com.squareup.okhttp3:okhttp:3.1.2'
+}

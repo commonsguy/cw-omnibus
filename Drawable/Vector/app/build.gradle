@@ -1,0 +1,22 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'io.karim:materialtabs:2.0.2'
+    compile 'com.android.support:support-v13:23.2.0'
+    compile 'com.android.support:support-vector-drawable:23.2.0'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 22
+        generatedDensities=[]
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+}

@@ -15,17 +15,12 @@
 package com.commonsware.android.okhttp;
 
 import android.util.Log;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import java.io.BufferedReader;
+import java.io.Reader;
 import de.greenrobot.event.EventBus;
 
 class LoadThread extends Thread {

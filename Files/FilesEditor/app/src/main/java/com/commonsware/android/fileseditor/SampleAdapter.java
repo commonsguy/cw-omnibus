@@ -17,6 +17,7 @@ package com.commonsware.android.fileseditor;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v13.app.FragmentPagerAdapter;
 import java.io.File;
@@ -37,6 +38,10 @@ public class SampleAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT) {
+      return(2);
+    }
+
     return(3);
   }
 

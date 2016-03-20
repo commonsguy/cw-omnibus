@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">Env Dump</string>
-  <string name="main_msg">Collect the details from LogCat, before closing this window!</string>
 </resources>

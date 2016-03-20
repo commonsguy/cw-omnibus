@@ -22,9 +22,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
   private static final String TAG="EnvDump";
+  private final StringBuilder buf=new StringBuilder();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -36,20 +38,24 @@ public class MainActivity extends Activity {
     logActivityManagerStuff();
     logDisplayMetrics();
     logConfiguration();
+
+    TextView tv=(TextView)findViewById(R.id.text);
+
+    tv.setText(buf.toString());
   }
 
   private void logBuildValues() {
-    Log.d(TAG, "Build.VERSION.SDK_INT="+Build.VERSION.SDK_INT);
+    log("Build.VERSION.SDK_INT="+Build.VERSION.SDK_INT);
 
-    Log.d(TAG, "Build.BRAND="+Build.BRAND);
-    Log.d(TAG, "Build.DEVICE="+Build.DEVICE);
-    Log.d(TAG, "Build.DISPLAY="+Build.DISPLAY);
-    Log.d(TAG, "Build.HARDWARE="+Build.HARDWARE);
-    Log.d(TAG, "Build.ID="+Build.ID);
-    Log.d(TAG, "Build.MANUFACTURER="+Build.MANUFACTURER);
-    Log.d(TAG, "Build.MODEL="+Build.MODEL);
-    Log.d(TAG, "Build.PRODUCT="+Build.PRODUCT);
-    Log.d(TAG, "Build.PRODUCT="+Build.PRODUCT);
+    log("Build.BRAND="+Build.BRAND);
+    log("Build.DEVICE="+Build.DEVICE);
+    log("Build.DISPLAY="+Build.DISPLAY);
+    log("Build.HARDWARE="+Build.HARDWARE);
+    log("Build.ID="+Build.ID);
+    log("Build.MANUFACTURER="+Build.MANUFACTURER);
+    log("Build.MODEL="+Build.MODEL);
+    log("Build.PRODUCT="+Build.PRODUCT);
+    log("Build.PRODUCT="+Build.PRODUCT);
 
     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
       StringBuilder buf=new StringBuilder();
@@ -62,26 +68,26 @@ public class MainActivity extends Activity {
         buf.append(abi);
       }
 
-      Log.d(TAG, "Build.SUPPORTED_APIS=" + buf);
+      log("Build.SUPPORTED_APIS=" + buf);
     }
     else {
-      Log.d(TAG, "Build.CPU_API="+Build.CPU_ABI);
-      Log.d(TAG, "Build.CPU_API2="+Build.CPU_ABI2);
+      log("Build.CPU_API="+Build.CPU_ABI);
+      log("Build.CPU_API2="+Build.CPU_ABI2);
     }
   }
 
   private void logSystemFeatures() {
     for (FeatureInfo feature :
         getPackageManager().getSystemAvailableFeatures()) {
-      Log.d(TAG, "System Feature: "+feature.name);
+      log("System Feature: "+feature.name);
     }
   }
 
   private void logActivityManagerStuff() {
     ActivityManager mgr=(ActivityManager)getSystemService(ACTIVITY_SERVICE);
 
-    Log.d(TAG, "heap limit="+mgr.getMemoryClass());
-    Log.d(TAG, "large-heap limit="+mgr.getLargeMemoryClass());
+    log("heap limit="+mgr.getMemoryClass());
+    log("large-heap limit="+mgr.getLargeMemoryClass());
   }
 
   private void logDisplayMetrics() {
@@ -89,30 +95,36 @@ public class MainActivity extends Activity {
 
     getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-    Log.d(TAG, "DisplayMetrics.densityDpi="+dm.densityDpi);
-    Log.d(TAG, "DisplayMetrics.xdpi="+dm.xdpi);
-    Log.d(TAG, "DisplayMetrics.ydpi="+dm.ydpi);
-    Log.d(TAG, "DisplayMetrics.scaledDensity="+dm.scaledDensity);
-    Log.d(TAG, "DisplayMetrics.widthPixels="+dm.widthPixels);
-    Log.d(TAG, "DisplayMetrics.heightPixels="+dm.heightPixels);
+    log("DisplayMetrics.densityDpi="+dm.densityDpi);
+    log("DisplayMetrics.xdpi="+dm.xdpi);
+    log("DisplayMetrics.ydpi="+dm.ydpi);
+    log("DisplayMetrics.scaledDensity="+dm.scaledDensity);
+    log("DisplayMetrics.widthPixels="+dm.widthPixels);
+    log("DisplayMetrics.heightPixels="+dm.heightPixels);
   }
 
   private void logConfiguration() {
     Configuration cfg=getResources().getConfiguration();
 
-    Log.d(TAG, "Configuration.densityDpi="+cfg.densityDpi);
-    Log.d(TAG, "Configuration.fontScale="+cfg.fontScale);
-    Log.d(TAG, "Configuration.hardKeyboardHidden="+cfg.hardKeyboardHidden);
-    Log.d(TAG, "Configuration.keyboard="+cfg.keyboard);
-    Log.d(TAG, "Configuration.keyboardHidden="+cfg.keyboardHidden);
-    Log.d(TAG, "Configuration.locale="+cfg.locale);
-    Log.d(TAG, "Configuration.mcc="+cfg.mcc);
-    Log.d(TAG, "Configuration.mnc="+cfg.mnc);
-    Log.d(TAG, "Configuration.navigation="+cfg.navigation);
-    Log.d(TAG, "Configuration.navigationHidden="+cfg.navigationHidden);
-    Log.d(TAG, "Configuration.orientation="+cfg.orientation);
-    Log.d(TAG, "Configuration.screenHeightDp="+cfg.screenHeightDp);
-    Log.d(TAG, "Configuration.screenWidthDp="+cfg.screenWidthDp);
-    Log.d(TAG, "Configuration.touchscreen="+cfg.touchscreen);
+    log("Configuration.densityDpi="+cfg.densityDpi);
+    log("Configuration.fontScale="+cfg.fontScale);
+    log("Configuration.hardKeyboardHidden="+cfg.hardKeyboardHidden);
+    log("Configuration.keyboard="+cfg.keyboard);
+    log("Configuration.keyboardHidden="+cfg.keyboardHidden);
+    log("Configuration.locale="+cfg.locale);
+    log("Configuration.mcc="+cfg.mcc);
+    log("Configuration.mnc="+cfg.mnc);
+    log("Configuration.navigation="+cfg.navigation);
+    log("Configuration.navigationHidden="+cfg.navigationHidden);
+    log("Configuration.orientation="+cfg.orientation);
+    log("Configuration.screenHeightDp="+cfg.screenHeightDp);
+    log("Configuration.screenWidthDp="+cfg.screenWidthDp);
+    log("Configuration.touchscreen="+cfg.touchscreen);
+  }
+  
+  private void log(String msg) {
+    Log.d(TAG, msg);
+    buf.append(msg);
+    buf.append('\n');
   }
 }

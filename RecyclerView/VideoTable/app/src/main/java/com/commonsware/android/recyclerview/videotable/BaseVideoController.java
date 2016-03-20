@@ -20,7 +20,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import java.io.File;
 
 abstract class BaseVideoController extends RecyclerView.ViewHolder

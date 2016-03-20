@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2015 CommonsWare, LLC
+  Copyright (c) 2008-2016 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -23,23 +23,14 @@ import android.provider.MediaStore;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MainActivity extends RecyclerViewActivity implements
     LoaderManager.LoaderCallbacks<Cursor> {
   private static final int[] COLUMN_WEIGHTS={1, 4, 1};
-  private ImageLoader imageLoader;
 
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-
-    ImageLoaderConfiguration ilConfig=
-        new ImageLoaderConfiguration.Builder(this).build();
-
-    imageLoader=ImageLoader.getInstance();
-    imageLoader.init(ilConfig);
 
     getLoaderManager().initLoader(0, null, this);
 
@@ -80,8 +71,7 @@ public class MainActivity extends RecyclerViewActivity implements
         case 0:
           result=new VideoThumbnailController(getLayoutInflater()
                                                  .inflate(R.layout.thumbnail,
-                                                          parent, false),
-                                              imageLoader);
+                                                          parent, false));
           break;
 
         case 1:

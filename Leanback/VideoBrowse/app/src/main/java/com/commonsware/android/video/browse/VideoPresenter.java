@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2014 CommonsWare, LLC
+ Copyright (c) 2014-2016 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -28,26 +28,16 @@ import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.view.View;
 import android.view.ViewGroup;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class VideoPresenter extends Presenter {
   private Context ctxt;
-  private ImageLoader imageLoader;
 
   VideoPresenter(Context ctxt) {
     super();
 
     this.ctxt=ctxt;
-
-    ImageLoaderConfiguration ilConfig=
-        new ImageLoaderConfiguration.Builder(ctxt).build();
-
-    imageLoader=ImageLoader.getInstance();
-    imageLoader.init(ilConfig);
   }
 
   @Override
@@ -57,7 +47,7 @@ public class VideoPresenter extends Presenter {
     cardView.setFocusable(true);
     cardView.setFocusableInTouchMode(true);
 
-    return(new Holder(cardView, imageLoader));
+    return(new Holder(cardView));
   }
 
   @Override
@@ -75,7 +65,7 @@ public class VideoPresenter extends Presenter {
         ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
             video.id);
 
-    h.updateCardViewImage(thumbnailUri.toString());
+    h.updateCardViewImage(thumbnailUri);
   }
 
   @Override
@@ -84,39 +74,49 @@ public class VideoPresenter extends Presenter {
   }
 
   static class Holder extends Presenter.ViewHolder {
-    private final ImageLoader imageLoader;
     private final ImageCardView cardView;
-    private final ImageSize targetSize;
+    private int targetWidth, targetHeight;
 
-    public Holder(View view, ImageLoader imageLoader) {
+    public Holder(View view) {
       super(view);
 
       cardView=(ImageCardView)view;
-      this.imageLoader=imageLoader;
 
       Resources res=view.getContext().getResources();
 
-      targetSize=
-          new ImageSize((int)res.getDimension(R.dimen.card_width),
-                        (int)res.getDimension(R.dimen.card_height));
+      targetWidth=(int)res.getDimension(R.dimen.card_width);
+      targetHeight=(int)res.getDimension(R.dimen.card_height);
     }
 
-    protected void updateCardViewImage(String path) {
-      DisplayImageOptions opts=new DisplayImageOptions.Builder()
-          .showImageOnLoading(R.drawable.ic_media_video_poster)
-          .build();
+    protected void updateCardViewImage(Uri uri) {
+      Picasso.with(cardView.getContext())
+        .load(uri)
+        .resize(targetWidth, targetHeight)
+        .centerCrop()
+        .onlyScaleDown()
+        .placeholder(R.drawable.ic_media_video_poster)
+        .into(new Target() {
+          @Override
+          public void onBitmapLoaded(Bitmap bitmap,
+                                     Picasso.LoadedFrom from) {
+            Drawable bmpDrawable=
+              new BitmapDrawable(
+                cardView.getContext().getResources(),
+                bitmap);
 
-      imageLoader.loadImage(path, targetSize, opts,
-                            new SimpleImageLoadingListener() {
-        @Override
-        public void onLoadingComplete(String uri, View v, Bitmap bmp) {
-          Drawable bmpDrawable=
-              new BitmapDrawable(cardView.getContext().getResources(),
-                                 bmp);
+            cardView.setMainImage(bmpDrawable);
+          }
 
-          cardView.setMainImage(bmpDrawable);
-        }
-      });
+          @Override
+          public void onBitmapFailed(Drawable errorDrawable) {
+            cardView.setMainImage(errorDrawable);
+          }
+
+          @Override
+          public void onPrepareLoad(Drawable placeHolderDrawable) {
+            cardView.setMainImage(placeHolderDrawable);
+          }
+        });
     }
   }
 }

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 android {

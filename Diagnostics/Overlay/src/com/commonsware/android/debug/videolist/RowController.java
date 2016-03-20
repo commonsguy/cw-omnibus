@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2015 CommonsWare, LLC
+ Copyright (c) 2015-2016 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain	a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -23,31 +23,21 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 import java.io.File;
 
 class RowController extends RecyclerView.ViewHolder
     implements View.OnClickListener {
   final private TextView title;
   final private ImageView thumbnail;
-  final private ImageLoader imageLoader;
   private String videoUri=null;
   private String videoMimeType=null;
-  private static final DisplayImageOptions opts=
-      new DisplayImageOptions.Builder()
-        .showImageOnLoading(R.drawable.ic_media_video_poster)
-        .build();
 
-  RowController(View row, ImageLoader imageLoader) {
+  RowController(View row) {
     super(row);
-    this.imageLoader=imageLoader;
 
     title=(TextView)row.findViewById(android.R.id.text1);
     thumbnail=(ImageView)row.findViewById(R.id.thumbnail);
@@ -91,7 +81,11 @@ class RowController extends RecyclerView.ViewHolder
           ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
               videoId);
 
-      imageLoader.displayImage(video.toString(), thumbnail, opts);
+      Picasso.with(thumbnail.getContext())
+        .load(video.toString())
+        .fit().centerCrop()
+        .placeholder(R.drawable.ic_media_video_poster)
+        .into(thumbnail);
     }
   }
 }

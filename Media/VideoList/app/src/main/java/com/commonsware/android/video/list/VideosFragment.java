@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2013 CommonsWare, LLC
+  Copyright (c) 2013-2016 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,7 +14,6 @@
 
 package com.commonsware.android.video.list;
 
-import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.CursorLoader;
@@ -28,37 +27,24 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.squareup.picasso.Picasso;
 
 public class VideosFragment extends
     ContractListFragment<VideosFragment.Contract> implements
     LoaderManager.LoaderCallbacks<Cursor>,
     SimpleCursorAdapter.ViewBinder {
-  private ImageLoader imageLoader;
 
   @Override
-  public void onAttach(Activity host) {
-    super.onAttach(host);
-
-    ImageLoaderConfiguration ilConfig=
-        new ImageLoaderConfiguration.Builder(getActivity()).build();
-
-    imageLoader=ImageLoader.getInstance();
-    imageLoader.init(ilConfig);
-  }
-
-  @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+  public void onViewCreated(View view,
+                            Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
     String[] from=
-        { MediaStore.Video.Media.TITLE, MediaStore.Video.Media._ID };
+      { MediaStore.Video.Media.TITLE, MediaStore.Video.Media._ID };
     int[] to= { android.R.id.text1, R.id.thumbnail };
     SimpleCursorAdapter adapter=
-        new SimpleCursorAdapter(getActivity(), R.layout.row, null,
-                                from, to, 0);
+      new SimpleCursorAdapter(getActivity(), R.layout.row, null,
+        from, to, 0);
 
     adapter.setViewBinder(this);
     setListAdapter(adapter);
@@ -101,13 +87,14 @@ public class VideosFragment extends
   public boolean setViewValue(View v, Cursor c, int column) {
     if (column == c.getColumnIndex(MediaStore.Video.Media._ID)) {
       Uri video=
-          ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-              c.getInt(column));
-      DisplayImageOptions opts=new DisplayImageOptions.Builder()
-          .showImageOnLoading(R.drawable.ic_media_video_poster)
-          .build();
+          ContentUris.withAppendedId(
+            MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+            c.getInt(column));
 
-      imageLoader.displayImage(video.toString(), (ImageView)v, opts);
+      Picasso.with(getActivity()).load(video.toString())
+        .fit().centerCrop()
+        .placeholder(R.drawable.ic_media_video_poster)
+        .into((ImageView)v);
 
       return(true);
     }

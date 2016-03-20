@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2015 CommonsWare, LLC
+  Copyright (c) 2008-2016 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -24,22 +24,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MainActivity extends RecyclerViewActivity implements
     LoaderManager.LoaderCallbacks<Cursor> {
-  private ImageLoader imageLoader;
-
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-
-    ImageLoaderConfiguration ilConfig=
-        new ImageLoaderConfiguration.Builder(this).build();
-
-    imageLoader=ImageLoader.getInstance();
-    imageLoader.init(ilConfig);
 
     getLoaderManager().initLoader(0, null, this);
 
@@ -77,8 +67,7 @@ public class MainActivity extends RecyclerViewActivity implements
 
     @Override
     public RowController onCreateViewHolder(ViewGroup parent, int viewType) {
-      return(new RowController(inflater.inflate(R.layout.row, parent, false),
-                               imageLoader));
+      return(new RowController(inflater.inflate(R.layout.row, parent, false)));
     }
 
     void setVideos(Cursor videos) {

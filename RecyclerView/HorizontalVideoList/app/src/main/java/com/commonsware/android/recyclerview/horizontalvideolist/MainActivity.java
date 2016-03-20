@@ -23,22 +23,12 @@ import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MainActivity extends RecyclerViewActivity implements
     LoaderManager.LoaderCallbacks<Cursor> {
-  private ImageLoader imageLoader;
-
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-
-    ImageLoaderConfiguration ilConfig=
-        new ImageLoaderConfiguration.Builder(this).build();
-
-    imageLoader=ImageLoader.getInstance();
-    imageLoader.init(ilConfig);
 
     getLoaderManager().initLoader(0, null, this);
 
@@ -71,8 +61,7 @@ public class MainActivity extends RecyclerViewActivity implements
     @Override
     public RowController onCreateViewHolder(ViewGroup parent, int viewType) {
       return(new RowController(getLayoutInflater()
-                                 .inflate(R.layout.row, parent, false),
-                               imageLoader));
+                                 .inflate(R.layout.row, parent, false)));
     }
 
     void setVideos(Cursor videos) {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">SAW Monitor</string>
+	<string name="msg_detected">SYSTEM_ALERT_WINDOW Detected</string>
+	<string name="msg_requested">You %1$s %2$s!</string>
+	<string name="msg_upgraded">upgraded</string>
+	<string name="msg_installed">installed</string>
+	<string name="msg_whitelist">Whitelist</string>
+	<string name="msg_settings">Settings</string>
+	<string name="msg_enable">Enable monitoring</string>
+
+</resources>

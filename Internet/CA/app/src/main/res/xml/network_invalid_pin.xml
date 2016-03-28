@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+  <domain-config>
+    <domain includeSubdomains="false" usesCleartextTraffic="false">wares.commonsware.com</domain>
+    <pin-set expiration="2018-01-01">
+      <pin digest="SHA-256">XyT0OwuqsvhmpgcGEMQ8OG0vQx/8pdIXGHnAPemF0XY=</pin>
+    </pin-set>
+  </domain-config>
+</network-security-config>

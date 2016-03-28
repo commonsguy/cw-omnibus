@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+    }
+
+    productFlavors {
+        thawte {
+            resValue "string", "app_name", "CA Validation Demo"
+            applicationId "com.commonsware.android.downloader.ca.thawte"
+            manifestPlaceholders=
+                    [networkSecurityConfig: 'network_thawte']
+        }
+        verisign {
+            resValue "string", "app_name", "Invalid CA Validation Demo"
+            applicationId "com.commonsware.android.downloader.ca.verisign"
+            manifestPlaceholders=
+                    [networkSecurityConfig: 'network_verisign']
+        }
+        system {
+            resValue "string", "app_name", "System CA Validation Demo"
+            applicationId "com.commonsware.android.downloader.ca.system"
+            manifestPlaceholders=
+                    [networkSecurityConfig: 'network_verisign_system']
+        }
+        pin {
+            resValue "string", "app_name", "Cert Pin Demo"
+            applicationId "com.commonsware.android.downloader.ca.pin"
+            manifestPlaceholders=
+                    [networkSecurityConfig: 'network_pin']
+        }
+        invalidPin {
+            resValue "string", "app_name", "Cert Pin Demo"
+            applicationId "com.commonsware.android.downloader.ca.invalidpin"
+            manifestPlaceholders=
+                    [networkSecurityConfig: 'network_invalid_pin']
+        }
+    }
+}
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v13:23.2.1'
+    compile 'com.commonsware.cwac:provider:0.3.1'
+}

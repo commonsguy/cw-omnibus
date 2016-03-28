@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+  <domain-config>
+    <domain includeSubdomains="false" usesCleartextTraffic="false">wares.commonsware.com</domain>
+    <trust-anchors>
+      <certificates src="@raw/verisign_class3" />
+      <certificates src="system" />
+    </trust-anchors>
+  </domain-config>
+</network-security-config>

@@ -18,7 +18,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import de.greenrobot.event.EventBus;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class MainActivity extends Activity {
   @Override
@@ -44,6 +46,7 @@ public class MainActivity extends Activity {
     super.onPause();
   }
 
+  @Subscribe
   public void onEventMainThread(QuestionClickedEvent event) {
     startActivity(new Intent(Intent.ACTION_VIEW,
                              Uri.parse(event.item.link)));

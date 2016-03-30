@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">AntiPatterns: Camera</string>
+	<string name="btn_capture">Capture Photo</string>
+	<string name="btn_view">View Full Photo</string>
+	<string name="msg_failure">Failed to copy photo</string>
+
+</resources>

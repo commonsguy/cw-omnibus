@@ -37,6 +37,6 @@ public class BrowserDemo4 extends Activity {
       }
     });
     
-    browser.loadUrl("https://commonsware.com");
+    browser.loadUrl("http://commonsware.com");
   }
 }

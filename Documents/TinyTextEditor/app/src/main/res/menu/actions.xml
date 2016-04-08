@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/create"
+    android:title="@string/menu_create"
+    android:showAsAction="never"/>
+  <item
+    android:id="@+id/open"
+    android:title="@string/menu_open"
+    android:icon="@drawable/ic_folder_open_24dp"
+    android:showAsAction="ifRoom"/>
+  <item
+    android:id="@+id/open_multiple"
+    android:title="@string/menu_open_multiple"
+    android:showAsAction="never"/>
+</menu>

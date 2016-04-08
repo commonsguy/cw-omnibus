@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'io.karim:materialtabs:2.0.2'
+    compile 'com.android.support:support-v13:23.2.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.commonsware.cwac:pager:0.2.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+}
+
+android {
+    compileSdkVersion 'android-N'
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 23
+    }
+
+    // based on http://stackoverflow.com/a/27372806/115145
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.processManifest.doLast {
+                def manifestOutFile = output.processManifest.manifestOutputFile
+                def xml = new XmlParser().parse(manifestOutFile)
+                def usesSdk = xml.'uses-sdk'
+
+                usesSdk.replaceNode {
+                    'uses-sdk'('android:minSdkVersion': '19',
+                            'android:targetSdkVersion': '23')
+                }
+
+                def fw = new FileWriter(manifestOutFile.toString())
+
+                new XmlNodePrinter(new PrintWriter(fw)).print(xml)
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Tiny Text Editor</string>
+	<string name="hint">Editor #%d</string>
+	<string name="menu_create">Create</string>
+	<string name="menu_open">Open</string>
+	<string name="menu_close">Close</string>
+	<string name="msg_filename">I Can Haz Filename?</string>
+	<string name="menu_save">Save</string>
+	<string name="msg_save_error">Oops! We could not save your changes!</string>
+	<string name="msg_save_history">Oops! Could not save edit history!</string>
+	<string name="msg_perm_failure">Oops! We did not get permission to work with this document!</string>
+	<string name="menu_open_multiple">Open Multiple</string>
+	<string name="msg_load_error">Oops! We could not load one of your documents!</string>
+	<string name="menu_launch">Open in New Window</string>
+
+</resources>

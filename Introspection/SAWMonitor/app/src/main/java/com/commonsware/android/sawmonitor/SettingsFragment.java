@@ -62,8 +62,7 @@ public class SettingsFragment extends PreferenceFragment
   }
 
   void populateWhitelist(MultiSelectListPreference whitelist) {
-    List<ApplicationInfo> apps=
-      pm.getInstalledApplications(PackageManager.GET_PERMISSIONS);
+    List<ApplicationInfo> apps=pm.getInstalledApplications(0);
 
     Collections.sort(apps,
       new ApplicationInfo.DisplayNameComparator(pm));

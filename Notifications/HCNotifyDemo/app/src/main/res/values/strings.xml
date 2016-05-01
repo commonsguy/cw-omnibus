@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="hello">Hello World, HCNotifyDemoActivity!</string>
-  <string name="app_name">HCNotifyDemo</string>
-  <string name="ticker">Hi, I\'m the ticker text!</string>
-</resources>

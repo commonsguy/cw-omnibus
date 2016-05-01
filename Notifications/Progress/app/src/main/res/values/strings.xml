@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="hello">Hello World, HCNotifyDemoActivity!</string>
-  <string name="app_name">Progress Notify Demo</string>
-  <string name="ticker">Hi, I\'m the ticker text!</string>
-  <string name="done">We\'re done!</string>
-  <string name="busy">We\'re busy...</string>
-  <string name="progress_notification">Progress Notification</string>
-</resources>

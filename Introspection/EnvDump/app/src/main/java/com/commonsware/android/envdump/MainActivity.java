@@ -55,7 +55,6 @@ public class MainActivity extends Activity {
     log("Build.MANUFACTURER="+Build.MANUFACTURER);
     log("Build.MODEL="+Build.MODEL);
     log("Build.PRODUCT="+Build.PRODUCT);
-    log("Build.PRODUCT="+Build.PRODUCT);
 
     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
       StringBuilder buf=new StringBuilder();

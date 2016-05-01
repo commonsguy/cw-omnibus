@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
     compile 'io.karim:materialtabs:2.0.2'
-    compile 'com.android.support:support-v13:23.2.1'
+    compile 'com.android.support:support-v13:23.3.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.commonsware.cwac:pager:0.2.5'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'

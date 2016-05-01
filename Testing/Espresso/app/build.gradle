@@ -1,0 +1,20 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.commonsware.android.espresso"
+        testApplicationId "com.commonsware.android.espresso.test"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+}

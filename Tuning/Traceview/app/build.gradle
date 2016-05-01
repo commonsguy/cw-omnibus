@@ -1,0 +1,10 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'org.antlr:stringtemplate:4.0.2'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
+}

@@ -1,0 +1,15 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    androidTestCompile 'com.android.support.test:rules:0.5'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        testApplicationId "com.commonsware.android.gradle.hello.test"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}

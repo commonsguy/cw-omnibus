@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+  <domain-config>
+    <domain includeSubdomains="false" usesCleartextTraffic="false">scrap.commonsware.com</domain>
+    <trust-anchors>
+      <certificates src="@raw/example" />
+    </trust-anchors>
+  </domain-config>
+</network-security-config>

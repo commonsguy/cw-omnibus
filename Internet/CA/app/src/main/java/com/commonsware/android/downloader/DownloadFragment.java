@@ -69,9 +69,7 @@ public class DownloadFragment extends Fragment implements
   private void doTheDownload() {
     Intent i=new Intent(getActivity(), Downloader.class);
 
-    i.setData(Uri.parse(
-      "https://wares.commonsware.com/excerpt-7p0.pdf"));
-
+    i.setData(Uri.parse(BuildConfig.URL));
     getActivity().startService(i);
     getActivity().finish();
   }

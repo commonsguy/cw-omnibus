@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+def WARES='"https://wares.commonsware.com/excerpt-7p0.pdf"'
+def SELFSIGNED='"https://scrap.commonsware.com:3001/excerpt-7p0.pdf"'
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -15,30 +18,49 @@ android {
             applicationId "com.commonsware.android.downloader.ca.thawte"
             manifestPlaceholders=
                     [networkSecurityConfig: 'network_thawte']
+            buildConfigField "String", "URL", WARES
         }
         verisign {
             resValue "string", "app_name", "Invalid CA Validation Demo"
             applicationId "com.commonsware.android.downloader.ca.verisign"
             manifestPlaceholders=
                     [networkSecurityConfig: 'network_verisign']
+            buildConfigField "String", "URL", WARES
         }
         system {
             resValue "string", "app_name", "System CA Validation Demo"
             applicationId "com.commonsware.android.downloader.ca.system"
             manifestPlaceholders=
                     [networkSecurityConfig: 'network_verisign_system']
+            buildConfigField "String", "URL", WARES
         }
         pin {
             resValue "string", "app_name", "Cert Pin Demo"
             applicationId "com.commonsware.android.downloader.ca.pin"
             manifestPlaceholders=
                     [networkSecurityConfig: 'network_pin']
+            buildConfigField "String", "URL", WARES
         }
         invalidPin {
             resValue "string", "app_name", "Cert Pin Demo"
             applicationId "com.commonsware.android.downloader.ca.invalidpin"
             manifestPlaceholders=
                     [networkSecurityConfig: 'network_invalid_pin']
+            buildConfigField "String", "URL", WARES
+        }
+        selfSigned {
+            resValue "string", "app_name", "Self-Signed Demo"
+            applicationId "com.commonsware.android.downloader.ca.ss"
+            manifestPlaceholders=
+                    [networkSecurityConfig: 'network_selfsigned']
+            buildConfigField "String", "URL", SELFSIGNED
+        }
+        override {
+            resValue "string", "app_name", "Debug Override Demo"
+            applicationId "com.commonsware.android.downloader.ca.debug"
+            manifestPlaceholders=
+                    [networkSecurityConfig: 'network_override']
+            buildConfigField "String", "URL", SELFSIGNED
         }
     }
 }

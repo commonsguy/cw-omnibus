@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.FileProvider;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,9 +32,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Downloader extends IntentService {
-  public static final String ACTION_COMPLETE=
-      "com.commonsware.android.downloader.action.COMPLETE";
   private static int NOTIFY_ID=1337;
+  private static final String AUTHORITY=
+    BuildConfig.APPLICATION_ID+".provider";
 
   public Downloader() {
     super("Downloader");
@@ -42,12 +43,8 @@ public class Downloader extends IntentService {
   @Override
   public void onHandleIntent(Intent i) {
     try {
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-      
-      root.mkdirs();
-
-      File output=new File(root, i.getData().getLastPathSegment());
+      File output=
+        new File(getFilesDir(), i.getData().getLastPathSegment());
 
       if (output.exists()) {
         output.delete();
@@ -96,10 +93,16 @@ public class Downloader extends IntentService {
        .setTicker(getString(R.string.download_complete));
 
       Intent outbound=new Intent(Intent.ACTION_VIEW);
+      Uri outputUri=
+        FileProvider.getUriForFile(this, AUTHORITY, output);
 
-      outbound.setDataAndType(Uri.fromFile(output), mimeType);
+      outbound.setDataAndType(outputUri, mimeType);
+      outbound.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-      b.setContentIntent(PendingIntent.getActivity(this, 0, outbound, 0));
+      PendingIntent pi=PendingIntent.getActivity(this, 0,
+        outbound, PendingIntent.FLAG_UPDATE_CURRENT);
+
+      b.setContentIntent(pi);
     }
     else {
       b.setContentTitle(getString(R.string.exception))

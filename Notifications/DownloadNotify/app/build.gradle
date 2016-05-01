@@ -5,10 +5,20 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "21.1.2"
+	compileSdkVersion 19
+	buildToolsVersion "21.1.2"
 
 	defaultConfig {
 		targetSdkVersion 17
 	}
+}
+
+repositories {
+	maven {
+		url "https://s3.amazonaws.com/repo.commonsware.com"
+	}
+}
+
+dependencies {
+    compile 'com.commonsware.cwac:provider:0.3.1'
 }

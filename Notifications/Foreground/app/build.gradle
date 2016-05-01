@@ -12,3 +12,13 @@ android {
 		targetSdkVersion 17
 	}
 }
+
+repositories {
+	maven {
+		url "https://s3.amazonaws.com/repo.commonsware.com"
+	}
+}
+
+dependencies {
+	compile 'com.commonsware.cwac:provider:0.3.1'
+}

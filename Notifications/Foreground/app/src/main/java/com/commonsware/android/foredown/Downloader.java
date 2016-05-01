@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.FileProvider;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,8 +32,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Downloader extends IntentService {
-  public static final String ACTION_COMPLETE=
-      "com.commonsware.android.downloader.action.COMPLETE";
+  private static final String AUTHORITY=
+    BuildConfig.APPLICATION_ID+".provider";
   private static int NOTIFY_ID=1337;
   private static int FOREGROUND_ID=1338;
 
@@ -42,18 +43,13 @@ public class Downloader extends IntentService {
 
   @Override
   public void onHandleIntent(Intent i) {
+    String filename=i.getData().getLastPathSegment();
+
+    startForeground(FOREGROUND_ID,
+      buildForegroundNotification(filename));
+
     try {
-      String filename=i.getData().getLastPathSegment();
-
-      startForeground(FOREGROUND_ID,
-                      buildForegroundNotification(filename));
-
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
-      root.mkdirs();
-
-      File output=new File(root, filename);
+      File output=new File(getFilesDir(), filename);
 
       if (output.exists()) {
         output.delete();
@@ -81,12 +77,13 @@ public class Downloader extends IntentService {
         c.disconnect();
       }
 
-      stopForeground(true);
       raiseNotification(i, output, null);
     }
     catch (IOException e2) {
-      stopForeground(true);
       raiseNotification(i, null, e2);
+    }
+    finally {
+      stopForeground(true);
     }
   }
 
@@ -104,10 +101,16 @@ public class Downloader extends IntentService {
        .setTicker(getString(R.string.download_complete));
 
       Intent outbound=new Intent(Intent.ACTION_VIEW);
+      Uri outputUri=
+        FileProvider.getUriForFile(this, AUTHORITY, output);
 
-      outbound.setDataAndType(Uri.fromFile(output), inbound.getType());
+      outbound.setDataAndType(outputUri, inbound.getType());
+      outbound.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-      b.setContentIntent(PendingIntent.getActivity(this, 0, outbound, 0));
+      PendingIntent pi=PendingIntent.getActivity(this, 0,
+        outbound, PendingIntent.FLAG_UPDATE_CURRENT);
+
+      b.setContentIntent(pi);
     }
     else {
       b.setContentTitle(getString(R.string.exception))
@@ -125,9 +128,8 @@ public class Downloader extends IntentService {
   private Notification buildForegroundNotification(String filename) {
     NotificationCompat.Builder b=new NotificationCompat.Builder(this);
 
-    b.setOngoing(true);
-
-    b.setContentTitle(getString(R.string.downloading))
+    b.setOngoing(true)
+      .setContentTitle(getString(R.string.downloading))
      .setContentText(filename)
      .setSmallIcon(android.R.drawable.stat_sys_download)
      .setTicker(getString(R.string.downloading));

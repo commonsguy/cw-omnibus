@@ -24,7 +24,7 @@
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
-      <layout android:minimalSize="480dp" />
+      <layout android:minimalWidth="480dp" />
     </activity>
   </application>
 

@@ -249,33 +249,33 @@ public class OrbotHelper implements ProxyHelper {
         return intent;
     }
 
-	@Override
-	public boolean isInstalled(Context context) {
-		return isOrbotInstalled(context);
-	}
+  @Override
+  public boolean isInstalled(Context context) {
+    return isOrbotInstalled(context);
+  }
 
-	@Override
-	public void requestStatus(Context context) { 
-		isOrbotRunning(context);
-	}
+  @Override
+  public void requestStatus(Context context) { 
+    isOrbotRunning(context);
+  }
 
-	@Override
-	public boolean requestStart(Context context) {
-		return requestStartTor(context);
-	}
+  @Override
+  public boolean requestStart(Context context) {
+    return requestStartTor(context);
+  }
 
-	@Override
-	public Intent getInstallIntent(Context context) {
-		return getOrbotInstallIntent(context);
-	}
+  @Override
+  public Intent getInstallIntent(Context context) {
+    return getOrbotInstallIntent(context);
+  }
 
-	@Override
-	public Intent getStartIntent(Context context) {
-		return getOrbotStartIntent();
-	}
-	
-	@Override
-	public String getName() {
-		return "Orbot";
-	}
+  @Override
+  public Intent getStartIntent(Context context) {
+    return getOrbotStartIntent();
+  }
+  
+  @Override
+  public String getName() {
+    return "Orbot";
+  }
 }

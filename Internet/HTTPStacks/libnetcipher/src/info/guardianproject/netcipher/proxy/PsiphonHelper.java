@@ -43,11 +43,11 @@ public class PsiphonHelper implements ProxyHelper {
     public final static int DEFAULT_SOCKS_PORT = 1080;
     public final static int DEFAULT_HTTP_PORT = 8080;
     
-	@Override
-	public boolean isInstalled(Context context) {
+  @Override
+  public boolean isInstalled(Context context) {
         return isAppInstalled(context, PACKAGE_NAME);
-	}
-	
+  }
+  
 
     private static boolean isAppInstalled(Context context, String uri) {
         try {
@@ -59,97 +59,97 @@ public class PsiphonHelper implements ProxyHelper {
         }
     }
 
-	@Override
-	public void requestStatus(final Context context) {
-	
-		Thread thread = new Thread ()
-		{			
-			public void run ()
-			{
-				//can connect to default HTTP proxy port?
-				boolean isSocksOpen = false;
-				boolean isHttpOpen = false;
-				
-				int socksPort = DEFAULT_SOCKS_PORT;
-				int httpPort = DEFAULT_HTTP_PORT;
-				
-				for (int i = 0; i < 10 && (!isSocksOpen); i++)				
-					isSocksOpen = isPortOpen("127.0.0.1",socksPort++,100);								
-				
-				for (int i = 0; i < 10 && (!isHttpOpen); i++)				
-					isHttpOpen = isPortOpen("127.0.0.1",httpPort++,100);								
+  @Override
+  public void requestStatus(final Context context) {
+  
+    Thread thread = new Thread ()
+    {			
+      public void run ()
+      {
+        //can connect to default HTTP proxy port?
+        boolean isSocksOpen = false;
+        boolean isHttpOpen = false;
+        
+        int socksPort = DEFAULT_SOCKS_PORT;
+        int httpPort = DEFAULT_HTTP_PORT;
+        
+        for (int i = 0; i < 10 && (!isSocksOpen); i++)				
+          isSocksOpen = isPortOpen("127.0.0.1",socksPort++,100);								
+        
+        for (int i = 0; i < 10 && (!isHttpOpen); i++)				
+          isHttpOpen = isPortOpen("127.0.0.1",httpPort++,100);								
 
-				//any other check?
-				
-				Intent intent = new Intent(ProxyHelper.ACTION_STATUS);
-				intent.putExtra(EXTRA_PACKAGE_NAME, PACKAGE_NAME);
-				
-				if (isSocksOpen && isHttpOpen)
-				{				
-				  intent.putExtra(EXTRA_STATUS, STATUS_ON);
-				  
-				  intent.putExtra(EXTRA_PROXY_PORT_HTTP, httpPort-1);
-				  intent.putExtra(EXTRA_PROXY_PORT_SOCKS, socksPort-1);
-				  
-				
-				}
-				else
-				{
-					intent.putExtra(EXTRA_STATUS, STATUS_OFF);
-				}
-				
-				  context.sendBroadcast(intent);
-			}
-		};
-		
-		thread.start();
-		
-	}
+        //any other check?
+        
+        Intent intent = new Intent(ProxyHelper.ACTION_STATUS);
+        intent.putExtra(EXTRA_PACKAGE_NAME, PACKAGE_NAME);
+        
+        if (isSocksOpen && isHttpOpen)
+        {				
+          intent.putExtra(EXTRA_STATUS, STATUS_ON);
+          
+          intent.putExtra(EXTRA_PROXY_PORT_HTTP, httpPort-1);
+          intent.putExtra(EXTRA_PROXY_PORT_SOCKS, socksPort-1);
+          
+        
+        }
+        else
+        {
+          intent.putExtra(EXTRA_STATUS, STATUS_OFF);
+        }
+        
+          context.sendBroadcast(intent);
+      }
+    };
+    
+    thread.start();
+    
+  }
 
-	@Override
-	public boolean requestStart(Context context) {
+  @Override
+  public boolean requestStart(Context context) {
 
-		Intent intent = getStartIntent(context);
-	//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		context.startActivity(intent);
-		
-		return true;
-	}
+    Intent intent = getStartIntent(context);
+  //	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    context.startActivity(intent);
+    
+    return true;
+  }
 
-	@Override
-	public Intent getInstallIntent(Context context) {
-		 final Intent intent = new Intent(Intent.ACTION_VIEW);
-	        intent.setData(Uri.parse(MARKET_URI));
+  @Override
+  public Intent getInstallIntent(Context context) {
+     final Intent intent = new Intent(Intent.ACTION_VIEW);
+          intent.setData(Uri.parse(MARKET_URI));
 
-	        PackageManager pm = context.getPackageManager();
-	        List<ResolveInfo> resInfos = pm.queryIntentActivities(intent, 0);
+          PackageManager pm = context.getPackageManager();
+          List<ResolveInfo> resInfos = pm.queryIntentActivities(intent, 0);
 
-	        String foundPackageName = null;
-	        for (ResolveInfo r : resInfos) {
-	            if (TextUtils.equals(r.activityInfo.packageName, FDROID_PACKAGE_NAME)
-	                    || TextUtils.equals(r.activityInfo.packageName, PLAY_PACKAGE_NAME)) {
-	                foundPackageName = r.activityInfo.packageName;
-	                break;
-	            }
-	        }
+          String foundPackageName = null;
+          for (ResolveInfo r : resInfos) {
+              if (TextUtils.equals(r.activityInfo.packageName, FDROID_PACKAGE_NAME)
+                      || TextUtils.equals(r.activityInfo.packageName, PLAY_PACKAGE_NAME)) {
+                  foundPackageName = r.activityInfo.packageName;
+                  break;
+              }
+          }
 
-	        if (foundPackageName == null) {
-	            intent.setData(Uri.parse(FDROID_URI));
-	        } else {
-	            intent.setPackage(foundPackageName);
-	        }
-	        return intent;
-	}
+          if (foundPackageName == null) {
+              intent.setData(Uri.parse(FDROID_URI));
+          } else {
+              intent.setPackage(foundPackageName);
+          }
+          return intent;
+  }
 
-	@Override
-	public Intent getStartIntent(Context context) {
-		 Intent intent = new Intent();
-		 intent.setComponent(new ComponentName(PACKAGE_NAME, COMPONENT_NAME));
+  @Override
+  public Intent getStartIntent(Context context) {
+     Intent intent = new Intent();
+     intent.setComponent(new ComponentName(PACKAGE_NAME, COMPONENT_NAME));
 
-	     return intent;
-	}
-	
-	public static boolean isPortOpen(final String ip, final int port, final int timeout) {
+       return intent;
+  }
+  
+  public static boolean isPortOpen(final String ip, final int port, final int timeout) {
         try {
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(ip, port), timeout);
@@ -169,9 +169,9 @@ public class PsiphonHelper implements ProxyHelper {
     }
 
 
-	@Override
-	public String getName() {
-		return PACKAGE_NAME;
-	}
+  @Override
+  public String getName() {
+    return PACKAGE_NAME;
+  }
 
 }

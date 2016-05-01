@@ -21,12 +21,12 @@ import android.content.Intent;
 
 public interface ProxyHelper {
 
-	public boolean isInstalled (Context context);
-	public void requestStatus (Context context);
-	public boolean requestStart (Context context);
-	public Intent getInstallIntent (Context context);
-	public Intent getStartIntent (Context context);
-	public String getName ();
+  public boolean isInstalled (Context context);
+  public void requestStatus (Context context);
+  public boolean requestStart (Context context);
+  public Intent getInstallIntent (Context context);
+  public Intent getStartIntent (Context context);
+  public String getName ();
 
     public final static String FDROID_PACKAGE_NAME = "org.fdroid.fdroid";
     public final static String PLAY_PACKAGE_NAME = "com.android.vending";

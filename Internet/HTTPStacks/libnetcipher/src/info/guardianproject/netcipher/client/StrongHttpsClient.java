@@ -89,7 +89,7 @@ public class StrongHttpsClient extends DefaultHttpClient {
                 new Scheme(TYPE_HTTP, 80, PlainSocketFactory.getSocketFactory()));
 
         try {
-        	TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+          TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             sFactory = new StrongSSLSocketFactory(context, trustManagerFactory.getTrustManagers(), keystore, TRUSTSTORE_PASSWORD);
             mRegistry.register(new Scheme("https", 443, sFactory));
         } catch (Exception e) {
@@ -124,13 +124,13 @@ public class StrongHttpsClient extends DefaultHttpClient {
             }
             else
             {
-            	proxyHost = new HttpHost(host, port, type);
+              proxyHost = new HttpHost(host, port, type);
                 getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxyHost);
             }
         }
         else
         {
-        	getParams().removeParameter(ConnRoutePNames.DEFAULT_PROXY);
+          getParams().removeParameter(ConnRoutePNames.DEFAULT_PROXY);
             proxyHost = null;
         }
 
@@ -138,7 +138,7 @@ public class StrongHttpsClient extends DefaultHttpClient {
 
     public void disableProxy ()
     {
-    	getParams().removeParameter(ConnRoutePNames.DEFAULT_PROXY);
+      getParams().removeParameter(ConnRoutePNames.DEFAULT_PROXY);
         proxyHost = null;
     }
 

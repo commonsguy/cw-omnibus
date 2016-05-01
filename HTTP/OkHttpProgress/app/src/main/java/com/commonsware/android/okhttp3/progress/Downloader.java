@@ -74,11 +74,11 @@ public class Downloader extends IntentService {
                                        boolean done) {
             long now=SystemClock.uptimeMillis();
 
-            if (now-lastUpdateTime>100) {
+            if (now-lastUpdateTime>1000) {
               builder.setProgress((int)contentLength,
-                (int)bytesRead,
-                false);
+                (int)bytesRead, false);
               mgr.notify(FOREGROUND_ID, builder.build());
+              lastUpdateTime=now;
             }
           }
         };
@@ -151,8 +151,6 @@ public class Downloader extends IntentService {
   private NotificationCompat.Builder buildForeground(
     String filename) {
     NotificationCompat.Builder b=new NotificationCompat.Builder(this);
-
-    b.setOngoing(true);
 
     b.setContentTitle(getString(R.string.downloading))
      .setContentText(filename)

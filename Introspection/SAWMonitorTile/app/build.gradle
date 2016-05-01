@@ -1,0 +1,21 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 'android-N'
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        minSdkVersion 'N'
+        targetSdkVersion 'N'
+        generatedDensities=[]
+        applicationId "com.commonsware.android.sawmonitor.tile"
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v13:23.2.1'
+}

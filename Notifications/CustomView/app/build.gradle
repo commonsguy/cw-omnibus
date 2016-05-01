@@ -1,0 +1,17 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+	compile 'com.android.support:support-v13:23.3.0'
+	compile 'com.squareup.okhttp3:okhttp:3.1.2'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+	defaultConfig {
+        minSdkVersion 21
+		targetSdkVersion 21
+		applicationId "com.commonsware.android.okhttp3.progress.custom"
+	}
+}

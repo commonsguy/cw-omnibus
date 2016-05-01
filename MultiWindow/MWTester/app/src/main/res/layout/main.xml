@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="horizontal">
+
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:onClick="launchPlainSameTask"
+      android:text="@string/label_plain_same" />
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:onClick="launchLayoutSameTask"
+      android:text="@string/label_layout_same" />
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:onClick="launchOptOutSameTask"
+      android:text="@string/label_opt_out_same" />
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:onClick="launchLandscapeSameTask"
+      android:text="@string/label_land_same" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:onClick="launchPlainNewTask"
+      android:text="@string/label_plain_new" />
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:onClick="launchLayoutNewTask"
+      android:text="@string/label_layout_new" />
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:onClick="launchOptOutNewTask"
+      android:text="@string/label_opt_out_new" />
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:onClick="launchLandscapeNewTask"
+      android:text="@string/label_land_new" />
+  </LinearLayout>
+</LinearLayout>

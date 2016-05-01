@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">DocumentTree Demo</string>
+	<string name="pref_doc_tree">Document Tree Root</string>
+	<string name="pref_storage_volume">Storage Volume</string>
+	<string name="dlg_storage_volume">Pick a storage volume</string>
+
+
+</resources>

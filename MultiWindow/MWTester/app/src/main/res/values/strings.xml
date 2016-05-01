@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MultiWindow Tester</string>
+    <string name="label_plain_same">Plain, Same Task</string>
+    <string name="label_layout_same">Layout, Same Task</string>
+    <string name="label_opt_out_same">Opt-Out, Same Task</string>
+    <string name="label_land_same">Landscape, Same Task</string>
+    <string name="label_plain_new">Plain, New Task</string>
+    <string name="label_layout_new">Layout, New Task</string>
+    <string name="label_opt_out_new">Opt-Out, New Task</string>
+    <string name="label_land_new">Landscape, New Task</string>
+</resources>

@@ -1,0 +1,11 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 'android-N'
+    buildToolsVersion "24.0.0 rc1"
+
+    defaultConfig {
+      minSdkVersion 'N'
+      targetSdkVersion 'N'
+    }
+}

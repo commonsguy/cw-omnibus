@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MultiWindow Sampler</string>
+    <string name="label_plain">Sampler: Plain</string>
+    <string name="label_layout"><![CDATA[Sampler: <layout>]]></string>
+    <string name="label_opt_out">Sampler: Opt-Out</string>
+    <string name="label_landscape">Sampler: Landscape</string>
+</resources>

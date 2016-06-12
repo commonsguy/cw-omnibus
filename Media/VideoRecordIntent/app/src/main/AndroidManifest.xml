@@ -4,7 +4,7 @@
 	android:versionName="1.0">
 
 	<uses-sdk
-		android:minSdkVersion="8"
+		android:minSdkVersion="13"
 		android:targetSdkVersion="15"/>
 
 	<supports-screens
@@ -31,6 +31,15 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<provider
+			android:name="LegacyCompatFileProvider"
+			android:authorities="${applicationId}.provider"
+			android:exported="false"
+			android:grantUriPermissions="true">
+			<meta-data
+				android:name="android.support.FILE_PROVIDER_PATHS"
+				android:resource="@xml/provider_paths"/>
+		</provider>
 	</application>
 
 </manifest>

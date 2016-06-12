@@ -1,7 +1,7 @@
 <resources>
 
-	<string name="app_name">Audio Recording Demo</string>
-	<string name="title_activity_main">Audio Recording</string>
+	<string name="app_name">Video Recording Demo</string>
+	<string name="title_activity_main">Video Recording</string>
 	<string name="record">Record</string>
 	<string name="strange">Something strange happened</string>
 	<string name="max_duration">Maximum duration reached</string>

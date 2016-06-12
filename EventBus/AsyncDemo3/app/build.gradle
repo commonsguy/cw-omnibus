@@ -1,0 +1,15 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'org.greenrobot:eventbus:3.0.0'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
+
+	defaultConfig {
+		targetSdkVersion 17
+    applicationId "com.commonsware.android.eventbus.greenrobot3"
+	}
+}

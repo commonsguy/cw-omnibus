@@ -35,6 +35,6 @@ public class DocumentHelper extends TreeUriPreferenceHelper
 
     host.startActivityForHelper(i, this);
 
-    return (true);
+    return(true);
   }
 }

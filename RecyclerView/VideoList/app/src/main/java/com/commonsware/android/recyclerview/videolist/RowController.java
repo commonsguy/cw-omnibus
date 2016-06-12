@@ -24,13 +24,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
-import java.io.File;
 
 class RowController extends RecyclerView.ViewHolder
     implements View.OnClickListener {
   private TextView title=null;
   private ImageView thumbnail=null;
-  private String videoUri=null;
+  private Uri videoUri=null;
   private String videoMimeType=null;
 
   RowController(View row) {
@@ -44,10 +43,9 @@ class RowController extends RecyclerView.ViewHolder
 
   @Override
   public void onClick(View v) {
-    Uri video=Uri.fromFile(new File(videoUri));
     Intent i=new Intent(Intent.ACTION_VIEW);
 
-    i.setDataAndType(video, videoMimeType);
+    i.setDataAndType(videoUri, videoMimeType);
     title.getContext().startActivity(i);
   }
 
@@ -55,13 +53,13 @@ class RowController extends RecyclerView.ViewHolder
     title.setText(row.getString(
       row.getColumnIndex(MediaStore.Video.Media.TITLE)));
 
-    Uri video=
+    videoUri=
         ContentUris.withAppendedId(
           MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
           row.getInt(row.getColumnIndex(MediaStore.Video.Media._ID)));
 
     Picasso.with(thumbnail.getContext())
-      .load(video.toString())
+      .load(videoUri.toString())
       .fit().centerCrop()
       .placeholder(R.drawable.ic_media_video_poster)
       .into(thumbnail);
@@ -70,7 +68,6 @@ class RowController extends RecyclerView.ViewHolder
     int mimeTypeColumn=
         row.getColumnIndex(MediaStore.Video.Media.MIME_TYPE);
 
-    videoUri=row.getString(uriColumn);
     videoMimeType=row.getString(mimeTypeColumn);
   }
 }

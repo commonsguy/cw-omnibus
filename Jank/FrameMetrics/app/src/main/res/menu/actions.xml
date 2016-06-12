@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/record"
+    android:icon="@drawable/ic_record_white_24dp"
+    android:showAsAction="always"
+    android:title="@string/menu_record" />
+  <item
+    android:id="@+id/stop"
+    android:icon="@drawable/ic_stop_white_24dp"
+    android:showAsAction="always"
+    android:title="@string/menu_stop"
+    android:visible="false" />
+</menu>

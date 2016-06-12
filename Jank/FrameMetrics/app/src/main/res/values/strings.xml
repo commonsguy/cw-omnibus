@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FrameMetrics Demo</string>
+    <string name="size_template">Size: %d</string>
+    <string name="icon">Icon</string>
+  <string name="thumbnail">thumbnail</string>
+  <string name="menu_record">Record</string>
+  <string name="menu_stop">Stop</string>
+</resources>

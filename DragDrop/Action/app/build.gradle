@@ -1,0 +1,18 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.commonsware.android.dragdrop.action"
+        minSdkVersion 16
+        targetSdkVersion 23
+    }
+}

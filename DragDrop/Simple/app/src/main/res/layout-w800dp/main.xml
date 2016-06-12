@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="horizontal">
+
+  <android.support.v7.widget.RecyclerView android:id="@+id/video_list"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1" />
+
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <FrameLayout
+      android:id="@+id/video_frame"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginBottom="4dp"
+      android:layout_weight="1"
+      android:padding="4dp">
+
+      <VideoView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+    </FrameLayout>
+
+    <FrameLayout
+      android:id="@+id/thumbnail_frame"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:padding="4dp">
+
+      <ImageView
+        android:id="@+id/thumbnail_large"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside" />
+    </FrameLayout>
+  </LinearLayout>
+</LinearLayout>

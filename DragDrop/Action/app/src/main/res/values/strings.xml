@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Action Drag-and-Drop Demo</string>
+  <string name="icon">Icon</string>
+  <string name="thumbnail">Thumbnail</string>
+  <string name="label_video_info">Video Info</string>
+</resources>

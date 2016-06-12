@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Hotkeys N Demo</string>
+  <string name="icon">Icon</string>
+  <string name="thumbnail">Thumbnail</string>
+  <string name="msg_choose">Use the arrow keys or D-pad to choose a video first!</string>
+  <string name="menu_video">Play Video</string>
+  <string name="menu_thumbnail">Show Thumbnail</string>
+  <string name="msg_custom">Custom App Hotkeys</string>
+  <string name="title_shortcuts">Keyboard Shortcuts</string>
+  <string name="msg_shortcuts">Up/Down to select a video, Alt-Right to play the video, Ctrl-Right to show the large thumbnail</string>
+</resources>

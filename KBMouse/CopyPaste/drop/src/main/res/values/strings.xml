@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Cross-App Paste Demo</string>
+  <string name="icon">Icon</string>
+  <string name="thumbnail">Thumbnail</string>
+  <string name="title_shortcuts">Keyboard Shortcuts</string>
+  <string name="msg_shortcuts">Use Ctrl-V to paste an image from the clipboard</string>
+</resources>

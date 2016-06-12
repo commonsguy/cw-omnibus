@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/thumbnail_frame"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_margin="4dp"
+  android:padding="4dp">
+
+  <ImageView
+    android:id="@+id/thumbnail_large"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="centerInside" />
+</FrameLayout>

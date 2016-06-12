@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/play_video"
+    android:alphabeticShortcut="p"
+    android:icon="@drawable/ic_movie_white_24dp"
+    android:showAsAction="always"
+    android:title="@string/menu_video" />
+  <item
+    android:id="@+id/show_thumbnail"
+    android:alphabeticShortcut="t"
+    android:icon="@drawable/ic_insert_photo_white_24dp"
+    android:showAsAction="always"
+    android:title="@string/menu_thumbnail" />
+</menu>

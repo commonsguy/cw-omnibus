@@ -108,7 +108,7 @@ public class EditorFragment extends Fragment {
 
     if (iCanHazN()) {
       launchItem=menu.findItem(R.id.launch);
-      launchItem.setVisible(getActivity().inMultiWindow());
+      launchItem.setVisible(getActivity().isInMultiWindowMode());
     }
 
     super.onCreateOptionsMenu(menu, inflater);
@@ -135,8 +135,8 @@ public class EditorFragment extends Fragment {
   }
 
   @Override
-  public void onMultiWindowChanged(boolean inMultiWindow) {
-    super.onMultiWindowChanged(inMultiWindow);
+  public void onMultiWindowModeChanged(boolean inMultiWindow) {
+    super.onMultiWindowModeChanged(inMultiWindow);
 
     if (launchItem!=null) {
       launchItem.setVisible(inMultiWindow);

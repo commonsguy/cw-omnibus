@@ -16,9 +16,13 @@ package com.commonsware.android.tte;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,18 +30,25 @@ import android.widget.Toast;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import java.util.HashSet;
 import java.util.List;
 import io.karim.MaterialTabs;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends Activity
   implements EditorFragment.Contract {
+  private static final String ACTION_NEW_WINDOW=
+    BuildConfig.APPLICATION_ID+".intent.action.NEW_WINDOW";
+  private static final String[] PERMS_FILE={WRITE_EXTERNAL_STORAGE};
   private static final int REQUEST_OPEN=2343;
   private static final int REQUEST_CREATE=REQUEST_OPEN+1;
+  private static final int REQUEST_PERMS_FILE=123;
   private EditorsAdapter adapter;
   private ViewPager pager;
   private EditHistory editHistory=EditHistory.INSTANCE;
   private boolean mustRestoreHistory;
   private MaterialTabs tabs;
+  private final HashSet<Uri> pendingFiles=new HashSet<>();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +56,7 @@ public class MainActivity extends Activity
     setContentView(R.layout.main);
 
     mustRestoreHistory=(savedInstanceState==null &&
-      getIntent().getData()==null);
+            !ACTION_NEW_WINDOW.equals(getIntent().getAction()));
 
     pager=(ViewPager)findViewById(R.id.pager);
     adapter=new EditorsAdapter(getFragmentManager());
@@ -53,6 +64,15 @@ public class MainActivity extends Activity
 
     tabs=(MaterialTabs)findViewById(R.id.tabs);
     tabs.setViewPager(pager);
+  }
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+
+    if (Intent.ACTION_EDIT.equals(intent.getAction())) {
+      openEditor(intent.getData());
+    }
   }
 
   @Override
@@ -131,6 +151,24 @@ public class MainActivity extends Activity
   }
 
   @Override
+  public void onRequestPermissionsResult(int requestCode,
+                                         String[] permissions,
+                                         int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions,
+      grantResults);
+
+    if (REQUEST_PERMS_FILE==requestCode) {
+      if (canWriteFiles()) {
+        for (Uri document : pendingFiles) {
+          openEditor(document);
+        }
+
+        pendingFiles.clear();
+      }
+    }
+  }
+
+  @Override
   public void applyDisplayName(Uri document,
                                String displayName) {
     adapter.updateTitle(document, displayName);
@@ -148,6 +186,7 @@ public class MainActivity extends Activity
 
     Intent i=
       new Intent(this, MainActivity.class)
+        .setAction(ACTION_NEW_WINDOW)
         .setData(document)
         .setFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
           Intent.FLAG_ACTIVITY_NEW_TASK |
@@ -191,27 +230,36 @@ public class MainActivity extends Activity
 
       mustRestoreHistory=false;
     }
-    else if (getIntent().getData()!=null) {
+
+    if (getIntent().getData()!=null) {
       openEditor(getIntent().getData());
     }
   }
 
   private void openEditor(Uri document) {
-    int position=adapter.getPositionForDocument(document);
+    if (ContentResolver.SCHEME_CONTENT.equals(document.getScheme()) ||
+      canWriteFiles()) {
+      int position=adapter.getPositionForDocument(document);
 
-    if (position==-1) {
-      adapter.addDocument(document);
-      pager.setCurrentItem(adapter.getCount()-1);
+      if (position==-1) {
+        adapter.addDocument(document);
+        pager.setCurrentItem(adapter.getCount()-1);
 
-      if (!editHistory.addOpenEditor(document)) {
-        Toast
-          .makeText(this, R.string.msg_save_history,
-            Toast.LENGTH_LONG)
-          .show();
+        if (!editHistory.addOpenEditor(document)) {
+          Toast
+            .makeText(this, R.string.msg_save_history,
+              Toast.LENGTH_LONG)
+            .show();
+        }
+      }
+      else {
+        pager.setCurrentItem(position);
       }
     }
-    else {
-      pager.setCurrentItem(position);
+    else if (ContentResolver.SCHEME_FILE.equals(document.getScheme())) {
+      pendingFiles.add(document);
+      ActivityCompat.requestPermissions(this, PERMS_FILE,
+        REQUEST_PERMS_FILE);
     }
   }
 
@@ -250,5 +298,10 @@ public class MainActivity extends Activity
     }
 
     adapter.remove(document);
+  }
+
+  private boolean canWriteFiles() {
+    return(ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE)==
+      PackageManager.PERMISSION_GRANTED);
   }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-  package="com.commonsware.android.tte"
+<manifest package="com.commonsware.android.tte"
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:versionCode="1"
@@ -11,6 +10,8 @@
     android:normalScreens="true"
     android:smallScreens="false"
     android:xlargeScreens="true" />
+
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
   <application
     android:name=".LeakCanaryApplication"
@@ -25,6 +26,15 @@
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.EDIT" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+
+        <data android:mimeType="text/*" />
+        <data android:scheme="file" />
+        <data android:scheme="content" />
       </intent-filter>
     </activity>
     <activity

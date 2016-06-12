@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Mouse Context Menu Demo</string>
+  <string name="icon">Icon</string>
+  <string name="thumbnail">Thumbnail</string>
+  <string name="menu_video">Play Video</string>
+  <string name="menu_thumbnail">Show Thumbnail</string>
+</resources>

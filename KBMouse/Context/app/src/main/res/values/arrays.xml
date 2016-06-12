@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="popup">
+    <item>@string/menu_video</item>
+    <item>@string/menu_thumbnail</item>
+  </string-array>
+</resources>

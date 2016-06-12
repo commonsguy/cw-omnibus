@@ -1,0 +1,7 @@
+<resources>
+
+	<string name="app_name">MessagingStyle Sample</string>
+  <string name="talk">Talk to Me!</string>
+  <string name="title">MessagingStyle Test</string>
+
+</resources>

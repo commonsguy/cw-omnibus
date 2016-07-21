@@ -18,50 +18,37 @@ import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.KeyEvent;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import com.commonsware.android.abf.ActionBarFragmentActivity;
+import com.commonsware.android.abf.rv.MainActivity;
 import junit.framework.Assert;
+import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.pressKey;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.contrib.RecyclerViewActions.scrollToPosition;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class DemoActivityRuleTest {
-  @Rule public final ActivityTestRule<ActionBarFragmentActivity> main
-      =new ActivityTestRule(ActionBarFragmentActivity.class, true);
+public class RecyclerViewTest {
+  @Rule public final ActivityTestRule<MainActivity> main
+      =new ActivityTestRule(MainActivity.class, true);
 
   @Test
   public void listCount() {
-    onView(withId(android.R.id.list))
+    onView(Matchers.<View>instanceOf(RecyclerView.class))
       .check(new AdapterCountAssertion(25));
   }
 
   @Test
-  public void keyEvents() {
-    onView(withId(android.R.id.list))
-      .perform(pressKey(KeyEvent.KEYCODE_DPAD_DOWN),
-        pressKey(KeyEvent.KEYCODE_DPAD_DOWN),
-        pressKey(KeyEvent.KEYCODE_DPAD_DOWN),
-        pressKey(KeyEvent.KEYCODE_DPAD_DOWN))
-      .check(new ListSelectionAssertion(3));
-  }
-
-  @Test
   public void scrollToBottom() {
-    onData(anything())
-      .inAdapterView(withId(android.R.id.list))
-      .atPosition(24)
-      .check(matches(withText("purus")));
+    onView(withClassName(is(RecyclerView.class.getCanonicalName())))
+      .perform(scrollToPosition(24))
+      .check(matches(anything()));
   }
 
   static class AdapterCountAssertion implements ViewAssertion {
@@ -74,25 +61,9 @@ public class DemoActivityRuleTest {
     @Override
     public void check(View view,
                       NoMatchingViewException noViewFoundException) {
-      Assert.assertTrue(view instanceof AdapterView);
+      Assert.assertTrue(view instanceof RecyclerView);
       Assert.assertEquals(count,
-        ((AdapterView)view).getAdapter().getCount());
-    }
-  }
-
-  static class ListSelectionAssertion implements ViewAssertion {
-    private final int position;
-
-    ListSelectionAssertion(int position) {
-      this.position=position;
-    }
-
-    @Override
-    public void check(View view,
-                      NoMatchingViewException noViewFoundException) {
-      Assert.assertTrue(view instanceof ListView);
-      Assert.assertEquals(position,
-        ((ListView)view).getSelectedItemPosition());
+        ((RecyclerView)view).getAdapter().getItemCount());
     }
   }
 }

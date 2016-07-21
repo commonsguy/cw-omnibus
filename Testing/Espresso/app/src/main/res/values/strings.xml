@@ -4,4 +4,6 @@
     <string name="add">Add</string>
     <string name="reset">Reset</string>
     <string name="word">Word</string>
+    <string name="size_template">Size: %d</string>
+    <string name="icon">Icon</string>
 </resources>

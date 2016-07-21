@@ -1,17 +1,24 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile 'com.android.support:support-annotations:24.0.0'
+    androidTestCompile 'com.android.support:recyclerview-v7:24.0.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
 
     defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 22
         applicationId "com.commonsware.android.espresso"
         testApplicationId "com.commonsware.android.espresso.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments disableAnalytics: 'true'
     }
 
     packagingOptions {

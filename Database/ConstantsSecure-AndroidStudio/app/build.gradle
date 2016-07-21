@@ -1,10 +1,15 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'net.zetetic:android-database-sqlcipher:3.3.1-2@aar'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.0@aar'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 22
+    }
 }

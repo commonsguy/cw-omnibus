@@ -39,8 +39,8 @@
         android:defaultHeight="480dp"
         android:defaultWidth="640dp"
         android:gravity="bottom|end"
-        android:minimalHeight="480dp"
-        android:minimalWidth="480dp"/>
+        android:minHeight="480dp"
+        android:minWidth="480dp"/>
       <intent-filter>
         <action android:name="${applicationId}.LAYOUT" />
 

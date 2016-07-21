@@ -28,8 +28,8 @@
         android:defaultHeight="240dp"
         android:defaultWidth="320dp"
         android:gravity="bottom|end"
-        android:minimalHeight="240dp"
-        android:minimalWidth="240dp"/>
+        android:minHeight="240dp"
+        android:minWidth="240dp"/>
     </activity>
   </application>
 

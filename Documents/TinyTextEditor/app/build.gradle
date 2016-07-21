@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
     compile 'io.karim:materialtabs:2.0.2'
-    compile 'com.android.support:support-v13:23.3.0'
+    compile 'com.android.support:support-v13:24.0.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.commonsware.cwac:pager:0.2.5'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
@@ -16,11 +16,11 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 'android-N'
-    buildToolsVersion '24.0.0 rc1'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.0'
 
     defaultConfig {
-        minSdkVersion 'N'
-        targetSdkVersion 'N'
+        minSdkVersion 19
+        targetSdkVersion 24
     }
 }

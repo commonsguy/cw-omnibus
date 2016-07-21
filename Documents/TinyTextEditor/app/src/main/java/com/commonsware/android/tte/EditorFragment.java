@@ -106,7 +106,7 @@ public class EditorFragment extends Fragment {
                                   MenuInflater inflater) {
     inflater.inflate(R.menu.editor_actions, menu);
 
-    if (iCanHazN()) {
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N) {
       launchItem=menu.findItem(R.id.launch);
       launchItem.setVisible(getActivity().isInMultiWindowMode());
     }
@@ -193,9 +193,5 @@ public class EditorFragment extends Fragment {
 
   void markAsClosing() {
     isClosing=true;
-  }
-
-  public static boolean iCanHazN() {
-    return("N".equals(Build.VERSION.CODENAME));
   }
 }

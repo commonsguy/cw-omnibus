@@ -67,7 +67,7 @@ public class DownloadFragment extends Fragment implements
 
     Intent i=new Intent(getActivity(), Downloader.class);
 
-    i.setData(Uri.parse("https://commonsware.com/Android/excerpt.pdf"));
+    i.setData(Uri.parse("https://commonsware.com/Android/Android-1_0-CC.pdf"));
 
     getActivity().startService(i);
   }

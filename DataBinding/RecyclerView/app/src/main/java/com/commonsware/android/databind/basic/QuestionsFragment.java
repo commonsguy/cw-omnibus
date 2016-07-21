@@ -166,7 +166,7 @@ public class QuestionsFragment extends RecyclerViewFragment {
         RowBinding.inflate(getActivity().getLayoutInflater(),
           parent, false);
 
-      return(new QuestionController(rowBinding, this));
+      return(new QuestionController(rowBinding));
     }
 
     @Override

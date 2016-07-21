@@ -28,8 +28,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="?android:attr/selectableItemBackground"
-      android:onClick="@{controller}"
-      android:onTouch="@{controller.ON_TOUCH}"
+      android:onClick="@{()->controller.showQuestion(question)}"
+      android:onTouch="@{controller::onTouch}"
       android:orientation="horizontal">
 
       <ImageView

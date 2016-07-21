@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="android.text.Html" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="question"
+      type="com.commonsware.android.databind.basic.Question" />
+
+    <variable
+      name="controller"
+      type="com.commonsware.android.databind.basic.QuestionController" />
+  </data>
+
+  <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    cardview:cardCornerRadius="4dp">
+
+    <LinearLayout
+      android:id="@+id/row_content"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/selectableItemBackground"
+      android:gravity="center_vertical"
+      android:onClick="@{()->controller.showQuestion(question)}"
+      android:onTouch="@{(v,event)->controller.onTouch(v,event)}"
+      android:orientation="horizontal">
+
+      <Switch
+        android:id="@+id/expanded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="@={question.expanded}" />
+
+      <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/icon"
+        android:padding="8dip"
+        android:visibility="@{expanded.checked ? View.VISIBLE : View.GONE}"
+        app:error="@{@drawable/owner_error}"
+        app:imageUrl="@{question.owner.profileImage}"
+        app:placeholder="@{@drawable/owner_placeholder}" />
+
+      <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_weight="1"
+        android:text="@{Html.fromHtml(question.title)}"
+        android:textSize="20sp" />
+
+      <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@{Integer.toString(question.score)}"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:visibility="@{icon.visibility}" />
+
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
+</layout>

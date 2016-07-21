@@ -1,0 +1,25 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    androidTestCompile 'com.android.support:support-annotations:24.0.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    compile 'com.android.support:design:24.0.0'
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+	defaultConfig {
+        minSdkVersion 15
+		targetSdkVersion 18
+        testApplicationId "com.commonsware.android.design.til.test"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments disableAnalytics: 'true'
+	}
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+}

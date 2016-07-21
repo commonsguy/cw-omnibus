@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+import com.commonsware.cwac.netsecurity.TrustManagerBuilder;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,6 +65,12 @@ public class Downloader extends IntentService {
       URL url=new URL(i.getData().toString());
       HttpURLConnection c=
         (HttpURLConnection)url.openConnection();
+      TrustManagerBuilder tmb=
+        new TrustManagerBuilder().withManifestConfig(this);
+
+      tmb.build().setHost(url.getHost());
+      tmb.applyTo(c);
+
       FileOutputStream fos=
         new FileOutputStream(output.getPath());
       BufferedOutputStream out=new BufferedOutputStream(fos);
@@ -88,7 +95,7 @@ public class Downloader extends IntentService {
 
       raiseNotification(mimeType, output, null);
     }
-    catch (IOException e2) {
+    catch (Exception e2) {
       Log.e(getClass().getSimpleName(),
         "Exception downloading file", e2);
       raiseNotification(null, null, e2);

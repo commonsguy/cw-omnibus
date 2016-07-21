@@ -4,11 +4,11 @@ def WARES='"https://wares.commonsware.com/excerpt-7p0.pdf"'
 def SELFSIGNED='"https://scrap.commonsware.com:3001/excerpt-7p0.pdf"'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 23
     }
 
@@ -72,6 +72,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-v13:23.2.1'
-    compile 'com.commonsware.cwac:provider:0.3.1'
+    compile 'com.android.support:support-v13:24.0.0'
+    compile 'com.commonsware.cwac:provider:0.4.0'
+    compile 'com.commonsware.cwac:netsecurity:0.0.1'
 }

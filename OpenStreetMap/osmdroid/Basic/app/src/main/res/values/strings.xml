@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">osmdroid Basic Demo</string>
+	<string name="msg_no_perm">We cannot proceed without permission!</string>
+
+</resources>

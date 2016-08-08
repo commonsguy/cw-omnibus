@@ -1,0 +1,17 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'org.osmdroid:osmdroid-android:5.2@aar'
+    compile 'com.android.support:support-v4:24.1.1'
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 24
+        applicationId 'com.commonsware.android.osmdroid.basic'
+    }
+}

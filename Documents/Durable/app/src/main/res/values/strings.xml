@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Durable Document Demo</string>
+
+	<string name="open">Open Document</string>
+	<string name="get">Get Content</string>
+
+</resources>

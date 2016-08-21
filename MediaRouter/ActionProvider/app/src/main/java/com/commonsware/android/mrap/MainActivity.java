@@ -16,7 +16,7 @@ package com.commonsware.android.mrap;
 
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.MediaRouteActionProvider;
 import android.support.v7.media.MediaControlIntent;
 import android.support.v7.media.MediaRouteSelector;
@@ -25,7 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
   private MediaRouteSelector selector=null;
   private MediaRouter router=null;
   private TextView selectedRoute=null;

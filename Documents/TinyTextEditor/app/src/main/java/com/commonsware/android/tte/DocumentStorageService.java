@@ -37,6 +37,7 @@ public class DocumentStorageService extends IntentService {
   public static void loadDocument(Context ctxt, Uri document) {
     Intent i=new Intent(ctxt, DocumentStorageService.class)
       .setAction(Intent.ACTION_OPEN_DOCUMENT)
+      .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
       .setData(document);
 
     ctxt.startService(i);
@@ -47,6 +48,8 @@ public class DocumentStorageService extends IntentService {
     Intent i=new Intent(ctxt, DocumentStorageService.class)
       .setAction(Intent.ACTION_EDIT)
       .setData(document)
+      .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
       .putExtra(Intent.EXTRA_TEXT, text)
       .putExtra(EXTRA_CLOSING, isClosing);
 

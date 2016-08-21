@@ -14,6 +14,7 @@
 
 package com.commonsware.android.osmdroid;
 
+import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -33,9 +34,12 @@ public class MainActivity extends RequiredPermissionsActivity {
   protected void createForRealz() {
     setContentView(R.layout.activity_main);
 
+    OpenStreetMapTileProviderConstants
+      .setUserAgentValue(getPackageName());
+
     MapView map=(MapView)findViewById(R.id.map);
 
-    map.setTileSource(TileSourceFactory.USGS_TOPO);
+    map.setTileSource(TileSourceFactory.MAPNIK);
     map.setMultiTouchControls(true);
     map.getController().setZoom(18);
     map

@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+	   url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'com.android.support:leanback-v17:24.1.1'
+    compile 'com.android.support:mediarouter-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.commonsware.cwac:presentation:0.4.5'
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 24
+        applicationId "com.commonsware.android.preso.decktastic"
+    }
+}

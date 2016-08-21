@@ -1,0 +1,15 @@
+{
+    "title": "Notifications, Front to Back",
+    "duration": 70,
+    "baseURL": "http://misc.commonsware.com/andevcon2014/preso2/",
+    "slides": [
+        {
+            "title": "(title slide)",
+            "image": "img0.png"
+        },
+        {
+            "title": "Order of Battle",
+            "image": "img1.png"
+        }
+    ]
+}

@@ -1,0 +1,347 @@
+{
+    "title": "Your Android App. On TV.",
+    "duration": 210,
+    "baseURL": "http://misc.commonsware.com/andevcon2014/preso1/",
+    "slides": [
+        {
+            "title": "(title slide)",
+            "image": "img0.png"
+        },
+        {
+            "title": "Whadaya Mean?",
+            "image": "img1.png"
+        },
+        {
+            "title": "Why?",
+            "image": "img2.png"
+        },
+        {
+            "title": "Order of Battle (1)",
+            "image": "img3.png"
+        },
+        {
+            "title": "Order of Battle (2)",
+            "image": "img4.png"
+        },
+        {
+            "title": "Axes, Not of Evil",
+            "image": "img5.png"
+        },
+        {
+            "title": "Getting to a TV",
+            "image": "img6.png"
+        },
+        {
+            "title": "(Mobile Direct)",
+            "image": "img7.png"
+        },
+        {
+            "title": "Wired",
+            "image": "img8.png"
+        },
+        {
+            "title": "Wireless",
+            "image": "img9.png"
+        },
+        {
+            "title": "Silicon Image",
+            "image": "img10.png"
+        },
+        {
+            "title": "Gamma",
+            "image": "img11.png"
+        },
+        {
+            "title": "What Is Shown",
+            "image": "img12.png"
+        },
+        {
+            "title": "(Presentation)",
+            "image": "img13.png"
+        },
+        {
+            "title": "Using Presentation",
+            "image": "img14.png"
+        },
+        {
+            "title": "Not Equal",
+            "image": "img15.png"
+        },
+        {
+            "title": "Using Presentation (2)",
+            "image": "img16.png"
+        },
+        {
+            "title": "Fragments",
+            "image": "img17.png"
+        },
+        {
+            "title": "Trying it Out",
+            "image": "img18.png"
+        },
+        {
+            "title": "(screenshot)",
+            "image": "img19.png"
+        },
+        {
+            "title": "(screenshot 2) - then demo",
+            "image": "img20.png"
+        },
+        {
+            "title": "Low-Level",
+            "image": "img21.png"
+        },
+        {
+            "title": "Low-Level (2)",
+            "image": "img22.png"
+        },
+        {
+            "title": "Strategies",
+            "image": "img23.png"
+        },
+        {
+            "title": "Strategies (2)",
+            "image": "img24.png"
+        },
+        {
+            "title": "Tactics",
+            "image": "img25.png"
+        },
+        {
+            "title": "PresentationService",
+            "image": "img26.png"
+        },
+        {
+            "title": "(Direct-To-TV)",
+            "image": "img27.png"
+        },
+        {
+            "title": "Devices",
+            "image": "img28.png"
+        },
+        {
+            "title": "Devices (2)",
+            "image": "img29.png"
+        },
+        {
+            "title": "Amazon",
+            "image": "img30.png"
+        },
+        {
+            "title": "Delta",
+            "image": "img31.png"
+        },
+        {
+            "title": "Normal",
+            "image": "img32.png"
+        },
+        {
+            "title": "Is Iz A Tee Vee? - then demo",
+            "image": "img33.png"
+        },
+        {
+            "title": "(Remote Playback)",
+            "image": "img34.png"
+        },
+        {
+            "title": "Devices",
+            "image": "img35.png"
+        },
+        {
+            "title": "Devices (2)",
+            "image": "img36.png"
+        },
+        {
+            "title": "Alpha",
+            "image": "img37.png"
+        },
+        {
+            "title": "RPC",
+            "image": "img38.png"
+        },
+        {
+            "title": "Cast SDK",
+            "image": "img39.png"
+        },
+        {
+            "title": "Cast Preso",
+            "image": "img40.png"
+        },
+        {
+            "title": "Connect SDK",
+            "image": "img41.png"
+        },
+        {
+            "title": "Fling SDK",
+            "image": "img42.png"
+        },
+        {
+            "title": "(COFFEE)",
+            "image": "img43.png"
+        },
+        {
+            "title": "(MRouter)",
+            "image": "img44.png"
+        },
+        {
+            "title": "MRouter",
+            "image": "img45.png"
+        },
+        {
+            "title": "Choices",
+            "image": "img46.png"
+        },
+        {
+            "title": "Interacting",
+            "image": "img47.png"
+        },
+        {
+            "title": "MRAP",
+            "image": "img48.png"
+        },
+        {
+            "title": "Which MRAP?",
+            "image": "img49.png"
+        },
+        {
+            "title": "Wiring - then demo",
+            "image": "img50.png"
+        },
+        {
+            "title": "RPC",
+            "image": "img51.png"
+        },
+        {
+            "title": "RPC Flow",
+            "image": "img52.png"
+        },
+        {
+            "title": "Using RPC - then demo",
+            "image": "img53.png"
+        },
+        {
+            "title": "Other RPC Cap",
+            "image": "img54.png"
+        },
+        {
+            "title": "MRP",
+            "image": "img55.png"
+        },
+        {
+            "title": "RPC Flow",
+            "image": "img56.png"
+        },
+        {
+            "title": "RPC Flow (2)",
+            "image": "img57.png"
+        },
+        {
+            "title": "MRP",
+            "image": "img58.png"
+        },
+        {
+            "title": "Examples",
+            "image": "img59.png"
+        },
+        {
+            "title": "Examples (2)",
+            "image": "img60.png"
+        },
+        {
+            "title": "Who Uses?",
+            "image": "img61.png"
+        },
+        {
+            "title": "Implementing - then demo",
+            "image": "img62.png"
+        },
+        {
+            "title": "Other MRP Cap",
+            "image": "img63.png"
+        },
+        {
+            "title": "(design)",
+            "image": "img64.png"
+        },
+        {
+            "title": "Overscan",
+            "image": "img65.png"
+        },
+        {
+            "title": "Nav",
+            "image": "img66.png"
+        },
+        {
+            "title": "Nav (2)",
+            "image": "img67.png"
+        },
+        {
+            "title": "Fonts",
+            "image": "img68.png"
+        },
+        {
+            "title": "Colors",
+            "image": "img69.png"
+        },
+        {
+            "title": "Leanback Uses",
+            "image": "img70.png"
+        },
+        {
+            "title": "Leanback Lib",
+            "image": "img71.png"
+        },
+        {
+            "title": "BrowseFragment",
+            "image": "img72.png"
+        },
+        {
+            "title": "BrowseFragment (2) - then demo",
+            "image": "img73.png"
+        },
+        {
+            "title": "Intermittancy",
+            "image": "img74.png"
+        },
+        {
+            "title": "Intermittancy (2)",
+            "image": "img75.png"
+        },
+        {
+            "title": "Code Consolidation",
+            "image": "img76.png"
+        },
+        {
+            "title": "Code Consolidation (2)",
+            "image": "img77.png"
+        },
+        {
+            "title": "(business)",
+            "image": "img78.png"
+        },
+        {
+            "title": "Players",
+            "image": "img79.png"
+        },
+        {
+            "title": "Conf Room",
+            "image": "img80.png"
+        },
+        {
+            "title": "Games",
+            "image": "img81.png"
+        },
+        {
+            "title": "HW",
+            "image": "img82.png"
+        },
+        {
+            "title": "(summary)",
+            "image": "img83.png"
+        },
+        {
+            "title": "Quadrants",
+            "image": "img84.png"
+        }
+    ]
+}

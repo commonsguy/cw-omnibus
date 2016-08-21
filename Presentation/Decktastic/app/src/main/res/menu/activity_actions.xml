@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <item
+    android:id="@+id/countdown"
+    app:actionViewClass="com.commonsware.android.preso.decktastic.ReverseChronometer"
+    app:showAsAction="always"
+    tools:ignore="AlwaysShowAction,MenuTitle" />
+  <item
+    android:id="@+id/route_provider"
+    android:title="@string/media_route_provider"
+    app:actionProviderClass="android.support.v7.app.MediaRouteActionProvider"
+    app:showAsAction="always" />
+  <item
+    android:id="@+id/first"
+    android:icon="@android:drawable/ic_media_previous"
+    android:title="@string/first"
+    app:showAsAction="ifRoom" />
+  <item
+    android:id="@+id/last"
+    android:icon="@android:drawable/ic_media_next"
+    android:title="@string/last"
+    app:showAsAction="ifRoom" />
+  <item
+    android:id="@+id/present"
+    android:checkable="true"
+    android:checked="true"
+    android:title="@string/show_presentation"
+    app:showAsAction="never" />
+
+</menu>

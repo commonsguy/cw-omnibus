@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 19
     buildToolsVersion "21.1.2"
+}
+
+dependencies {
+    compile 'com.google.android.gms:play-services:9.2.1'
 }

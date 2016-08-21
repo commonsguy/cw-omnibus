@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.commonsware.cwac:cam2:0.2.+'
+    compile 'com.commonsware.cwac:cam2:0.6.6'
     compile 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
     compile 'com.android.support:support-v4:23.0.1'
 }

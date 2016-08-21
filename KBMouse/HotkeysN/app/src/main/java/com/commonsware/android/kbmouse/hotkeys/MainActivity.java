@@ -21,6 +21,7 @@
 package com.commonsware.android.kbmouse.hotkeys;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ClipData;
@@ -243,8 +244,8 @@ public class MainActivity extends Activity implements
         }
       }
       else if (keyCode==KeyEvent.KEYCODE_SLASH &&
-        event.isAltPressed() &&
-        Build.VERSION.SDK_INT<=Build.VERSION_CODES.M) {
+        event.isMetaPressed() &&
+        Build.VERSION.SDK_INT<Build.VERSION_CODES.N) {
         new ShortcutDialogFragment().show(getFragmentManager(),
           "shortcuts");
 
@@ -255,6 +256,7 @@ public class MainActivity extends Activity implements
     return(super.onKeyDown(keyCode, event));
   }
 
+  @TargetApi(Build.VERSION_CODES.N)
   @Override
   public void onProvideKeyboardShortcuts(
     List<KeyboardShortcutGroup> data, Menu menu, int deviceId) {

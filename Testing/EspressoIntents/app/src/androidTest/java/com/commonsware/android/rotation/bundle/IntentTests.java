@@ -143,7 +143,7 @@ public class IntentTests {
     int target=
       (getOrientation()==Configuration.ORIENTATION_LANDSCAPE ?
         ActivityInfo.SCREEN_ORIENTATION_PORTRAIT :
-        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     main.getActivity().setRequestedOrientation(target);
   }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/launch"
+    android:icon="@drawable/ic_open_in_new_24dp"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_launch" />
+</menu>

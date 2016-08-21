@@ -1,0 +1,7 @@
+#!/bin/bash
+
+adb shell am startservice -n com.commonsware.android.andshooter/.ScreenshotService -a com.commonsware.android.andshooter.RECORD
+sleep 2s
+
+adb pull /mnt/shell/emulated/0/Android/data/com.commonsware.android.andshooter/files/screenshot.png $1
+adb shell rm /mnt/shell/emulated/0/Android/data/com.commonsware.android.andshooter/files/screenshot.png

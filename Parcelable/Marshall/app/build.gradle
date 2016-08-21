@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.android.support:support-v13:24.1.0'
+    compile 'com.commonsware.cwac:wakeful:1.0.+'
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+	defaultConfig {
+        minSdkVersion 14
+		targetSdkVersion 17
+	}
+}

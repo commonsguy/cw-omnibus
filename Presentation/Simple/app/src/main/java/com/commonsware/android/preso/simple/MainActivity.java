@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
         cb=new RouteCallback();
         router=(MediaRouter)getSystemService(MEDIA_ROUTER_SERVICE);
       }
-      
+
       handleRoute(router.getSelectedRoute(MediaRouter.ROUTE_TYPE_LIVE_VIDEO));
       router.addCallback(MediaRouter.ROUTE_TYPE_LIVE_VIDEO, cb);
     }

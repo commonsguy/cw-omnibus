@@ -5,8 +5,8 @@
 	<string name="icon">Owner Icon</string>
 	<string name="menu_refresh">Refresh</string>
 	<string name="btn_view">View</string>
-	<string name="views">Views: </string>
-  <string name="answers">Answers: </string>
-  <string name="tags">Tags: </string>
+	<string name="views">Views:</string>
+  <string name="answers">Answers:</string>
+  <string name="tags">Tags:</string>
 
 </resources>

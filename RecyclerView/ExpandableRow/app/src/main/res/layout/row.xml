@@ -87,17 +87,17 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text='@{@string/tags+TextUtils.join(", ", question.tags)}' />
+            android:text='@{@string/tags+" "+TextUtils.join(", ", question.tags)}' />
 
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/views+question.viewCount}" />
+            android:text='@{@string/views+" "+question.viewCount}' />
 
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/answers+question.answerCount}" />
+            android:text='@{@string/answers+" "+question.answerCount}' />
 
         </LinearLayout>
 

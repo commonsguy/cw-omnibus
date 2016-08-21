@@ -88,7 +88,7 @@ public class MainActivity extends Activity implements
       return(true);
     }
 
-    return super.onOptionsItemSelected(item);
+    return(super.onOptionsItemSelected(item));
   }
 
   @Override

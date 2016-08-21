@@ -1,4 +1,4 @@
-This pair of sample Android apps demonstrate
+This sample Android app demonstrates
 the overhead incurred in cross-process AIDL calls.
 
 This app is covered in 

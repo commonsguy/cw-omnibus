@@ -18,6 +18,7 @@ import android.app.assist.AssistContent;
 import android.app.assist.AssistStructure;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Environment;
 import android.service.voice.VoiceInteractionSession;
@@ -65,7 +66,7 @@ public class AssistLoggerSession extends
     super.onHandleScreenshot(screenshot);
 
     if (screenshot!=null) {
-      new ScreenshotThread(logDir, screenshot).start();
+      new ScreenshotThread(getContext(), logDir, screenshot).start();
     }
   }
 
@@ -75,14 +76,17 @@ public class AssistLoggerSession extends
                              AssistContent content) {
     super.onHandleAssist(data, structure, content);
 
-    new AssistDumpThread(logDir, data, structure, content).start();
+    new AssistDumpThread(getContext(), logDir, data, structure,
+      content).start();
   }
 
   private static class ScreenshotThread extends Thread {
     private final File logDir;
     private final Bitmap screenshot;
+    private final Context ctxt;
 
-    ScreenshotThread(File logDir, Bitmap screenshot) {
+    ScreenshotThread(Context ctxt, File logDir, Bitmap screenshot) {
+      this.ctxt=ctxt.getApplicationContext();
       this.logDir=logDir;
       this.screenshot=screenshot;
     }
@@ -98,6 +102,12 @@ public class AssistLoggerSession extends
           fos.flush();
           fos.getFD().sync();
           fos.close();
+
+          MediaScannerConnection
+            .scanFile(ctxt,
+              new String[] {f.getAbsolutePath()},
+              new String[] {"image/png"}, null);
+
           Log.d(getClass().getSimpleName(),
             "screenshot written to: "+f.getAbsolutePath());
         }

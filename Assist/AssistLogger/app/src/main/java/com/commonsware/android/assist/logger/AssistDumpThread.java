@@ -16,7 +16,9 @@ package com.commonsware.android.assist.logger;
 
 import android.app.assist.AssistContent;
 import android.app.assist.AssistStructure;
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.util.Log;
 import org.json.JSONArray;
@@ -33,10 +35,12 @@ class AssistDumpThread extends Thread {
   private final Bundle data;
   private final AssistStructure structure;
   private final AssistContent content;
+  private final Context ctxt;
 
-  AssistDumpThread(File logDir, Bundle data,
+  AssistDumpThread(Context ctxt, File logDir, Bundle data,
                    AssistStructure structure,
                    AssistContent content) {
+    this.ctxt=ctxt.getApplicationContext();
     this.logDir=logDir;
     this.data=data;
     this.structure=structure;
@@ -83,6 +87,12 @@ class AssistDumpThread extends Thread {
         pw.flush();
         fos.getFD().sync();
         fos.close();
+
+        MediaScannerConnection
+          .scanFile(ctxt,
+            new String[] {f.getAbsolutePath()},
+            new String[] {"application/json"}, null);
+
         Log.d(getClass().getSimpleName(),
           "assist data written to: "+f.getAbsolutePath());
       }

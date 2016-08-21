@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2012-14 CommonsWare, LLC
+  Copyright (c) 2013-2015 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -12,20 +12,14 @@
     https://commonsware.com/Android
  */
 
-package com.commonsware.android.async;
+package com.commonsware.android.okhttp;
 
-import android.app.Activity;
-import android.os.Bundle;
-
-public class AsyncDemo extends Activity {
+public class Item {
+  String title;
+  String link;
+  
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getFragmentManager().beginTransaction()
-                          .add(android.R.id.content,
-                               new AsyncDemoFragment()).commit();
-    }
+  public String toString() {
+    return(title);
   }
 }

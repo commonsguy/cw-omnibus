@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AudioDemo</string>
+    <string name="app_name">Audio Playback Demo</string>
+    <string name="menu_play">Play</string>
+    <string name="menu_pause">Pause</string>
+    <string name="menu_stop">Stop</string>
+    <string name="msg_error">Exception preparing media</string>
+    <string name="msg_error_toast">Oops! We cannot play back the audio!</string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="drop_target_ready">#64dd17</color>
+  <color name="outer_normal">#ffa000</color>
+  <color name="inner_normal">#00b0ff</color>
+  <color name="image_normal">#d500f9</color>
+</resources>

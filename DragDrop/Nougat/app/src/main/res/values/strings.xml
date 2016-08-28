@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Nougat Drag Bug Demo</string>
+  <string name="icon">Icon</string>
+  <string name="thumbnail">Thumbnail</string>
+  <string name="msg_photo">Freedom Tower, Morning</string>
+  <string name="menu_main">Main Demo</string>
+  <string name="menu_bug">Bug</string>
+  <string name="menu_inclusive">Inclusive</string>
+  <string name="activity_bug">Nougat: Bug</string>
+  <string name="activity_inclusive">Nougat: Inclusive</string>
+</resources>

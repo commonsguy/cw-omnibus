@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">Sidecar</string>
+  <string name="msg_saved">Saved!</string>
+  <string name="msg_choose">You need to choose an app first!</string>
+  <string name="msg_sorry">Sorry, something didn\'t work</string>
+
+</resources>

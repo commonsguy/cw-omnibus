@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">Freecar</string>
+  <string name="msg_saved">Saved!</string>
+  <string name="msg_choose">You need to choose an app first!</string>
+  <string name="msg_sorry">Sorry, something didn\'t work</string>
+  <string name="freeform">Launch freeform</string>
+
+</resources>

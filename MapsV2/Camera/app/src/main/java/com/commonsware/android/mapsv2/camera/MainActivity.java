@@ -20,7 +20,10 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraMoveCanceledListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraMoveListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraMoveStartedListener;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,8 +34,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AbstractMapActivity implements
     OnMapReadyCallback, OnInfoWindowClickListener,
-    OnCameraChangeListener {
+  OnCameraMoveStartedListener,
+  OnCameraMoveListener,
+  OnCameraMoveCanceledListener,
+  OnCameraIdleListener {
   private boolean needsInit=false;
+  private GoogleMap map;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,8 @@ public class MainActivity extends AbstractMapActivity implements
 
   @Override
   public void onMapReady(final GoogleMap map) {
+    this.map=map;
+
     if (needsInit) {
       CameraUpdate center=
           CameraUpdateFactory.newLatLng(new LatLng(40.76793169992044,
@@ -76,7 +85,11 @@ public class MainActivity extends AbstractMapActivity implements
 
     map.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
     map.setOnInfoWindowClickListener(this);
-    map.setOnCameraChangeListener(this);
+
+    map.setOnCameraMoveStartedListener(this);
+    map.setOnCameraMoveListener(this);
+    map.setOnCameraMoveCanceledListener(this);
+    map.setOnCameraIdleListener(this);
   }
 
   @Override
@@ -85,18 +98,53 @@ public class MainActivity extends AbstractMapActivity implements
   }
 
   @Override
-  public void onCameraChange(CameraPosition position) {
-    Log.d(getClass().getSimpleName(),
-          String.format("lat: %f, lon: %f, zoom: %f, tilt: %f",
-                        position.target.latitude,
-                        position.target.longitude, position.zoom,
-                        position.tilt));
+  public void onCameraIdle() {
+    CameraPosition position=map.getCameraPosition();
+
+    Log.d("onCameraIdle",
+      String.format("lat: %f, lon: %f, zoom: %f, tilt: %f",
+        position.target.latitude,
+        position.target.longitude, position.zoom,
+        position.tilt));
+  }
+
+  @Override
+  public void onCameraMoveCanceled() {
+    CameraPosition position=map.getCameraPosition();
+
+    Log.d("onCameraMoveCanceled",
+      String.format("lat: %f, lon: %f, zoom: %f, tilt: %f",
+        position.target.latitude,
+        position.target.longitude, position.zoom,
+        position.tilt));
+  }
+
+  @Override
+  public void onCameraMove() {
+    CameraPosition position=map.getCameraPosition();
+
+    Log.d("onCameraMove",
+      String.format("lat: %f, lon: %f, zoom: %f, tilt: %f",
+        position.target.latitude,
+        position.target.longitude, position.zoom,
+        position.tilt));
+  }
+
+  @Override
+  public void onCameraMoveStarted(int i) {
+    CameraPosition position=map.getCameraPosition();
+
+    Log.d("onCameraMoveStarted",
+      String.format("lat: %f, lon: %f, zoom: %f, tilt: %f",
+        position.target.latitude,
+        position.target.longitude, position.zoom,
+        position.tilt));
   }
 
   private void addMarker(GoogleMap map, double lat, double lon,
                          int title, int snippet) {
     map.addMarker(new MarkerOptions().position(new LatLng(lat, lon))
-                                     .title(getString(title))
-                                     .snippet(getString(snippet)));
+      .title(getString(title))
+      .snippet(getString(snippet)));
   }
 }

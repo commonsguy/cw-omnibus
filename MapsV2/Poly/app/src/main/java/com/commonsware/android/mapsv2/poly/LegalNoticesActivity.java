@@ -17,7 +17,7 @@ package com.commonsware.android.mapsv2.poly;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 public class LegalNoticesActivity extends Activity {
   @Override
@@ -27,6 +27,8 @@ public class LegalNoticesActivity extends Activity {
 
     TextView legal=(TextView)findViewById(R.id.legal);
 
-    legal.setText(GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this));
+    legal.setText(GoogleApiAvailability
+      .getInstance()
+      .getOpenSourceSoftwareLicenseInfo(this));
   }
 }

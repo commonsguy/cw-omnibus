@@ -105,7 +105,7 @@ public class MainActivity extends Activity implements
       case R.id.file_beam:
         Intent i=new Intent(Intent.ACTION_GET_CONTENT);
 
-        i.setType("*/*");
+        i.setType("*/*").addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(i, 0);
         return(true);
     }

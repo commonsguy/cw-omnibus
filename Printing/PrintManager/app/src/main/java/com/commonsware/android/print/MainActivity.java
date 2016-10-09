@@ -61,7 +61,9 @@ public class MainActivity extends Activity {
     switch (item.getItemId()) {
       case R.id.bitmap:
         Intent i=
-            new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
+            new Intent(Intent.ACTION_GET_CONTENT)
+              .addCategory(Intent.CATEGORY_OPENABLE)
+              .setType("image/*");
 
         startActivityForResult(i, IMAGE_REQUEST_ID);
 

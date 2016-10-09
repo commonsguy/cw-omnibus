@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements OnClickListener {
     else {
       Intent i=new Intent(Intent.ACTION_GET_CONTENT);
       
-      i.setType("*/*");
+      i.setType("*/*").addCategory(Intent.CATEGORY_OPENABLE);
       startActivityForResult(i, 0);
     }
   }

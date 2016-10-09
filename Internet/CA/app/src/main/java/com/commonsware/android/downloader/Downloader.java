@@ -68,7 +68,6 @@ public class Downloader extends IntentService {
       TrustManagerBuilder tmb=
         new TrustManagerBuilder().withManifestConfig(this);
 
-      tmb.build().setHost(url.getHost());
       tmb.applyTo(c);
 
       FileOutputStream fos=

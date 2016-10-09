@@ -50,6 +50,7 @@ public class FilesCPDemo extends Activity {
                    FileProvider.getUriForFile(this, AUTHORITY, f));
 
     i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
     startActivity(i);
     finish();
   }

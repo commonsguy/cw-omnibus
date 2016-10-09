@@ -14,9 +14,12 @@
 
 package com.commonsware.android.documenttree;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.storage.StorageManager;
@@ -58,11 +61,14 @@ public class SettingsFragment extends PreferenceFragment
       prefDocTree);
 
     prefVolumes=(ListPreference)findPreference(PREF_VOLUMES);
-    populateVolumes();
-    onSharedPreferenceChanged(prefs, PREF_STORAGE_URI);
-    volumeHelper=
-      new VolumeHelper(this, prefVolumes,
-        PREF_STORAGE_URI, Environment.DIRECTORY_DOCUMENTS);
+
+    if (prefVolumes.isEnabled()) {
+      populateVolumes();
+      onSharedPreferenceChanged(prefs, PREF_STORAGE_URI);
+      volumeHelper=
+        new VolumeHelper(this, prefVolumes,
+          PREF_STORAGE_URI, Environment.DIRECTORY_DOCUMENTS);
+    }
   }
 
   @Override
@@ -111,9 +117,11 @@ public class SettingsFragment extends PreferenceFragment
     }
   }
 
+  @TargetApi(Build.VERSION_CODES.N)
   private void populateVolumes() {
     StorageManager storage=
-      getActivity().getSystemService(StorageManager.class);
+      (StorageManager)getActivity()
+        .getSystemService(Context.STORAGE_SERVICE);
     List<StorageVolume> volumes=storage.getStorageVolumes();
 
     Collections.sort(volumes, new Comparator<StorageVolume>() {

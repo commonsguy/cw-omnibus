@@ -79,6 +79,7 @@ public class MainActivity extends AbstractMapActivity implements
     }
   }
 
+  @SuppressWarnings("MissingPermission")
   @Override
   public void onMapReady(final GoogleMap map) {
     if (needsInit) {

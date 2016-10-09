@@ -14,11 +14,14 @@
 
 package com.commonsware.android.job;
 
+import android.annotation.TargetApi;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.os.Build;
 import android.os.PersistableBundle;
 import android.util.Log;
 
+@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 public class DemoJobService extends JobService {
   private volatile Thread job=null;
 

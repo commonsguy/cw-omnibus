@@ -15,6 +15,7 @@
 package com.commonsware.android.camcon;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -65,6 +66,13 @@ public class CameraContentDemoActivity extends Activity {
       if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
         i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
       }
+      else if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN) {
+        ClipData clip=
+          ClipData.newUri(getContentResolver(), "A photo", outputUri);
+
+        i.setClipData(clip);
+        i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+      }
       else {
         List<ResolveInfo> resInfoList=
           getPackageManager()
@@ -73,8 +81,7 @@ public class CameraContentDemoActivity extends Activity {
         for (ResolveInfo resolveInfo : resInfoList) {
           String packageName = resolveInfo.activityInfo.packageName;
           grantUriPermission(packageName, outputUri,
-            Intent.FLAG_GRANT_WRITE_URI_PERMISSION |
-              Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
       }
 

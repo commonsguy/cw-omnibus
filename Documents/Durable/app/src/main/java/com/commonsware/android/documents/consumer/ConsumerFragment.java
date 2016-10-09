@@ -134,8 +134,9 @@ public class ConsumerFragment extends Fragment {
   private void get() {
     Intent i=
       new Intent()
-        .setType("*/*")
-        .setAction(Intent.ACTION_GET_CONTENT);
+        .setType("image/png")
+        .setAction(Intent.ACTION_GET_CONTENT)
+        .addCategory(Intent.CATEGORY_OPENABLE);
 
     startActivityForResult(i, REQUEST_GET);
   }

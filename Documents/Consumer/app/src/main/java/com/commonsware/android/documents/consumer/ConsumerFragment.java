@@ -131,7 +131,8 @@ public class ConsumerFragment extends Fragment {
                              REQUEST_OPEN);
     }
     else {
-      startActivityForResult(i.setAction(Intent.ACTION_GET_CONTENT),
+      startActivityForResult(i.setAction(Intent.ACTION_GET_CONTENT)
+                              .addCategory(Intent.CATEGORY_OPENABLE),
                              REQUEST_GET);
     }
   }

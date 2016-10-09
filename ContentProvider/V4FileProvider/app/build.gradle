@@ -7,11 +7,11 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-v13:21.0.3'
-    compile 'com.commonsware.cwac:provider:0.2.4'
+    compile 'com.android.support:support-v13:24.2.0'
+    compile 'com.commonsware.cwac:provider:0.4.3'
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 }

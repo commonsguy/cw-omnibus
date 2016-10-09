@@ -8,16 +8,17 @@ repositories {
 
 dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.support:support-v13:21.0.3'
+    compile 'com.android.support:support-v13:24.2.0'
     compile 'com.commonsware.cwac:wakeful:1.0.+'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
 	defaultConfig {
-		targetSdkVersion 17
+        minSdkVersion 15
+		targetSdkVersion 24
         applicationId 'com.commonsware.android.eventbus.greenrobot3'
 	}
 }

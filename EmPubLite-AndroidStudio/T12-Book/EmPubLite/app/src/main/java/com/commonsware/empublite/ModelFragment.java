@@ -5,17 +5,18 @@ import android.app.Fragment;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Process;
-import android.preference.PreferenceFragment;
 import android.util.Log;
 import com.google.gson.Gson;
+import org.greenrobot.eventbus.EventBus;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import de.greenrobot.event.EventBus;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ModelFragment extends Fragment {
-  private BookContents contents=null;
+  final private AtomicReference<BookContents> contents=
+    new AtomicReference<>();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -27,13 +28,13 @@ public class ModelFragment extends Fragment {
   public void onAttach(Activity host) {
     super.onAttach(host);
 
-    if (contents==null) {
+    if (contents.get()==null) {
       new LoadThread(host.getAssets()).start();
     }
   }
 
-  synchronized public BookContents getBook() {
-    return(contents);
+  public BookContents getBook() {
+    return(contents.get());
   }
 
   private class LoadThread extends Thread {
@@ -53,13 +54,11 @@ public class ModelFragment extends Fragment {
       try {
         InputStream is=assets.open("book/contents.json");
         BufferedReader reader=
-            new BufferedReader(new InputStreamReader(is));
+          new BufferedReader(new InputStreamReader(is));
 
-        synchronized(this) {
-          contents=gson.fromJson(reader, BookContents.class);
-        }
+        contents.set(gson.fromJson(reader, BookContents.class));
 
-        EventBus.getDefault().post(new BookLoadedEvent(contents));
+        EventBus.getDefault().post(new BookLoadedEvent(getBook()));
       }
       catch (IOException e) {
         Log.e(getClass().getSimpleName(), "Exception parsing JSON", e);

@@ -13,7 +13,12 @@ public class BookContents {
     return(chapters.get(position).file);
   }
 
+  String getChapterTitle(int position) {
+    return(chapters.get(position).title);
+  }
+
   static class Chapter {
     String file;
+    String title;
   }
 }

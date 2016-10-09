@@ -1,36 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/something"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-    <RelativeLayout
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="7"
+    android:orientation="vertical">
+
+    <io.karim.MaterialTabs
+      android:id="@+id/tabs"
       android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="7"
-      tools:context=".EmPubLiteActivity">
-        <ProgressBar
-          android:id="@+id/progressBar1"
-          style="?android:attr/progressBarStyleLarge"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerVertical="true"/>
-        <android.support.v4.view.ViewPager
-          android:id="@+id/pager"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:visibility="gone"/>
-    </RelativeLayout>
-    <View
-      android:id="@+id/divider"
+      android:layout_height="48dp"
+      app:mtIndicatorColor="@color/colorAccent"
+      app:mtSameWeightTabs="true" />
+
+    <android.support.v4.view.ViewPager
+      android:id="@+id/pager"
       android:layout_width="match_parent"
-      android:layout_height="2dp"
-      android:background="#AA000000"
-      android:visibility="gone"/>
-    <FrameLayout
-      android:id="@+id/sidebar"
-      android:layout_width="match_parent"
-      android:layout_height="0dp">
-    </FrameLayout>
+      android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+  </LinearLayout>
+
+  <View
+    android:id="@+id/divider"
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:background="#AA000000"
+    android:visibility="gone" />
+
+  <FrameLayout
+    android:id="@+id/sidebar"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"></FrameLayout>
 </LinearLayout>

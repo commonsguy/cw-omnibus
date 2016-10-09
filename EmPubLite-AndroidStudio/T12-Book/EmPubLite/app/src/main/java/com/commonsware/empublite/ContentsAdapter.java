@@ -18,11 +18,16 @@ public class ContentsAdapter extends FragmentStatePagerAdapter {
     String path=contents.getChapterFile(position);
 
     return(SimpleContentFragment.newInstance("file:///android_asset/book/"
-        + path));
+      + path));
   }
 
   @Override
   public int getCount() {
     return(contents.getChapterCount());
+  }
+
+  @Override
+  public CharSequence getPageTitle(int position) {
+    return(contents.getChapterTitle(position));
   }
 }

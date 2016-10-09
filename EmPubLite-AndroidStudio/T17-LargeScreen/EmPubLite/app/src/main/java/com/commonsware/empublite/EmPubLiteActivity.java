@@ -11,10 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import io.karim.MaterialTabs;
 
 public class EmPubLiteActivity extends Activity
-    implements FragmentManager.OnBackStackChangedListener {
+  implements FragmentManager.OnBackStackChangedListener {
   private static final String MODEL="model";
   private static final String PREF_LAST_POSITION="lastPosition";
   private static final String PREF_SAVE_LAST_POSITION="saveLastPosition";
@@ -22,11 +25,11 @@ public class EmPubLiteActivity extends Activity
   private static final String HELP="help";
   private static final String ABOUT="about";
   private static final String FILE_HELP=
-      "file:///android_asset/misc/help.html";
+    "file:///android_asset/misc/help.html";
   private static final String FILE_ABOUT=
-      "file:///android_asset/misc/about.html";
-  private ViewPager pager=null;
-  private ContentsAdapter adapter=null;
+    "file:///android_asset/misc/about.html";
+  private ViewPager pager;
+  private ContentsAdapter adapter;
   private ModelFragment mfrag=null;
   private View sidebar=null;
   private View divider=null;
@@ -36,25 +39,21 @@ public class EmPubLiteActivity extends Activity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
 
     setupStrictMode();
-
-    setContentView(R.layout.main);
     pager=(ViewPager)findViewById(R.id.pager);
     sidebar=findViewById(R.id.sidebar);
     divider=findViewById(R.id.divider);
-
-    getFragmentManager().addOnBackStackChangedListener(this);
-
-    help=
-        (SimpleContentFragment)getFragmentManager().findFragmentByTag(HELP);
+    help=(SimpleContentFragment)getFragmentManager().findFragmentByTag(HELP);
     about=
-        (SimpleContentFragment)getFragmentManager().findFragmentByTag(ABOUT);
+      (SimpleContentFragment)getFragmentManager().findFragmentByTag(ABOUT);
+    getFragmentManager().addOnBackStackChangedListener(this);
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
     EventBus.getDefault().register(this);
 
     if (adapter==null) {
@@ -63,10 +62,8 @@ public class EmPubLiteActivity extends Activity
       if (mfrag==null) {
         mfrag=new ModelFragment();
 
-        getFragmentManager()
-            .beginTransaction()
-            .add(mfrag, MODEL)
-            .commit();
+        getFragmentManager().beginTransaction()
+          .add(mfrag, MODEL).commit();
       }
       else if (mfrag.getBook()!=null) {
         setupPager(mfrag.getBook());
@@ -75,22 +72,22 @@ public class EmPubLiteActivity extends Activity
 
     if (mfrag.getPrefs()!=null) {
       pager.setKeepScreenOn(mfrag.getPrefs()
-          .getBoolean(PREF_KEEP_SCREEN_ON, false));
+        .getBoolean(PREF_KEEP_SCREEN_ON, false));
     }
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     EventBus.getDefault().unregister(this);
 
     if (mfrag.getPrefs()!=null) {
       int position=pager.getCurrentItem();
 
       mfrag.getPrefs().edit().putInt(PREF_LAST_POSITION, position)
-          .apply();
+        .apply();
     }
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override
@@ -119,10 +116,9 @@ public class EmPubLiteActivity extends Activity
         return(true);
 
       case R.id.notes:
-        Intent i=new Intent(this, NoteActivity.class);
-
-        i.putExtra(NoteActivity.EXTRA_POSITION, pager.getCurrentItem());
-        startActivity(i);
+        startActivity(new Intent(this, NoteActivity.class)
+          .putExtra(NoteActivity.EXTRA_POSITION,
+            pager.getCurrentItem()));
 
         return(true);
 
@@ -134,12 +130,12 @@ public class EmPubLiteActivity extends Activity
 
     return(super.onOptionsItemSelected(item));
   }
-  
+
   @Override
   public void onBackStackChanged() {
     if (getFragmentManager().getBackStackEntryCount() == 0) {
       LinearLayout.LayoutParams p=
-          (LinearLayout.LayoutParams)sidebar.getLayoutParams();
+        (LinearLayout.LayoutParams)sidebar.getLayoutParams();
       if (p.weight > 0) {
         p.weight=0;
         sidebar.setLayoutParams(p);
@@ -149,15 +145,17 @@ public class EmPubLiteActivity extends Activity
   }
 
   @SuppressWarnings("unused")
-  public void onEventMainThread(BookLoadedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onBookLoaded(BookLoadedEvent event) {
     setupPager(event.getBook());
   }
 
   private void setupPager(BookContents contents) {
     adapter=new ContentsAdapter(this, contents);
     pager.setAdapter(adapter);
-    findViewById(R.id.progressBar1).setVisibility(View.GONE);
-    pager.setVisibility(View.VISIBLE);
+
+    MaterialTabs tabs=(MaterialTabs)findViewById(R.id.tabs);
+    tabs.setViewPager(pager);
 
     SharedPreferences prefs=mfrag.getPrefs();
 
@@ -170,9 +168,22 @@ public class EmPubLiteActivity extends Activity
     }
   }
 
+  private void setupStrictMode() {
+    StrictMode.ThreadPolicy.Builder builder=
+      new StrictMode.ThreadPolicy.Builder()
+        .detectAll()
+        .penaltyLog();
+
+    if (BuildConfig.DEBUG) {
+      builder.penaltyFlashScreen();
+    }
+
+    StrictMode.setThreadPolicy(builder.build());
+  }
+
   private void openSidebar() {
     LinearLayout.LayoutParams p=
-        (LinearLayout.LayoutParams)sidebar.getLayoutParams();
+      (LinearLayout.LayoutParams)sidebar.getLayoutParams();
     if (p.weight == 0) {
       p.weight=3;
       sidebar.setLayoutParams(p);
@@ -190,7 +201,7 @@ public class EmPubLiteActivity extends Activity
       }
 
       getFragmentManager().beginTransaction().addToBackStack(null)
-          .replace(R.id.sidebar, about, ABOUT).commit();
+        .replace(R.id.sidebar, about, ABOUT).commit();
     }
     else {
       Intent i=new Intent(this, SimpleContentActivity.class);
@@ -209,7 +220,7 @@ public class EmPubLiteActivity extends Activity
       }
 
       getFragmentManager().beginTransaction().addToBackStack(null)
-          .replace(R.id.sidebar, help, HELP).commit();
+        .replace(R.id.sidebar, help, HELP).commit();
     }
     else {
       Intent i=new Intent(this, SimpleContentActivity.class);
@@ -217,18 +228,5 @@ public class EmPubLiteActivity extends Activity
       i.putExtra(SimpleContentActivity.EXTRA_FILE, FILE_HELP);
       startActivity(i);
     }
-  }
-
-  private void setupStrictMode() {
-    StrictMode.ThreadPolicy.Builder builder=
-        new StrictMode.ThreadPolicy.Builder()
-            .detectAll()
-            .penaltyLog();
-
-    if (BuildConfig.DEBUG) {
-      builder.penaltyFlashScreen();
-    }
-
-    StrictMode.setThreadPolicy(builder.build());
   }
 }

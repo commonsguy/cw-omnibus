@@ -11,12 +11,12 @@ public class SimpleContentActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      String file = getIntent().getStringExtra(EXTRA_FILE);
-      Fragment f = SimpleContentFragment.newInstance(file);
+    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
+      String file=getIntent().getStringExtra(EXTRA_FILE);
+      Fragment f=SimpleContentFragment.newInstance(file);
 
       getFragmentManager().beginTransaction()
-          .add(android.R.id.content, f).commit();
+        .add(android.R.id.content, f).commit();
     }
   }
 }

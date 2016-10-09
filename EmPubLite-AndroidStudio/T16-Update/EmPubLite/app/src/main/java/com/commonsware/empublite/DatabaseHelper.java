@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Process;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
   private static final String DATABASE_NAME="empublite.db";
@@ -57,12 +57,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
       String[] args={String.valueOf(position)};
       Cursor c=
-          getReadableDatabase().rawQuery("SELECT prose FROM notes WHERE position = ? ", args);
+        getReadableDatabase().rawQuery("SELECT prose FROM notes WHERE position = ? ", args);
 
       if (c.getCount() > 0) {
         c.moveToFirst();
+
         EventBus.getDefault().post(new NoteLoadedEvent(position,
-            c.getString(0)));
+          c.getString(0)));
       }
 
       c.close();
@@ -85,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
       String[] args={String.valueOf(position), prose};
       getWritableDatabase().execSQL("INSERT OR REPLACE INTO notes (position, prose) VALUES (?, ?)",
-          args);
+        args);
     }
   }
 }

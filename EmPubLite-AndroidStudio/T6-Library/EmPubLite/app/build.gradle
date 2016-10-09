@@ -1,15 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
-
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "com.commonsware.empublite"
+        minSdkVersion 15
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
-        minSdkVersion 15
-        targetSdkVersion 18
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 }
 
@@ -20,10 +26,15 @@ repositories {
 }
 
 dependencies {
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.google.code.gson:gson:2.3.1'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
-    compile 'com.commonsware.cwac:security:0.5.2'
-    compile 'com.android.support:support-v13:23.1.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.commonsware.cwac:security:0.8.0'
+    compile 'com.android.support:support-v13:24.2.1'
+    compile 'io.karim:materialtabs:2.0.5'
 }

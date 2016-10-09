@@ -33,7 +33,7 @@ public class SimpleContentFragment extends WebViewFragment {
                            ViewGroup container,
                            Bundle savedInstanceState) {
     View result=
-        super.onCreateView(inflater, container, savedInstanceState);
+      super.onCreateView(inflater, container, savedInstanceState);
 
     getWebView().getSettings().setJavaScriptEnabled(true);
     getWebView().getSettings().setSupportZoom(true);

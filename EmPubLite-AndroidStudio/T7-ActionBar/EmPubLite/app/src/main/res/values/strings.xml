@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">EmPub Lite</string>
-    <string name="help">Help</string>
-    <string name="about">About</string>
+  <string name="app_name">EmPub Lite</string>
+  <string name="hint">Enter notes here</string>
+  <string name="help">Help</string>
+  <string name="about">About</string>
 </resources>

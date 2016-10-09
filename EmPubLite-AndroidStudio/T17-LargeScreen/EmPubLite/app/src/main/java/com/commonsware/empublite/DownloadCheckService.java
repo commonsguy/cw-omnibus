@@ -4,21 +4,21 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 import com.commonsware.cwac.security.ZipUtils;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import de.greenrobot.event.EventBus;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okio.BufferedSink;
 import okio.Okio;
-import retrofit.RestAdapter;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DownloadCheckService extends IntentService {
   private static final String OUR_BOOK_DATE="20120418";
   private static final String UPDATE_FILENAME="book.zip";
-  public static final String UPDATE_BASEDIR="updates";
+  static final String UPDATE_BASEDIR="updates";
 
   public DownloadCheckService() {
     super("DownloadCheckService");
@@ -41,17 +41,19 @@ public class DownloadCheckService extends IntentService {
     }
     catch (Exception e) {
       Log.e(getClass().getSimpleName(),
-          "Exception downloading update", e);
+        "Exception downloading update", e);
     }
   }
 
-  private String getUpdateUrl() {
-    RestAdapter restAdapter=
-        new RestAdapter.Builder().setEndpoint("https://commonsware.com")
-            .build();
+  private String getUpdateUrl() throws IOException {
+    Retrofit retrofit=
+      new Retrofit.Builder()
+        .baseUrl("https://commonsware.com")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
     BookUpdateInterface updateInterface=
-        restAdapter.create(BookUpdateInterface.class);
-    BookUpdateInfo info=updateInterface.update();
+      retrofit.create(BookUpdateInterface.class);
+    BookUpdateInfo info=updateInterface.update().execute().body();
 
     if (info.updatedOn.compareTo(OUR_BOOK_DATE) > 0) {
       return(info.updateUrl);

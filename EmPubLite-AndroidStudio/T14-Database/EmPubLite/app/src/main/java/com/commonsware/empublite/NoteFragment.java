@@ -10,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class NoteFragment extends Fragment {
   public interface Contract {
@@ -49,8 +51,8 @@ public class NoteFragment extends Fragment {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     EventBus.getDefault().register(this);
 
@@ -61,14 +63,14 @@ public class NoteFragment extends Fragment {
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     DatabaseHelper.getInstance(getActivity())
-        .updateNote(getPosition(),
-            editor.getText().toString());
+      .updateNote(getPosition(),
+        editor.getText().toString());
 
     EventBus.getDefault().unregister(this);
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override
@@ -91,7 +93,8 @@ public class NoteFragment extends Fragment {
   }
 
   @SuppressWarnings("unused")
-  public void onEventMainThread(NoteLoadedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onNoteLoaded(NoteLoadedEvent event) {
     if (event.getPosition() == getPosition()) {
       editor.setText(event.getProse());
     }

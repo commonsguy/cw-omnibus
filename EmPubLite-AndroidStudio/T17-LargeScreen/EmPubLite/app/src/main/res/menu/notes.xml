@@ -7,7 +7,7 @@
     android:title="@string/share"/>
   <item
     android:id="@+id/delete"
-    android:icon="@drawable/ic_action_discard"
+    android:icon="@drawable/ic_delete_white_24dp"
     android:showAsAction="ifRoom|withText"
     android:title="@string/delete">
   </item>

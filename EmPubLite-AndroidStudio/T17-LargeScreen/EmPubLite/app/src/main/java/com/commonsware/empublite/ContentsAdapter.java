@@ -15,13 +15,16 @@ public class ContentsAdapter extends FragmentStatePagerAdapter {
 
   @Override
   public Fragment getItem(int position) {
-    String path=contents.getChapterFile(position);
-
     return(SimpleContentFragment.newInstance(contents.getChapterPath(position)));
   }
 
   @Override
   public int getCount() {
     return(contents.getChapterCount());
+  }
+
+  @Override
+  public CharSequence getPageTitle(int position) {
+    return(contents.getChapterTitle(position));
   }
 }

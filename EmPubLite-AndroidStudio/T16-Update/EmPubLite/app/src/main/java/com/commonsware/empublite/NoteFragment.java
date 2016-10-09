@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ShareActionProvider;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class NoteFragment extends Fragment implements TextWatcher {
   public interface Contract {
@@ -25,7 +27,7 @@ public class NoteFragment extends Fragment implements TextWatcher {
   private EditText editor=null;
   private ShareActionProvider share=null;
   private Intent shareIntent=
-      new Intent(Intent.ACTION_SEND).setType("text/plain");
+    new Intent(Intent.ACTION_SEND).setType("text/plain");
 
   static NoteFragment newInstance(int position) {
     NoteFragment frag=new NoteFragment();
@@ -57,8 +59,8 @@ public class NoteFragment extends Fragment implements TextWatcher {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     EventBus.getDefault().register(this);
 
@@ -69,14 +71,14 @@ public class NoteFragment extends Fragment implements TextWatcher {
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     DatabaseHelper.getInstance(getActivity())
-        .updateNote(getPosition(),
-            editor.getText().toString());
+      .updateNote(getPosition(),
+        editor.getText().toString());
 
     EventBus.getDefault().unregister(this);
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override
@@ -84,8 +86,8 @@ public class NoteFragment extends Fragment implements TextWatcher {
     inflater.inflate(R.menu.notes, menu);
 
     share=
-        (ShareActionProvider)menu.findItem(R.id.share)
-            .getActionProvider();
+      (ShareActionProvider)menu.findItem(R.id.share)
+        .getActionProvider();
     share.setShareIntent(shareIntent);
 
     super.onCreateOptionsMenu(menu, inflater);
@@ -119,8 +121,10 @@ public class NoteFragment extends Fragment implements TextWatcher {
                             int count) {
     // ignored
   }
+
   @SuppressWarnings("unused")
-  public void onEventMainThread(NoteLoadedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onNoteLoaded(NoteLoadedEvent event) {
     if (event.getPosition() == getPosition()) {
       editor.setText(event.getProse());
     }

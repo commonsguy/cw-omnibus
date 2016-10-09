@@ -4,23 +4,28 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Process;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.google.gson.Gson;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import de.greenrobot.event.EventBus;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ModelFragment extends Fragment {
-  private BookContents contents=null;
-  private SharedPreferences prefs=null;
+  final private AtomicReference<BookContents> contents=
+    new AtomicReference<>();
+  final private AtomicReference<SharedPreferences> prefs=
+    new AtomicReference<>();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,7 @@ public class ModelFragment extends Fragment {
 
     EventBus.getDefault().register(this);
 
-    if (contents==null) {
+    if (contents.get()==null) {
       new LoadThread(host).start();
     }
   }
@@ -47,22 +52,23 @@ public class ModelFragment extends Fragment {
   }
 
   @SuppressWarnings("unused")
-  public void onEventBackgroundThread(BookUpdatedEvent event) {
+  @Subscribe(threadMode =ThreadMode.BACKGROUND)
+  public void onBookUpdated(BookUpdatedEvent event) {
     if (getActivity()!=null) {
       new LoadThread(getActivity()).start();
     }
   }
 
-  synchronized public BookContents getBook() {
-    return(contents);
+  public BookContents getBook() {
+    return(contents.get());
   }
 
-  synchronized public SharedPreferences getPrefs() {
-    return(prefs);
+  public SharedPreferences getPrefs() {
+    return(prefs.get());
   }
 
   private class LoadThread extends Thread {
-    private Context ctxt=null;
+    final private Context ctxt;
 
     LoadThread(Context ctxt) {
       super();
@@ -72,16 +78,13 @@ public class ModelFragment extends Fragment {
 
     @Override
     public void run() {
+      prefs.set(PreferenceManager.getDefaultSharedPreferences(ctxt));
+
       Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-
-      synchronized(this) {
-        prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
-      }
-
       Gson gson=new Gson();
       File baseDir=
-          new File(ctxt.getFilesDir(),
-              DownloadCheckService.UPDATE_BASEDIR);
+        new File(ctxt.getFilesDir(),
+          DownloadCheckService.UPDATE_BASEDIR);
 
       try {
         InputStream is;
@@ -93,20 +96,18 @@ public class ModelFragment extends Fragment {
           is=ctxt.getAssets().open("book/contents.json");
         }
 
+        ctxt.getAssets().open("book/contents.json");
+
         BufferedReader reader=
-            new BufferedReader(new InputStreamReader(is));
+          new BufferedReader(new InputStreamReader(is));
 
-        synchronized(this) {
-          contents=gson.fromJson(reader, BookContents.class);
-        }
-
-        is.close();
+        contents.set(gson.fromJson(reader, BookContents.class));
 
         if (baseDir.exists()) {
-          contents.setBaseDir(baseDir);
+          contents.get().setBaseDir(baseDir);
         }
 
-        EventBus.getDefault().post(new BookLoadedEvent(contents));
+        EventBus.getDefault().post(new BookLoadedEvent(getBook()));
       }
       catch (IOException e) {
         Log.e(getClass().getSimpleName(), "Exception parsing JSON", e);

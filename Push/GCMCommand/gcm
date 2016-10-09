@@ -1,2 +1,0 @@
-#!/bin/bash
-java -cp libs/commons-cli-1.2.jar:libs/gcm-server.jar:libs/json_simple-1.1.jar:build/libs/GCMCommand.jar com.commonsware.android.gcm.cmd.GCM "$@"

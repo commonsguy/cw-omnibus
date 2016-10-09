@@ -1,0 +1,16 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+	compile 'com.android.support:support-v13:24.2.1'
+	compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+
+	defaultConfig {
+    	minSdkVersion 14
+		targetSdkVersion 24
+	}
+}

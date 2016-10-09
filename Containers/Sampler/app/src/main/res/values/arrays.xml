@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="titles">
+    <item>No Container</item>
+    <item>Bottom-then-Top: LinearLayout</item>
+    <item>Bottom-then-Top: RelativeLayout</item>
+    <item>Bottom-then-Top: ConstraintLayout</item>
+    <item>Stacked Percent: LinearLayout</item>
+    <item>Stacked Percent: ConstraintLayout</item>
+    <item>URL Dialog: LinearLayout</item>
+    <item>URL Dialog: RelativeLayout</item>
+    <item>URL Dialog: TableLayout</item>
+    <item>URL Dialog: ConstraintLayout</item>
+    <item>Form: TableLayout</item>
+    <item>Form: LinearLayout</item>
+    <item>Overlap: RelativeLayout</item>
+    <item>Center: RelativeLayout</item>
+    <item>Center: ConstraintLayout</item>
+    <item>Bias: ConstraintLayout</item>
+    <item>Bias: LinearLayout</item>
+    <item>Aspect: ConstraintLayout</item>
+    <item>Center Align: LinearLayout</item>
+    <item>Center Align: ConstraintLayout</item>
+  </string-array>
+  <array name="layouts">
+    <item>@layout/no_container</item>
+    <item>@layout/bottom_then_top_ll</item>
+    <item>@layout/bottom_then_top_rl</item>
+    <item>@layout/bottom_then_top_cl</item>
+    <item>@layout/stacked_percent_ll</item>
+    <item>@layout/stacked_percent_cl</item>
+    <item>@layout/url_dialog_ll</item>
+    <item>@layout/url_dialog_rl</item>
+    <item>@layout/url_dialog_tl</item>
+    <item>@layout/url_dialog_cl</item>
+    <item>@layout/form_tl</item>
+    <item>@layout/form_ll</item>
+    <item>@layout/overlap_rl</item>
+    <item>@layout/center_rl</item>
+    <item>@layout/center_cl</item>
+    <item>@layout/bias_cl</item>
+    <item>@layout/bias_ll</item>
+    <item>@layout/aspect_cl</item>
+    <item>@layout/center_align_ll</item>
+    <item>@layout/center_align_cl</item>
+  </array>
+</resources>

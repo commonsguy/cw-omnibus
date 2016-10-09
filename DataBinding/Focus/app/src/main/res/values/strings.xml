@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Focus Binding Demo</string>
+	<string name="a_button">A Button</string>
+	<string name="str_1st_field">1st Field</string>
+	<string name="str_2nd_field">2nd Field</string>
+
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Containers Sampler</string>
+	<string name="button">Button!</string>
+	<string name="fifty_percent">Fifty Percent</string>
+	<string name="thirty_percent">Thirty Percent</string>
+	<string name="twenty_percent">Twenty Percent</string>
+	<string name="url">URL:</string>
+	<string name="ok">OK</string>
+	<string name="cancel">Cancel</string>
+  <string name="another_button">Another Button!</string>
+  <string name="name">Name:</string>
+  <string name="home_planet">Home Planet:</string>
+  <string name="android_programmer">Are you an Android programmer?</string>
+  <string name="favorite_food">Favorite Food:</string>
+  <string name="do_something">Do Something Useful With This Data</string>
+	<string name="big">I AM BIG</string>
+	<string name="small">I am small</string>
+</resources>

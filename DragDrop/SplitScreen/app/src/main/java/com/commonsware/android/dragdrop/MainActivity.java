@@ -65,14 +65,14 @@ public class MainActivity extends Activity implements
   public boolean onLongClick(View view) {
     Uri uri=PROVIDER
       .buildUpon()
-      .appendPath(StreamProvider.getUriPrefix(AUTHORITY))
-      .appendPath("assets/FreedomTower-Morning.jpg")
+      .appendEncodedPath(StreamProvider.getUriPrefix(AUTHORITY))
+      .appendEncodedPath("assets/FreedomTower-Morning.jpg")
       .build();
 
     ClipData clip=ClipData.newRawUri(getString(R.string.msg_photo), uri);
     View.DragShadowBuilder shadow=new ThumbDragShadow();
 
-    iv.startDragAndDrop(clip, shadow, null,
+    iv.startDragAndDrop(clip, shadow, Boolean.TRUE,
       View.DRAG_FLAG_GLOBAL|View.DRAG_FLAG_GLOBAL_URI_READ|
         View.DRAG_FLAG_GLOBAL_PERSISTABLE_URI_PERMISSION);
 

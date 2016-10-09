@@ -57,7 +57,7 @@ class RowController extends RecyclerView.ViewHolder
     ClipData clip=ClipData.newRawUri(title.getText(), videoUri);
     View.DragShadowBuilder shadow=new View.DragShadowBuilder(thumbnail);
 
-    itemView.startDrag(clip, shadow, null, 0);
+    itemView.startDrag(clip, shadow, Boolean.TRUE, 0);
 
     return(true);
   }

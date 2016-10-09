@@ -62,8 +62,8 @@ public class MainActivity extends Activity implements
   public boolean onLongClick(View view) {
     Uri uri=PROVIDER
       .buildUpon()
-      .appendPath(StreamProvider.getUriPrefix(AUTHORITY))
-      .appendPath("assets/FreedomTower-Morning.jpg")
+      .appendEncodedPath(StreamProvider.getUriPrefix(AUTHORITY))
+      .appendEncodedPath("assets/FreedomTower-Morning.jpg")
       .build();
 
     ClipData clip=ClipData.newRawUri(getString(R.string.msg_photo), uri);

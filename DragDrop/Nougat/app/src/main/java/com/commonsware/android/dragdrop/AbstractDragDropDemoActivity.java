@@ -102,20 +102,18 @@ abstract public class AbstractDragDropDemoActivity extends Activity implements
   public boolean onLongClick(View view) {
     Uri uri=PROVIDER
       .buildUpon()
-      .appendPath(StreamProvider.getUriPrefix(AUTHORITY))
-      .appendPath("assets/FreedomTower-Morning.jpg")
+      .appendEncodedPath(StreamProvider.getUriPrefix(AUTHORITY))
+      .appendEncodedPath("assets/FreedomTower-Morning.jpg")
       .build();
 
     ClipData clip=ClipData.newRawUri(getString(R.string.msg_photo), uri);
     View.DragShadowBuilder shadow=new ThumbDragShadow();
 
     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N) {
-      iv.startDragAndDrop(clip, shadow, null,
-        View.DRAG_FLAG_GLOBAL | View.DRAG_FLAG_GLOBAL_URI_READ |
-          View.DRAG_FLAG_GLOBAL_PERSISTABLE_URI_PERMISSION);
+      iv.startDragAndDrop(clip, shadow, Boolean.TRUE, 0);
     }
     else {
-      iv.startDrag(clip, shadow, null, 0);
+      iv.startDrag(clip, shadow, Boolean.TRUE, 0);
     }
 
     return(true);
@@ -184,11 +182,9 @@ abstract public class AbstractDragDropDemoActivity extends Activity implements
 
     switch (event.getAction()) {
       case DragEvent.ACTION_DRAG_STARTED:
-        if (event
+        if (event.getLocalState()==null || !event
           .getClipDescription()
           .hasMimeType(ClipDescription.MIMETYPE_TEXT_URILIST)) {
-        }
-        else {
           result=false;
         }
 

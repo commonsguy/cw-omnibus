@@ -1,0 +1,29 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url uri('../repository')
+        }
+    }
+    dependencies {
+        classpath 'com.commonsware.android:staticizer:0.0.1'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.commonsware.android.staticizer'
+
+staticizer {
+    packageName 'com.commonsware.android.staticizer.demo'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+}

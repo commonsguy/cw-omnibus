@@ -1,0 +1,27 @@
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile 'com.android.tools.build:gradle:2.2.2'
+    compile 'com.squareup:javapoet:1.7.0'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.guava:guava:19.0'
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+group 'com.commonsware.android'
+version '0.0.1'
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repository'))
+        }
+    }
+}

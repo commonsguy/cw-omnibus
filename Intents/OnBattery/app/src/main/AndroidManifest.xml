@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.commonsware.android.battmon"
-	android:versionCode="1"
-	android:versionName="1.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.commonsware.android.battmon" android:versionCode="1" android:versionName="1.0">
 
-	<uses-sdk
-		android:minSdkVersion="14"
-		android:targetSdkVersion="14"/>
+	<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="14"/>
 
-	<supports-screens
-		android:largeScreens="false"
-		android:normalScreens="true"
-		android:smallScreens="false"/>
+	<supports-screens android:largeScreens="false" android:normalScreens="true" android:smallScreens="false"/>
 
-	<application
-		android:icon="@drawable/cw"
-		android:label="@string/app_name"
-		android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
-		<activity
-			android:name=".BatteryMonitor"
-			android:label="@string/app_name">
+	<application android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
+		<activity android:name=".BatteryMonitor" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 

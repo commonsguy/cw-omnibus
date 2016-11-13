@@ -1,1 +1,1 @@
-include ':bigsample', ':tinysample', ':libnetcipher', ':netcipher-httpclient', ':netcipher-hurl', ':netcipher-volley', ':netcipher-okhttp3'
+include ':hurl', ':okhttp3', ':httpclient', ':volley'

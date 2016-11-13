@@ -1,0 +1,19 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    compile 'com.google.code.gson:gson:2.5'
+    compile 'info.guardianproject.netcipher:netcipher:2.0.0-alpha1'
+    compile 'info.guardianproject.netcipher:netcipher-volley:2.0.0-alpha1'
+    compile 'com.android.volley:volley:1.0.0'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+
+    defaultConfig {
+        applicationId "com.commonsware.android.http.volley"
+    }
+}

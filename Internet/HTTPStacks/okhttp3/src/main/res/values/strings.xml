@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">NetCipher OkHttp3 Demo</string>
+  <string name="msg_timeout">Tor not available; timed out</string>
+  <string name="msg_crash">Ick! We crashed!</string>
+  <string name="msg_invalid">Tor connection seems to be invalid</string>
+
+</resources>

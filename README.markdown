@@ -1,4 +1,4 @@
-Welcome to the source code for [_The Busy Coder's Guide to Android Development_](https://commonsware.com/Android)!
+https://commonsware.com/Android/previews/defining-and-using-styles
 
 ## About the Book
 
@@ -415,22 +415,6 @@ does not contain `gradlew` or its corresponding JAR for security reasons.
   - [`Dialog`](https://github.com/commonsguy/cw-omnibus/tree/master/Progress/Dialog)
   - [`Styled`](https://github.com/commonsguy/cw-omnibus/tree/master/Progress/Styled)
   - [`TitleBar`](https://github.com/commonsguy/cw-omnibus/tree/master/Progress/TitleBar)
-- `RestrictedProfiles/`
-  - [`App`](https://github.com/commonsguy/cw-omnibus/tree/master/RestrictedProfiles/App)
-  - [`Device`](https://github.com/commonsguy/cw-omnibus/tree/master/RestrictedProfiles/Device)
-- `RichText/`
-  - [`Search`](https://github.com/commonsguy/cw-omnibus/tree/master/RichText/Search)
-- `Selection/`
-  - [`AutoComplete`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/AutoComplete)
-  - [`Checklist`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/Checklist)
-  - [`Dynamic`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/Dynamic)
-  - [`Grid`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/Grid)
-  - [`HeaderDetailList`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/HeaderDetailList)
-  - [`HeaderFooter`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/HeaderFooter)
-  - [`List`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/List)
-  - [`RateList`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/RateList)
-  - [`Spinner`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/Spinner)
-  - [`ViewHolder`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/ViewHolder)
 - `RecyclerView/`
   - [`ActionModeList`](https://github.com/commonsguy/cw-omnibus/tree/master/RecyclerView/ActionModeList)
   - [`ActionModeList2`](https://github.com/commonsguy/cw-omnibus/tree/master/RecyclerView/ActionModeList2)
@@ -453,3 +437,103 @@ does not contain `gradlew` or its corresponding JAR for security reasons.
   - [`SortedList`](https://github.com/commonsguy/cw-omnibus/tree/master/RecyclerView/SortedList)
   - [`VideoList`](https://github.com/commonsguy/cw-omnibus/tree/master/RecyclerView/VideoList)
   - [`VideoTable`](https://github.com/commonsguy/cw-omnibus/tree/master/RecyclerView/VideoTable)
+- `RestrictedProfiles/`
+  - [`App`](https://github.com/commonsguy/cw-omnibus/tree/master/RestrictedProfiles/App)
+  - [`Device`](https://github.com/commonsguy/cw-omnibus/tree/master/RestrictedProfiles/Device)
+- `RichText/`
+  - [`Search`](https://github.com/commonsguy/cw-omnibus/tree/master/RichText/Search)
+- `Selection/`
+  - [`AutoComplete`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/AutoComplete)
+  - [`Checklist`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/Checklist)
+  - [`Dynamic`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/Dynamic)
+  - [`Grid`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/Grid)
+  - [`HeaderDetailList`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/HeaderDetailList)
+  - [`HeaderFooter`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/HeaderFooter)
+  - [`List`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/List)
+  - [`RateList`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/RateList)
+  - [`Spinner`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/Spinner)
+  - [`ViewHolder`](https://github.com/commonsguy/cw-omnibus/tree/master/Selection/ViewHolder)
+- `Sensor/`
+  - [`Monitor`](https://github.com/commonsguy/cw-omnibus/tree/master/Sensor/Monitor)
+- `Service/`
+  - [`Downloader`](https://github.com/commonsguy/cw-omnibus/tree/master/Service/Downloader)
+  - [`FakePlayer`](https://github.com/commonsguy/cw-omnibus/tree/master/Service/FakePlayer)
+- `SMS/`
+  - [`Monitor`](https://github.com/commonsguy/cw-omnibus/tree/master/SMS/Monitor)
+  - [`Sender`](https://github.com/commonsguy/cw-omnibus/tree/master/SMS/Sender)
+- `Styles/`
+  - [`NowStyled`](https://github.com/commonsguy/cw-omnibus/tree/master/Styles/NowStyled)
+- `SystemEvents/`
+  - [`OnBattery`](https://github.com/commonsguy/cw-omnibus/tree/master/SystemEvents/OnBattery)
+  - [`OnBoot`](https://github.com/commonsguy/cw-omnibus/tree/master/SystemEvents/OnBoot)
+- `SystemServices/`
+  - [`ClipboardMonitor`](https://github.com/commonsguy/cw-omnibus/tree/master/SystemServices/ClipboardMonitor)
+  - [`ClipIP`](https://github.com/commonsguy/cw-omnibus/tree/master/SystemServices/ClipIP)
+  - [`ClipMusic`](https://github.com/commonsguy/cw-omnibus/tree/master/SystemServices/ClipMusic)
+- `Tapjacking/`
+  - [`RelativeSecure`](https://github.com/commonsguy/cw-omnibus/tree/master/Tapjacking/RelativeSecure)
+- `Tasks/`
+  - [`Docs`](https://github.com/commonsguy/cw-omnibus/tree/master/Tasks/Docs)
+  - [`NoHistory`](https://github.com/commonsguy/cw-omnibus/tree/master/Tasks/NoHistory)
+  - [`Nukesalot`](https://github.com/commonsguy/cw-omnibus/tree/master/Tasks/Nukesalot)
+  - [`PersistentCanary`](https://github.com/commonsguy/cw-omnibus/tree/master/Tasks/PersistentCanary)
+  - [`ReparentDemo`](https://github.com/commonsguy/cw-omnibus/tree/master/Tasks/ReparentDemo)
+  - [`RoundRobin`](https://github.com/commonsguy/cw-omnibus/tree/master/Tasks/RoundRobin)
+  - [`TaskCanary`](https://github.com/commonsguy/cw-omnibus/tree/master/Tasks/TaskCanary)
+  - [`Tasksalot`](https://github.com/commonsguy/cw-omnibus/tree/master/Tasks/Tasksalot)
+- `Testing/`
+  - [`Coverage`](https://github.com/commonsguy/cw-omnibus/tree/master/Testing/Coverage)
+  - [`Espresso`](https://github.com/commonsguy/cw-omnibus/tree/master/Testing/Espresso)
+  - [`EspressoIdle`](https://github.com/commonsguy/cw-omnibus/tree/master/Testing/EspressoIdle)
+  - [`EspressoIntents`](https://github.com/commonsguy/cw-omnibus/tree/master/Testing/EspressoIntents)
+  - [`EspressoMatcher`](https://github.com/commonsguy/cw-omnibus/tree/master/Testing/EspressoMatcher)
+  - [`JUnit4`](https://github.com/commonsguy/cw-omnibus/tree/master/Testing/JUnit4)
+  - [`UiAutomator`](https://github.com/commonsguy/cw-omnibus/tree/master/Testing/UiAutomator)
+- `Threads/`
+  - [`AsyncTask`](https://github.com/commonsguy/cw-omnibus/tree/master/Threads/AsyncTask)
+  - [`PostDelayed`](https://github.com/commonsguy/cw-omnibus/tree/master/Threads/PostDelayed)
+- `Toolbar/`
+  - [`EU4YouToolbar`](https://github.com/commonsguy/cw-omnibus/tree/master/Toolbar/EU4YouToolbar)
+  - [`SplitActionBar`](https://github.com/commonsguy/cw-omnibus/tree/master/Toolbar/SplitActionBar)
+  - [`SplitActionBar2`](https://github.com/commonsguy/cw-omnibus/tree/master/Toolbar/SplitActionBar2)
+  - [`SplitActionBarCompat`](https://github.com/commonsguy/cw-omnibus/tree/master/Toolbar/SplitActionBarCompat)
+- `UnitTest/`
+  - [`Mockito`](https://github.com/commonsguy/cw-omnibus/tree/master/UnitTest/Mockito)
+  - [`POJO`](https://github.com/commonsguy/cw-omnibus/tree/master/UnitTest/POJO)
+  - [`Robolectric`](https://github.com/commonsguy/cw-omnibus/tree/master/UnitTest/Robolectric)
+- `ViewPager/`
+  - [`ActionBar`](https://github.com/commonsguy/cw-omnibus/tree/master/ViewPager/ActionBar)
+  - [`Columns1`](https://github.com/commonsguy/cw-omnibus/tree/master/ViewPager/Columns1)
+  - [`FlexColumns`](https://github.com/commonsguy/cw-omnibus/tree/master/ViewPager/FlexColumns)
+  - [`Fragments`](https://github.com/commonsguy/cw-omnibus/tree/master/ViewPager/Fragments)
+  - [`Indicator`](https://github.com/commonsguy/cw-omnibus/tree/master/ViewPager/Indicator)
+  - [`MultiView1`](https://github.com/commonsguy/cw-omnibus/tree/master/ViewPager/MultiView1)
+  - [`MultiView2`](https://github.com/commonsguy/cw-omnibus/tree/master/ViewPager/MultiView2)
+  - [`Nested`](https://github.com/commonsguy/cw-omnibus/tree/master/ViewPager/Nested)
+- `Views/`
+  - [`ColorMixer`](https://github.com/commonsguy/cw-omnibus/tree/master/Views/ColorMixer)
+  - [`ReverseChronometer`](https://github.com/commonsguy/cw-omnibus/tree/master/Views/ReverseChronometer)
+- `WebKit/`
+  - [`Browser1`](https://github.com/commonsguy/cw-omnibus/tree/master/WebKit/Browser1)
+  - [`Browser2`](https://github.com/commonsguy/cw-omnibus/tree/master/WebKit/Browser2)
+  - [`Browser3`](https://github.com/commonsguy/cw-omnibus/tree/master/WebKit/Browser3)
+  - [`Browser4`](https://github.com/commonsguy/cw-omnibus/tree/master/WebKit/Browser4)
+  - [`GeoWeb1`](https://github.com/commonsguy/cw-omnibus/tree/master/WebKit/GeoWeb1)
+  - [`GeoWeb2`](https://github.com/commonsguy/cw-omnibus/tree/master/WebKit/GeoWeb2)
+- `WebServer/`
+  - [`Reusable`](https://github.com/commonsguy/cw-omnibus/tree/master/WebServer/Reusable)
+  - [`Secure`](https://github.com/commonsguy/cw-omnibus/tree/master/WebServer/Secure)
+  - [`Simple`](https://github.com/commonsguy/cw-omnibus/tree/master/WebServer/Simple)
+  - [`Template`](https://github.com/commonsguy/cw-omnibus/tree/master/WebServer/Template)
+  - [`WebSockets`](https://github.com/commonsguy/cw-omnibus/tree/master/WebServer/WebSockets)
+- `WidgetCatalog/`
+  - [`AdapterViewFlipper`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/AdapterViewFlipper)
+  - [`CalendarView`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/CalendarView)
+  - [`DatePicker`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/DatePicker)
+  - [`ExpandableListView`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/ExpandableListView)
+  - [`SeekBar`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/SeekBar)
+  - [`SlidingDrawer`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/SlidingDrawer)
+  - [`StackView`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/StackView)
+  - [`Tab`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/Tab)
+  - [`TimePicker`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/TimePicker)
+  - [`ViewFlipper`](https://github.com/commonsguy/cw-omnibus/tree/master/WidgetCatalog/ViewFlipper)

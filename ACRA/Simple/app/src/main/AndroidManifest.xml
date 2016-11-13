@@ -25,14 +25,6 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity
-      android:name="org.acra.dialog.CrashReportDialog"
-      android:excludeFromRecents="true"
-      android:finishOnTaskLaunch="true"
-      android:launchMode="singleInstance"
-      android:process=":error_report"
-      android:theme="@style/AppTheme.Dialog"
-      tools:replace="android:theme" />
   </application>
 
 </manifest>

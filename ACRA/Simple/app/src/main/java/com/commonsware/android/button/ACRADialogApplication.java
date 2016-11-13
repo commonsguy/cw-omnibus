@@ -26,6 +26,7 @@ import org.acra.annotation.ReportsCrashes;
   resDialogText = R.string.msg_acra_dialog,
   resDialogCommentPrompt = R.string.msg_acra_comment_prompt,
   resDialogEmailPrompt = R.string.msg_acra_email_prompt,
+  resDialogTheme = R.style.AppTheme_Dialog,
   httpMethod=org.acra.sender.HttpSender.Method.PUT,
   reportType=org.acra.sender.HttpSender.Type.JSON
 )

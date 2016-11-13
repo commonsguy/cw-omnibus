@@ -1,0 +1,18 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 24
+    }
+}
+
+dependencies {
+    provided 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    provided project(':api')
+}

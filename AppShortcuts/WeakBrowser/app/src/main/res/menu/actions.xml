@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/search"
+    android:icon="@drawable/ic_search_white_24dp"
+    android:showAsAction="ifRoom"
+    android:title="@string/search" />
+  <item
+    android:id="@+id/settings"
+    android:enabled="@bool/is_nougat_mr1"
+    android:showAsAction="never"
+    android:title="@string/menu_settings" />
+</menu>

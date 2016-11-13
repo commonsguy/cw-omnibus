@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <SwitchPreference
+    android:key="enabled"
+    android:title="@string/enabled_label"
+    android:defaultValue="false"/>
+  <MultiSelectListPreference
+    android:key="bookmarks"
+    android:dependency="enabled"
+    android:title="Bookmarks"
+    android:dialogTitle="@string/bookmarks_title"/>
+</PreferenceScreen>

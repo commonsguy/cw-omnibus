@@ -1,0 +1,25 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 24
+        buildConfigField "String", "EXTENSION_URL", '"'+EXTENSION_URL+'"'
+    }
+}
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'com.commonsware.cwac:security:0.8.0'
+    compile 'com.commonsware.cwac:netsecurity:0.2.0'
+    compile project(':api')
+    compile 'de.greenrobot:eventbus:2.4.0'
+}

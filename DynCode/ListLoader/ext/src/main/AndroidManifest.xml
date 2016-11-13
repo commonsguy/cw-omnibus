@@ -1,0 +1,6 @@
+<manifest package="com.commonsware.android.dyncode.ext"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <application android:allowBackup="false" />
+
+</manifest>

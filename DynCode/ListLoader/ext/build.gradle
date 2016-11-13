@@ -1,0 +1,16 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+
+    defaultConfig {
+        applicationId "com.commonsware.android.dyncode.ext"
+        minSdkVersion 15
+        targetSdkVersion 24
+    }
+}
+
+dependencies {
+    compile project(':impl')
+}

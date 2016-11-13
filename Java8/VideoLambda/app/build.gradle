@@ -1,0 +1,26 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        applicationId 'com.commonsware.android.lambda.video'
+
+        jackOptions {
+            enabled true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}

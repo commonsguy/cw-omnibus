@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">WeakBrowser</string>
+  <string name="search">Search</string>
+  <string name="search_long_desc">Use a search engine</string>
+  <string name="enabled_label">Show App Shortcuts</string>
+  <string name="bookmarks_title">Choose up to 5 app shortcuts</string>
+  <string name="menu_settings">Settings</string>
+</resources>

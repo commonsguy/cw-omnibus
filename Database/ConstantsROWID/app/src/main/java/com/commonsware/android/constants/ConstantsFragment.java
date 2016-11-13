@@ -67,7 +67,7 @@ public class ConstantsFragment extends ListFragment implements
 
   @Override
   public void onDestroy() {
-    if (task != null) {
+    if (task!=null) {
       task.cancel(false);
     }
 
@@ -116,15 +116,15 @@ public class ConstantsFragment extends ListFragment implements
     task=new InsertTask().execute(values);
   }
 
-
   abstract private class BaseTask<T> extends AsyncTask<T, Void, Cursor> {
     @Override
     public void onPostExecute(Cursor result) {
       ((CursorAdapter)getListAdapter()).changeCursor(result);
+      current=result;
       task=null;
     }
 
-    protected Cursor doQuery() {
+    Cursor doQuery() {
       Cursor result=
           db
               .getReadableDatabase()

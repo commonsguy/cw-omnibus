@@ -1,7 +1,7 @@
 This sample Android app demonstrates
-the use of OkHttp 3.x.
+basic use of idling resources as part of Espresso testing.
 
 This app is covered in 
-[the chapter on Internet access](https://commonsware.com/Android/previews/internet-access)
+[the chapter on Espresso](https://commonsware.com/Android/previews/testing-with-espresso)
 in [*The Busy Coder's Guide to Android Development*](https://commonsware.com/Android/).
 

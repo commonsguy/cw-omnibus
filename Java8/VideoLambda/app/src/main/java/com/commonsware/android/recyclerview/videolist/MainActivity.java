@@ -169,8 +169,6 @@ public class MainActivity extends RecyclerViewActivity implements
       else {
         ArrayList<Video> temp=new ArrayList<>();
 
-        c.moveToFirst();
-
         while (c.moveToNext()) {
           temp.add(new Video(c));
         }

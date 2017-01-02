@@ -51,56 +51,39 @@ public class AlarmReceiver extends BroadcastReceiver {
   }
 
   private void notifyPrivate(Context ctxt, NotificationManagerCompat mgr) {
-    Notification pub=buildPublic(ctxt).build();
+    Notification pub=buildBase(ctxt, R.string.public_title).build();
 
-    mgr.notify(NOTIFY_ID, buildNormal(ctxt).setPublicVersion(pub).build());
+    mgr.notify(NOTIFY_ID,
+      buildBase(ctxt, R.string.private_title).setPublicVersion(pub).build());
   }
 
   private void notifyPublic(Context ctxt, NotificationManagerCompat mgr) {
     mgr.notify(NOTIFY_ID,
-        buildNormal(ctxt)
+        buildBase(ctxt, R.string.public_title)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build());
   }
 
   private void notifySecret(Context ctxt, NotificationManagerCompat mgr) {
     mgr.notify(NOTIFY_ID,
-        buildNormal(ctxt)
+        buildBase(ctxt, R.string.secret_title)
             .setVisibility(NotificationCompat.VISIBILITY_SECRET)
             .build());
   }
 
   private void notifyHeadsUp(Context ctxt, NotificationManagerCompat mgr) {
     mgr.notify(NOTIFY_ID,
-        buildNormal(ctxt)
+        buildBase(ctxt, R.string.headsup_title)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build());
   }
 
-  private NotificationCompat.Builder buildNormal(Context ctxt) {
+  private NotificationCompat.Builder buildBase(Context ctxt, int titleId) {
     NotificationCompat.Builder b=new NotificationCompat.Builder(ctxt);
 
     b.setAutoCancel(true)
         .setDefaults(Notification.DEFAULT_ALL)
-        .setContentTitle(ctxt.getString(R.string.download_complete))
-        .setContentText(ctxt.getString(R.string.fun))
-        .setContentIntent(buildPendingIntent(ctxt, Settings.ACTION_SECURITY_SETTINGS))
-        .setSmallIcon(android.R.drawable.stat_sys_download_done)
-        .setTicker(ctxt.getString(R.string.download_complete))
-        .addAction(android.R.drawable.ic_media_play,
-            ctxt.getString(R.string.play),
-            buildPendingIntent(ctxt, Settings.ACTION_SETTINGS));
-
-    return(b);
-  }
-
-  private NotificationCompat.Builder buildPublic(Context ctxt) {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(ctxt);
-
-    b.setAutoCancel(true)
-        .setDefaults(Notification.DEFAULT_ALL)
-        .setContentTitle(ctxt.getString(R.string.public_title))
-        .setContentText(ctxt.getString(R.string.public_text))
+        .setContentTitle(ctxt.getString(titleId))
         .setContentIntent(buildPendingIntent(ctxt, Settings.ACTION_SECURITY_SETTINGS))
         .setSmallIcon(android.R.drawable.stat_sys_download_done)
         .addAction(android.R.drawable.ic_media_play,

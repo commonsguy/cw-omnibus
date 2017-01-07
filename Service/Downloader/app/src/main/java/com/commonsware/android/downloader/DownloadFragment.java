@@ -22,6 +22,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v13.app.FragmentCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -29,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-import android.support.v13.app.FragmentCompat;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class DownloadFragment extends Fragment implements
@@ -49,8 +49,8 @@ public class DownloadFragment extends Fragment implements
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     IntentFilter f=new IntentFilter(Downloader.ACTION_COMPLETE);
 
@@ -59,11 +59,11 @@ public class DownloadFragment extends Fragment implements
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     LocalBroadcastManager.getInstance(getActivity())
                          .unregisterReceiver(onEvent);
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override

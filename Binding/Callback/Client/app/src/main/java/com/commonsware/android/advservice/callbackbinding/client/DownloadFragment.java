@@ -35,7 +35,6 @@ import android.widget.Toast;
 import com.commonsware.android.advservice.callbackbinding.IDownload;
 import com.commonsware.android.advservice.callbackbinding.IDownloadCallback;
 import java.util.List;
-import de.greenrobot.event.EventBus;
 
 public class DownloadFragment extends Fragment implements
     OnClickListener, ServiceConnection {
@@ -49,7 +48,6 @@ public class DownloadFragment extends Fragment implements
     super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
-    EventBus.getDefault().register(this);
 
     appContext=(Application)getActivity().getApplicationContext();
 
@@ -94,8 +92,6 @@ public class DownloadFragment extends Fragment implements
     appContext.unbindService(this);
     disconnect();
 
-    EventBus.getDefault().unregister(this);
-
     super.onDestroy();
   }
 
@@ -121,17 +117,6 @@ public class DownloadFragment extends Fragment implements
     disconnect();
   }
 
-  public void onEventMainThread(CallbackEvent event) {
-    if (getActivity()!=null) {
-      if (event.succeeded) {
-        Toast.makeText(getActivity(), "Download successful!", Toast.LENGTH_LONG).show();
-      }
-      else {
-        Toast.makeText(getActivity(), event.msg, Toast.LENGTH_LONG).show();
-      }
-    }
-  }
-
   private void disconnect() {
     binding=null;
     btn.setEnabled(false);
@@ -140,22 +125,22 @@ public class DownloadFragment extends Fragment implements
   IDownloadCallback.Stub cb=new IDownloadCallback.Stub() {
     @Override
     public void onSuccess() throws RemoteException {
-      EventBus.getDefault().post(new CallbackEvent(true, null));
+      getActivity().runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          Toast.makeText(getActivity(), "Download successful!", Toast.LENGTH_LONG).show();
+        }
+      });
     }
 
     @Override
-    public void onFailure(String msg) throws RemoteException {
-      EventBus.getDefault().post(new CallbackEvent(false, msg));
+    public void onFailure(final String msg) throws RemoteException {
+      getActivity().runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+        }
+      });
     }
   };
-
-  static class CallbackEvent {
-    boolean succeeded=false;
-    String msg=null;
-
-    CallbackEvent(boolean succeeded, String msg) {
-      this.succeeded=succeeded;
-      this.msg=msg;
-    }
-  }
 }

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'net.zetetic:android-database-sqlcipher:3.5.0@aar'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
 }
 
 android {

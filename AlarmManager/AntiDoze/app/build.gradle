@@ -1,18 +1,18 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.android.support:support-v13:23.0.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.android.support:support-v13:25.0.1'
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
-	defaultConfig {
+	  defaultConfig {
         minSdkVersion 19
-		targetSdkVersion 23
-	}
+		    targetSdkVersion 23
+	  }
 
     productFlavors {
         foreground {

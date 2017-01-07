@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-	compile 'com.android.support:support-v13:25.0.0'
-	compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
+	compile 'com.android.support:support-v13:25.1.0'
+	compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
 
 	defaultConfig {
     	minSdkVersion 14
-		targetSdkVersion 25
+			targetSdkVersion 25
 	}
 }

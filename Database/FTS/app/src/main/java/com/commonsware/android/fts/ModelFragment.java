@@ -20,8 +20,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import de.greenrobot.event.EventBus;
-import retrofit.RestAdapter;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ModelFragment extends Fragment {
   private Context app=null;
@@ -52,7 +55,8 @@ public class ModelFragment extends Fragment {
     super.onDetach();
   }
 
-  public void onEventBackgroundThread(SearchRequestedEvent event) {
+  @Subscribe(threadMode =ThreadMode.BACKGROUND)
+  public void onSearchRequested(SearchRequestedEvent event) {
     try {
       Cursor results=DatabaseHelper.getInstance(app).loadQuestions(app, event.match);
 
@@ -67,15 +71,17 @@ public class ModelFragment extends Fragment {
   class FetchQuestionsThread extends Thread {
     @Override
     public void run() {
-      RestAdapter restAdapter=
-          new RestAdapter.Builder().setEndpoint("https://api.stackexchange.com")
-              .build();
+      Retrofit retrofit=
+        new Retrofit.Builder()
+          .baseUrl("https://api.stackexchange.com")
+          .addConverterFactory(GsonConverterFactory.create())
+          .build();
       StackOverflowInterface so=
-          restAdapter.create(StackOverflowInterface.class);
-
-      SOQuestions questions=so.questions("android");
+        retrofit.create(StackOverflowInterface.class);
 
       try {
+        SOQuestions questions=so.questions("android").execute().body();
+
         DatabaseHelper
             .getInstance(app)
             .insertQuestions(app, questions.items);

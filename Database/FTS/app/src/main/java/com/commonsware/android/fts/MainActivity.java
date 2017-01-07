@@ -18,9 +18,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import de.greenrobot.event.EventBus;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements QuestionsFragment.Contract {
   private static final String MODEL="model";
   private ModelFragment model=null;
 
@@ -43,18 +42,7 @@ public class MainActivity extends Activity {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
-    EventBus.getDefault().register(this);
-  }
-
-  @Override
-  public void onPause() {
-    EventBus.getDefault().unregister(this);
-    super.onPause();
-  }
-
-  public void onEventMainThread(QuestionClickedEvent event) {
-    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(event.url)));
+  public void onQuestionClicked(String url) {
+    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
   }
 }

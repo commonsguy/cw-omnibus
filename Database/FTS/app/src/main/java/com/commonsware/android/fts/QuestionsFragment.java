@@ -28,10 +28,16 @@ import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class QuestionsFragment extends ListFragment
     implements SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
+  interface Contract {
+    void onQuestionClicked(String url);
+  }
+
   private static final String STATE_QUERY="q";
   private SearchView sv=null;
   private String initialQuery=null;
@@ -47,6 +53,20 @@ public class QuestionsFragment extends ListFragment
       initialQuery=state.getString(STATE_QUERY);
       lastQuery=initialQuery;
     }
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+
+    EventBus.getDefault().register(this);
+  }
+
+  @Override
+  public void onStop() {
+    EventBus.getDefault().unregister(this);
+
+    super.onStop();
   }
 
   @Override
@@ -66,20 +86,6 @@ public class QuestionsFragment extends ListFragment
 
     adapter.setViewBinder(new QuestionBinder());
     setListAdapter(adapter);
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-
-    EventBus.getDefault().registerSticky(this);
-  }
-
-  @Override
-  public void onPause() {
-    EventBus.getDefault().unregister(this);
-
-    super.onPause();
   }
 
   @Override
@@ -106,7 +112,7 @@ public class QuestionsFragment extends ListFragment
     Cursor row=(Cursor)adapter.getItem(position);
     int link=row.getColumnIndex(DatabaseHelper.LINK);
 
-    EventBus.getDefault().post(new QuestionClickedEvent(row.getString(link)));
+    ((Contract)getActivity()).onQuestionClicked(row.getString(link));
   }
 
   @Override
@@ -133,7 +139,8 @@ public class QuestionsFragment extends ListFragment
     return(true);
   }
 
-  public void onEventMainThread(ModelLoadedEvent event) {
+  @Subscribe(sticky = true, threadMode =ThreadMode.MAIN)
+  public void onModelLoaded(ModelLoadedEvent event) {
     ((SimpleCursorAdapter)getListAdapter()).changeCursor(event.model);
 
     if (sv!=null) {

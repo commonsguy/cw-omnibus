@@ -3,5 +3,8 @@
 
 	<string name="hello">Hello World, CameraContentDemoActivity!</string>
 	<string name="app_name">Camera FileProvider Demo</string>
+	<string name="msg_sorry">Sorry, but we need permission to continue!</string>
+	<string name="msg_no_camera">I cannot find a camera app!</string>
+	<string name="msg_no_viewer">I cannot find an image viewer app that supports a content: Uri</string>
 
 </resources>

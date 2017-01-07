@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2008-2016 CommonsWare, LLC
+ Copyright (c) 2008-2017 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,7 +14,8 @@
 
 package com.commonsware.android.camcon;
 
-import android.app.Activity;
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,10 +25,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.widget.Toast;
 import java.io.File;
 import java.util.List;
 
-public class CameraContentDemoActivity extends Activity {
+public class MainActivity extends AbstractPermissionActivity {
   private static final String EXTRA_FILENAME=
     "com.commonsware.android.camcon.EXTRA_FILENAME";
   private static final String FILENAME="CameraContentDemo.jpeg";
@@ -36,14 +38,22 @@ public class CameraContentDemoActivity extends Activity {
     BuildConfig.APPLICATION_ID+".provider";
   private static final String PHOTOS="photos";
   private File output=null;
-  private Uri outputUri=null;
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  protected String[] getDesiredPermissions() {
+    return(new String[] {Manifest.permission.CAMERA});
+  }
 
-    Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_sorry, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
 
+  @Override
+  protected void onReady(Bundle savedInstanceState) {
     if (savedInstanceState==null) {
       output=new File(new File(getFilesDir(), PHOTOS), FILENAME);
 
@@ -53,14 +63,10 @@ public class CameraContentDemoActivity extends Activity {
       else {
         output.getParentFile().mkdirs();
       }
-    }
-    else {
-      output=(File)savedInstanceState.getSerializable(EXTRA_FILENAME);
-    }
 
-    outputUri=FileProvider.getUriForFile(this, AUTHORITY, output);
+      Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+      Uri outputUri=FileProvider.getUriForFile(this, AUTHORITY, output);
 
-    if (savedInstanceState==null) {
       i.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
 
       if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
@@ -85,7 +91,16 @@ public class CameraContentDemoActivity extends Activity {
         }
       }
 
-      startActivityForResult(i, CONTENT_REQUEST);
+      try {
+        startActivityForResult(i, CONTENT_REQUEST);
+      }
+      catch (ActivityNotFoundException e) {
+        Toast.makeText(this, R.string.msg_no_camera, Toast.LENGTH_LONG).show();
+        finish();
+      }
+    }
+    else {
+      output=(File)savedInstanceState.getSerializable(EXTRA_FILENAME);
     }
   }
 
@@ -102,10 +117,18 @@ public class CameraContentDemoActivity extends Activity {
     if (requestCode == CONTENT_REQUEST) {
       if (resultCode == RESULT_OK) {
         Intent i=new Intent(Intent.ACTION_VIEW);
-        
+        Uri outputUri=FileProvider.getUriForFile(this, AUTHORITY, output);
+
         i.setDataAndType(outputUri, "image/jpeg");
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(i);
+
+        try {
+          startActivity(i);
+        }
+        catch (ActivityNotFoundException e) {
+          Toast.makeText(this, R.string.msg_no_viewer, Toast.LENGTH_LONG).show();
+        }
+
         finish();
       }
     }

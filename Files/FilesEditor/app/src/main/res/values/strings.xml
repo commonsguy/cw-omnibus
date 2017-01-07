@@ -4,5 +4,6 @@
 	<string name="internal">Internal</string>
 	<string name="external">External</string>
 	<string name="pub">Public</string>
+	<string name="msg_sorry">Sorry, but we need permission to continue!</string>
 
 </resources>

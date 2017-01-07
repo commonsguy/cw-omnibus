@@ -38,10 +38,6 @@ public class SampleAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT) {
-      return(2);
-    }
-
     return(3);
   }
 

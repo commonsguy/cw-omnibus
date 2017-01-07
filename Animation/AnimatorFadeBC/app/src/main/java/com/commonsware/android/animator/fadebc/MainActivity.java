@@ -33,17 +33,17 @@ public class MainActivity extends Activity implements Runnable {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     run();
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     fadee.removeCallbacks(this);
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override

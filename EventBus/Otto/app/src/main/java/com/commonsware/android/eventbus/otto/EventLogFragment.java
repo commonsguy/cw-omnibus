@@ -49,17 +49,17 @@ public class EventLogFragment extends ListFragment {
   }
   
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
     
     ScheduledService.bus.register(this);
   }
   
   @Override
-  public void onPause() {
+  public void onStop() {
     ScheduledService.bus.unregister(this);
     
-    super.onPause();
+    super.onStop();
   }
 
   @Subscribe

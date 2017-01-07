@@ -22,11 +22,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import de.greenrobot.event.EventBus;
 
 public class EventLogFragment extends ListFragment {
   private EventLogAdapter adapter=null;
@@ -46,20 +48,21 @@ public class EventLogFragment extends ListFragment {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     EventBus.getDefault().register(this);
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     EventBus.getDefault().unregister(this);
 
-    super.onPause();
+    super.onStop();
   }
 
-  public void onEventMainThread(final RandomEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onRandomEvent(final RandomEvent event) {
     adapter.add(event);
   }
 

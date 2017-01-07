@@ -54,8 +54,8 @@ public class EventLogFragment extends ListFragment {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     IntentFilter filter=new IntentFilter(ACTION_EVENT);
 
@@ -64,11 +64,11 @@ public class EventLogFragment extends ListFragment {
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     LocalBroadcastManager.getInstance(getActivity())
                          .unregisterReceiver(onEvent);
 
-    super.onPause();
+    super.onStop();
   }
 
   class EventLogAdapter extends ArrayAdapter<Intent> {

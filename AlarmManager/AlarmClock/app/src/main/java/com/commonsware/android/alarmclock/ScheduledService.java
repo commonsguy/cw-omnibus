@@ -17,13 +17,13 @@ package com.commonsware.android.alarmclock;
 import android.content.Intent;
 import android.util.Log;
 import com.commonsware.cwac.wakeful.WakefulIntentService;
+import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Random;
-import de.greenrobot.event.EventBus;
 
 public class ScheduledService extends WakefulIntentService {
   private Random rng=new Random();

@@ -49,17 +49,17 @@ public class EventLogFragment extends ListFragment {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     EventBus.getDefault().register(this);
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     EventBus.getDefault().unregister(this);
 
-    super.onPause();
+    super.onStop();
   }
 
   public void onEventMainThread(final RandomEvent event) {

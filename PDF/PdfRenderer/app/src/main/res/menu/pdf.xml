@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/pdfs"
+    android:icon="@drawable/ic_folder_open_white_24dp"
+    android:showAsAction="always"
+    android:title="@string/menu_pick">
+  </item>
+</menu>

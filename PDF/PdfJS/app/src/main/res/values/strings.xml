@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">pdf.JS Demo</string>
+  <string name="menu_pdf_files">PDF Files</string>
+  <string name="menu_presentation">Presentation</string>
+  <string name="menu_taxes">IRS 1040A</string>
+  <string name="menu_open">Picker</string>
+</resources>

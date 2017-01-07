@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">PdfRenderer Demo</string>
+	<string name="menu_pick">Pick PDF</string>
+	<string name="toast_open">Could not open that document!</string>
+
+</resources>

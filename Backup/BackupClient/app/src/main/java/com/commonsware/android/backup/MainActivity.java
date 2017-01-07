@@ -24,7 +24,9 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import io.karim.MaterialTabs;
 
 public class MainActivity extends Activity  {
@@ -46,8 +48,8 @@ public class MainActivity extends Activity  {
   }
 
   @Override
-  protected void onResume() {
-    super.onResume();
+  protected void onStart() {
+    super.onStart();
 
     EventBus.getDefault().register(this);
 
@@ -57,7 +59,7 @@ public class MainActivity extends Activity  {
   }
 
   @Override
-  protected void onPause() {
+  protected void onStop() {
     EventBus.getDefault().unregister(this);
 
     if (prefs!=null) {
@@ -67,7 +69,7 @@ public class MainActivity extends Activity  {
         .apply();
     }
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override
@@ -93,19 +95,22 @@ public class MainActivity extends Activity  {
     return(super.onOptionsItemSelected(item));
   }
 
-  public void onEventMainThread(BackupService.BackupCompletedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onCompleted(BackupService.BackupCompletedEvent event) {
     Toast
       .makeText(this, R.string.msg_backup_completed, Toast.LENGTH_LONG)
       .show();
   }
 
-  public void onEventMainThread(BackupService.BackupFailedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onFailed(BackupService.BackupFailedEvent event) {
     Toast
       .makeText(this, R.string.msg_backup_failed, Toast.LENGTH_LONG)
       .show();
   }
 
-  public void onEventMainThread(PrefsLoadedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onPrefsLoaded(PrefsLoadedEvent event) {
     this.prefs=event.prefs;
 
     int lastVisited=prefs.getInt(PREF_LAST_VISITED, -1);

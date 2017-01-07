@@ -18,7 +18,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class RestoreProgressActivity extends Activity {
   @Override
@@ -36,25 +38,27 @@ public class RestoreProgressActivity extends Activity {
   }
 
   @Override
-  protected void onResume() {
-    super.onResume();
+  protected void onStart() {
+    super.onStart();
 
     EventBus.getDefault().register(this);
   }
 
   @Override
-  protected void onPause() {
+  protected void onStop() {
     EventBus.getDefault().unregister(this);
 
-    super.onPause();
+    super.onStop();
   }
 
-  public void onEventMainThread(RestoreService.RestoreCompletedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onCompleted(RestoreService.RestoreCompletedEvent event) {
     startActivity(new Intent(this, MainActivity.class));
     finish();
   }
 
-  public void onEventMainThread(RestoreService.RestoreFailedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onFailed(RestoreService.RestoreFailedEvent event) {
     Toast.makeText(this, R.string.msg_restore_failed,
       Toast.LENGTH_LONG).show();
     finish();

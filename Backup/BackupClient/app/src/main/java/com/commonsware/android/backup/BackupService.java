@@ -25,13 +25,13 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import de.greenrobot.event.EventBus;
 
 public class BackupService extends IntentService {
   static final OkHttpClient OKHTTP_CLIENT=new OkHttpClient();

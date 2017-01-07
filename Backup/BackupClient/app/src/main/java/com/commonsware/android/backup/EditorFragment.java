@@ -77,13 +77,13 @@ public class EditorFragment extends Fragment {
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     if (loaded) {
       new SaveThread(editor.getText().toString(),
           (File)getArguments().getSerializable(KEY_FILE)).start();
     }
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override

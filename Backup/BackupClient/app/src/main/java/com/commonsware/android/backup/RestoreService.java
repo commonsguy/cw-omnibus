@@ -19,8 +19,8 @@ import android.content.Intent;
 import android.util.Log;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import org.greenrobot.eventbus.EventBus;
 import java.io.File;
-import de.greenrobot.event.EventBus;
 import okio.BufferedSink;
 import okio.Okio;
 

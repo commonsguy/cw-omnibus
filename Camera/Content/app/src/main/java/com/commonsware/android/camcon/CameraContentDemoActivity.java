@@ -36,8 +36,7 @@ public class CameraContentDemoActivity extends Activity {
     Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
     if (savedInstanceState==null) {
-      File dir=
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+      File dir=getExternalFilesDir(Environment.DIRECTORY_DCIM);
 
       dir.mkdirs();
       output=new File(dir, FILENAME);

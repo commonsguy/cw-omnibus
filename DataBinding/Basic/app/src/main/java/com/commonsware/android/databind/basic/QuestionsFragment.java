@@ -28,14 +28,18 @@ import android.widget.Toast;
 import com.commonsware.android.databind.basic.databinding.RowBinding;
 import com.squareup.picasso.Picasso;
 import java.util.List;
-import de.greenrobot.event.EventBus;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QuestionsFragment extends ListFragment implements
     Callback<SOQuestions> {
+  interface Contract {
+    void onQuestion(Item question);
+  }
+
   @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container,
@@ -45,13 +49,15 @@ public class QuestionsFragment extends ListFragment implements
 
     setRetainInstance(true);
 
-    RestAdapter restAdapter=
-        new RestAdapter.Builder().setEndpoint("https://api.stackexchange.com")
-                                 .build();
+    Retrofit retrofit=
+      new Retrofit.Builder()
+        .baseUrl("https://api.stackexchange.com")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
     StackOverflowInterface so=
-        restAdapter.create(StackOverflowInterface.class);
+      retrofit.create(StackOverflowInterface.class);
 
-    so.questions("android", this);
+    so.questions("android").enqueue(this);
 
     return(result);
   }
@@ -60,20 +66,21 @@ public class QuestionsFragment extends ListFragment implements
   public void onListItemClick(ListView l, View v, int position, long id) {
     Item item=((ItemsAdapter)getListAdapter()).getItem(position);
 
-    EventBus.getDefault().post(new QuestionClickedEvent(item));
+    ((Contract)getActivity()).onQuestion(item);
   }
 
   @Override
-  public void failure(RetrofitError exception) {
-    Toast.makeText(getActivity(), exception.getMessage(),
-                   Toast.LENGTH_LONG).show();
+  public void onResponse(Call<SOQuestions> call,
+                         Response<SOQuestions> response) {
+    setListAdapter(new ItemsAdapter(response.body().items));
+  }
+
+  @Override
+  public void onFailure(Call<SOQuestions> call, Throwable t) {
+    Toast.makeText(getActivity(), t.getMessage(),
+      Toast.LENGTH_LONG).show();
     Log.e(getClass().getSimpleName(),
-          "Exception from Retrofit request to StackOverflow", exception);
-  }
-
-  @Override
-  public void success(SOQuestions questions, Response response) {
-    setListAdapter(new ItemsAdapter(questions.items));
+      "Exception from Retrofit request to StackOverflow", t);
   }
 
   class ItemsAdapter extends ArrayAdapter<Item> {

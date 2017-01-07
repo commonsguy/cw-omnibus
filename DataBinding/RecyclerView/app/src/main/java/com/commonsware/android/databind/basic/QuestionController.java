@@ -19,7 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import com.commonsware.android.databind.basic.databinding.RowBinding;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 public class QuestionController extends RecyclerView.ViewHolder
   implements View.OnTouchListener {

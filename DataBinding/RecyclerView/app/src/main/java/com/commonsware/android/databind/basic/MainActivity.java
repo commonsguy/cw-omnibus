@@ -18,8 +18,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends Activity {
   @Override
@@ -45,8 +46,9 @@ public class MainActivity extends Activity {
     super.onPause();
   }
 
-  public void onEventMainThread(QuestionClickedEvent event) {
+  @Subscribe(threadMode =ThreadMode.MAIN)
+  public void onQuestionClicked(QuestionClickedEvent event) {
     startActivity(new Intent(Intent.ACTION_VIEW,
-                             Uri.parse(event.question.link)));
+      Uri.parse(event.question.link)));
   }
 }

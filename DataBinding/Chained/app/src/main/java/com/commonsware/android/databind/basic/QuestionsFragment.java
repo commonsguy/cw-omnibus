@@ -32,21 +32,22 @@ import com.commonsware.android.databind.basic.databinding.RowBinding;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QuestionsFragment extends RecyclerViewFragment {
-  private ArrayList<Question> questions
-    =new ArrayList<Question>();
-  private HashMap<String, Question> questionMap=
-    new HashMap<String, Question>();
-  RestAdapter restAdapter=
-    new RestAdapter.Builder().setEndpoint("https://api.stackexchange.com")
+  private ArrayList<Question> questions=new ArrayList<Question>();
+  private HashMap<String, Question> questionMap=new HashMap<String, Question>();
+  Retrofit retrofit=
+    new Retrofit.Builder()
+      .baseUrl("https://api.stackexchange.com")
+      .addConverterFactory(GsonConverterFactory.create())
       .build();
   StackOverflowInterface so=
-    restAdapter.create(StackOverflowInterface.class);
+    retrofit.create(StackOverflowInterface.class);
 
   @BindingAdapter({"app:imageUrl", "app:placeholder", "app:error"})
   public static void bindImageView(ImageView iv,
@@ -77,11 +78,11 @@ public class QuestionsFragment extends RecyclerViewFragment {
 
     setLayoutManager(new LinearLayoutManager(getActivity()));
 
-    so.questions("android", new Callback<SOQuestions>() {
+    so.questions("android").enqueue(new Callback<SOQuestions>() {
       @Override
-      public void success(SOQuestions results,
-                          Response response) {
-        for (Item item : results.items) {
+      public void onResponse(Call<SOQuestions> call,
+                             Response<SOQuestions> response) {
+        for (Item item : response.body().items) {
           Question question=new Question(item);
 
           questions.add(question);
@@ -92,8 +93,8 @@ public class QuestionsFragment extends RecyclerViewFragment {
       }
 
       @Override
-      public void failure(RetrofitError error) {
-        onError(error);
+      public void onFailure(Call<SOQuestions> call, Throwable t) {
+        onError(t);
       }
     });
   }
@@ -122,11 +123,11 @@ public class QuestionsFragment extends RecyclerViewFragment {
 
     String ids=TextUtils.join(";", idList);
 
-    so.update(ids, new Callback<SOQuestions>() {
+    so.update(ids).enqueue(new Callback<SOQuestions>() {
       @Override
-      public void success(SOQuestions soQuestions,
-                          Response response) {
-        for (Item item : soQuestions.items) {
+      public void onResponse(Call<SOQuestions> call,
+                             Response<SOQuestions> response) {
+        for (Item item : response.body().items) {
           Question question=questionMap.get(item.id);
 
           if (question!=null) {
@@ -136,13 +137,13 @@ public class QuestionsFragment extends RecyclerViewFragment {
       }
 
       @Override
-      public void failure(RetrofitError error) {
-        onError(error);
+      public void onFailure(Call<SOQuestions> call, Throwable t) {
+        onError(t);
       }
     });
   }
 
-  private void onError(RetrofitError error) {
+  private void onError(Throwable error) {
     Toast.makeText(getActivity(), error.getMessage(),
       Toast.LENGTH_LONG).show();
 

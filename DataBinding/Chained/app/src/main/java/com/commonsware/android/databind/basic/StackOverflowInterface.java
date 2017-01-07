@@ -14,15 +14,15 @@
 
 package com.commonsware.android.databind.basic;
 
-import retrofit.Callback;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface StackOverflowInterface {
   @GET("/2.1/questions?order=desc&sort=creation&site=stackoverflow")
-  void questions(@Query("tagged") String tags, Callback<SOQuestions> cb);
+  Call<SOQuestions> questions(@Query("tagged") String tags);
 
   @GET("/2.1/questions/{ids}?site=stackoverflow")
-  void update(@Path("ids") String questionIds, Callback<SOQuestions> cb);
+  Call<SOQuestions> update(@Path("ids") String tags);
 }

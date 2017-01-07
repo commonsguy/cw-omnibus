@@ -1,0 +1,20 @@
+apply plugin: 'com.android.application'
+
+repositories {
+  maven { url "https://jitpack.io" }
+}
+
+dependencies {
+  	compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+
+	  defaultConfig {
+        minSdkVersion 15
+		    targetSdkVersion 25
+	  }
+}

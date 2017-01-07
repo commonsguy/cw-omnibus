@@ -1,0 +1,16 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+  	compile 'com.android.support:recyclerview-v7:25.1.0'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+
+	  defaultConfig {
+        minSdkVersion 15
+		    targetSdkVersion 25
+        applicationId 'com.commonsware.android.rvp.snap'
+	  }
+}

@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+repositories {
+  maven {
+    url "https://s3.amazonaws.com/repo.commonsware.com"
+  }
+}
+
+dependencies {
+  	compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.commonsware.cwac:crossport:0.0.1'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+
+	  defaultConfig {
+        minSdkVersion 21
+		    targetSdkVersion 25
+        applicationId 'com.commonsware.cwac.rvp.dynsnap'
+	  }
+}

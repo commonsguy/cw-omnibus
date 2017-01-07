@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/add"
+    android:icon="@drawable/ic_add_white_24dp"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_add" />
+  <item
+    android:id="@+id/split"
+    android:icon="@drawable/ic_split_white_24dp"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_split" />
+  <item
+    android:id="@+id/swap"
+    android:icon="@drawable/ic_swap_white_24dp"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_swap" />
+  <item
+    android:id="@+id/remove"
+    android:icon="@drawable/ic_remove_white_24dp"
+    android:showAsAction="ifRoom"
+    android:title="@string/menu_remove" />
+</menu>

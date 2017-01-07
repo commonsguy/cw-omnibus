@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Rx Retrofit Demo</string>
+	<string name="icon">Owner Icon</string>
+	<string name="menu_refresh">Refresh</string>
+
+</resources>

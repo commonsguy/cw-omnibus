@@ -1,0 +1,12 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+	  defaultConfig {
+        minSdkVersion 15
+		    targetSdkVersion 25
+        applicationId 'com.commonsware.android.webkit.bridge.port'
+	  }
+}

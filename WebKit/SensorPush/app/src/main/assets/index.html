@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>Android Light Sensor Demo</title>
+<script language="javascript">
+	function update_lux(lux) {
+		document.getElementById("lux").innerHTML=lux;
+	}
+	
+	function pull() {
+	    var result=JSON.parse(LIGHT_SENSOR.getLux());
+
+		update_lux(result.lux);
+	}
+</script>
+</head>
+<body>
+<p><b><a onClick="pull()">Light Level</a>: </b><span id="lux">0.0</span> lux</p>
+</body>
+</html>
+

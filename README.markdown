@@ -1,5 +1,3 @@
-https://commonsware.com/Android/previews/defining-and-using-styles
-
 ## About the Book
 
 _The Busy Coder's Guide to Android Development_ is a book covering Android application development, from basics

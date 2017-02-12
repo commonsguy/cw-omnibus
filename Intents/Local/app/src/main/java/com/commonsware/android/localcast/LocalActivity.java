@@ -37,8 +37,8 @@ public class LocalActivity extends Activity {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     IntentFilter filter=new IntentFilter(NoticeService.BROADCAST);
 
@@ -47,8 +47,8 @@ public class LocalActivity extends Activity {
   }
 
   @Override
-  public void onPause() {
-    super.onPause();
+  public void onStop() {
+    super.onStop();
 
     LocalBroadcastManager.getInstance(this).unregisterReceiver(onNotice);
   }

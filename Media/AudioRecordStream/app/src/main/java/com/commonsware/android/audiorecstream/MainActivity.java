@@ -46,8 +46,8 @@ public class MainActivity extends Activity implements
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
 
     recorder=new MediaRecorder();
     recorder.setOnErrorListener(this);
@@ -55,11 +55,11 @@ public class MainActivity extends Activity implements
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     recorder.release();
     recorder=null;
 
-    super.onPause();
+    super.onStop();
   }
 
   @Override

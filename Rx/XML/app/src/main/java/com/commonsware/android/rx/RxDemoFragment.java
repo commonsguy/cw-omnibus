@@ -23,40 +23,36 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import org.xmlpull.v1.XmlPullParser;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RxDemoFragment extends ListFragment {
   private ArrayList<String> model=new ArrayList<>();
   private ArrayAdapter<String> adapter;
-  private AtomicBoolean isCancelled=new AtomicBoolean(false);
+  private Disposable sub=null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    setRetainInstance(true);
-
     adapter=new ArrayAdapter<>(getActivity(),
       android.R.layout.simple_list_item_1, model);
 
-    Observable
+    Observable<String> observable=Observable
       .create(new WordSource(getActivity()))
       .subscribeOn(Schedulers.io())
       .map(s -> (s.toUpperCase()))
       .observeOn(AndroidSchedulers.mainThread())
-      .takeUntil(s -> (isCancelled.get()))
       .doOnComplete(() -> {
-        if (!isCancelled.get()) {
-          Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
-            .show();
-        }
-      })
-      .subscribe(s -> adapter.add(s),
+        Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
+          .show();
+      });
+
+    sub=observable.subscribe(s -> adapter.add(s),
         error ->
           Toast
             .makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG)
@@ -73,7 +69,9 @@ public class RxDemoFragment extends ListFragment {
 
   @Override
   public void onDestroy() {
-    isCancelled.set(true);
+    if (sub!=null && !sub.isDisposed()) {
+      sub.dispose();
+    }
 
     super.onDestroy();
   }

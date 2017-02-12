@@ -32,8 +32,7 @@ class DownloadJob implements Runnable {
   @Override
   public void run() {
     try {
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+      File root=getExternalFilesDir(null);
 
       root.mkdirs();
 

@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2012-2015 CommonsWare, LLC
+  Copyright (c) 2012-2017 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,15 +14,28 @@
 
 package com.commonsware.android.fileseditor;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 import io.karim.MaterialTabs;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainActivity extends Activity  {
+public class MainActivity extends AbstractPermissionActivity  {
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  protected String[] getDesiredPermissions() {
+    return(new String[]{WRITE_EXTERNAL_STORAGE});
+  }
+
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_sorry, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
+
+  @Override
+  protected void onReady(Bundle savedInstanceState) {
     setContentView(R.layout.main);
 
     ViewPager pager=(ViewPager)findViewById(R.id.pager);

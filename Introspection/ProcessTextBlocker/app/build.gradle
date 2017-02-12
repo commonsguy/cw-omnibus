@@ -2,15 +2,16 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'io.karim:materialtabs:2.0.2'
-    compile 'com.android.support:support-v13:22.2.1'
+    compile 'com.android.support:support-v13:25.1.0'
 }
 
 android {
-  compileSdkVersion 22
-  buildToolsVersion "22.0.1"
+  compileSdkVersion 25
+  buildToolsVersion "25.0.2"
 
 	defaultConfig {
       minSdkVersion 15
-      targetSdkVersion 18
+      targetSdkVersion 25
+      applicationId "com.commonsware.android.fileseditor.ptb"
 	}
 }

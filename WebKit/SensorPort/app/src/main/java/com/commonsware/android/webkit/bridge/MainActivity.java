@@ -25,21 +25,15 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebMessage;
 import android.webkit.WebMessagePort;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Locale;
 
 public class MainActivity extends Activity implements SensorEventListener {
   private static final String URL="file:///android_asset/index.html";
-  private static final String THIS_IS_STUPID="https://commonsware.com";
   private SensorManager mgr;
   private Sensor light;
   private WebView wv;
@@ -60,25 +54,15 @@ public class MainActivity extends Activity implements SensorEventListener {
     wv.addJavascriptInterface(jsInterface, "LIGHT_SENSOR");
 
     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
-      try {
-        String html=slurp(getAssets().open("index.html"));
+      wv.setWebViewClient(new WebViewClient() {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+          initPort();
+        }
+      });
+    }
 
-        wv.loadDataWithBaseURL(THIS_IS_STUPID, html, "text/html", "UTF-8",
-          null);
-        wv.setWebViewClient(new WebViewClient() {
-          @Override
-          public void onPageFinished(WebView view, String url) {
-            initPort();
-          }
-        });
-      }
-      catch (IOException e) {
-        Log.e(getClass().getSimpleName(), "Could not read asset", e);
-      }
-    }
-    else {
-      wv.loadUrl(URL);
-    }
+    wv.loadUrl(URL);
   }
 
   @Override
@@ -132,29 +116,12 @@ public class MainActivity extends Activity implements SensorEventListener {
     });
 
     wv.postWebMessage(new WebMessage("", new WebMessagePort[]{channel[1]}),
-          Uri.parse(THIS_IS_STUPID));
+          Uri.EMPTY);
   }
 
   @TargetApi(Build.VERSION_CODES.M)
   private void postLux() {
     port.postMessage(new WebMessage(jsInterface.getLux()));
-  }
-
-  // based on http://stackoverflow.com/a/309718/115145
-
-  private static String slurp(final InputStream is)
-    throws IOException {
-    final char[] buffer=new char[8192];
-    final StringBuilder out=new StringBuilder();
-    final Reader in=new InputStreamReader(is, "UTF-8");
-    int rsz=in.read(buffer, 0, buffer.length);
-
-    while (rsz>0) {
-      out.append(buffer, 0, rsz);
-      rsz=in.read(buffer, 0, buffer.length);
-    }
-
-    return(out.toString());
   }
 
   private static class JSInterface {

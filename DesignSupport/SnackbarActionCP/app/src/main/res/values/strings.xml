@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Snackbar CrossPort Async Demo</string>
+    <string name="done">Done!</string>
+    <string name="snackbar_action_restart">Restart</string>
+</resources>

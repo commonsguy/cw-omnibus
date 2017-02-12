@@ -28,7 +28,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
-import de.greenrobot.event.EventBus;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -36,6 +35,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class QuestionsFragment extends ListFragment {
+  public interface Contract {
+    void onQuestion(Item question);
+  }
+
   static final String SO_URL=
     "https://api.stackexchange.com/2.1/questions?pagesize=100&"
       + "order=desc&sort=creation&site=stackoverflow&tagged=android";
@@ -89,7 +92,7 @@ public class QuestionsFragment extends ListFragment {
   public void onListItemClick(ListView l, View v, int position, long id) {
     Item item=((ItemsAdapter)getListAdapter()).getItem(position);
 
-    EventBus.getDefault().post(new QuestionClickedEvent(item));
+    ((Contract)getActivity()).onQuestion(item);
   }
 
   class ItemsAdapter extends ArrayAdapter<Item> {

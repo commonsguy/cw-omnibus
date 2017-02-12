@@ -2,11 +2,16 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'de.greenrobot:eventbus:2.2.1'
-    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.google.code.gson:gson:2.8.0'
     compile 'cz.msebera.android:httpclient:4.4.1.1'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+    }
 }

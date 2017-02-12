@@ -17,10 +17,11 @@ package com.commonsware.android.processtext;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import de.greenrobot.event.EventBus;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity
+  implements QuestionsFragment.Contract {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -28,12 +29,14 @@ public class MainActivity extends Activity {
     if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
       String search=null;
 
-      if (Intent.ACTION_PROCESS_TEXT.equals(getIntent().getAction())) {
-        search=getIntent().getStringExtra(Intent.EXTRA_PROCESS_TEXT);
+      if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+        if (Intent.ACTION_PROCESS_TEXT.equals(getIntent().getAction())) {
+          search=getIntent().getStringExtra(Intent.EXTRA_PROCESS_TEXT);
 
-        if (search==null) {
-          search=getIntent()
-            .getStringExtra(Intent.EXTRA_PROCESS_TEXT_READONLY);
+          if (search==null) {
+            search=getIntent()
+              .getStringExtra(Intent.EXTRA_PROCESS_TEXT_READONLY);
+          }
         }
       }
 
@@ -46,27 +49,17 @@ public class MainActivity extends Activity {
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
-    EventBus.getDefault().register(this);
-  }
-
-  @Override
-  public void onPause() {
-    EventBus.getDefault().unregister(this);
-    super.onPause();
-  }
-
-  public void onEventMainThread(QuestionClickedEvent event) {
-    if (Intent.ACTION_PROCESS_TEXT.equals(getIntent().getAction()) &&
+  public void onQuestion(Item question) {
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M &&
+      Intent.ACTION_PROCESS_TEXT.equals(getIntent().getAction()) &&
       getIntent().getStringExtra(Intent.EXTRA_PROCESS_TEXT)!=null) {
       setResult(Activity.RESULT_OK,
-        new Intent().putExtra(Intent.EXTRA_PROCESS_TEXT, event.item.link));
+        new Intent().putExtra(Intent.EXTRA_PROCESS_TEXT, question.link));
       finish();
     }
     else {
       startActivity(new Intent(Intent.ACTION_VIEW,
-        Uri.parse(event.item.link)));
+        Uri.parse(question.link)));
     }
   }
 }

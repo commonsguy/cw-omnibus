@@ -2,16 +2,15 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         applicationId "com.commonsware.android.retrofit2"
     }
 }

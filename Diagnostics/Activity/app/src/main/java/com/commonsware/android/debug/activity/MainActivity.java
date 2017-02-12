@@ -18,9 +18,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import de.greenrobot.event.EventBus;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity
+  implements QuestionsFragment.Contract {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -33,19 +33,8 @@ public class MainActivity extends Activity {
   }
 
   @Override
-  public void onStart() {
-    super.onStart();
-    EventBus.getDefault().register(this);
-  }
-
-  @Override
-  public void onStop() {
-    EventBus.getDefault().unregister(this);
-    super.onStop();
-  }
-
-  public void onEventMainThread(QuestionClickedEvent event) {
+  public void onQuestion(Item question) {
     startActivity(new Intent(Intent.ACTION_VIEW,
-                             Uri.parse(event.item.link)));
+      Uri.parse(question.link)));
   }
 }

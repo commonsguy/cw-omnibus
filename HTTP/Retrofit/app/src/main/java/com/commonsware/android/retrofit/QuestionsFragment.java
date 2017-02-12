@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
-import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -34,6 +33,10 @@ import retrofit.client.Response;
 
 public class QuestionsFragment extends ListFragment implements
     Callback<SOQuestions> {
+  public interface Contract {
+    void onQuestion(Item question);
+  }
+
   @Override
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container,
@@ -58,7 +61,7 @@ public class QuestionsFragment extends ListFragment implements
   public void onListItemClick(ListView l, View v, int position, long id) {
     Item item=((ItemsAdapter)getListAdapter()).getItem(position);
 
-    EventBus.getDefault().post(new QuestionClickedEvent(item));
+    ((Contract)getActivity()).onQuestion(item);
   }
 
   @Override

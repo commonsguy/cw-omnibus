@@ -25,10 +25,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
-import de.greenrobot.event.EventBus;
 
 public class QuestionsFragment extends ListFragment implements
     LoaderManager.LoaderCallbacks<SOQuestions> {
+  public interface Contract {
+    void onQuestion(Item question);
+  }
+
   @Override
   public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
@@ -40,7 +43,7 @@ public class QuestionsFragment extends ListFragment implements
   public void onListItemClick(ListView l, View v, int position, long id) {
     Item item=((ItemsAdapter)getListAdapter()).getItem(position);
 
-    EventBus.getDefault().post(new QuestionClickedEvent(item));
+    ((Contract)getActivity()).onQuestion(item);
   }
 
   @Override

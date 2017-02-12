@@ -26,6 +26,10 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 public class QuestionsFragment extends ListFragment {
+  public interface Contract {
+    void onQuestion(Item question);
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -50,7 +54,7 @@ public class QuestionsFragment extends ListFragment {
   public void onListItemClick(ListView l, View v, int position, long id) {
     Item item=((ItemsAdapter)getListAdapter()).getItem(position);
 
-    EventBus.getDefault().post(new QuestionClickedEvent(item));
+    ((Contract)getActivity()).onQuestion(item);
   }
 
   public void onEventMainThread(QuestionsLoadedEvent event) {

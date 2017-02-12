@@ -53,8 +53,7 @@ public class Downloader extends IntentService {
 
       startForeground(FOREGROUND_ID, builder.build());
 
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+      File root=getExternalFilesDir(null);
 
       root.mkdirs();
 

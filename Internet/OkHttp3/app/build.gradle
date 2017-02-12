@@ -2,17 +2,17 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 18
+        minSdkVersion 16
+        targetSdkVersion 25
         applicationId 'com.commonsware.android.okhttp3'
     }
 }

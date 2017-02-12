@@ -1,0 +1,24 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.android.support:support-v13:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+	defaultConfig {
+      minSdkVersion 21
+		  targetSdkVersion 25
+      applicationId 'com.commonsware.android.rv.transcript'
+	}
+}

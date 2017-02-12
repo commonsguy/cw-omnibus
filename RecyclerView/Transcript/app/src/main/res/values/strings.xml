@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">RV Transcript Demo</string>
+	<string name="notif_title">You got a random number!</string>
+
+</resources>

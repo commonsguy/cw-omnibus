@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Theme.Apptheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+  </style>
+
+  <style name="activated" parent="Theme.Apptheme">
+    <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
+  </style>
+
+</resources>

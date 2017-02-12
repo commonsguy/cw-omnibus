@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'io.karim:materialtabs:2.0.2'
-    compile 'com.android.support:support-v13:23.1.1'
-    compile 'com.android.support:percent:23.1.1'
+    compile 'com.android.support:support-v13:25.1.1'
+    compile 'com.android.support:percent:25.1.1'
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 17

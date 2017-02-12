@@ -26,11 +26,14 @@ public class PermissionTabAdapter extends FragmentPagerAdapter {
       R.string.signature,
       R.string.other};
   private final Context ctxt;
+  private final PermissionRoster roster;
 
-  public PermissionTabAdapter(Context ctxt, FragmentManager mgr) {
+  PermissionTabAdapter(Context ctxt, FragmentManager mgr,
+                       PermissionRoster roster) {
     super(mgr);
 
     this.ctxt=ctxt;
+    this.roster=roster;
   }
 
   @Override
@@ -40,7 +43,9 @@ public class PermissionTabAdapter extends FragmentPagerAdapter {
 
   @Override
   public Fragment getItem(int position) {
-    return(PermissionListFragment.newInstance(PermissionType.forValue(position)));
+    PermissionType type=PermissionType.forValue(position);
+
+    return(PermissionListFragment.newInstance(roster.getListForType(type)));
   }
 
   @Override

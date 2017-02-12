@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2015 CommonsWare, LLC
+ Copyright (c) 2015-2017 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -16,7 +16,7 @@ package com.commonsware.android.permreporter;
 
 import android.util.SparseArray;
 
-public enum PermissionType {
+enum PermissionType {
   NORMAL(0),
   DANGEROUS(1),
   SIGNATURE(2),
@@ -33,7 +33,7 @@ public enum PermissionType {
 
   private final int value;
 
-  private PermissionType(int value) {
+  PermissionType(int value) {
     this.value=value;
   }
 

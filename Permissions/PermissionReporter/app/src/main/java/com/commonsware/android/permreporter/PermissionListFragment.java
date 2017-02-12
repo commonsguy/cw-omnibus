@@ -24,38 +24,26 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import de.greenrobot.event.EventBus;
 
 public class PermissionListFragment extends ListFragment {
-  private static final String KEY_TYPE="type";
+  private static final String ARG_PERMS="perms";
 
-  static PermissionListFragment newInstance(PermissionType type) {
+  static PermissionListFragment newInstance(ArrayList<PermissionInfo> perms) {
     PermissionListFragment frag=new PermissionListFragment();
     Bundle args=new Bundle();
 
-    args.putSerializable(KEY_TYPE, type);
+    args.putParcelableArrayList(ARG_PERMS, perms);
     frag.setArguments(args);
 
     return(frag);
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
-    EventBus.getDefault().registerSticky(this);
-  }
-
-  @Override
-  public void onPause() {
-    EventBus.getDefault().unregister(this);
-
-    super.onPause();
-  }
-
-  public void onEventMainThread(PermissionRosterLoadedEvent event) {
-    PermissionType type=(PermissionType)getArguments().getSerializable(KEY_TYPE);
-    ArrayList<PermissionInfo> perms=event.getListForType(type);
+    ArrayList<PermissionInfo> perms=
+      getArguments().getParcelableArrayList(ARG_PERMS);
 
     if (perms!=null && perms.size()>0) {
       Collections.sort(perms, new Comparator<PermissionInfo>() {

@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2015 CommonsWare, LLC
+ Copyright (c) 2015-2017 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -15,18 +15,20 @@
 package com.commonsware.android.permreporter;
 
 import android.content.pm.PermissionInfo;
+import android.os.Parcel;
+import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PermissionRosterLoadedEvent {
-  HashMap<PermissionType, ArrayList<PermissionInfo>> roster=
+class PermissionRoster {
+  private HashMap<PermissionType, ArrayList<PermissionInfo>> roster=
       new HashMap<PermissionType, ArrayList<PermissionInfo>>();
 
   void add(PermissionType type, PermissionInfo info) {
     ArrayList<PermissionInfo> list=roster.get(type);
 
     if (list==null) {
-      list=new ArrayList<PermissionInfo>();
+      list=new ArrayList<>();
       roster.put(type, list);
     }
 

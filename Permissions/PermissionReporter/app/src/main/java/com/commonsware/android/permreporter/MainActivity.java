@@ -15,23 +15,127 @@
 package com.commonsware.android.permreporter;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.PermissionGroupInfo;
+import android.content.pm.PermissionInfo;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.widget.Toast;
 import io.karim.MaterialTabs;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends Activity  {
+  private Observable<PermissionRoster> observable;
+  private Disposable sub;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    ViewPager pager=(ViewPager)findViewById(R.id.pager);
+    final ViewPager pager=(ViewPager)findViewById(R.id.pager);
+    final MaterialTabs tabs=(MaterialTabs)findViewById(R.id.tabs);
 
-    pager.setAdapter(new PermissionTabAdapter(this, getFragmentManager()));
+    observable=(Observable<PermissionRoster>)getLastNonConfigurationInstance();
 
-    MaterialTabs tabs=(MaterialTabs)findViewById(R.id.tabs);
-    tabs.setViewPager(pager);
+    if (observable==null) {
+      observable=Observable
+        .create(new PermissionSource(this))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .cache();
+    }
 
-    new PermissionLoadThread(this).start();
+    sub=observable.subscribe(new Consumer<PermissionRoster>() {
+        @Override
+        public void accept(PermissionRoster roster) throws Exception {
+          pager.setAdapter(new PermissionTabAdapter(MainActivity.this,
+            getFragmentManager(), roster));
+          tabs.setViewPager(pager);
+        }
+      }, new Consumer<Throwable>() {
+        @Override
+        public void accept(Throwable error) throws Exception {
+          Toast
+            .makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG)
+            .show();
+          Log.e(getClass().getSimpleName(), "Exception processing request",
+            error);
+        }
+      });
+  }
+
+  public Object onRetainNonConfigurationInstance() {
+    return(observable);
+  }
+
+  @Override
+  protected void onDestroy() {
+    sub.dispose();
+
+    super.onDestroy();
+  }
+
+  private static class PermissionSource implements ObservableOnSubscribe<PermissionRoster> {
+    private Context ctxt;
+
+    private PermissionSource(Context ctxt) {
+      this.ctxt=ctxt.getApplicationContext();
+    }
+
+    @Override
+    public void subscribe(ObservableEmitter<PermissionRoster> emitter)
+      throws Exception {
+      PackageManager pm=ctxt.getPackageManager();
+      final PermissionRoster result=new PermissionRoster();
+
+      addPermissionsFromGroup(pm, null, result);
+
+      for (PermissionGroupInfo group :
+        pm.getAllPermissionGroups(0)) {
+        addPermissionsFromGroup(pm, group.name, result);
+      }
+
+      emitter.onNext(result);
+      emitter.onComplete();
+    }
+
+    private void addPermissionsFromGroup(PackageManager pm,
+                                         String groupName,
+                                         PermissionRoster result)
+      throws PackageManager.NameNotFoundException {
+      for (PermissionInfo info :
+        pm.queryPermissionsByGroup(groupName, 0)) {
+        int coreBits=
+          info.protectionLevel &
+            PermissionInfo.PROTECTION_MASK_BASE;
+
+        switch (coreBits) {
+          case PermissionInfo.PROTECTION_NORMAL:
+            result.add(PermissionType.NORMAL, info);
+            break;
+
+          case PermissionInfo.PROTECTION_DANGEROUS:
+            result.add(PermissionType.DANGEROUS, info);
+            break;
+
+          case PermissionInfo.PROTECTION_SIGNATURE:
+            result.add(PermissionType.SIGNATURE, info);
+            break;
+
+          default:
+            result.add(PermissionType.OTHER, info);
+            break;
+        }
+      }
+    }
   }
 }

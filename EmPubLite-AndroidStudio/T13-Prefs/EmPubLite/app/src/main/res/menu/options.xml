@@ -3,13 +3,13 @@
 
   <item
     android:id="@+id/settings"
-    android:icon="@drawable/ic_settings_black_24px"
+    android:icon="@drawable/ic_settings_black_24dp"
     android:showAsAction="never"
     android:title="@string/settings">
   </item>
   <item
     android:id="@+id/help"
-    android:icon="@drawable/ic_help_outline_black_24px"
+    android:icon="@drawable/ic_help_outline_black_24dp"
     android:title="@string/help">
   </item>
   <item

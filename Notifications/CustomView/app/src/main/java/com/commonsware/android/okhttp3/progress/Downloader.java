@@ -20,7 +20,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
@@ -55,8 +54,7 @@ public class Downloader extends IntentService {
 
       startForeground(FOREGROUND_ID, notif);
 
-      File root=
-          Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+      File root=getExternalFilesDir(null);
 
       root.mkdirs();
 

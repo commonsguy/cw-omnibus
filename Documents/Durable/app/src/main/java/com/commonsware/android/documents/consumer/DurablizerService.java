@@ -16,20 +16,15 @@ package com.commonsware.android.documents.consumer;
 
 import android.app.IntentService;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.UriPermission;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.provider.DocumentFile;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
+import com.commonsware.cwac.document.DocumentFileCompat;
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.NoSubscriberEvent;
-import org.greenrobot.eventbus.Subscribe;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 public class DurablizerService extends IntentService {
   public DurablizerService() {
@@ -48,7 +43,7 @@ public class DurablizerService extends IntentService {
     if (weHaveDurablePermission || document!=null) {
       Log.d(getClass().getSimpleName(), document.toString());
 
-      DocumentFile docFile=buildDocFileForUri(document);
+      DocumentFileCompat docFile=buildDocFileForUri(document);
 
       Log.d(getClass().getSimpleName(),
         "Display name: "+docFile.getName());
@@ -86,34 +81,22 @@ public class DurablizerService extends IntentService {
   }
 
   private Uri makeLocalCopy(Uri document) {
-    DocumentFile docFile=buildDocFileForUri(document);
+    DocumentFileCompat docFile=buildDocFileForUri(document);
     Uri result=null;
 
     if (docFile.getName()!=null) {
-      File f=new File(getFilesDir(), docFile.getName());
-
       try {
-        FileOutputStream fos=new FileOutputStream(f);
-        BufferedOutputStream out=new BufferedOutputStream(fos);
-        InputStream in=
-          getContentResolver().openInputStream(document);
+        String ext=
+          MimeTypeMap.getSingleton().getExtensionFromMimeType(docFile.getType());
 
-        try {
-          byte[] buffer=new byte[8192];
-          int len=0;
-
-          while ((len=in.read(buffer))>=0) {
-            out.write(buffer, 0, len);
-          }
-
-          out.flush();
-          result=Uri.fromFile(f);
+        if (ext!=null) {
+          ext="."+ext;
         }
-        finally {
-          fos.getFD().sync();
-          out.close();
-          in.close();
-        }
+
+        File f=File.createTempFile("cw_", ext, getFilesDir());
+
+        docFile.copyTo(f);
+        result=Uri.fromFile(f);
       }
       catch (Exception e) {
         Log.e(getClass().getSimpleName(),
@@ -124,23 +107,23 @@ public class DurablizerService extends IntentService {
     return(result);
   }
 
-  private DocumentFile buildDocFileForUri(Uri document) {
-    DocumentFile docFile;
+  private DocumentFileCompat buildDocFileForUri(Uri document) {
+    DocumentFileCompat docFile;
 
     if (document.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-      docFile=DocumentFile.fromSingleUri(this, document);
+      docFile=DocumentFileCompat.fromSingleUri(this, document);
     }
     else {
-      docFile=DocumentFile.fromFile(new File(document.getPath()));
+      docFile=DocumentFileCompat.fromFile(new File(document.getPath()));
     }
 
     return(docFile);
   }
 
   static class ContentReadyEvent {
-    final DocumentFile docFile;
+    final DocumentFileCompat docFile;
 
-    ContentReadyEvent(DocumentFile docFile) {
+    ContentReadyEvent(DocumentFileCompat docFile) {
       this.docFile=docFile;
     }
   }

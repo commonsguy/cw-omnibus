@@ -15,6 +15,7 @@
 package com.commonsware.android.camcon;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Intent;
@@ -29,7 +30,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.List;
 
-public class MainActivity extends AbstractPermissionActivity {
+public class MainActivity extends Activity {
   private static final String EXTRA_FILENAME=
     "com.commonsware.android.camcon.EXTRA_FILENAME";
   private static final String FILENAME="CameraContentDemo.jpeg";
@@ -40,20 +41,9 @@ public class MainActivity extends AbstractPermissionActivity {
   private File output=null;
 
   @Override
-  protected String[] getDesiredPermissions() {
-    return(new String[] {Manifest.permission.CAMERA});
-  }
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-  @Override
-  protected void onPermissionDenied() {
-    Toast
-      .makeText(this, R.string.msg_sorry, Toast.LENGTH_LONG)
-      .show();
-    finish();
-  }
-
-  @Override
-  protected void onReady(Bundle savedInstanceState) {
     if (savedInstanceState==null) {
       output=new File(new File(getFilesDir(), PHOTOS), FILENAME);
 

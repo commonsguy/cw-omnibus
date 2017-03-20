@@ -35,15 +35,15 @@ public class MainActivity extends Activity implements
   }
   
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
     cm.addPrimaryClipChangedListener(this);
   }
   
   @Override
-  public void onPause() {
+  public void onStop() {
     cm.removePrimaryClipChangedListener(this);
-    super.onPause();
+    super.onStop();
   }
 
   @Override

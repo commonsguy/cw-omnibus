@@ -41,16 +41,16 @@ public class BatteryMonitor extends Activity {
   }
   
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onStart() {
+    super.onStart();
     
     registerReceiver(onBatteryChanged,
                       new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
   }
   
   @Override
-  public void onPause() {
-    super.onPause();
+  public void onStop() {
+    super.onStop();
     
     unregisterReceiver(onBatteryChanged);
   }

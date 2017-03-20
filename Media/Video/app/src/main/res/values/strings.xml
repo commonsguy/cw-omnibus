@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">VideoDemo</string>
+  <string name="app_name">VideoDemo</string>
+  <string name="msg_sorry">Sorry, but we need permission to continue!</string>
 </resources>

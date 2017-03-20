@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2008-2014 CommonsWare, LLC
+  Copyright (c) 2008-2017 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain	a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,27 +14,41 @@
 
 package com.commonsware.android.downmgr;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.widget.Toast;
 
-public class DownloadDemo extends Activity {
+public class DownloadDemo extends AbstractPermissionActivity {
+
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    
+  protected String[] getDesiredPermissions() {
+    return(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE});
+  }
+
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_sorry, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
+
+  @Override
+  public void onReady(Bundle savedInstanceState) {
     StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                                 .detectNetwork()
                                 .penaltyDeath()
                                 .build());
     
-      if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
-        getFragmentManager().beginTransaction()
-                                   .add(android.R.id.content,
-                                        new DownloadFragment()).commit();
-      }
+    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
+      getFragmentManager().beginTransaction()
+                                 .add(android.R.id.content,
+                                      new DownloadFragment()).commit();
+    }
   }
 
   public void viewLog() {

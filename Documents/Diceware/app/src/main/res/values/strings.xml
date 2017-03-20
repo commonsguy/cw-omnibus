@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Diceware Demo</string>
+
+	<string name="open">Open Word File</string>
+	<string name="get">Get Word File</string>
+	<string name="menu_refresh">Refresh</string>
+	<string name="menu_words">Words</string>
+	<string name="menu_reset">Reset</string>
+
+</resources>

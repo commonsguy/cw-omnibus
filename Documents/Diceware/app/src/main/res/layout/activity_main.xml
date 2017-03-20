@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="8dp">
+
+  <android.support.v7.widget.CardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="8dp">
+
+    <TextView
+      android:id="@+id/passphrase"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:freezesText="true"
+      android:textSize="20sp"
+      android:typeface="monospace" />
+  </android.support.v7.widget.CardView>
+
+</FrameLayout>

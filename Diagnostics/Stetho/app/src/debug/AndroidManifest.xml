@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.commonsware.android.stetho"
+  android:versionCode="1"
+  android:versionName="1.0">
+
+  <application
+    android:name="com.commonsware.android.stetho.StethoApp"
+    tools:replace="android:name">
+  </application>
+
+</manifest>

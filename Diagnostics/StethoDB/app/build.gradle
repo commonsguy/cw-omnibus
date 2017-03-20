@@ -1,0 +1,20 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+
+		defaultConfig {
+				minSdkVersion 15
+				targetSdkVersion 22
+				applicationId 'com.commonsware.android.constants.stetho'
+		}
+}
+
+dependencies {
+	debugCompile('com.facebook.stetho:stetho:1.4.2') {
+		exclude group: 'com.android.support', module: 'appcompat-v7'
+	}
+	debugCompile 'com.android.support:support-compat:25.2.0'
+	debugCompile 'com.facebook.stetho:stetho-js-rhino:1.4.2'
+}

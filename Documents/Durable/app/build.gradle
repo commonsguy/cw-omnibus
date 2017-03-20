@@ -1,17 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 24
+        minSdkVersion 15
+        targetSdkVersion 25
         applicationId "com.commonsware.android.documents.durable"
+    }
+}
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
     }
 }
 
 dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.commonsware.cwac:document:0.1.1'
 }

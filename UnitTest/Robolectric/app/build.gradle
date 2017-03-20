@@ -8,7 +8,7 @@ dependencies {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         testApplicationId "com.commonsware.android.gradle.hello.robolectric"

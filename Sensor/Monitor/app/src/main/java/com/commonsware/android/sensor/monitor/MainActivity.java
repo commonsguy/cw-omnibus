@@ -48,9 +48,9 @@ public class MainActivity extends Activity implements
   }
 
   @Override
-  public void onPause() {
+  public void onStop() {
     mgr.unregisterListener(log);
-    super.onPause();
+    super.onStop();
   }
 
   @Override

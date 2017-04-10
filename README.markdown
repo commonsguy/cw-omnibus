@@ -62,3 +62,5 @@ natural structure.
 Slowly, this book is being converted over to having all projects use
 the Android Studio structure. This process should be completed sometime
 in 2016.
+ 
+ 

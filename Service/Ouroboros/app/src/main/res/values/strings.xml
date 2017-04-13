@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">Ouroboros</string>
+  <string name="btn_background">Background</string>
+  <string name="btn_foreground">Foreground</string>
+  <string name="msg_notify_title">Tail-eating is ongoing!</string>
+  <string name="msg_notify_text">Stop the process when you are done with it</string>
+</resources>

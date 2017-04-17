@@ -96,8 +96,6 @@ public class ModelFragment extends Fragment {
           is=ctxt.getAssets().open("book/contents.json");
         }
 
-        ctxt.getAssets().open("book/contents.json");
-
         BufferedReader reader=
           new BufferedReader(new InputStreamReader(is));
 

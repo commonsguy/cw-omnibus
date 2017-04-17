@@ -30,6 +30,7 @@ abstract public class AbstractSillyService extends Service {
   abstract protected Class<? extends AbstractSillyService> getOtherClass();
 
   static final String EXTRA_FOREGROUND="foreground";
+  static final String EXTRA_BROADCAST_HACK="hack";
 
   private final ScheduledExecutorService timer=
     Executors.newScheduledThreadPool(1);
@@ -49,6 +50,12 @@ abstract public class AbstractSillyService extends Service {
           getSystemService(NotificationManager.class)
             .startServiceInForeground(next, 1337,
               buildNotification(AbstractSillyService.this));
+        }
+        else if (intent.getBooleanExtra(EXTRA_BROADCAST_HACK, false)) {
+          Log.e(getClass().getSimpleName(), "starting via broadcast hack");
+          next.putExtra(EXTRA_BROADCAST_HACK, true);
+          sendBroadcast(new Intent(AbstractSillyService.this, HackReceiver.class)
+            .putExtra(Intent.EXTRA_INTENT, next));
         }
         else {
           Log.e(getClass().getSimpleName(), "starting normal");

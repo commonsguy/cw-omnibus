@@ -4,4 +4,5 @@
   <string name="btn_foreground">Foreground</string>
   <string name="msg_notify_title">Tail-eating is ongoing!</string>
   <string name="msg_notify_text">Stop the process when you are done with it</string>
+  <string name="btn_broadcast_hack">Broadcast Hack</string>
 </resources>

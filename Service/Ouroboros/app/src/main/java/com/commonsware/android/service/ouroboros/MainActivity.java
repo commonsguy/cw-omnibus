@@ -43,4 +43,10 @@ public class MainActivity extends Activity {
         AbstractSillyService.buildNotification(this));
     finish();
   }
+
+  public void startBroadcastHack(View view) {
+    startService(new Intent(this, FirstSillyService.class)
+      .putExtra(AbstractSillyService.EXTRA_BROADCAST_HACK, true));
+    finish();
+  }
 }

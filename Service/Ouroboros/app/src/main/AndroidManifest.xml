@@ -20,6 +20,8 @@
 
     <service android:name=".FirstSillyService" />
     <service android:name=".SecondSillyService" />
+
+    <receiver android:name=".HackReceiver" />
   </application>
 
 </manifest>

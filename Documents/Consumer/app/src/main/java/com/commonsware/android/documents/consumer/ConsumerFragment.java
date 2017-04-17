@@ -17,7 +17,10 @@ package com.commonsware.android.documents.consumer;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -32,11 +35,17 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class ConsumerFragment extends Fragment {
+public class ConsumerFragment extends Fragment
+  implements LoaderManager.LoaderCallbacks<Cursor> {
   private static final int REQUEST_OPEN=1337;
   private static final int REQUEST_GET=REQUEST_OPEN + 1;
-  private TextView transcript=null;
-  private ScrollView scroll=null;
+  private static final String[] PROJECTION={
+    OpenableColumns.DISPLAY_NAME,
+    OpenableColumns.SIZE
+  };
+  private TextView transcript;
+  private ScrollView scroll;
+  private Uri uri;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +68,7 @@ public class ConsumerFragment extends Fragment {
   }
 
   private void logToTranscript(String msg) {
-    transcript.setText(transcript.getText().toString() + msg + "\n");
+    transcript.append(msg + "\n");
     scroll.fullScroll(View.FOCUS_DOWN);
   }
 
@@ -82,43 +91,54 @@ public class ConsumerFragment extends Fragment {
   @Override
   public void onActivityResult(int requestCode, int resultCode,
                                Intent resultData) {
-    if (resultCode == Activity.RESULT_OK) {
-      Uri uri=null;
-
-      if (resultData != null) {
+    if (resultCode==Activity.RESULT_OK) {
+      if (resultData!=null) {
         uri=resultData.getData();
-        logToTranscript(uri.toString());
 
-        if (requestCode == REQUEST_OPEN) {
-          Cursor c=
-              getActivity().getContentResolver().query(uri, null, null,
-                                                       null, null);
-
-          if (c != null && c.moveToFirst()) {
-            int displayNameColumn=
-                c.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-
-            if (displayNameColumn >= 0) {
-              logToTranscript("Display name: "
-                  + c.getString(displayNameColumn));
-            }
-
-            int sizeColumn=c.getColumnIndex(OpenableColumns.SIZE);
-
-            if (sizeColumn < 0 || c.isNull(sizeColumn)) {
-              logToTranscript("Size not available");
-            }
-            else {
-              logToTranscript(String.format("Size: %d",
-                                            c.getInt(sizeColumn)));
-            }
-          }
-          else {
-            logToTranscript("...no metadata available?");
-          }
+        if (requestCode==REQUEST_OPEN) {
+          getLoaderManager().initLoader(0, null, this);
+        }
+        else {
+          logToTranscript(uri.toString());
         }
       }
     }
+  }
+
+  public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
+    return(new CursorLoader(getActivity(), uri, PROJECTION, null, null, null));
+  }
+
+  public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+    transcript.setText(null);
+    logToTranscript(uri.toString());
+
+    if (c!=null && c.moveToFirst()) {
+      int displayNameColumn=
+        c.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+
+      if (displayNameColumn>=0) {
+        logToTranscript("Display name: "
+          +c.getString(displayNameColumn));
+      }
+
+      int sizeColumn=c.getColumnIndex(OpenableColumns.SIZE);
+
+      if (sizeColumn<0 || c.isNull(sizeColumn)) {
+        logToTranscript("Size not available");
+      }
+      else {
+        logToTranscript(String.format("Size: %d",
+          c.getInt(sizeColumn)));
+      }
+    }
+    else {
+      logToTranscript("...no metadata available?");
+    }
+  }
+
+  public void onLoaderReset(Loader<Cursor> loader) {
+    // unused
   }
 
   @TargetApi(Build.VERSION_CODES.KITKAT)

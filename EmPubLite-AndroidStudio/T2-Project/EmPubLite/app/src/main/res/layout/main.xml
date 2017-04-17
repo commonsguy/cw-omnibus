@@ -8,7 +8,6 @@
   android:paddingLeft="@dimen/activity_horizontal_margin"
   android:paddingRight="@dimen/activity_horizontal_margin"
   android:paddingTop="@dimen/activity_vertical_margin"
-  android:visibility="invisible"
   tools:context="com.commonsware.empublite.EmPubLiteActivity">
 
   <TextView

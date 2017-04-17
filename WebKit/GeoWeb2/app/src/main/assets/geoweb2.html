@@ -2,16 +2,16 @@
 <head>
 <title>Android GeoWebTwo Demo</title>
 <script language="javascript">
-	function whereami(lat, lon) {
-		document.getElementById("lat").innerHTML=lat;
-		document.getElementById("lon").innerHTML=lon;
-	}
-	
-	function pull() {
-		var location=JSON.parse(locater.getLocation());
-		
-		whereami(location.lat, location.lon);
-	}
+  function whereami(lat, lon) {
+    document.getElementById("lat").innerHTML=lat;
+    document.getElementById("lon").innerHTML=lon;
+  }
+  
+  function pull() {
+    var location=JSON.parse(locater.getLocation());
+    
+    whereami(location.lat, location.lon);
+  }
 </script>
 </head>
 <body>

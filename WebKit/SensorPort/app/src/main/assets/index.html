@@ -2,29 +2,29 @@
 <head>
 <title>Android Light Sensor Demo</title>
 <script language="javascript">
-	function update_lux(lux) {
-		document.getElementById("lux").innerHTML=lux;
-	}
+  function update_lux(lux) {
+    document.getElementById("lux").innerHTML=lux;
+  }
 
-    function parse(json) {
-	    var result=JSON.parse(LIGHT_SENSOR.getLux());
+  function parse(json) {
+    var result=JSON.parse(json);
 
-		update_lux(result.lux);
+    update_lux(result.lux);
+  }
+
+  var port;
+
+  function pull() {
+    port.postMessage("ping");
+  }
+
+  onmessage = function (e) {
+    port = e.ports[0];
+
+    port.onmessage = function (f) {
+      parse(e.data);
     }
-
-	var port;
-
-	function pull() {
-	    port.postMessage("ping");
-	}
-
-    onmessage = function (e) {
-        port = e.ports[0];
-
-        port.onmessage = function (f) {
-            parse(e.data);
-        }
-    }
+  }
 </script>
 </head>
 <body>

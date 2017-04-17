@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Package Logger Demo</string>
+    <string name="activated">Receiver Activated!</string>
+</resources>

@@ -7,7 +7,6 @@
   <Button
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:layout_above="@+id/another_button"
     android:text="@string/button"
     app:layout_constraintBottom_toTopOf="@+id/another_button"
     app:layout_constraintEnd_toEndOf="parent"

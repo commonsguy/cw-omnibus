@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Multi-Display Demo</string>
+	<string name="title0">Title Slide</string>
+	<string name="title1">Who\'s On Second</string>
+	<string name="title2">Getting to Second: Sending</string>
+	<string name="title3">Getting to Second: Receiving</string>
+	<string name="title4">Secondary Display: What Is Shown</string>
+	<string name="title5">Not All Screens Are Created Equal</string>
+	<string name="title6">Exerting Your Control</string>
+	<string name="title7">Exerting Your Control #2</string>
+	<string name="title8">Exerting Your Control #3</string>
+	<string name="title9">(sample output)</string>
+	<string name="title10">(sample output #2)</string>
+	<string name="title11">Low-Level Exertion</string>
+	<string name="title12">Low-Level Exertion #2</string>
+	<string name="title13">Fragments of a Presentation</string>
+	<string name="title14">Secondary Screen Strategies</string>
+	<string name="title15">Secondary Screen Strategies #2</string>
+	<string name="title16">Secondary Screen Tactics</string>
+	<string name="title17">Limitations and Annoyances</string>
+	<string name="title18">Limitations and Annoyances #2</string>
+	<string name="title19">(QR)</string>
+	<string name="show_presentation">Show Presentation</string>
+	<string name="first">Go To First Slide</string>
+	<string name="last">Go To Last Slide</string>
+  <string name="slide_content">Slide Content</string>
+  <string name="action_next">Next</string>
+  <string name="action_previous">Previous</string>
+	<string name="action_stop">Stop</string>
+
+</resources>

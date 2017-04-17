@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">App Wrangler</string>
+  <string name="menu_install">Install...</string>
+  <string name="msg_install_perm">You need to grant us the right to install this app</string>
+  <string name="menu_clear_on_click">Clear on Click</string>
+  <string name="menu_refresh">Refresh</string>
+  <string name="msg_refresh_nack">No changes reported!</string>
+  <string name="msg_refresh_ack">Changes applied!</string>
+</resources>

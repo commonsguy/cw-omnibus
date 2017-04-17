@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PiP Demo</string>
+    <string name="size_template">Size: %d</string>
+    <string name="icon">Icon</string>
+  <string name="thumbnail">thumbnail</string>
+  <string name="menu_pip">Enter Picture-In-Picture Mode</string>
+  <string name="pause">Pause</string>
+  <string name="pause_desc">Pause video playback</string>
+  <string name="play">Play</string>
+  <string name="play_desc">Play video</string>
+  <string name="normal">Normal</string>
+  <string name="normal_desc">Return to normal</string>
+</resources>

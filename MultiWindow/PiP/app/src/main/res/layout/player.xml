@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/video_frame"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="4dp">
+
+  <com.commonsware.android.recyclerview.videolist.ResizeableVideoView
+    android:id="@+id/player"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" />
+
+  <com.commonsware.cwac.crossport.design.widget.FloatingActionButton
+    android:id="@+id/pip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:layout_margin="16dp"
+    android:src="@drawable/ic_picture_in_picture_white_24dp" />
+</FrameLayout>

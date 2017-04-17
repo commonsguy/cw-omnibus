@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">Long Job Demo</string>
+  <string name="msg_start">Job scheduled!</string>
+</resources>

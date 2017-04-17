@@ -44,7 +44,7 @@ as there is always the chance that somebody has published material linking you t
 
 ## Using with Command-Line Gradle
 
-Right now, you will need your own local installation of Gradle 2.1
+Right now, you will need your own local installation of Gradle 3.3
 in order to build the projects from the command line, as the repository
 does not contain `gradlew` or its corresponding JAR for security reasons.
 

@@ -1,0 +1,18 @@
+<resources>
+  <string name="app_name">Notification Channels Demo</string>
+  <string name="group_name_updates">Updates</string>
+  <string name="group_name_promo">Promotions</string>
+  <string name="channel_name_content">Content Updates</string>
+  <string name="channel_name_battle">Battle Results</string>
+  <string name="channel_name_coins">Free Coins!</string>
+  <string name="button_content">Raise Content Notification</string>
+  <string name="notif_content_title">New Content!</string>
+  <string name="notify_content_text">We have new content for you! Isn\'t that great!</string>
+  <string name="button_battle">Raise Battle Notification</string>
+  <string name="notif_battle_title">Call to Battle!</string>
+  <string name="notif_battle_text">It is time to wage some war!</string>
+  <string name="button_coins">Raise Coins Notification</string>
+  <string name="notif_coins_title">Free Coins!</string>
+  <string name="notif_coins_text">Collect some free coins!</string>
+  <string name="menu_settings">Settings</string>
+</resources>

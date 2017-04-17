@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Fanout Demo</string>
+  <string name="menu_explicit">Explicit</string>
+  <string name="menu_fanout">Fanout</string>
+  <string name="menu_implicit">Implicit</string>
+
+</resources>

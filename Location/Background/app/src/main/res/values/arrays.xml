@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="delays">
+    <item>1 second</item>
+    <item>10 seconds</item>
+    <item>1 minute</item>
+    <item>6 minutes</item>
+    <item>1 hour</item>
+  </string-array>
+  <string-array name="delay_values">
+    <item>1000</item>
+    <item>10000</item>
+    <item>60000</item>
+    <item>360000</item>
+    <item>3600000</item>
+  </string-array>
+</resources>

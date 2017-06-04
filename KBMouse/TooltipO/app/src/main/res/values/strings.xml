@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Tooltip O Demo</string>
+  <string name="icon">Icon</string>
+  <string name="thumbnail">Thumbnail</string>
+  <string name="tooltip_player">Drag a video here to play it!</string>
+  <string name="tooltip_thumbnail">Drag a video here to see a large thumbnail from it!</string>
+  <string name="tooltip_video_list">Long-click to drag a video!</string>
+</resources>

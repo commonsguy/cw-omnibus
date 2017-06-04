@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context="com.commonsware.android.autosize.MainActivity">
+
+  <EditText
+    android:id="@+id/input"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:hint="@string/hint_input" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_margin="4dp"
+    android:background="@android:color/black" />
+
+  <TextView
+    android:id="@+id/granular"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:autoSizeMaxTextSize="40sp"
+    android:autoSizeMinTextSize="5sp"
+    android:autoSizeStepGranularity="5sp"
+    android:autoSizeText="uniform"
+    android:maxLines="1" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_margin="4dp"
+    android:background="@android:color/black" />
+
+  <TextView
+    android:id="@+id/steps"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:autoSizePresetSizes="@array/autosize_sizes"
+    android:autoSizeText="uniform"
+    android:maxLines="1" />
+
+</LinearLayout>

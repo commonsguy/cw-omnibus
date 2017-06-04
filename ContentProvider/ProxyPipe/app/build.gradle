@@ -1,0 +1,30 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.hugo'
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'com.commonsware.cwac:provider:0.5.1'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+}
+
+android {
+    compileSdkVersion 'android-O'
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 'O'
+        targetSdkVersion 'O'
+        applicationId 'com.commonsware.android.cp.proxypipe'
+        testApplicationId 'com.commonsware.android.cp.proxypipe.test'
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    aaptOptions {
+        noCompress 'pdf'
+    }
+}

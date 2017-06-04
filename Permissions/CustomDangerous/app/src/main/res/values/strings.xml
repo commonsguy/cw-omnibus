@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">Custom Dangerous Impl</string>
+  <string name="perm_label">Custom Dangerous Permission</string>
+  <string name="perm_desc">This is a description. No, really.</string>
+</resources>

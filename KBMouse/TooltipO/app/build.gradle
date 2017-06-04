@@ -1,0 +1,17 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+}
+
+android {
+    compileSdkVersion 'android-O'
+    buildToolsVersion "26.0.0-rc1"
+
+    defaultConfig {
+        minSdkVersion 'O'
+        targetSdkVersion 'O'
+        applicationId 'com.commonsware.android.kbmouse.tooltip.o'
+    }
+}

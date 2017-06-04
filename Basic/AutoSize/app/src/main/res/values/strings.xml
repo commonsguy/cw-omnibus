@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">AutoSize Demo</string>
+  <string name="hint_input">Type in some text!</string>
+</resources>

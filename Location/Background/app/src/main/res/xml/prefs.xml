@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <ListPreference
+    android:defaultValue="1"
+    android:dependency="running"
+    android:entries="@array/delays"
+    android:entryValues="@array/delay_values"
+    android:key="delay"
+    android:title="@string/pref_period" />
+  <SwitchPreference
+    android:defaultValue="false"
+    android:dependency="running"
+    android:key="foreground"
+    android:title="@string/pref_foreground" />
+  <SwitchPreference
+    android:defaultValue="false"
+    android:disableDependentsState="true"
+    android:key="running"
+    android:title="@string/pref_run" />
+</PreferenceScreen>

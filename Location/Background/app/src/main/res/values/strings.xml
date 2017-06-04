@@ -1,0 +1,11 @@
+<resources>
+  <string name="app_name">Background Location</string>
+  <string name="msg_denied">Sorry, we cannot proceed without permission!</string>
+  <string name="notif_title">Every move you make, every step you take</string>
+  <string name="notif_text">I\'ll be watching you</string>
+  <string name="pref_period">Polling period</string>
+  <string name="pref_foreground">Run in foreground?</string>
+  <string name="pref_run">Start running?</string>
+  <string name="missing_text">No value set</string>
+  <string name="msg_error">Could not invoke startServiceInForeground()</string>
+</resources>

@@ -1,0 +1,21 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 'android-O'
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 'O'
+        targetSdkVersion 'O'
+        generatedDensities=[]
+        applicationId 'com.commonsware.android.sawmonitor.o'
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v13:25.3.1'
+}

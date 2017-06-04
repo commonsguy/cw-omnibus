@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">Custom Dangerous Client</string>
+  <string name="msg_toast">Now, why\'d you go and do THAT?</string>
+</resources>

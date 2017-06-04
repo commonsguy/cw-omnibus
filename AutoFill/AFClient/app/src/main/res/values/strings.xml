@@ -1,0 +1,13 @@
+<resources>
+  <string name="app_name">AFClient</string>
+  <string name="hint_username">Username</string>
+  <string name="hint_passphrase">Passphrase</string>
+  <string name="hint_credit_card_number">Credit card number</string>
+  <string name="btn_save">Save</string>
+  <string name="menu_invisible">Invisible</string>
+  <string name="menu_gone">Gone</string>
+  <string name="menu_tiny">Tiny</string>
+  <string name="menu_zero">Zero-Size</string>
+  <string name="menu_off_screen">Off-Screen</string>
+  <string name="msg_invalid">Invalid credentials, please try again</string>
+</resources>

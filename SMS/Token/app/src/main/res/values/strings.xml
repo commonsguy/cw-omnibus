@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">SMS Token Demo</string>
+  <string name="msg">Text %s to this device!</string>
+</resources>

@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:padding="8dp"
+	style="@style/activated">
+
+	<ImageView
+		android:id="@+id/thumbnail"
+		android:layout_width="64dp"
+		android:layout_height="64dp"
+		android:contentDescription="@string/thumbnail"/>
+
+	<TextView
+		android:id="@android:id/text1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="8dp"
+		android:layout_gravity="center_vertical"
+		android:textSize="24sp"/>
+
+</LinearLayout>

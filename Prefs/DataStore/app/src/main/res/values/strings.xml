@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Pref Fragment Demo</string>
+	<string name="checkbox">Checkbox:</string>
+	<string name="ringtone">Ringtone:</string>
+	<string name="checkbox2">Checkbox #2:</string>
+	<string name="text">Text:</string>
+	<string name="list">List:</string>
+	<string name="settings">Settings</string>
+	<string name="pref1summary">Check it on, check it off</string>
+	<string name="pref1title">Checkbox Preference</string>
+	<string name="pref2summary">Pick a tone, any tone</string>
+	<string name="pref2title">Ringtone Preference</string>
+	<string name="pref3summary">Click to pop up a field for entry</string>
+	<string name="pref3title">Text Entry Dialog</string>
+	<string name="pref4summary">Click to pop up a list to choose from</string>
+	<string name="pref4title">Selection Dialog</string>
+	<string name="pref5summary">Another Checkbox</string>
+	<string name="pref5title">On. Off. It really doesn\'t matter.</string>
+	<string name="header1title">Some Settings</string>
+	<string name="header1summary">A handful of values for you to tailor</string>
+	<string name="header2title">More Settings</string>
+	<string name="header2summary">Well, we needed two headers</string>
+	<string name="listdialogtitle">Choose a Pennsylvania city</string>
+	<string name="dialogtitle">Enter something useful</string>
+
+</resources>

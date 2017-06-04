@@ -1,0 +1,12 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 25
+        targetSdkVersion 'O'
+        applicationId 'com.commonsware.android.browser.secure'
+    }
+}

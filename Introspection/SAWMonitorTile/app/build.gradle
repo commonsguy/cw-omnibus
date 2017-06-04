@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         minSdkVersion 24
@@ -12,5 +12,5 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v13:25.0.2'
+    compile 'com.android.support:support-v13:25.0.3'
 }

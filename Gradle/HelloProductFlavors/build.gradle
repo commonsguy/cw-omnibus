@@ -14,7 +14,7 @@ dependencies {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.3'
 
     defaultConfig {
         versionCode 2

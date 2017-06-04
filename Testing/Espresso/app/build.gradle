@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    androidTestCompile 'com.android.support:support-annotations:25.0.2'
-    androidTestCompile 'com.android.support:recyclerview-v7:25.0.2'
+    androidTestCompile 'com.android.support:support-annotations:25.0.3'
+    androidTestCompile 'com.android.support:recyclerview-v7:25.0.3'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
-    compile 'com.android.support:recyclerview-v7:25.0.2'
+    compile 'com.android.support:recyclerview-v7:25.0.3'
 }
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         minSdkVersion 14

@@ -14,7 +14,7 @@ dependencies {
 
 android {
     compileSdkVersion 'android-O'
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
       minSdkVersion 15

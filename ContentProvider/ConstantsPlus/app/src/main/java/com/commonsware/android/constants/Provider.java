@@ -53,7 +53,7 @@ public class Provider extends ContentProvider {
   public boolean onCreate() {
     db=new DatabaseHelper(getContext());
 
-    return((db == null) ? false : true);
+    return(true);
   }
 
   @Override

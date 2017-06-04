@@ -35,7 +35,7 @@ public class FilesCPDemo extends Activity {
     File f=new File(getFilesDir(), "test.pdf");
 
     if (!f.exists()) {
-      AssetManager assets=getResources().getAssets();
+      AssetManager assets=getAssets();
 
       try {
         copy(assets.open("test.pdf"), f);

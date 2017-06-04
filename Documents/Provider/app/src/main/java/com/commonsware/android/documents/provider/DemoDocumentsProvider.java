@@ -120,7 +120,7 @@ public class DemoDocumentsProvider extends DocumentsProvider {
 
     try {
       pipe=ParcelFileDescriptor.createPipe();
-      AssetManager assets=getContext().getResources().getAssets();
+      AssetManager assets=getContext().getAssets();
 
       new TransferThread(assets.open(documentId),
           new ParcelFileDescriptor.AutoCloseOutputStream(pipe[1])).start();

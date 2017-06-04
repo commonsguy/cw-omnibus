@@ -31,7 +31,7 @@ public class FileProvider extends AbstractFileProvider {
     File f=new File(getContext().getFilesDir(), "test.pdf");
 
     if (!f.exists()) {
-      AssetManager assets=getContext().getResources().getAssets();
+      AssetManager assets=getContext().getAssets();
 
       try {
         copy(assets.open("test.pdf"), f);

@@ -91,7 +91,7 @@ public class BitmapFragment extends Fragment {
 
   private AssetManager assets() {
     if (assets == null) {
-      assets=getActivity().getResources().getAssets();
+      assets=getActivity().getAssets();
     }
 
     return(assets);

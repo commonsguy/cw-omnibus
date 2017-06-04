@@ -40,7 +40,7 @@ public class PipeProvider extends AbstractFileProvider {
 
     try {
       pipe=ParcelFileDescriptor.createPipe();
-      AssetManager assets=getContext().getResources().getAssets();
+      AssetManager assets=getContext().getAssets();
 
       new TransferThread(assets.open(uri.getLastPathSegment()),
                        new AutoCloseOutputStream(pipe[1])).start();

@@ -21,7 +21,11 @@
     <service android:name=".FirstSillyService" />
     <service android:name=".SecondSillyService" />
 
-    <receiver android:name=".HackReceiver" />
+    <receiver android:name=".HackReceiver">
+      <intent-filter>
+        <action android:name="com.commonsware.WTF" />
+      </intent-filter>
+    </receiver>
   </application>
 
 </manifest>

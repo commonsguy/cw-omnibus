@@ -39,6 +39,10 @@ abstract public class AbstractSillyService extends Service {
   public int onStartCommand(final Intent intent, int flags, int startId) {
     Log.e(getClass().getSimpleName(), "onStartCommand() called");
 
+    if (intent.getBooleanExtra(EXTRA_FOREGROUND, false)) {
+      startForeground(1337, buildNotification(this));
+    }
+
     timer.schedule(new Runnable() {
       @Override
       public void run() {
@@ -47,9 +51,8 @@ abstract public class AbstractSillyService extends Service {
         if (intent.getBooleanExtra(EXTRA_FOREGROUND, false)) {
           Log.e(getClass().getSimpleName(), "starting foreground");
           next.putExtra(EXTRA_FOREGROUND, true);
-          getSystemService(NotificationManager.class)
-            .startServiceInForeground(next, 1337,
-              buildNotification(AbstractSillyService.this));
+          //startForegroundService(next);
+          startService(next);
         }
         else if (intent.getBooleanExtra(EXTRA_BROADCAST_HACK, false)) {
           Log.e(getClass().getSimpleName(), "starting via broadcast hack");

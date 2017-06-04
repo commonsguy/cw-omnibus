@@ -38,9 +38,8 @@ public class MainActivity extends Activity {
       new Intent(this, FirstSillyService.class)
         .putExtra(AbstractSillyService.EXTRA_FOREGROUND, true);
 
-    getSystemService(NotificationManager.class)
-      .startServiceInForeground(svc, 1337,
-        AbstractSillyService.buildNotification(this));
+    //startForegroundService(svc);
+    startService(svc);
     finish();
   }
 

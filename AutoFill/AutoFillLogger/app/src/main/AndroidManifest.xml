@@ -17,12 +17,12 @@
 
     <service
       android:name=".AutoFillLoggerService"
-      android:permission="android.permission.BIND_AUTO_FILL">
+      android:permission="android.permission.BIND_AUTOFILL">
       <meta-data
         android:name="android.autofill"
         android:resource="@xml/autofill_service" />
       <intent-filter>
-        <action android:name="android.service.autofill.AutoFillService" />
+        <action android:name="android.service.autofill.AutofillService" />
       </intent-filter>
     </service>
   </application>

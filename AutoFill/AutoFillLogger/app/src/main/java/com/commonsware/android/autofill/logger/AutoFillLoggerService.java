@@ -18,12 +18,15 @@ import android.app.assist.AssistStructure;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Environment;
-import android.service.autofill.AutoFillService;
+import android.service.autofill.AutofillService;
 import android.service.autofill.FillCallback;
+import android.service.autofill.FillRequest;
 import android.service.autofill.FillResponse;
 import android.service.autofill.SaveCallback;
+import android.service.autofill.SaveInfo;
+import android.service.autofill.SaveRequest;
 import android.util.Log;
-import android.view.autofill.AutoFillId;
+import android.view.autofill.AutofillId;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,44 +34,72 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AutoFillLoggerService extends AutoFillService {
+public class AutoFillLoggerService extends AutofillService {
   private static final String EXTRA_LOG_DIR="logDirName";
+  private static final int SAVE_DATA_ALL=SaveInfo.SAVE_DATA_TYPE_GENERIC |
+    SaveInfo.SAVE_DATA_TYPE_ADDRESS | SaveInfo.SAVE_DATA_TYPE_CREDIT_CARD |
+    SaveInfo.SAVE_DATA_TYPE_EMAIL_ADDRESS | SaveInfo.SAVE_DATA_TYPE_PASSWORD |
+    SaveInfo.SAVE_DATA_TYPE_USERNAME;
 
   @Override
   public void onFillRequest(AssistStructure assistStructure, Bundle extras,
+                            int whatever,
+                            CancellationSignal cancellationSignal,
+                            FillCallback fillCallback) {
+    // deprecated?
+  }
+
+  @Override
+  public void onFillRequest(FillRequest request,
                             CancellationSignal cancellationSignal,
                             FillCallback fillCallback) {
     if (Environment.MEDIA_MOUNTED
       .equals(Environment.getExternalStorageState())) {
+      Bundle extras=request.getClientState();
+
       if (extras==null) {
         extras=new Bundle();
       }
 
       File logDir=getLogDir(extras);
-      Set<AutoFillId> ids=new HashSet<>();
+      Set<AutofillId> ids=new HashSet<>();
+      AssistStructure assistStructure=request.getStructure();
+      AutofillId first=null;
 
       for (int i=0; i<assistStructure.getWindowNodeCount(); i++) {
         AssistStructure.WindowNode node=assistStructure.getWindowNodeAt(i);
 
-        collectViewIds(node.getRootViewNode(), ids);
+        AutofillId temp=collectViewIds(node.getRootViewNode(), ids);
+
+        if (first==null) {
+          first=temp;
+        }
       }
+
+      ids.remove(first);
+
+      SaveInfo saveInfo=
+        new SaveInfo.Builder(SAVE_DATA_ALL, new AutofillId[] { first })
+          .setOptionalIds(ids.toArray(new AutofillId[ids.size()]))
+          .build();
 
       FillResponse.Builder b=new FillResponse.Builder();
 
-      b.addSavableFields(ids.toArray(new AutoFillId[ids.size()]));
+      b.setSaveInfo(saveInfo);
       b.setExtras(extras);
 
       Log.d(getClass().getSimpleName(),
         String.format("onFillRequest() called, saving %d fields", ids.size()));
 
+      FillResponse response=b.build();
+
       try {
         File log=File.createTempFile("fill-", ".json", logDir);
 
         new DumpThread.Fill(this, log, extras, assistStructure, fillCallback,
-          b.build()).start();
+          response).start();
       }
       catch (IOException e) {
-        fillCallback.onSuccess(b.build());
         Log.e(getClass().getSimpleName(), "Exception creating temp file", e);
       }
     }
@@ -80,18 +111,22 @@ public class AutoFillLoggerService extends AutoFillService {
   @Override
   public void onSaveRequest(AssistStructure assistStructure, Bundle extras,
                             SaveCallback saveCallback) {
+    // deprecated?
+  }
 
+  @Override
+  public void onSaveRequest(SaveRequest request, SaveCallback saveCallback) {
     Log.d(getClass().getSimpleName(), "onSaveRequest() called");
 
     if (Environment.MEDIA_MOUNTED
       .equals(Environment.getExternalStorageState())) {
+      Bundle extras=request.getClientState();
       File logDir=getLogDir(extras);
 
       try {
         File log=File.createTempFile("save-", ".json", logDir);
 
-        new DumpThread.Save(this, log, extras, assistStructure, saveCallback)
-          .start();
+        new DumpThread.Save(this, log, request, saveCallback).start();
       }
       catch (IOException e) {
         saveCallback.onFailure(e.getMessage());
@@ -100,13 +135,24 @@ public class AutoFillLoggerService extends AutoFillService {
     }
   }
 
-  private void collectViewIds(AssistStructure.ViewNode node,
-                              Set<AutoFillId> ids) {
-    ids.add(node.getAutoFillId());
+  private AutofillId collectViewIds(AssistStructure.ViewNode node,
+                                    Set<AutofillId> ids) {
+    AutofillId result=null;
+
+    if (node.getAutofillHints()!=null && node.getAutofillHints().length>0) {
+      result=node.getAutofillId();
+      ids.add(result);
+    }
 
     for (int i=0; i<node.getChildCount(); i++) {
-      collectViewIds(node.getChildAt(i), ids);
+      AutofillId temp=collectViewIds(node.getChildAt(i), ids);
+
+      if (result==null) {
+        result=temp;
+      }
     }
+
+    return(result);
   }
 
   private File getLogDir(Bundle extras) {

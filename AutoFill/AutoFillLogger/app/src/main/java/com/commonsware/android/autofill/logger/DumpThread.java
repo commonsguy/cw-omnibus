@@ -19,8 +19,10 @@ import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.service.autofill.FillCallback;
+import android.service.autofill.FillContext;
 import android.service.autofill.FillResponse;
 import android.service.autofill.SaveCallback;
+import android.service.autofill.SaveRequest;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,20 +34,16 @@ import java.io.PrintWriter;
 import java.util.Set;
 
 abstract class DumpThread extends Thread {
+  abstract void writeTo(JSONObject json);
   abstract void onSuccess();
   abstract void onFailure(String message);
 
   private final File logFile;
-  private final Bundle data;
-  private final AssistStructure structure;
   private final Context ctxt;
 
-  private DumpThread(Context ctxt, File logDir, Bundle data,
-                     AssistStructure structure) {
+  private DumpThread(Context ctxt, File logDir) {
     this.ctxt=ctxt.getApplicationContext();
     this.logFile=logDir;
-    this.data=data;
-    this.structure=structure;
   }
 
   @Override
@@ -53,23 +51,7 @@ abstract class DumpThread extends Thread {
     if (logFile!=null) {
       JSONObject json=new JSONObject();
 
-      if (data!=null) {
-        try {
-          json.put("data", dumpBundle(data, new JSONObject()));
-        }
-        catch (JSONException e) {
-          Log.e(getClass().getSimpleName(),
-            "Exception saving data", e);
-        }
-      }
-
-      try {
-        json.put("structure", dumpStructure(new JSONObject()));
-      }
-      catch (JSONException e) {
-        Log.e(getClass().getSimpleName(),
-          "Exception saving structure", e);
-      }
+      writeTo(json);
 
       try {
         FileOutputStream fos=new FileOutputStream(logFile);
@@ -102,7 +84,7 @@ abstract class DumpThread extends Thread {
     }
   }
 
-  private JSONObject dumpBundle(Bundle b, JSONObject json)
+  protected JSONObject dumpBundle(Bundle b, JSONObject json)
     throws JSONException {
     Set<String> keys=b.keySet();
 
@@ -113,13 +95,14 @@ abstract class DumpThread extends Thread {
     return (json);
   }
 
-  private JSONObject dumpStructure(JSONObject json)
+  protected JSONObject dumpStructure(AssistStructure structure, JSONObject json)
     throws JSONException {
     return (json.put("windows",
-      dumpStructureWindows(new JSONArray())));
+      dumpStructureWindows(structure, new JSONArray())));
   }
 
-  private JSONArray dumpStructureWindows(JSONArray windows)
+  protected JSONArray dumpStructureWindows(AssistStructure structure,
+                                           JSONArray windows)
     throws JSONException {
     for (int i=0; i<structure.getWindowNodeCount(); i++) {
       windows.put(
@@ -127,10 +110,10 @@ abstract class DumpThread extends Thread {
           new JSONObject()));
     }
 
-    return (windows);
+    return(windows);
   }
 
-  private JSONObject dumpStructureWindow(
+  protected JSONObject dumpStructureWindow(
     AssistStructure.WindowNode window,
     JSONObject json)
     throws JSONException {
@@ -156,6 +139,11 @@ abstract class DumpThread extends Thread {
     json.put("activated", wrap(node.isActivated()));
     json.put("alpha", wrap(node.getAlpha()));
     json.put("assistBlocked", wrap(node.isAssistBlocked()));
+    json.put("autofillHints", wrap(node.getAutofillHints()));
+    json.put("autofillId", wrap(node.getAutofillId()));
+    json.put("autofillOptions", wrap(node.getAutofillOptions()));
+    json.put("autofillType", wrap(node.getAutofillType()));
+    json.put("autofillValue", wrap(node.getAutofillValue()));
     json.put("checkable", wrap(node.isCheckable()));
     json.put("checked", wrap(node.isChecked()));
     json.put("className", wrap(node.getClassName()));
@@ -176,15 +164,18 @@ abstract class DumpThread extends Thread {
     json.put("focused", wrap(node.isFocused()));
     json.put("height", wrap(node.getHeight()));
     json.put("hint", wrap(node.getHint()));
+    json.put("htmlInfo", wrap(node.getHtmlInfo()));
     json.put("id", wrap(node.getId()));
     json.put("idEntry", wrap(node.getIdEntry()));
     json.put("idPackage", wrap(node.getIdPackage()));
     json.put("idType", wrap(node.getIdType()));
+    json.put("inputType", wrap(node.getInputType()));
     json.put("left", wrap(node.getLeft()));
     json.put("longClickable", wrap(node.isLongClickable()));
     json.put("scrollX", wrap(node.getScrollX()));
     json.put("scrollY", wrap(node.getScrollY()));
     json.put("isSelected", wrap(node.isSelected()));
+    json.put("isOpaque", wrap(node.isOpaque()));
     json.put("text", wrap(node.getText()));
     json.put("textBackgroundColor",
       wrap(node.getTextBackgroundColor()));
@@ -202,6 +193,7 @@ abstract class DumpThread extends Thread {
     json.put("top", wrap(node.getTop()));
     json.put("transformation",
       wrap(node.getTransformation()));
+    json.put("url", wrap(node.getUrl()));
     json.put("visibility", wrap(node.getVisibility()));
     json.put("width", wrap(node.getWidth()));
 
@@ -232,12 +224,43 @@ abstract class DumpThread extends Thread {
 
   static class Save extends DumpThread {
     private final SaveCallback saveCallback;
+    private final SaveRequest request;
 
-    Save(Context ctxt, File logDir, Bundle data, AssistStructure structure,
+    Save(Context ctxt, File logDir, SaveRequest request,
          SaveCallback saveCallback) {
-      super(ctxt, logDir, data, structure);
+      super(ctxt, logDir);
 
       this.saveCallback=saveCallback;
+      this.request=request;
+    }
+
+    @Override
+    void writeTo(JSONObject json) {
+      if (request.getClientState()!=null) {
+        try {
+          json.put("data",
+            dumpBundle(request.getClientState(), new JSONObject()));
+        }
+        catch (JSONException e) {
+          Log.e(getClass().getSimpleName(),
+            "Exception saving data", e);
+        }
+      }
+
+      try {
+        JSONArray contexts=new JSONArray();
+
+        for (FillContext fillContext : request.getFillContexts()) {
+          contexts.put(dumpStructure(fillContext.getStructure(),
+            new JSONObject()));
+        }
+
+        json.put("contexts", contexts);
+      }
+      catch (JSONException e) {
+        Log.e(getClass().getSimpleName(),
+          "Exception saving structure", e);
+      }
     }
 
     @Override
@@ -254,13 +277,38 @@ abstract class DumpThread extends Thread {
   static class Fill extends DumpThread {
     private final FillCallback fillCallback;
     private final FillResponse response;
+    private final Bundle data;
+    private final AssistStructure structure;
 
     Fill(Context ctxt, File logDir, Bundle data, AssistStructure structure,
          FillCallback fillCallback, FillResponse response) {
-      super(ctxt, logDir, data, structure);
+      super(ctxt, logDir);
 
       this.fillCallback=fillCallback;
       this.response=response;
+      this.data=data;
+      this.structure=structure;
+    }
+
+    @Override
+    void writeTo(JSONObject json) {
+      if (data!=null) {
+        try {
+          json.put("data", dumpBundle(data, new JSONObject()));
+        }
+        catch (JSONException e) {
+          Log.e(getClass().getSimpleName(),
+            "Exception saving data", e);
+        }
+      }
+
+      try {
+        json.put("structure", dumpStructure(structure, new JSONObject()));
+      }
+      catch (JSONException e) {
+        Log.e(getClass().getSimpleName(),
+          "Exception saving structure", e);
+      }
     }
 
     @Override

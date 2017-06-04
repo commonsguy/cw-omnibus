@@ -16,7 +16,6 @@ package com.commonsware.android.preso.slides;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;

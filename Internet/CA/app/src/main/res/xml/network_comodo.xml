@@ -3,7 +3,7 @@
   <domain-config>
     <domain includeSubdomains="false" usesCleartextTraffic="false">wares.commonsware.com</domain>
     <trust-anchors>
-      <certificates src="@raw/thawte_primary_root" />
+      <certificates src="@raw/addtrustexternalcaroot" />
     </trust-anchors>
   </domain-config>
 </network-security-config>

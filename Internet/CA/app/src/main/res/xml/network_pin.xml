@@ -2,8 +2,8 @@
 <network-security-config>
   <domain-config>
     <domain includeSubdomains="false" usesCleartextTraffic="false">wares.commonsware.com</domain>
-    <pin-set expiration="2017-05-01">
-      <pin digest="SHA-256">RyT0OwuqsvhmpgcGEMQ8OG0vQx/8pdIXGHnAPemF0XY=</pin>
+    <pin-set expiration="2020-05-01">
+      <pin digest="SHA-256">sF1A3ez70l81aUjLwU6KiAMmOyPNFQDueJH+4YDWppo=</pin>
     </pin-set>
   </domain-config>
 </network-security-config>

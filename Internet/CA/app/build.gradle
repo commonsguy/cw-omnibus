@@ -13,11 +13,11 @@ android {
     }
 
     productFlavors {
-        thawte {
+        comodo {
             resValue "string", "app_name", "CA Validation Demo"
-            applicationId "com.commonsware.android.downloader.ca.thawte"
+            applicationId "com.commonsware.android.downloader.ca.comodo"
             manifestPlaceholders=
-                    [networkSecurityConfig: 'network_thawte']
+                    [networkSecurityConfig: 'network_comodo']
             buildConfigField "String", "URL", WARES
         }
         verisign {

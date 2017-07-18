@@ -22,7 +22,7 @@
     port = e.ports[0];
 
     port.onmessage = function (f) {
-      parse(e.data);
+      parse(f.data);
     }
   }
 </script>

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         minSdkVersion 25
-        targetSdkVersion 'O'
+        targetSdkVersion 26
         applicationId 'com.commonsware.android.browser.secure'
     }
 }

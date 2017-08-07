@@ -6,6 +6,6 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 'O'
+        targetSdkVersion 26
     }
 }

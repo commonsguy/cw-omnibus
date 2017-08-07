@@ -147,6 +147,6 @@ class SAWDetector {
   }
 
   private static boolean iCanHazO() {
-    return("O".equals(Build.VERSION.CODENAME));
+    return(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O);
   }
 }

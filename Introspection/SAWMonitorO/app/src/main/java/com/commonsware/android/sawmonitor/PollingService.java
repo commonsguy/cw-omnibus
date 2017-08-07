@@ -20,7 +20,6 @@ import android.app.job.JobService;
 public class PollingService extends JobService {
   @Override
   public boolean onStartJob(JobParameters jobParameters) {
-android.util.Log.e("20170512", "onStartJob");
     SAWDetector.seeSAW(this);
 
     return(false);

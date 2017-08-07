@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">Work Queue Demo</string>
+  <string name="msg_go_away">Run the instrumentation tests, please!</string>
+</resources>

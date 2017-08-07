@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
+
+  defaultConfig {
+    applicationId "com.commonsware.android.job.work"
+    minSdkVersion 26
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    testApplicationId "com.commonsware.android.job.work.test"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  dependencies {
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+  }
+}

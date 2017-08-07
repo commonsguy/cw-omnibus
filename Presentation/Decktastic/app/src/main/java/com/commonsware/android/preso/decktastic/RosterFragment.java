@@ -97,11 +97,11 @@ public class RosterFragment extends BrowseFragment
       super();
 
       this.ctxt=ctxt.getApplicationContext();
-      android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
     }
 
     @Override
     public void run() {
+      android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
       PresoRoster.getInstance().load(ctxt);
 
       EventBus.getDefault().postSticky(new RosterLoadedEvent());

@@ -18,9 +18,11 @@
     <item>Center: ConstraintLayout</item>
     <item>Bias: ConstraintLayout</item>
     <item>Bias: LinearLayout</item>
+    <item>Bias: ConstraintLayout Peers</item>
     <item>Aspect: ConstraintLayout</item>
     <item>Center Align: LinearLayout</item>
     <item>Center Align: ConstraintLayout</item>
+    <item>Chains: ConstraintLayout</item>
   </string-array>
   <array name="layouts">
     <item>@layout/no_container</item>
@@ -40,8 +42,10 @@
     <item>@layout/center_cl</item>
     <item>@layout/bias_cl</item>
     <item>@layout/bias_ll</item>
+    <item>@layout/bias_peers_cl</item>
     <item>@layout/aspect_cl</item>
     <item>@layout/center_align_ll</item>
     <item>@layout/center_align_cl</item>
+    <item>@layout/chains_cl</item>
   </array>
 </resources>

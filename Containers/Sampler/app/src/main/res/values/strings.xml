@@ -16,4 +16,5 @@
   <string name="do_something">Do Something Useful With This Data</string>
 	<string name="big">I AM BIG</string>
 	<string name="small">I am small</string>
+  <string name="btn_other">Other Button!</string>
 </resources>

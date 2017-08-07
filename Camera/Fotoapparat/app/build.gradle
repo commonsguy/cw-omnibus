@@ -1,0 +1,27 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+dependencies {
+    compile 'com.github.clans:fab:1.5.5'
+    compile 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
+    compile 'com.android.support:support-compat:26.0.0'
+    compile ('io.fotoapparat.fotoapparat:library:1.2.0') {
+      exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+}
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
+  
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 26
+    applicationId 'com.commonsware.android.camera.fotoapparat'
+  }
+}

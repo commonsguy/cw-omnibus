@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fotoapparat Demo</string>
+    <string name="msg_pic_taken">Picture taken!</string>
+    <string name="msg_vid_recorded">Video recorded!</string>
+    <string name="msg_take_picture">You need to grant us permission! Tap the Take Picture button again, and we will ask for permission.</string>
+    <string name="msg_no_perm">Sorry, you did not give us permission!</string>
+    <string name="msg_record_video">You need to grant us permission! Tap the Record Video button again, and we will ask for permission.</string>
+</resources>

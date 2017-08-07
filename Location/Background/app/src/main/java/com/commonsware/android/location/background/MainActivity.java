@@ -88,11 +88,7 @@ public class MainActivity extends AbstractPermissionActivity {
 
       if (value) {
         if (Build.VERSION.SDK_INT>Build.VERSION_CODES.N_MR1) {
-          Notification fg=LocationPollerService.buildNotification(getActivity());
-          NotificationManager mgr=
-            getActivity().getSystemService(NotificationManager.class);
-
-          launchServiceInForeground(mgr, fg, i);
+          getActivity().startForegroundService(i);
         }
         else {
           getActivity().startService(i);
@@ -105,21 +101,6 @@ public class MainActivity extends AbstractPermissionActivity {
       getActivity().finish();
 
       return(true);
-    }
-
-    private void launchServiceInForeground(NotificationManager mgr,
-                                           Notification fg, Intent i) {
-      try {
-        Method startServiceInForeground=
-          mgr.getClass().getMethod("startServiceInForeground", Intent.class,
-            int.class, Notification.class);
-
-        startServiceInForeground.invoke(mgr, i, 1337, fg);
-      }
-      catch (Exception e) {
-        Log.e(getClass().getSimpleName(), "Could not invoke startServiceInForeground()", e);
-        Toast.makeText(getActivity(), R.string.msg_error, Toast.LENGTH_LONG).show();
-      }
     }
 
     private void updateSummary(ListPreference pref, String value) {

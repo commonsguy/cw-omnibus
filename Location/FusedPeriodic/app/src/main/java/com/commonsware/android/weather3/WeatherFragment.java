@@ -14,11 +14,13 @@
 
 package com.commonsware.android.weather3;
 
+import android.annotation.SuppressLint;
 import android.app.ListFragment;
 import android.content.IntentSender;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,26 +39,25 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.squareup.picasso.Picasso;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherFragment extends ListFragment implements
     ResultCallback<LocationSettingsResult>,
     LocationListener {
   static final int SETTINGS_REQUEST_ID=1338;
-  private String template=null;
+  @SuppressLint("SimpleDateFormat")
+  private static final SimpleDateFormat ISO8601=
+    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+  private ForecastAdapter adapter;
+  private NWSInterface nws;
   private LocationRequest request=null;
 
   @Override
@@ -64,7 +65,13 @@ public class WeatherFragment extends ListFragment implements
     super.onCreate(savedInstanceState);
     setRetainInstance(true);
 
-    template=getActivity().getString(R.string.url);
+    Retrofit retrofit=
+      new Retrofit.Builder()
+        .baseUrl("https://api.weather.gov")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
+
+    nws=retrofit.create(NWSInterface.class);
     request=new LocationRequest()
               .setNumUpdates(1)
               .setExpirationDuration(60000)
@@ -128,8 +135,32 @@ public class WeatherFragment extends ListFragment implements
 
   @Override
   public void onLocationChanged(Location location) {
-    new FetchForecastTask()
-        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, location);
+    double roundedLat=(double)Math.round(location.getLatitude()*10000d)/10000d;
+    double roundedLon=(double)Math.round(location.getLongitude()*10000d)/10000d;
+
+    nws.getForecast(roundedLat, roundedLon)
+      .enqueue(new Callback<WeatherResponse>() {
+        @Override
+        public void onResponse(Call<WeatherResponse> call,
+                               Response<WeatherResponse> response) {
+          if (response.code()==200) {
+            adapter=new ForecastAdapter(response.body().properties.periods);
+            setListAdapter(adapter);
+          }
+          else {
+            Toast.makeText(getActivity(), R.string.msg_nws,
+              Toast.LENGTH_LONG).show();
+          }
+        }
+
+        @Override
+        public void onFailure(Call<WeatherResponse> call, Throwable t) {
+          Toast.makeText(getActivity(), t.getMessage(),
+            Toast.LENGTH_LONG).show();
+          Log.e(getClass().getSimpleName(),
+            "Exception from Retrofit request to National Weather Service", t);
+        }
+      });
   }
 
   private GoogleApiClient getPlayServices() {
@@ -147,6 +178,7 @@ public class WeatherFragment extends ListFragment implements
     result.setResultCallback(this);
   }
 
+  @SuppressWarnings("MissingPermission")
   void requestLocations() {
     PendingResult<Status> result=
         LocationServices.FusedLocationApi
@@ -172,134 +204,50 @@ public class WeatherFragment extends ListFragment implements
     });
   }
 
-  private String getForecastXML(String path) throws IOException {
-    BufferedReader reader=null;
-    URL url=new URL(path);
-    HttpURLConnection c=(HttpURLConnection)url.openConnection();
+  private class ForecastAdapter extends ArrayAdapter<WeatherResponse.Period> {
+    private int size;
+    private java.text.DateFormat dateFormat;
+    private java.text.DateFormat timeFormat;
 
-    try {
-      reader=
-          new BufferedReader(new InputStreamReader(c.getInputStream()));
-
-      StringBuilder buf=new StringBuilder();
-      String line=null;
-
-      while ((line=reader.readLine()) != null) {
-        buf.append(line);
-        buf.append('\n');
-      }
-
-      return(buf.toString());
-    }
-    finally {
-      if (reader != null) {
-        reader.close();
-      }
-      
-      c.disconnect();
-    }
-  }
-
-  private ArrayList<Forecast> buildForecasts(String raw)
-                                                        throws Exception {
-    ArrayList<Forecast> forecasts=new ArrayList<Forecast>();
-    DocumentBuilder builder=
-        DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    Document doc=builder.parse(new InputSource(new StringReader(raw)));
-    NodeList times=doc.getElementsByTagName("start-valid-time");
-
-    for (int i=0; i < times.getLength(); i++) {
-      Element time=(Element)times.item(i);
-      Forecast forecast=new Forecast();
-
-      forecasts.add(forecast);
-      forecast.setTime(time.getFirstChild().getNodeValue());
-    }
-
-    NodeList temps=doc.getElementsByTagName("value");
-
-    for (int i=0; i < temps.getLength(); i++) {
-      Element temp=(Element)temps.item(i);
-      Forecast forecast=forecasts.get(i);
-
-      forecast.setTemp(Integer.valueOf(temp.getFirstChild()
-                                           .getNodeValue()));
-    }
-
-    NodeList icons=doc.getElementsByTagName("icon-link");
-
-    for (int i=0; i < icons.getLength(); i++) {
-      Element icon=(Element)icons.item(i);
-      Forecast forecast=forecasts.get(i);
-
-      forecast.setIcon(icon.getFirstChild().getNodeValue());
-    }
-
-    return(forecasts);
-  }
-
-  private class FetchForecastTask extends AsyncTask<Location, Void, List<Forecast>> {
-    private Exception e=null;
-
-    @Override
-    protected List<Forecast> doInBackground(Location... locs) {
-      try {
-        Location loc=locs[0];
-        String url=
-            String.format(template, loc.getLatitude(),
-                          loc.getLongitude());
-
-        return(buildForecasts(getForecastXML(url)));
-      }
-      catch (Exception e) {
-        this.e=e;
-      }
-
-      return(null);
-    }
-
-    @Override
-    protected void onPostExecute(List<Forecast> forecasts) {
-      if (e == null) {
-        setListAdapter(new ForecastAdapter(forecasts));
-      }
-      else {
-        Log.e(getClass().getSimpleName(), "Exception fetching data", e);
-        Toast.makeText(getActivity(),
-                       String.format(getString(R.string.error),
-                                     e.toString()), Toast.LENGTH_LONG)
-             .show();
-      }
-    }
-  }
-
-  private class ForecastAdapter extends ArrayAdapter<Forecast> {
-    int size;
-
-    ForecastAdapter(List<Forecast> items) {
+    ForecastAdapter(List<WeatherResponse.Period> items) {
       super(getActivity(), R.layout.row, R.id.date, items);
 
-      size=
-          getActivity().getResources()
-              .getDimensionPixelSize(R.dimen.icon);
+      size=getActivity()
+        .getResources()
+        .getDimensionPixelSize(R.dimen.icon);
+      dateFormat=DateFormat.getDateFormat(getActivity());
+      timeFormat=DateFormat.getTimeFormat(getActivity());
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       View row=super.getView(position, convertView, parent);
-      Forecast item=getItem(position);
-      ImageView icon=(ImageView)row.findViewById(R.id.icon);
+      WeatherResponse.Period item=getItem(position);
 
-      Picasso.with(getActivity()).load(item.getIcon())
+      if (!TextUtils.isEmpty(item.icon)) {
+        ImageView icon=row.findViewById(R.id.icon);
+
+        Picasso.with(getActivity()).load(item.icon)
           .resize(size, size).centerCrop().into(icon);
+      }
 
-      TextView title=(TextView)row.findViewById(R.id.date);
+      TextView title=row.findViewById(R.id.date);
 
-      title.setText(item.getTime());
+      try {
+        Date parsedStartTime=ISO8601.parse(item.startTime);
+        String date=dateFormat.format(parsedStartTime);
+        String time=timeFormat.format(parsedStartTime);
 
-      TextView temp=(TextView)row.findViewById(R.id.temp);
+        title.setText(date+" "+time);
+      }
+      catch (ParseException e) {
+        title.setText(item.startTime);
+      }
 
-      temp.setText("Temperature: "+String.valueOf(item.getTemp())+"F");
+      TextView temp=row.findViewById(R.id.temp);
+
+      temp.setText(getString(R.string.temp, item.temperature,
+        item.temperatureUnit));
 
       return(row);
     }

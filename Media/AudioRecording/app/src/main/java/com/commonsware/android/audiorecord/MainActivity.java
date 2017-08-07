@@ -17,6 +17,7 @@ package com.commonsware.android.audiorecord;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.OnErrorListener;
 import android.media.MediaRecorder.OnInfoListener;
+import android.media.MediaScannerConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,7 +33,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class MainActivity extends AbstractPermissionActivity implements
     OnCheckedChangeListener, OnErrorListener, OnInfoListener {
   private static final String BASENAME="recording.3gp";
-  private MediaRecorder recorder=null;
+  private MediaRecorder recorder;
+  private File output;
 
   @Override
   protected String[] getDesiredPermissions() {
@@ -75,7 +77,7 @@ public class MainActivity extends AbstractPermissionActivity implements
   public void onCheckedChanged(CompoundButton buttonView,
                                boolean isChecked) {
     if (isChecked) {
-      File output=
+      output=
         new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
           BASENAME);
 
@@ -106,6 +108,9 @@ public class MainActivity extends AbstractPermissionActivity implements
     else {
       try {
         recorder.stop();
+
+        MediaScannerConnection
+          .scanFile(this, new String[] {output.getAbsolutePath()}, null, null);
       }
       catch (Exception e) {
         Log.w(getClass().getSimpleName(),

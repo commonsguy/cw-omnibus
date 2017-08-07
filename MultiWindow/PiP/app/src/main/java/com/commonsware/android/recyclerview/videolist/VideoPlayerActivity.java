@@ -16,12 +16,14 @@ package com.commonsware.android.recyclerview.videolist;
 
 import android.app.Activity;
 import android.app.PendingIntent;
-import android.app.PictureInPictureArgs;
+import android.app.PictureInPictureParams;
 import android.app.RemoteAction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Rational;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
@@ -36,12 +38,12 @@ public class VideoPlayerActivity extends Activity
   private static final int REQUEST_PLAY=REQUEST_PAUSE+1;
   private static final String EXTRA_REQUEST="requestCode";
   private static final String STATE_POSITION="position";
-  private final PictureInPictureArgs pipArgs=new PictureInPictureArgs();
   private VideoView video;
   private MediaController ctlr;
   private View fab;
   private int lastPosition;
   private Intent current;
+  private Rational aspectRatio;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,14 +114,14 @@ public class VideoPlayerActivity extends Activity
 
   @Override
   public void onClick(View view) {
-    pipArgs.setAspectRatio((float) video.getWidth() / video.getHeight());
-    updateActions();
-    enterPictureInPictureMode(pipArgs);
+    aspectRatio=new Rational(video.getWidth(), video.getHeight());
+    enterPictureInPictureMode(updateActions());
   }
 
   @Override
-  public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
-    super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+  public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode,
+                                            Configuration cfg) {
+    super.onPictureInPictureModeChanged(isInPictureInPictureMode, cfg);
 
     fab.setVisibility(isInPictureInPictureMode ? View.GONE : View.VISIBLE);
   }
@@ -135,7 +137,7 @@ public class VideoPlayerActivity extends Activity
       video.start();
     }
 
-    updateActions();
+    setPictureInPictureParams(updateActions());
   }
 
   private void play() {
@@ -144,7 +146,7 @@ public class VideoPlayerActivity extends Activity
     video.start();
   }
 
-  private void updateActions() {
+  private PictureInPictureParams updateActions() {
     ArrayList<RemoteAction> actions=new ArrayList<>();
 
     if (video.isPlaying()) {
@@ -156,8 +158,10 @@ public class VideoPlayerActivity extends Activity
         R.drawable.ic_play_arrow_white_24dp, R.string.play, R.string.play_desc));
     }
 
-    pipArgs.setActions(actions);
-    setPictureInPictureArgs(pipArgs);
+    return(new PictureInPictureParams.Builder()
+      .setAspectRatio(aspectRatio)
+      .setActions(actions)
+      .build());
   }
 
   private RemoteAction buildRemoteAction(int requestCode, int iconId,

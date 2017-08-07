@@ -14,7 +14,7 @@
 
 package com.commonsware.android.calllog.consumer;
 
-import android.app.ListActivity;
+import android.Manifest;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -25,18 +25,31 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class CallLogConsumerActivity extends ListActivity implements
+public class CallLogConsumerActivity extends AbstractPermissionActivity implements
     LoaderManager.LoaderCallbacks<Cursor>,
     SimpleCursorAdapter.ViewBinder {
+  private static final String[] PERMS={Manifest.permission.READ_CALL_LOG};
   private static final String[] PROJECTION=new String[] {
       CallLog.Calls._ID, CallLog.Calls.NUMBER, CallLog.Calls.DATE };
   private SimpleCursorAdapter adapter=null;
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  protected String[] getDesiredPermissions() {
+    return(PERMS);
+  }
 
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_no_perm, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
+
+  @Override
+  public void onReady() {
     adapter=
         new SimpleCursorAdapter(this, R.layout.row, null, new String[] {
             CallLog.Calls.NUMBER, CallLog.Calls.DATE }, new int[] {

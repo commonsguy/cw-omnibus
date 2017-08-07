@@ -14,7 +14,7 @@
 
 package com.commonsware.android.contacts.spinners;
 
-import android.app.ListActivity;
+import android.Manifest;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -25,13 +25,14 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-public class ContactSpinners extends ListActivity implements
+public class ContactSpinners extends AbstractPermissionActivity implements
     LoaderManager.LoaderCallbacks<Cursor>,
     AdapterView.OnItemSelectedListener {
+  private static final String[] PERMS={Manifest.permission.READ_CONTACTS};
   private static final int LOADER_NAMES=0;
   private static final int LOADER_NAMES_NUMBERS=1;
   private static final String[] PROJECTION_NAMES=new String[] {
@@ -68,8 +69,20 @@ public class ContactSpinners extends ListActivity implements
   };
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  protected String[] getDesiredPermissions() {
+    return(PERMS);
+  }
+
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_no_perm, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
+
+  @Override
+  public void onReady() {
     setContentView(R.layout.main);
 
     Spinner spin=(Spinner)findViewById(R.id.spinner);

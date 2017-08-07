@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">CallLog Consumer</string>
-
+	<string name="msg_no_perm">Sorry! This demo cannot run without permission!</string>
 </resources>

@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
       .setContentTitle(getString(R.string.notif_battle_title))
       .setContentText(getString(R.string.notif_battle_text))
       .setSmallIcon(android.R.drawable.stat_sys_warning)
-      .chooseBadgeIcon(Notification.BADGE_ICON_SMALL)
+      .setBadgeIconType(Notification.BADGE_ICON_SMALL)
       .setColor(Color.RED)
       .setColorized(true)
       .build();
@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
       .setContentTitle(getString(R.string.notif_coins_title))
       .setContentText(getString(R.string.notif_coins_text))
       .setSmallIcon(android.R.drawable.stat_sys_warning)
-      .setTimeout(System.currentTimeMillis()+5000)
+      .setTimeoutAfter(5000)
       .build();
 
     mgr.notify(NOTIF_ID_COINS, n);

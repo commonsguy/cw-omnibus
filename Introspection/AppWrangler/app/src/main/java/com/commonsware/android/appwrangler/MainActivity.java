@@ -39,7 +39,6 @@ public class MainActivity extends ListActivity {
   private static final int REQUEST_OPEN=1337;
 
   private AppAdapter adapter;
-  private boolean clearOnClick=false;
   private PackageManager pm;
   private int lastPackageSequenceNumber=-1;
   
@@ -62,10 +61,7 @@ public class MainActivity extends ListActivity {
   protected void onListItemClick(ListView l, View v,
                                  int position, long id) {
     ApplicationInfo app=adapter.getItem(position);
-    String action=clearOnClick ?
-      Intent.ACTION_CLEAR_PACKAGE :
-      Intent.ACTION_UNINSTALL_PACKAGE;
-    Intent i=new Intent(action)
+    Intent i=new Intent(Intent.ACTION_UNINSTALL_PACKAGE)
       .setData(Uri.parse("package:"+app.packageName));
 
     startActivity(i);
@@ -89,11 +85,6 @@ public class MainActivity extends ListActivity {
         startActivityForResult(i, REQUEST_OPEN);
         return(true);
 
-      case R.id.clear_on_click:
-        item.setChecked(!item.isChecked());
-        clearOnClick=item.isChecked();
-        return(true);
-
       case R.id.refresh:
         refresh(true);
         return(true);
@@ -106,7 +97,7 @@ public class MainActivity extends ListActivity {
   protected void onActivityResult(int requestCode, int resultCode,
                                   Intent data) {
     if (requestCode==REQUEST_OPEN && resultCode==RESULT_OK) {
-      if (!getPackageManager().canRequestPackageInstalls()) {
+      if (getPackageManager().canRequestPackageInstalls()) {
         Toast.makeText(this, R.string.msg_install_perm, Toast.LENGTH_LONG).show();
       }
 

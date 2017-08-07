@@ -9,10 +9,4 @@
     android:id="@+id/install"
     android:showAsAction="never"
     android:title="@string/menu_install" />
-  <item
-    android:id="@+id/clear_on_click"
-    android:checkable="true"
-    android:checked="false"
-    android:showAsAction="never"
-    android:title="@string/menu_clear_on_click" />
 </menu>

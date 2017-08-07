@@ -15,15 +15,52 @@
 package com.commonsware.android.autofill.logger;
 
 import android.app.ListActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.view.autofill.AutofillManager;
 import android.widget.Toast;
 
 public class MainActivity extends ListActivity {
+  private static final int REQUEST_ID=1337;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    Toast.makeText(this, "Um, hi there!", Toast.LENGTH_LONG).show();
+    AutofillManager af=getSystemService(AutofillManager.class);
+
+    if (af.isAutofillSupported()) {
+      if (af.hasEnabledAutofillServices()) {
+        Toast.makeText(this, R.string.msg_ready, Toast.LENGTH_LONG).show();
+        finish();
+      }
+      else {
+        Uri uri=Uri.parse("package:"+getPackageName());
+        Intent i=new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE, uri);
+
+        startActivityForResult(i, REQUEST_ID);
+      }
+    }
+    else {
+      Toast.makeText(this, R.string.msg_not_supported, Toast.LENGTH_LONG).show();
+      finish();
+    }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode,
+                                  Intent data) {
+    if (requestCode==REQUEST_ID) {
+      if (resultCode==RESULT_OK) {
+        Toast.makeText(this, R.string.msg_ready, Toast.LENGTH_LONG).show();
+      }
+      else {
+        Toast.makeText(this, R.string.msg_reject, Toast.LENGTH_LONG).show();
+      }
+    }
+
     finish();
   }
 }

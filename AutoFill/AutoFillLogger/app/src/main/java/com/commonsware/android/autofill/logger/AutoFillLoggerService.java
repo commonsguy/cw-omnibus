@@ -20,6 +20,7 @@ import android.os.CancellationSignal;
 import android.os.Environment;
 import android.service.autofill.AutofillService;
 import android.service.autofill.FillCallback;
+import android.service.autofill.FillContext;
 import android.service.autofill.FillRequest;
 import android.service.autofill.FillResponse;
 import android.service.autofill.SaveCallback;
@@ -30,6 +31,7 @@ import android.view.autofill.AutofillId;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,14 +42,6 @@ public class AutoFillLoggerService extends AutofillService {
     SaveInfo.SAVE_DATA_TYPE_ADDRESS | SaveInfo.SAVE_DATA_TYPE_CREDIT_CARD |
     SaveInfo.SAVE_DATA_TYPE_EMAIL_ADDRESS | SaveInfo.SAVE_DATA_TYPE_PASSWORD |
     SaveInfo.SAVE_DATA_TYPE_USERNAME;
-
-  @Override
-  public void onFillRequest(AssistStructure assistStructure, Bundle extras,
-                            int whatever,
-                            CancellationSignal cancellationSignal,
-                            FillCallback fillCallback) {
-    // deprecated?
-  }
 
   @Override
   public void onFillRequest(FillRequest request,
@@ -63,16 +57,22 @@ public class AutoFillLoggerService extends AutofillService {
 
       File logDir=getLogDir(extras);
       Set<AutofillId> ids=new HashSet<>();
-      AssistStructure assistStructure=request.getStructure();
       AutofillId first=null;
+      ArrayList<AssistStructure> assistStructures=new ArrayList<>();
 
-      for (int i=0; i<assistStructure.getWindowNodeCount(); i++) {
-        AssistStructure.WindowNode node=assistStructure.getWindowNodeAt(i);
+      for (FillContext fillContext : request.getFillContexts()) {
+        AssistStructure assistStructure=fillContext.getStructure();
 
-        AutofillId temp=collectViewIds(node.getRootViewNode(), ids);
+        assistStructures.add(assistStructure);
 
-        if (first==null) {
-          first=temp;
+        for (int i=0; i<assistStructure.getWindowNodeCount(); i++) {
+          AssistStructure.WindowNode node=assistStructure.getWindowNodeAt(i);
+
+          AutofillId temp=collectViewIds(node.getRootViewNode(), ids);
+
+          if (first==null) {
+            first=temp;
+          }
         }
       }
 
@@ -86,7 +86,7 @@ public class AutoFillLoggerService extends AutofillService {
       FillResponse.Builder b=new FillResponse.Builder();
 
       b.setSaveInfo(saveInfo);
-      b.setExtras(extras);
+      b.setClientState(extras);
 
       Log.d(getClass().getSimpleName(),
         String.format("onFillRequest() called, saving %d fields", ids.size()));
@@ -96,7 +96,7 @@ public class AutoFillLoggerService extends AutofillService {
       try {
         File log=File.createTempFile("fill-", ".json", logDir);
 
-        new DumpThread.Fill(this, log, extras, assistStructure, fillCallback,
+        new DumpThread.Fill(this, log, extras, assistStructures, fillCallback,
           response).start();
       }
       catch (IOException e) {
@@ -106,12 +106,6 @@ public class AutoFillLoggerService extends AutofillService {
     else {
       fillCallback.onSuccess(null);
     }
-  }
-
-  @Override
-  public void onSaveRequest(AssistStructure assistStructure, Bundle extras,
-                            SaveCallback saveCallback) {
-    // deprecated?
   }
 
   @Override

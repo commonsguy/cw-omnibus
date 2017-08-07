@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 'android-O'
+    compileSdkVersion 26
     buildToolsVersion "25.0.3"
 
     defaultConfig {
-        minSdkVersion 'O'
-        targetSdkVersion 'O'
+        minSdkVersion 26
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }

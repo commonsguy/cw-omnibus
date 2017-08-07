@@ -1,3 +1,6 @@
 <resources>
   <string name="app_name">AutoFill Logger Demo</string>
+  <string name="msg_ready">Carry on!</string>
+  <string name="msg_not_supported">Autofill is not supported!</string>
+  <string name="msg_reject">Well, *be* that way -- see what I care!</string>
 </resources>

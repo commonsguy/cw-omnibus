@@ -31,6 +31,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
+import java.util.List;
 import java.util.Set;
 
 abstract class DumpThread extends Thread {
@@ -92,7 +94,7 @@ abstract class DumpThread extends Thread {
       json.put(key, wrap(b.get(key)));
     }
 
-    return (json);
+    return(json);
   }
 
   protected JSONObject dumpStructure(AssistStructure structure, JSONObject json)
@@ -127,7 +129,7 @@ abstract class DumpThread extends Thread {
       dumpStructureNode(window.getRootViewNode(),
         new JSONObject()));
 
-    return (json);
+    return(json);
   }
 
   private JSONObject dumpStructureNode(
@@ -193,14 +195,14 @@ abstract class DumpThread extends Thread {
     json.put("top", wrap(node.getTop()));
     json.put("transformation",
       wrap(node.getTransformation()));
-    json.put("url", wrap(node.getUrl()));
     json.put("visibility", wrap(node.getVisibility()));
+    json.put("webDomain", wrap(node.getWebDomain()));
     json.put("width", wrap(node.getWidth()));
 
     json.put("children",
       dumpStructureNodes(node, new JSONArray()));
 
-    return (json);
+    return(json);
   }
 
   private JSONArray dumpStructureNodes(
@@ -211,15 +213,26 @@ abstract class DumpThread extends Thread {
         new JSONObject()));
     }
 
-    return (children);
+    return(children);
   }
 
   private Object wrap(Object thingy) {
-    if (thingy instanceof CharSequence) {
-      return (JSONObject.wrap(thingy.toString()));
+    if (thingy instanceof Array) {
+      Object[] array=(Object[])thingy;
+      JSONArray jsonArray=new JSONArray();
+
+      for (Object o : array) {
+        jsonArray.put(wrap(o));
+      }
+
+      return(jsonArray);
     }
 
-    return (JSONObject.wrap(thingy));
+    if (thingy instanceof CharSequence) {
+      return(JSONObject.wrap(thingy.toString()));
+    }
+
+    return(JSONObject.wrap(thingy));
   }
 
   static class Save extends DumpThread {
@@ -278,16 +291,16 @@ abstract class DumpThread extends Thread {
     private final FillCallback fillCallback;
     private final FillResponse response;
     private final Bundle data;
-    private final AssistStructure structure;
+    private final List<AssistStructure> structures;
 
-    Fill(Context ctxt, File logDir, Bundle data, AssistStructure structure,
+    Fill(Context ctxt, File logDir, Bundle data, List<AssistStructure> structures,
          FillCallback fillCallback, FillResponse response) {
       super(ctxt, logDir);
 
       this.fillCallback=fillCallback;
       this.response=response;
       this.data=data;
-      this.structure=structure;
+      this.structures=structures;
     }
 
     @Override
@@ -302,8 +315,14 @@ abstract class DumpThread extends Thread {
         }
       }
 
+      JSONArray structureArray=new JSONArray();
+
       try {
-        json.put("structure", dumpStructure(structure, new JSONObject()));
+        json.put("structures", structureArray);
+
+        for (AssistStructure structure : structures) {
+          structureArray.put(dumpStructure(structure, new JSONObject()));
+        }
       }
       catch (JSONException e) {
         Log.e(getClass().getSimpleName(),

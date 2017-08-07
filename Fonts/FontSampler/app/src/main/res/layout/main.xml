@@ -1,70 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:stretchColumns="1">
+
   <TableRow>
+
     <TextView
-      android:text="sans:"
       android:layout_marginRight="4dip"
-      android:textSize="20sp"
-    />
+      android:text="@string/label_sans"
+      android:textSize="20sp" />
+
     <TextView
       android:id="@+id/sans"
-      android:text="Hello, world!"
-      android:typeface="sans"
+      android:text="@string/hello_world"
       android:textSize="20sp"
-    />
+      android:typeface="sans" />
   </TableRow>
+
   <TableRow>
+
     <TextView
-      android:text="serif:"
       android:layout_marginRight="4dip"
-      android:textSize="20sp"
-    />
+      android:text="@string/label_serif"
+      android:textSize="20sp" />
+
     <TextView
       android:id="@+id/serif"
-      android:text="Hello, world!"
-      android:typeface="serif"
+      android:text="@string/hello_world"
       android:textSize="20sp"
-    />
+      android:typeface="serif" />
   </TableRow>
+
   <TableRow>
+
     <TextView
-      android:text="monospace:"
       android:layout_marginRight="4dip"
-      android:textSize="20sp"
-    />
+      android:text="@string/label_monospace"
+      android:textSize="20sp" />
+
     <TextView
       android:id="@+id/monospace"
-      android:text="Hello, world!"
-      android:typeface="monospace"
+      android:text="@string/hello_world"
       android:textSize="20sp"
-    />
+      android:typeface="monospace" />
   </TableRow>
+
   <TableRow>
+
     <TextView
-      android:text="Custom:"
       android:layout_marginRight="4dip"
-      android:textSize="20sp"
-    />
+      android:text="@string/label_custom"
+      android:textSize="20sp" />
+
     <TextView
       android:id="@+id/custom"
-      android:text="Hello, world!"
-      android:textSize="20sp"
-    />
+      android:text="@string/hello_world"
+      android:textSize="20sp" />
   </TableRow>
+
   <TableRow android:id="@+id/filerow">
+
     <TextView
-      android:text="Custom from File:"
       android:layout_marginRight="4dip"
-      android:textSize="20sp"
-    />
+      android:text="@string/label_custom_from_file"
+      android:textSize="20sp" />
+
     <TextView
       android:id="@+id/file"
-      android:text="Hello, world!"
-      android:textSize="20sp"
-    />
+      android:text="@string/hello_world"
+      android:textSize="20sp" />
   </TableRow>
 </TableLayout>

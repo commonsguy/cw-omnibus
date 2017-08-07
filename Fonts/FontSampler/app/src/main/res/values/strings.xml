@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FontSampler</string>
+  <string name="app_name">FontSampler</string>
+  <string name="label_sans">sans:</string>
+  <string name="hello_world">Hello, world!</string>
+  <string name="label_serif">serif:</string>
+  <string name="label_monospace">monospace:</string>
+  <string name="label_custom">Custom:</string>
+  <string name="label_custom_from_file">Custom from File:</string>
 </resources>

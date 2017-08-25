@@ -14,13 +14,9 @@
 
 package com.commonsware.android.service.ouroboros;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -39,10 +35,6 @@ abstract public class AbstractSillyService extends Service {
   public int onStartCommand(final Intent intent, int flags, int startId) {
     Log.e(getClass().getSimpleName(), "onStartCommand() called");
 
-    if (intent.getBooleanExtra(EXTRA_FOREGROUND, false)) {
-      startForeground(1337, buildNotification(this));
-    }
-
     timer.schedule(new Runnable() {
       @Override
       public void run() {
@@ -51,8 +43,7 @@ abstract public class AbstractSillyService extends Service {
         if (intent.getBooleanExtra(EXTRA_FOREGROUND, false)) {
           Log.e(getClass().getSimpleName(), "starting foreground");
           next.putExtra(EXTRA_FOREGROUND, true);
-          //startForegroundService(next);
-          startService(next);
+          startForegroundService(next);
         }
         else if (intent.getBooleanExtra(EXTRA_BROADCAST_HACK, false)) {
           Log.e(getClass().getSimpleName(), "starting via broadcast hack");
@@ -65,7 +56,7 @@ abstract public class AbstractSillyService extends Service {
           startService(next);
         }
       }
-    }, 1, TimeUnit.MINUTES);
+    }, 50, TimeUnit.SECONDS);
 
     return(START_STICKY);
   }
@@ -80,16 +71,5 @@ abstract public class AbstractSillyService extends Service {
     Log.e(getClass().getSimpleName(), "onDestroy() called");
 
     super.onDestroy();
-  }
-
-  static Notification buildNotification(Context ctxt) {
-    NotificationCompat.Builder b=
-      new NotificationCompat.Builder(ctxt)
-        .setOngoing(true)
-        .setContentTitle(ctxt.getString(R.string.msg_notify_title))
-        .setContentText(ctxt.getString(R.string.msg_notify_text))
-        .setSmallIcon(android.R.drawable.stat_notify_more);
-
-    return(b.build());
   }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Service Lifecycle Demo</string>
+  <string name="menu_run">Run</string>
+  <string name="channel_min">Very Unimportant Notifications</string>
+  <string name="channel_low">Fairly Unimportant Notifications</string>
+  <string name="menu_foreground">Foreground</string>
+  <string name="menu_importantish">Important-ish</string>
+  <string name="notify_working">I\'m Workin\' Here!</string>
+
+</resources>

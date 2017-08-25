@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/run"
+    android:icon="@drawable/ic_play_arrow_white_24dp"
+    android:showAsAction="ifRoom|withText"
+    android:title="@string/menu_run" />
+  <item
+    android:id="@+id/foreground"
+    android:showAsAction="never"
+    android:checkable="true"
+    android:title="@string/menu_foreground" />
+  <item
+    android:id="@+id/importantish"
+    android:showAsAction="never"
+    android:checkable="true"
+    android:enabled="false"
+    android:title="@string/menu_importantish" />
+</menu>

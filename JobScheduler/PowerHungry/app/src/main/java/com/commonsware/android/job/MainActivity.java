@@ -14,7 +14,6 @@
 
 package com.commonsware.android.job;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -25,8 +24,10 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainActivity extends Activity
+public class MainActivity extends AbstractPermissionActivity
     implements CompoundButton.OnCheckedChangeListener {
   private static final long[] PERIODS={
       60000,
@@ -43,13 +44,24 @@ public class MainActivity extends Activity
   private AlarmManager alarms=null;
   private JobScheduler jobs=null;
 
+  @Override
+  protected String[] getDesiredPermissions() {
+    return(new String[]{WRITE_EXTERNAL_STORAGE});
+  }
+
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_sorry, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
+
   @SuppressWarnings("ResourceType")
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
+  public void onReady(Bundle savedInstanceState) {
     setContentView(R.layout.main);
-    type=(Spinner)findViewById(R.id.type);
+    type=findViewById(R.id.type);
 
     ArrayAdapter<String> types=
         new ArrayAdapter<String>(this,
@@ -59,7 +71,7 @@ public class MainActivity extends Activity
     types.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     type.setAdapter(types);
 
-    period=(Spinner)findViewById(R.id.period);
+    period=findViewById(R.id.period);
 
     ArrayAdapter<String> periods=
         new ArrayAdapter<String>(this,
@@ -69,8 +81,8 @@ public class MainActivity extends Activity
     periods.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     period.setAdapter(periods);
 
-    download=(Switch)findViewById(R.id.download);
-    scheduled=(Switch)findViewById(R.id.scheduled);
+    download=findViewById(R.id.download);
+    scheduled=findViewById(R.id.scheduled);
     scheduled.setOnCheckedChangeListener(this);
 
     alarms=(AlarmManager)getSystemService(ALARM_SERVICE);

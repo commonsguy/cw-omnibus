@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">Power Hungry</string>
-    <string name="type_label">Type:</string>
-    <string name="period_label">Period:</string>
-    <string name="download_label">Download File:</string>
-    <string name="scheduled_label">Scheduled:</string>
+  <string name="app_name">Power Hungry</string>
+  <string name="type_label">Type:</string>
+  <string name="period_label">Period:</string>
+  <string name="download_label">Download File:</string>
+  <string name="scheduled_label">Scheduled:</string>
+  <string name="msg_sorry">Sorry, but we need permission to continue!</string>
 
 </resources>

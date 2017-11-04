@@ -48,7 +48,7 @@ public class FileProvider extends AbstractFileProvider {
 
   @Override
   public ParcelFileDescriptor openFile(Uri uri, String mode)
-                                                            throws FileNotFoundException {
+    throws FileNotFoundException {
     File root=getContext().getFilesDir();
     File f=new File(root, uri.getPath()).getAbsoluteFile();
 

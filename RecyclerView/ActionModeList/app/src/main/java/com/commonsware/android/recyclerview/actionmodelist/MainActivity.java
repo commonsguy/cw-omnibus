@@ -113,21 +113,24 @@ public class MainActivity extends RecyclerViewActivity {
     void onChecked(int position, boolean isChecked) {
       super.onChecked(position, isChecked);
 
-      if (isChecked) {
-        if (activeMode==null) {
-          activeMode=startActionMode(this);
-        }
-        else {
-          updateSubtitle(activeMode);
-        }
-      }
-      else if (getCheckedCount()==0 && activeMode!=null) {
+      if (getCheckedCount()==0 && activeMode!=null) {
         activeMode.finish();
+      }
+      else {
+        updateSubtitle(activeMode);
+
+        if (isChecked) {
+          if (activeMode==null) {
+            activeMode=startActionMode(this);
+          }
+        }
       }
     }
 
     private void updateSubtitle(ActionMode mode) {
-      mode.setSubtitle("(" + getCheckedCount() + ")");
+      if (mode!=null) {
+        mode.setSubtitle("("+getCheckedCount()+")");
+      }
     }
   }
 }

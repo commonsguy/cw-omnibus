@@ -5,15 +5,18 @@ def SELFSIGNED='"https://scrap.commonsware.com:3001/excerpt-7p0.pdf"'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 24
     }
 
+    flavorDimensions "default"
+
     productFlavors {
         comodo {
+            dimension "default"
             resValue "string", "app_name", "CA Validation Demo"
             applicationId "com.commonsware.android.downloader.ca.comodo"
             manifestPlaceholders=
@@ -21,6 +24,7 @@ android {
             buildConfigField "String", "URL", WARES
         }
         verisign {
+            dimension "default"
             resValue "string", "app_name", "Invalid CA Validation Demo"
             applicationId "com.commonsware.android.downloader.ca.verisign"
             manifestPlaceholders=
@@ -28,6 +32,7 @@ android {
             buildConfigField "String", "URL", WARES
         }
         system {
+            dimension "default"
             resValue "string", "app_name", "System CA Validation Demo"
             applicationId "com.commonsware.android.downloader.ca.system"
             manifestPlaceholders=
@@ -35,6 +40,7 @@ android {
             buildConfigField "String", "URL", WARES
         }
         pin {
+            dimension "default"
             resValue "string", "app_name", "Cert Pin Demo"
             applicationId "com.commonsware.android.downloader.ca.pin"
             manifestPlaceholders=
@@ -42,6 +48,7 @@ android {
             buildConfigField "String", "URL", WARES
         }
         invalidPin {
+            dimension "default"
             resValue "string", "app_name", "Cert Pin Demo"
             applicationId "com.commonsware.android.downloader.ca.invalidpin"
             manifestPlaceholders=
@@ -49,6 +56,7 @@ android {
             buildConfigField "String", "URL", WARES
         }
         selfSigned {
+            dimension "default"
             resValue "string", "app_name", "Self-Signed Demo"
             applicationId "com.commonsware.android.downloader.ca.ss"
             manifestPlaceholders=
@@ -56,6 +64,7 @@ android {
             buildConfigField "String", "URL", SELFSIGNED
         }
         override {
+            dimension "default"
             resValue "string", "app_name", "Debug Override Demo"
             applicationId "com.commonsware.android.downloader.ca.debug"
             manifestPlaceholders=

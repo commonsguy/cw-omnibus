@@ -14,10 +14,13 @@
 
 package com.commonsware.android.messaging;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -26,16 +29,25 @@ import android.util.Log;
 import java.util.Stack;
 
 public class RemoteInputReceiver extends BroadcastReceiver {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   static final int NOTIFY_ID=1337;
   static final String EXTRA_INPUT="input";
   static final Stack<Message> MESSAGES=new Stack<>();
   static final long INITIAL_TIMESTAMP=System.currentTimeMillis();
 
   static NotificationCompat.Builder buildNotification(Context ctxt) {
+    NotificationManager mgr=
+      (NotificationManager)ctxt.getSystemService(Context.NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     Intent i=new Intent(ctxt, RemoteInputReceiver.class);
     PendingIntent pi=
-      PendingIntent.getBroadcast(ctxt, 0, i,
-        PendingIntent.FLAG_UPDATE_CURRENT);
+      PendingIntent.getBroadcast(ctxt, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
     RemoteInput remoteInput=
       new RemoteInput.Builder(RemoteInputReceiver.EXTRA_INPUT)
@@ -60,7 +72,7 @@ public class RemoteInputReceiver extends BroadcastReceiver {
     }
 
     NotificationCompat.Builder builder=
-      new NotificationCompat.Builder(ctxt)
+      new NotificationCompat.Builder(ctxt, CHANNEL_WHATEVER)
         .setSmallIcon(
           android.R.drawable.stat_sys_download_done)
         .setContentTitle(ctxt.getString(R.string.title))

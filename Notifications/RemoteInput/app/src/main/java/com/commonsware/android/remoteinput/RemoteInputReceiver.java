@@ -29,7 +29,7 @@ public class RemoteInputReceiver extends BroadcastReceiver {
 
   static NotificationCompat.Builder buildNotificationBase(Context ctxt) {
     NotificationCompat.Builder builder=
-      new NotificationCompat.Builder(ctxt)
+      new NotificationCompat.Builder(ctxt, MainActivity.CHANNEL_WHATEVER)
         .setSmallIcon(
           android.R.drawable.stat_sys_download_done)
         .setContentTitle(ctxt.getString(R.string.title));

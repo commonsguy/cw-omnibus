@@ -16,25 +16,38 @@ package com.commonsware.android.stacked;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
 public class MainActivity extends Activity {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static final int NOTIFY_ID=1337;
   private static final int NOTIFY_ID2=1338;
   private static final int NOTIFY_ID3=1339;
   private static final String GROUP_SAMPLE="sampleGroup";
-  private NotificationManagerCompat mgr=null;
+  private NotificationManagerCompat mgrCompat=null;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    mgr=NotificationManagerCompat.from(this);
+    NotificationManager mgr=
+      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
+    mgrCompat=NotificationManagerCompat.from(this);
 
     showWearOne();
     showWearTwo();
@@ -52,11 +65,12 @@ public class MainActivity extends Activity {
         .addLine(getString(R.string.entry))
         .addLine(getString(R.string.another_entry));
 
-    mgr.notify(NOTIFY_ID, normal.setStyle(big).build());
+    mgrCompat.notify(NOTIFY_ID, normal.setStyle(big).build());
   }
 
   private NotificationCompat.Builder buildNormal() {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+    NotificationCompat.Builder b=
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true)
         .setDefaults(Notification.DEFAULT_ALL)
@@ -64,7 +78,6 @@ public class MainActivity extends Activity {
         .setContentText(getString(R.string.fun))
         .setContentIntent(buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))
         .setSmallIcon(android.R.drawable.stat_sys_download_done)
-        .setTicker(getString(R.string.download_complete))
         .setGroup(GROUP_SAMPLE)
         .setGroupSummary(true);
 
@@ -72,31 +85,31 @@ public class MainActivity extends Activity {
   }
 
   private void showWearOne() {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+    NotificationCompat.Builder b=
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true)
         .setDefaults(Notification.DEFAULT_ALL)
         .setContentTitle(getString(R.string.entry))
         .setContentIntent(buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))
         .setSmallIcon(android.R.drawable.stat_sys_download_done)
-        .setTicker(getString(R.string.download_complete))
         .setGroup(GROUP_SAMPLE);
 
-    mgr.notify(NOTIFY_ID2, b.build());
+    mgrCompat.notify(NOTIFY_ID2, b.build());
   }
 
   private void showWearTwo() {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+    NotificationCompat.Builder b=
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true)
         .setDefaults(Notification.DEFAULT_ALL)
         .setContentTitle(getString(R.string.another_entry))
         .setContentIntent(buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))
         .setSmallIcon(android.R.drawable.stat_sys_download_done)
-        .setTicker(getString(R.string.download_complete))
         .setGroup(GROUP_SAMPLE);
 
-    mgr.notify(NOTIFY_ID3, b.build());
+    mgrCompat.notify(NOTIFY_ID3, b.build());
   }
 
   private PendingIntent buildPendingIntent(String action) {

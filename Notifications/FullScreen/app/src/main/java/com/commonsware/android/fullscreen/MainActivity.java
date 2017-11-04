@@ -16,14 +16,17 @@ package com.commonsware.android.fullscreen;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 
 public class MainActivity extends Activity {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static final int NOTIFY_ID=1337;
 
   @Override
@@ -33,13 +36,20 @@ public class MainActivity extends Activity {
     NotificationManager mgr=
         (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     mgr.notify(NOTIFY_ID, buildNormal().build());
 
     finish();
   }
 
   private NotificationCompat.Builder buildNormal() {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+    NotificationCompat.Builder b=
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true)
      .setDefaults(Notification.DEFAULT_ALL)
@@ -47,7 +57,6 @@ public class MainActivity extends Activity {
      .setContentText(getString(R.string.fun))
      .setContentIntent(buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))
      .setSmallIcon(android.R.drawable.stat_sys_download_done)
-     .setTicker(getString(R.string.download_complete))
      .setFullScreenIntent(buildPendingIntent(Settings.ACTION_DATE_SETTINGS), true)
      .addAction(android.R.drawable.ic_media_play,
          getString(R.string.play),

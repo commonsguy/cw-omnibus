@@ -16,10 +16,12 @@ package com.commonsware.android.downloader;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
@@ -32,6 +34,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Downloader extends IntentService {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static int NOTIFY_ID=1337;
   private static final String AUTHORITY=
     BuildConfig.APPLICATION_ID+".provider";
@@ -82,15 +85,15 @@ public class Downloader extends IntentService {
 
   private void raiseNotification(String mimeType, File output,
                                  Exception e) {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+    NotificationCompat.Builder b=
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
 
     if (e == null) {
       b.setContentTitle(getString(R.string.download_complete))
        .setContentText(getString(R.string.fun))
-       .setSmallIcon(android.R.drawable.stat_sys_download_done)
-       .setTicker(getString(R.string.download_complete));
+       .setSmallIcon(android.R.drawable.stat_sys_download_done);
 
       Intent outbound=new Intent(Intent.ACTION_VIEW);
       Uri outputUri=
@@ -107,12 +110,17 @@ public class Downloader extends IntentService {
     else {
       b.setContentTitle(getString(R.string.exception))
        .setContentText(e.getMessage())
-       .setSmallIcon(android.R.drawable.stat_notify_error)
-       .setTicker(getString(R.string.exception));
+       .setSmallIcon(android.R.drawable.stat_notify_error);
     }
 
     NotificationManager mgr=
         (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
 
     mgr.notify(NOTIFY_ID, b.build());
   }

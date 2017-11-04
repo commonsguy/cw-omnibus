@@ -15,5 +15,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://maven.google.com' }
+        maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
     }
 }

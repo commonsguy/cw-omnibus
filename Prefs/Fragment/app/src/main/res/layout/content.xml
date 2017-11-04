@@ -29,17 +29,6 @@
 
 		<TextView
 			style="@style/label"
-			android:text="@string/checkbox2"/>
-
-		<TextView
-			android:id="@+id/checkbox2"
-			style="@style/value"/>
-	</TableRow>
-
-	<TableRow>
-
-		<TextView
-			style="@style/label"
 			android:text="@string/text"/>
 
 		<TextView

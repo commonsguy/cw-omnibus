@@ -26,7 +26,6 @@ import android.widget.TextView;
 public class PreferenceContentsFragment extends Fragment {
   private TextView checkbox=null;
   private TextView ringtone=null;
-  private TextView checkbox2=null;
   private TextView text=null;
   private TextView list=null;
 
@@ -37,7 +36,6 @@ public class PreferenceContentsFragment extends Fragment {
 
     checkbox=(TextView)result.findViewById(R.id.checkbox);
     ringtone=(TextView)result.findViewById(R.id.ringtone);
-    checkbox2=(TextView)result.findViewById(R.id.checkbox2);
     text=(TextView)result.findViewById(R.id.text);
     list=(TextView)result.findViewById(R.id.list);
 
@@ -53,7 +51,6 @@ public class PreferenceContentsFragment extends Fragment {
 
     checkbox.setText(Boolean.valueOf(prefs.getBoolean("checkbox", false)).toString());
     ringtone.setText(prefs.getString("ringtone", "<unset>"));
-    checkbox2.setText(Boolean.valueOf(prefs.getBoolean("checkbox2", false)).toString());
     text.setText(prefs.getString("text", "<unset>"));
     list.setText(prefs.getString("list", "<unset>"));
   }

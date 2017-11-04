@@ -84,10 +84,10 @@ public class Provider extends ContentProvider {
   @Override
   public String getType(Uri url) {
     if (isCollectionUri(url)) {
-      return("vnd.commonsware.cursor.dir/constant");
+      return("vnd.android.cursor.dir/constant");
     }
 
-    return("vnd.commonsware.cursor.item/constant");
+    return("vnd.android.cursor.item/constant");
   }
 
   @Override

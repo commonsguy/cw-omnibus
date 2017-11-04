@@ -68,13 +68,10 @@ public class RxDemoFragment extends ListFragment {
   class AddStringTask extends AsyncTask<Void, String, Void> {
     @Override
     protected Void doInBackground(Void... unused) {
-      Observable.fromArray(ITEMS).subscribe(new Consumer<String>() {
-        @Override
-        public void accept(String s) throws Exception {
-          if (!isCancelled()) {
-            publishProgress(s);
-            SystemClock.sleep(400);
-          }
+      Observable.fromArray(ITEMS).subscribe(s -> {
+        if (!isCancelled()) {
+          publishProgress(s);
+          SystemClock.sleep(400);
         }
       });
 

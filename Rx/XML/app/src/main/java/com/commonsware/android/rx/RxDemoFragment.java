@@ -47,10 +47,8 @@ public class RxDemoFragment extends ListFragment {
       .subscribeOn(Schedulers.io())
       .map(s -> (s.toUpperCase()))
       .observeOn(AndroidSchedulers.mainThread())
-      .doOnComplete(() -> {
-        Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT)
-          .show();
-      });
+      .doOnComplete(() ->
+        Toast.makeText(getActivity(), R.string.done, Toast.LENGTH_SHORT).show());
 
     sub=observable.subscribe(s -> adapter.add(s),
         error ->

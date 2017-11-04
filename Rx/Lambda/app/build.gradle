@@ -1,22 +1,17 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-  compile 'io.reactivex.rxjava2:rxjava:2.0.2'
+  compile 'io.reactivex.rxjava2:rxjava:2.1.5'
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+  compileSdkVersion 25
 
-	  defaultConfig {
-        minSdkVersion 15
-		    targetSdkVersion 25
-        applicationId "com.commonsware.android.rx.lambda"
-
-        jackOptions {
-            enabled true
-        }
-	 }
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 25
+    applicationId "com.commonsware.android.rx.lambda"
+  }
 
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8

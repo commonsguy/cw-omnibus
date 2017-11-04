@@ -34,8 +34,8 @@ class RowController extends RecyclerView.ViewHolder {
   RowController(View row) {
     super(row);
 
-    title=(TextView)row.findViewById(android.R.id.text1);
-    thumbnail=(ImageView)row.findViewById(R.id.thumbnail);
+    title=row.findViewById(android.R.id.text1);
+    thumbnail=row.findViewById(R.id.thumbnail);
 
     row.setOnClickListener(view -> {
       Intent i=new Intent(Intent.ACTION_VIEW);

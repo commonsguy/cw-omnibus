@@ -1,20 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
 
-repositories {
-    maven {
-        url "https://s3.amazonaws.com/repo.commonsware.com"
-    }
-}
-
 dependencies {
-    compile 'com.commonsware.cwac:provider:0.5.1'
-    androidTestCompile 'com.android.support.test:rules:0.5'
+    implementation 'com.commonsware.cwac:provider:0.5.1'
+    androidTestImplementation 'com.android.support.test:rules:0.5'
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 26

@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-  	compile 'com.android.support:recyclerview-v7:25.1.0'
-    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
+  	implementation 'com.android.support:recyclerview-v7:25.1.0'
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
 	  defaultConfig {
         minSdkVersion 21

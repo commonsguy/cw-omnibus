@@ -11,7 +11,7 @@ dependencies {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.commonsware.android.http.okhttp3"

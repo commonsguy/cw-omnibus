@@ -7,13 +7,13 @@ repositories {
 }
 
 dependencies {
-	compile 'com.android.support:support-v13:21.0.3'
-	compile 'com.commonsware.cwac:security:0.4.+'
+	implementation 'com.android.support:support-v13:21.0.3'
+	implementation 'com.commonsware.cwac:security:0.4.+'
 }
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
 	defaultConfig {
 		targetSdkVersion 17

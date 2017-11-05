@@ -7,13 +7,13 @@ repositories {
 }
 
 dependencies {
-    compile 'com.commonsware.cwac:cam2:0.7.4'
-    compile 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
+    implementation 'com.commonsware.cwac:cam2:0.7.4'
+    implementation 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
 }
 
 android {
   compileSdkVersion 25
-  buildToolsVersion '25.0.3'
+  buildToolsVersion '26.0.2'
   
   defaultConfig {
     minSdkVersion 15

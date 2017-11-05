@@ -7,18 +7,18 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:leanback-v17:24.1.1'
-    compile 'com.android.support:mediarouter-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.google.code.gson:gson:2.7'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.commonsware.cwac:presentation:0.4.5'
+    implementation 'com.android.support:leanback-v17:24.1.1'
+    implementation 'com.android.support:mediarouter-v7:24.1.1'
+    implementation 'com.android.support:design:24.1.1'
+    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.commonsware.cwac:presentation:0.4.5'
 }
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 17

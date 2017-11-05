@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'io.karim:materialtabs:2.0.2'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'com.android.support:support-v13:25.1.0'
+    implementation 'io.karim:materialtabs:2.0.2'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.squareup.okhttp:okhttp:2.5.0'
+    implementation 'com.google.code.gson:gson:2.4'
+    implementation 'com.android.support:support-v13:25.1.0'
 }
 
 android {
   compileSdkVersion 25
-  buildToolsVersion "25.0.3"
+  buildToolsVersion '26.0.2'
 
   defaultConfig {
     minSdkVersion 19

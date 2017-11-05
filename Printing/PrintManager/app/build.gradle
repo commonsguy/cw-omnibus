@@ -7,12 +7,12 @@ repositories {
 }
 
 dependencies {
-    compile 'com.samskivert:jmustache:1.9'
-    compile 'com.android.support:support-v13:21.0.3'
-    compile 'com.commonsware.cwac:layouts:0.4.+'
+    implementation 'com.samskivert:jmustache:1.9'
+    implementation 'com.android.support:support-v13:21.0.3'
+    implementation 'com.commonsware.cwac:layouts:0.4.+'
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 }

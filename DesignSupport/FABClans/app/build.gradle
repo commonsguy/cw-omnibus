@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-  compile 'com.github.clans:fab:1.5.5'
+  implementation 'com.github.clans:fab:1.5.5'
 }
 
 android {
   compileSdkVersion 22
-  buildToolsVersion "25.0.3"
+  buildToolsVersion '26.0.2'
 
 	defaultConfig {
       minSdkVersion 15

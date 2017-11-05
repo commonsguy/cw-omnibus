@@ -3,9 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
       }
 }
@@ -13,5 +14,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
+        maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
     }
 }

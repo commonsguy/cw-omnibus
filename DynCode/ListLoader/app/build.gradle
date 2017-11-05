@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 17
@@ -18,8 +18,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.commonsware.cwac:security:0.8.0'
-    compile 'com.commonsware.cwac:netsecurity:0.2.0'
+    implementation 'com.commonsware.cwac:security:0.8.0'
+    implementation 'com.commonsware.cwac:netsecurity:0.2.0'
     compile project(':api')
-    compile 'de.greenrobot:eventbus:2.4.0'
+    implementation 'de.greenrobot:eventbus:2.4.0'
 }

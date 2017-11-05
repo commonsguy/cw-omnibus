@@ -7,10 +7,10 @@ repositories {
 }
 
 dependencies {
-    compile 'com.commonsware.cwac:presentation:0.4.+'
+    implementation 'com.commonsware.cwac:presentation:0.4.+'
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 }

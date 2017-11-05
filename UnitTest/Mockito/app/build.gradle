@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         testApplicationId "com.commonsware.android.unittest.tests.mockito"
@@ -11,9 +11,9 @@ android {
 }
 
 dependencies {
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
-    compile 'de.greenrobot:eventbus:2.2.1'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    implementation 'com.squareup.retrofit:retrofit:1.6.1'
+    implementation 'de.greenrobot:eventbus:2.2.1'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    androidTestImplementation 'com.android.support.test:rules:0.4.1'
 }

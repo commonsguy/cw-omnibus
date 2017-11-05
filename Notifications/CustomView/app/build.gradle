@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-	compile 'com.android.support:support-compat:26.1.0'
-	compile 'com.squareup.okhttp3:okhttp:3.8.0'
+	implementation 'com.android.support:support-compat:26.1.0'
+	implementation 'com.squareup.okhttp3:okhttp:3.8.0'
 }
 
 android {
 	compileSdkVersion 26
-	buildToolsVersion "26.0.1"
+	buildToolsVersion '26.0.2'
 
 	defaultConfig {
 		minSdkVersion 21

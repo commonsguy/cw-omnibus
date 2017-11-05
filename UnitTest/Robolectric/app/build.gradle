@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:3.0'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:3.0'
+    androidTestImplementation 'com.android.support.test:rules:0.4.1'
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         testApplicationId "com.commonsware.android.gradle.hello.robolectric"

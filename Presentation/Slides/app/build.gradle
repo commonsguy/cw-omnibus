@@ -7,12 +7,12 @@ repositories {
 }
 
 dependencies {
-	compile 'com.mcxiaoke.viewpagerindicator:library:2.4.1@aar'
-	compile 'com.commonsware.cwac:presentation:0.4.+'
-	compile 'com.android.support:support-v13:21.0.3'
+	implementation 'com.mcxiaoke.viewpagerindicator:library:2.4.1@aar'
+	implementation 'com.commonsware.cwac:presentation:0.4.+'
+	implementation 'com.android.support:support-v13:21.0.3'
 }
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 }

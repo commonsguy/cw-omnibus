@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-  compile 'io.reactivex.rxjava2:rxjava:2.1.5'
+  implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
 }
 
 android {

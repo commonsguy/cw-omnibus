@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:26.0.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.android.support:recyclerview-v7:26.0.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 26

@@ -7,13 +7,13 @@ repositories {
 }
 
 dependencies {
-    compile 'com.commonsware.cwac:crossport:0.2.0'
-    compile 'com.android.support:support-v13:26.0.2'
+    implementation 'com.commonsware.cwac:crossport:0.2.0'
+    implementation 'com.android.support:support-v13:26.0.2'
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 21

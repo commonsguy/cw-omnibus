@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+    implementation 'com.android.support:appcompat-v7:22.2.1'
+    implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
 }
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 }

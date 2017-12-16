@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="message"
+      type="java.lang.CharSequence" />
+
+    <variable
+      name="timestamp"
+      type="java.lang.CharSequence" />
+  </data>
+
+  <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/padding_main"
+    android:paddingEnd="@dimen/padding_main"
+    android:paddingTop="@dimen/padding_transcript_row"
+    android:paddingBottom="@dimen/padding_transcript_row">
+
+    <TextView
+      android:id="@+id/timestamp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@{timestamp}"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="12:34" />
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="@{message}"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@id/timestamp"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="HELLO, WORLD!" />
+  </android.support.constraint.ConstraintLayout>
+</layout>

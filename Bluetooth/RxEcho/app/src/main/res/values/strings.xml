@@ -1,0 +1,15 @@
+<resources>
+  <string name="app_name">Rx Bluetooth Echo</string>
+  <string name="menu_server">Server</string>
+  <string name="menu_disco">Discover</string>
+  <string name="msg_no_bt">This device does not support Bluetooth — sorry!</string>
+  <string name="msg_away">OK, I\'ll go away then</string>
+  <string name="msg_foreground">SEND ME TEXT AND I WILL SHOUT IT BACK TO YOU!</string>
+  <string name="action_discovery">Enable Discovery</string>
+  <string name="menu_allow_disco">Allow Discovery</string>
+  <string name="switch_connected">Connected</string>
+  <string name="hint_entry">Type something!</string>
+  <string name="msg_connect_error">Could not connect!</string>
+  <string name="msg_stop">Stop Server</string>
+  <string name="msg_disco">Discoverable for 300 seconds!</string>
+</resources>

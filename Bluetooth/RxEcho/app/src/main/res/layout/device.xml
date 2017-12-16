@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <variable
+      name="controller"
+      type="com.commonsware.android.bluetooth.rxecho.DeviceFragment" />
+  </data>
+
+  <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_main">
+
+    <Switch
+      android:id="@+id/connected"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onCheckedChanged="@{() -> controller.onConnectionChange()}"
+      android:text="@string/switch_connected"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/transcript"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layoutManager="LinearLayoutManager"
+      app:layout_constraintBottom_toTopOf="@+id/entry"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/connected"
+      app:stackFromEnd="true" />
+
+    <EditText
+      android:id="@+id/entry"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:enabled="false"
+      android:hint="@string/hint_entry"
+      android:inputType="text"
+      android:imeOptions="actionSend"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.627"
+      app:layout_constraintStart_toStartOf="parent" />
+  </android.support.constraint.ConstraintLayout>
+</layout>

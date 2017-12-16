@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/server"
+    android:checkable="true"
+    android:checked="false"
+    android:enabled="false"
+    android:showAsAction="never"
+    android:title="@string/menu_server" />
+  <item
+    android:id="@+id/discover"
+    android:enabled="false"
+    android:showAsAction="never"
+    android:title="@string/menu_disco" />
+  <item
+    android:id="@+id/allow_disco"
+    android:enabled="false"
+    android:showAsAction="never"
+    android:title="@string/menu_allow_disco" />
+</menu>

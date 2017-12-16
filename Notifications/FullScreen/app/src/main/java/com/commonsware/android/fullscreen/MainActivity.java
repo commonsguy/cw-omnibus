@@ -57,6 +57,7 @@ public class MainActivity extends Activity {
      .setContentText(getString(R.string.fun))
      .setContentIntent(buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))
      .setSmallIcon(android.R.drawable.stat_sys_download_done)
+      .setNumber(5)
      .setFullScreenIntent(buildPendingIntent(Settings.ACTION_DATE_SETTINGS), true)
      .addAction(android.R.drawable.ic_media_play,
          getString(R.string.play),

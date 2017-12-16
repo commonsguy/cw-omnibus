@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestUtil 'com.android.support.test:orchestrator:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        testApplicationId "com.commonsware.android.gradle.hello.test"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    testOptions {
+        execution 'ANDROID_TEST_ORCHESTRATOR'
+    }
+}

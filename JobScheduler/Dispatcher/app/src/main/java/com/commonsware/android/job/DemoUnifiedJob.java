@@ -19,7 +19,7 @@ import android.util.Log;
 import com.evernote.android.job.Job;
 
 public class DemoUnifiedJob extends Job {
-  public static final String JOB_TAG=
+  static final String JOB_TAG=
     DemoUnifiedJob.class.getCanonicalName();
 
   @NonNull

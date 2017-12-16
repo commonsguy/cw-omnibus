@@ -19,10 +19,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import com.flurgle.camerakit.CameraListener;
-import com.flurgle.camerakit.CameraView;
 import com.github.clans.fab.FloatingActionButton;
-import java.io.File;
+import com.wonderkiln.camerakit.CameraKitEventListenerAdapter;
+import com.wonderkiln.camerakit.CameraKitImage;
+import com.wonderkiln.camerakit.CameraKitVideo;
+import com.wonderkiln.camerakit.CameraView;
 
 public class CameraActivity extends Activity {
   private static final String EXTRA_IS_PHOTO="isPhoto";
@@ -69,6 +70,24 @@ public class CameraActivity extends Activity {
     if (!isPhoto) {
       fab.setImageResource(R.drawable.ic_videocam_black_24dp);
     }
+
+    camera.addCameraKitListener(new CameraKitEventListenerAdapter() {
+      @Override
+      public void onImage(CameraKitImage image) {
+        // TODO: do something with picture
+
+        setResult(RESULT_OK);
+        finish();
+      }
+
+      @Override
+      public void onVideo(CameraKitVideo video) {
+        // TODO: do something with video file
+
+        setResult(RESULT_OK);
+        finish();
+      }
+    });
   }
 
   @Override
@@ -84,40 +103,20 @@ public class CameraActivity extends Activity {
   }
 
   private void takePhoto() {
-    camera.setCameraListener(new CameraListener() {
-      @Override
-      public void onPictureTaken(byte[] picture) {
-        // TODO: do something with picture
-
-        setResult(RESULT_OK);
-        finish();
-      }
-    });
-
     camera.captureImage();
     fab.setEnabled(false);
   }
 
   private void recordVideo() {
     if (isRecording) {
-      camera.stopRecordingVideo();
-      fab.setEnabled(false);
+      camera.stopVideo();
+      finish();
     }
     else {
-      camera.setCameraListener(new CameraListener() {
-        @Override
-        public void onVideoTaken(File video) {
-          super.onVideoTaken(video);
-
-          setResult(RESULT_OK);
-          finish();
-        }
-      });
-
       fab.setColorNormalResId(R.color.recording);
       fab.setImageResource(R.drawable.ic_stop_black_24dp);
       isRecording=true;
-      camera.startRecordingVideo();
+      camera.start();
     }
   }
 }

@@ -7,21 +7,22 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.clans:fab:1.5.5'
+    implementation 'com.github.clans:fab:1.6.4'
     implementation 'com.githang:com-phillipcalvin-iconbutton:1.0.1@aar'
-    implementation 'com.android.support:support-compat:26.0.0'
-    compile('com.flurgle:camerakit:0.9.18') {
+    implementation 'com.android.support:support-compat:27.0.2'
+    implementation('com.wonderkiln:camerakit-core:0.13.1') {
       exclude group: 'com.android.support', module: 'appcompat-v7'
+      exclude group: 'com.google.android.gms', module: 'play-services-vision'
     }
 }
 
 android {
-  compileSdkVersion 26
-  buildToolsVersion '26.0.2'
+  compileSdkVersion 27
+  buildToolsVersion '27.0.2'
   
   defaultConfig {
     minSdkVersion 15
-    targetSdkVersion 26
+    targetSdkVersion 27
     applicationId 'com.commonsware.android.camera.camerakit'
   }
 }

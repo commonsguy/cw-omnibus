@@ -62,13 +62,11 @@ public class MainActivity extends Activity {
       new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true)
-     .setDefaults(Notification.DEFAULT_ALL)
      .setContentTitle(getString(R.string.download_complete))
      .setContentText(getString(R.string.fun))
      .setContentIntent(buildPendingIntent(Settings.ACTION_SECURITY_SETTINGS))
      .setSmallIcon(android.R.drawable.stat_sys_download_done)
-     .setTicker(getString(R.string.download_complete))
-     .setPriority(NotificationCompat.PRIORITY_HIGH)
+     .setPriority(Notification.PRIORITY_HIGH)
      .addAction(android.R.drawable.ic_media_play,
                 getString(R.string.play),
                 buildPendingIntent(Settings.ACTION_SETTINGS));

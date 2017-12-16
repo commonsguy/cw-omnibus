@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
         .addLine(getString(R.string.low));
 
     NotificationCompat.Builder bigPage=
-        new NotificationCompat.Builder(this)
+        new NotificationCompat.Builder(this, CHANNEL_WHATEVER)
             .setStyle(big);
     NotificationCompat.Builder twoPages=
         new NotificationCompat.WearableExtender()

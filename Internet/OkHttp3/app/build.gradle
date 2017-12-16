@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation 'de.greenrobot:eventbus:2.4.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 }
 
 android {

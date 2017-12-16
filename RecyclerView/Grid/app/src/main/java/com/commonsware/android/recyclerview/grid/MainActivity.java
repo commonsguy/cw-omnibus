@@ -29,8 +29,8 @@ public class MainActivity extends RecyclerViewActivity {
           "porttitor", "sodales", "pellentesque", "augue", "purus"};
   
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     setLayoutManager(new GridLayoutManager(this, 2));
     setAdapter(new IconicAdapter());

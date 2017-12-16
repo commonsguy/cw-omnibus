@@ -37,8 +37,8 @@ public class MainActivity extends RecyclerViewActivity {
   private ChoiceCapableAdapter<?> adapter=null;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     setLayoutManager(new LinearLayoutManager(this));
     adapter=new IconicAdapter();

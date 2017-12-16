@@ -49,8 +49,8 @@ public class MainActivity extends Activity implements
   private View info;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
 
     player=(VideoView)findViewById(R.id.player);
@@ -74,9 +74,9 @@ public class MainActivity extends Activity implements
     setLayoutManager(new LinearLayoutManager(this));
     setAdapter(new VideoAdapter());
 
-    if (icicle!=null) {
+    if (state!=null) {
       isInPermission=
-        icicle.getBoolean(STATE_IN_PERMISSION, false);
+        state.getBoolean(STATE_IN_PERMISSION, false);
     }
 
     if (hasFilesPermission()) {

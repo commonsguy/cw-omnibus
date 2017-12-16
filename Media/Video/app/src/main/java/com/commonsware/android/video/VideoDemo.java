@@ -42,7 +42,7 @@ public class VideoDemo extends AbstractPermissionActivity {
   }
 
   @Override
-  public void onReady(Bundle icicle) {
+  public void onReady(Bundle state) {
     getWindow().setFormat(PixelFormat.TRANSLUCENT);
     setContentView(R.layout.main);
   

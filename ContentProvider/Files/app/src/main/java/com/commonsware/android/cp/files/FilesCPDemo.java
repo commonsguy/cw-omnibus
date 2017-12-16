@@ -21,8 +21,8 @@ import android.os.Bundle;
 
 public class FilesCPDemo extends Activity {
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     
     startActivity(new Intent(Intent.ACTION_VIEW,
                              Uri.parse(FileProvider.CONTENT_URI

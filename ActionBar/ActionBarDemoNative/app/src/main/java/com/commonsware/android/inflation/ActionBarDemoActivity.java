@@ -36,8 +36,8 @@ public class ActionBarDemoActivity extends ListActivity {
   private ArrayAdapter<String> adapter=null;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     initAdapter();
   }

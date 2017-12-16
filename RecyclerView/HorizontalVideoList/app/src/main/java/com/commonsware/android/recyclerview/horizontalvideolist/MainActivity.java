@@ -27,8 +27,8 @@ import android.view.ViewGroup;
 public class MainActivity extends RecyclerViewActivity implements
     LoaderManager.LoaderCallbacks<Cursor> {
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     getLoaderManager().initLoader(0, null, this);
 

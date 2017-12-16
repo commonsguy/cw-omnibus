@@ -30,8 +30,8 @@ public class ChronoDemo extends Activity {
   Calendar dateAndTime=Calendar.getInstance();
       
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
     
     dateAndTimeLabel=(TextView)findViewById(R.id.dateAndTime);

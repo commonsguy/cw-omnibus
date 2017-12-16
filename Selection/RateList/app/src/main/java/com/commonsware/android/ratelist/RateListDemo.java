@@ -33,8 +33,8 @@ public class RateListDemo extends ListActivity {
           "porttitor", "sodales", "pellentesque", "augue", "purus"};
   
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     
     ArrayList<RowModel> list=new ArrayList<RowModel>();
     

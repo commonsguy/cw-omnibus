@@ -20,8 +20,8 @@ import android.widget.Toast;
 
 public class PluginActivationActivity extends Activity {
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     Toast.makeText(this, R.string.activated, Toast.LENGTH_LONG).show();
     finish();

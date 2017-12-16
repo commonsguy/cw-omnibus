@@ -35,15 +35,15 @@ public class MainActivity extends RecyclerViewActivity implements
   private boolean isInPermission=false;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     setLayoutManager(new LinearLayoutManager(this));
     setAdapter(new VideoAdapter());
 
-    if (icicle!=null) {
+    if (state!=null) {
       isInPermission=
-        icicle.getBoolean(STATE_IN_PERMISSION, false);
+        state.getBoolean(STATE_IN_PERMISSION, false);
     }
 
     if (hasFilesPermission()) {

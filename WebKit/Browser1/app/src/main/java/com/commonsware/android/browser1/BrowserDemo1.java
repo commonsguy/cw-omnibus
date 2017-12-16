@@ -22,8 +22,8 @@ public class BrowserDemo1 extends Activity {
   WebView browser;
   
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
     browser=(WebView)findViewById(R.id.webkit);
     

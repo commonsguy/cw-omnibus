@@ -32,15 +32,15 @@ public class MainActivity extends Activity implements
   private ImageView image;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
 
     image=(ImageView)findViewById(R.id.thumbnail_large);
     image.setOnDragListener(this);
 
-    if (icicle!=null) {
-      imageUri=icicle.getParcelable(STATE_IMAGE_URI);
+    if (state!=null) {
+      imageUri=state.getParcelable(STATE_IMAGE_URI);
 
       if (imageUri!=null) {
         showThumbnail();

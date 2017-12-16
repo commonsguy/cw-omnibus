@@ -44,18 +44,18 @@ public class MainActivity extends RecyclerViewActivity implements
   private VideoAdapter adapter;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     setLayoutManager(new LinearLayoutManager(this));
 
     adapter=new VideoAdapter();
     setAdapter(adapter);
 
-    if (icicle!=null) {
+    if (state!=null) {
       isInPermission=
-        icicle.getBoolean(STATE_IN_PERMISSION, false);
-      adapter.sortAscending=icicle.getBoolean(STATE_SORT, true);
+        state.getBoolean(STATE_IN_PERMISSION, false);
+      adapter.sortAscending=state.getBoolean(STATE_SORT, true);
     }
 
     if (hasFilesPermission()) {

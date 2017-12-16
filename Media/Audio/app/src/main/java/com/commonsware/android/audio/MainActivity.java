@@ -30,8 +30,8 @@ public class MainActivity extends Activity
   private MediaPlayer mp;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     try {
       mp=MediaPlayer.create(this, R.raw.clip);

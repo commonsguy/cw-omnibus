@@ -35,8 +35,8 @@ public class MainActivity extends ListActivity {
   private EventAdapter adapter;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     getListView().setTranscriptMode(
       ListView.TRANSCRIPT_MODE_NORMAL);

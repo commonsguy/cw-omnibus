@@ -28,8 +28,8 @@ public class FlipperDemo2 extends Activity {
   AdapterViewFlipper flipper;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
 
     flipper=(AdapterViewFlipper)findViewById(R.id.details);

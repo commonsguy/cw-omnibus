@@ -34,8 +34,8 @@ public class AutoCompleteDemo extends Activity
           "porttitor", "sodales", "pellentesque", "augue", "purus"};
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
     selection=(TextView)findViewById(R.id.selection);
     edit=(AutoCompleteTextView)findViewById(R.id.edit);

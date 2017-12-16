@@ -24,8 +24,8 @@ public class CheckBoxDemo extends Activity implements
   CheckBox cb;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
 
     cb=(CheckBox)findViewById(R.id.check);

@@ -54,8 +54,8 @@ abstract public class AbstractDragDropDemoActivity extends Activity implements
   private ImageView iv;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
 
     originalColors.put(R.id.outer_container,
@@ -89,8 +89,8 @@ abstract public class AbstractDragDropDemoActivity extends Activity implements
         }
       });
 
-    if (icicle!=null) {
-      imageUri=icicle.getParcelable(STATE_IMAGE_URI);
+    if (state!=null) {
+      imageUri=state.getParcelable(STATE_IMAGE_URI);
 
       if (imageUri!=null) {
         showThumbnail();

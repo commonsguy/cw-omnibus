@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements
   private EditText editor=null;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.activity_main);
 
     shareIntent.setType("text/plain");

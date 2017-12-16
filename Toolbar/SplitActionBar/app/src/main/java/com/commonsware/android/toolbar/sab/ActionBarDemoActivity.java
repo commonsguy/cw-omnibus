@@ -34,8 +34,8 @@ public class ActionBarDemoActivity extends ListActivity {
   private ArrayAdapter<String> adapter=null;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
       setContentView(R.layout.main);

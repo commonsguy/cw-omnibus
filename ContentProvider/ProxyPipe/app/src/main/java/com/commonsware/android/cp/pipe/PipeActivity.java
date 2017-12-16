@@ -21,8 +21,8 @@ import android.os.Bundle;
 
 public class PipeActivity extends Activity {
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
 
     Uri uri=PipeProvider.CONTENT_URI.buildUpon().appendPath("test.pdf").build();
 

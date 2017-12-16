@@ -31,8 +31,8 @@ public class ListViewDemo extends ListActivity {
           "porttitor", "sodales", "pellentesque", "augue", "purus"};
   
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
     setListAdapter(new ArrayAdapter<String>(this,
                         android.R.layout.simple_list_item_1,

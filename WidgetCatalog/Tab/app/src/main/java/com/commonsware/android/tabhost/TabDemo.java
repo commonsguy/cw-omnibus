@@ -20,8 +20,8 @@ import android.widget.TabHost;
 
 public class TabDemo extends Activity {
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
 
     TabHost tabs=(TabHost)findViewById(R.id.tabhost);

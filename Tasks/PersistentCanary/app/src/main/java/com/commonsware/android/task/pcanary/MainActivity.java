@@ -29,8 +29,8 @@ public class MainActivity extends Activity {
   private long creationTime=-1L;
 
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.activity_main);
 
     Log.d(getClass().getSimpleName(), "std onCreate() called");

@@ -19,8 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 
 public class SwitchDemo extends AppCompatActivity {
   @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
+  public void onCreate(Bundle state) {
+    super.onCreate(state);
     setContentView(R.layout.main);
   }
 }

@@ -22,7 +22,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import java.io.BufferedOutputStream;
@@ -104,8 +103,7 @@ public class Downloader extends IntentService {
     NotificationCompat.Builder b=
       new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
-    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
-     .setWhen(System.currentTimeMillis());
+    b.setAutoCancel(true).setWhen(System.currentTimeMillis());
 
     if (e == null) {
       b.setContentTitle(getString(R.string.download_complete))
@@ -141,10 +139,9 @@ public class Downloader extends IntentService {
       new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setOngoing(true)
-      .setContentTitle(getString(R.string.downloading))
+     .setContentTitle(getString(R.string.downloading))
      .setContentText(filename)
-     .setSmallIcon(android.R.drawable.stat_sys_download)
-     .setTicker(getString(R.string.downloading));
+     .setSmallIcon(android.R.drawable.stat_sys_download);
 
     return(b.build());
   }

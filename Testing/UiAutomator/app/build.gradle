@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    androidTestCompile 'com.android.support.test:rules:0.3'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 18
+        testApplicationId "com.commonsware.android.gradle.hello.test"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt' // required for no good reason...
+    }
+}
+

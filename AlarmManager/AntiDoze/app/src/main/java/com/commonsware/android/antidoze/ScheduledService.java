@@ -15,9 +15,12 @@
 package com.commonsware.android.antidoze;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
@@ -35,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ScheduledService extends Service
   implements Runnable {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static int NOTIFY_ID=1337;
   private Random rng=new Random();
   private ScheduledExecutorService sched=
@@ -84,8 +88,17 @@ public class ScheduledService extends Service
   }
 
   private void foregroundify() {
+    NotificationManager mgr=
+      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     NotificationCompat.Builder b=
-      new NotificationCompat.Builder(this);
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
     Intent iActivity=new Intent(this, EventDemoActivity.class);
     PendingIntent piActivity=
       PendingIntent.getActivity(this, 0, iActivity, 0);

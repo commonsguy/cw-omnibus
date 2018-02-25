@@ -14,7 +14,7 @@
 
 package com.commonsware.android.antidoze;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
 
-public class EventDemoActivity extends Activity {
+public class EventDemoActivity extends FragmentActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -40,8 +40,8 @@ public class EventDemoActivity extends Activity {
       }
     }
 
-    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
+      getSupportFragmentManager().beginTransaction()
         .add(android.R.id.content,
           new EventLogFragment()).commit();
       startService(new Intent(this, ScheduledService.class));

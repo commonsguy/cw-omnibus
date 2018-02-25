@@ -19,7 +19,7 @@
 package com.commonsware.android.eu4youtb;
 
 import android.app.Activity;
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 
 public class ContractListFragment<T> extends ListFragment {
   private T contract;

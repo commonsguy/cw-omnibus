@@ -14,7 +14,7 @@
 
 package com.commonsware.android.downloader;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -42,7 +42,7 @@ public class DownloadFragment extends Fragment implements
                            Bundle savedInstanceState) {
     View result=inflater.inflate(R.layout.main, parent, false);
 
-    b=(Button)result.findViewById(R.id.button);
+    b=result.findViewById(R.id.button);
     b.setOnClickListener(this);
 
     return(result);
@@ -72,7 +72,7 @@ public class DownloadFragment extends Fragment implements
       doTheDownload();
     }
     else {
-      FragmentCompat.requestPermissions(this,
+      requestPermissions(
         new String[] { WRITE_EXTERNAL_STORAGE }, REQUEST_STORAGE);
     }
   }

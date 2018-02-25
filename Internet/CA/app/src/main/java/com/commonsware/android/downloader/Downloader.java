@@ -14,12 +14,15 @@
 
 package com.commonsware.android.downloader;
 
-import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
@@ -27,28 +30,26 @@ import com.commonsware.cwac.netsecurity.TrustManagerBuilder;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Downloader extends IntentService {
+public class Downloader extends JobIntentService {
   private static final String AUTHORITY=
     BuildConfig.APPLICATION_ID+".provider";
   private static int NOTIFY_ID=1337;
   private static int FOREGROUND_ID=1338;
+  private static int UNIQUE_JOB_ID=1339;
+  private static final String CHANNEL_WHATEVER="channel_whatever";
 
-  public Downloader() {
-    super("Downloader");
+  static void enqueueWork(Context ctxt, Intent i) {
+    enqueueWork(ctxt, Downloader.class, UNIQUE_JOB_ID, i);
   }
 
   @Override
-  public void onHandleIntent(Intent i) {
+  public void onHandleWork(Intent i) {
     File output=new File(getFilesDir(),
       i.getData().getLastPathSegment());
-
-    startForeground(FOREGROUND_ID,
-      buildForegroundNotification(output.getName()));
 
     try {
       if (output.exists()) {
@@ -99,8 +100,18 @@ public class Downloader extends IntentService {
 
   private void raiseNotification(String mimeType, File output,
                                  Exception e) {
+    NotificationManager mgr=
+      (NotificationManager)getSystemService(
+        NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     NotificationCompat.Builder b=
-      new NotificationCompat.Builder(this);
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
 
@@ -127,23 +138,6 @@ public class Downloader extends IntentService {
         .setTicker(getString(R.string.exception));
     }
 
-    NotificationManager mgr=
-      (NotificationManager)getSystemService(
-        NOTIFICATION_SERVICE);
-
     mgr.notify(NOTIFY_ID, b.build());
-  }
-
-  private Notification buildForegroundNotification(String filename) {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
-
-    b.setOngoing(true);
-
-    b.setContentTitle(getString(R.string.downloading))
-      .setContentText(filename)
-      .setSmallIcon(android.R.drawable.stat_sys_download)
-      .setTicker(getString(R.string.downloading));
-
-    return(b.build());
   }
 }

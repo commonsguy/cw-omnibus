@@ -14,38 +14,18 @@
 
 package com.commonsware.android.unittest;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import de.greenrobot.event.EventBus;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+      getSupportFragmentManager().beginTransaction()
                           .add(android.R.id.content,
                                new QuestionsFragment()).commit();
     }
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-    EventBus.getDefault().register(this);
-  }
-
-  @Override
-  public void onPause() {
-    EventBus.getDefault().unregister(this);
-    super.onPause();
-  }
-
-  public void onEventMainThread(QuestionClickedEvent event) {
-    startActivity(new Intent(Intent.ACTION_VIEW,
-                             Uri.parse(event.item.link)));
   }
 }

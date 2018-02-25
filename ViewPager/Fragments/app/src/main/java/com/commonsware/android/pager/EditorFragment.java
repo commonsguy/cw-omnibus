@@ -14,8 +14,8 @@
 
 package com.commonsware.android.pager;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +39,7 @@ public class EditorFragment extends Fragment {
                            ViewGroup container,
                            Bundle savedInstanceState) {
     View result=inflater.inflate(R.layout.editor, container, false);
-    EditText editor=(EditText)result.findViewById(R.id.editor);
+    EditText editor=result.findViewById(R.id.editor);
     int position=getArguments().getInt(KEY_POSITION, -1);
 
     editor.setHint(String.format(getString(R.string.hint), position + 1));

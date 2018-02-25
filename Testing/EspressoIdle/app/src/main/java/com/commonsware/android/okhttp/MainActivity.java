@@ -14,13 +14,13 @@
 
 package com.commonsware.android.okhttp;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import okhttp3.OkHttpClient;
 
-public class MainActivity extends Activity
+public class MainActivity extends FragmentActivity
   implements QuestionsFragment.Contract {
   private final OkHttpClient client=
     new OkHttpClient.Builder().build();
@@ -29,8 +29,8 @@ public class MainActivity extends Activity
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+      getSupportFragmentManager().beginTransaction()
                           .add(android.R.id.content,
                                new QuestionsFragment()).commit();
     }

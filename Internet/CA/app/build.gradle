@@ -4,12 +4,12 @@ def WARES='"https://wares.commonsware.com/excerpt-7p0.pdf"'
 def SELFSIGNED='"https://scrap.commonsware.com:3001/excerpt-7p0.pdf"'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 24
+        targetSdkVersion 27
     }
 
     flavorDimensions "default"
@@ -81,7 +81,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v13:24.2.0'
-    implementation 'com.commonsware.cwac:provider:0.4.4'
-    implementation 'com.commonsware.cwac:netsecurity:0.2.0'
+    implementation 'com.android.support:support-v13:27.0.2'
+    implementation 'com.commonsware.cwac:provider:0.5.3'
+    implementation 'com.commonsware.cwac:netsecurity:0.4.4'
 }

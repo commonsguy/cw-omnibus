@@ -14,16 +14,16 @@
 
 package com.commonsware.android.fakeplayer;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-public class FakePlayer extends Activity {
+public class FakePlayer extends FragmentActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     
-    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
+      getSupportFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new PlayerFragment()).commit();
     }

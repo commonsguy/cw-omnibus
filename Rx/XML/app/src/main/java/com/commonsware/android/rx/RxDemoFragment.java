@@ -14,7 +14,7 @@
 
 package com.commonsware.android.rx;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;

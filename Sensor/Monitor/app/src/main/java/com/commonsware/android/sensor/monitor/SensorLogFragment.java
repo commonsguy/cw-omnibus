@@ -15,7 +15,7 @@
 package com.commonsware.android.sensor.monitor;
 
 import android.annotation.SuppressLint;
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;

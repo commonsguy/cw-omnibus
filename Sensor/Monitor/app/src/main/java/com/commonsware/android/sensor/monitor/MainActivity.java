@@ -15,7 +15,7 @@
 package com.commonsware.android.sensor.monitor;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends FragmentActivity implements
     SensorsFragment.Contract {
   private SensorManager mgr=null;
   private SensorLogFragment log=null;
@@ -41,9 +41,9 @@ public class MainActivity extends Activity implements
 
     mgr=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
     log=
-        (SensorLogFragment)getFragmentManager().findFragmentById(R.id.log);
+        (SensorLogFragment)getSupportFragmentManager().findFragmentById(R.id.log);
 
-    panes=(SlidingPaneLayout)findViewById(R.id.panes);
+    panes=findViewById(R.id.panes);
     panes.openPane();
   }
 

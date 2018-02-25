@@ -2,16 +2,16 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'com.android.support:support-compat:26.1.0'
+    implementation "com.android.support:support-v13:27.0.2"
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
-	  defaultConfig {
-        minSdkVersion 19
-		    targetSdkVersion 26
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
 	  }
 
     flavorDimensions "default"

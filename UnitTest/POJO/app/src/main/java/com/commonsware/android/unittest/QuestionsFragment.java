@@ -14,7 +14,7 @@
 
 package com.commonsware.android.unittest;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -22,11 +22,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
-import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -52,13 +50,6 @@ public class QuestionsFragment extends ListFragment implements
     so.questions("android", this);
 
     return(result);
-  }
-
-  @Override
-  public void onListItemClick(ListView l, View v, int position, long id) {
-    Item item=((ItemsAdapter)getListAdapter()).getItem(position);
-
-    EventBus.getDefault().post(new QuestionClickedEvent(item));
   }
 
   @Override

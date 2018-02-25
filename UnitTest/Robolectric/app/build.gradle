@@ -1,18 +1,27 @@
 apply plugin: 'com.android.application'
 
 dependencies {
+    implementation "com.android.support:support-fragment:27.0.2"
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.robolectric:robolectric:3.0'
-    androidTestImplementation 'com.android.support.test:rules:0.4.1'
+    testImplementation "org.robolectric:robolectric:3.7.1"
+    androidTestImplementation 'com.android.support.test:rules:1.0.1'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
         testApplicationId "com.commonsware.android.gradle.hello.robolectric"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 

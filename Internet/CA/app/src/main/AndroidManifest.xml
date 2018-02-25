@@ -29,7 +29,9 @@
       </intent-filter>
     </activity>
 
-    <service android:name="Downloader" />
+    <service
+      android:name="Downloader"
+      android:permission="android.permission.BIND_JOB_SERVICE" />
 
     <provider
       android:name="LegacyCompatFileProvider"

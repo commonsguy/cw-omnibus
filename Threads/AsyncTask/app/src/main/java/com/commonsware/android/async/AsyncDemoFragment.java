@@ -14,7 +14,7 @@
 
 package com.commonsware.android.async;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -43,9 +43,9 @@ public class AsyncDemoFragment extends ListFragment {
     task.execute();
 
     adapter=
-        new ArrayAdapter<String>(getActivity(),
-                                 android.R.layout.simple_list_item_1,
-                                 model);
+      new ArrayAdapter<>(getActivity(),
+        android.R.layout.simple_list_item_1,
+        model);
   }
 
   @Override

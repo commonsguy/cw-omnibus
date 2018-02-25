@@ -2,7 +2,7 @@
 <resources>
 
 	<string name="hello">Hello World, ScheduledServiceDemoActivity!</string>
-	<string name="app_name">Scheduled Service Demo</string>
+	<string name="app_name">WakefulServiceDemo</string>
 	<string name="alarms_scheduled">Alarms scheduled!</string>
 
 </resources>

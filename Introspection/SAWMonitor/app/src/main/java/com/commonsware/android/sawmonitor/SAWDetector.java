@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2016-2017 CommonsWare, LLC
+ Copyright (c) 2016-2018 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,12 +14,13 @@
 
 package com.commonsware.android.sawmonitor;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -28,21 +29,18 @@ import android.content.pm.ChangedPackages;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
-import static android.content.Intent.ACTION_PACKAGE_ADDED;
-import static android.content.Intent.ACTION_PACKAGE_REPLACED;
 
 class SAWDetector {
   static final int NOTIFY_ID=3431;
   private static final int JOB_ID=1337;
   private static final String PREF_SEQUENCE="seq";
+  private static final String CHANNEL_WHATEVER="channel_whatever";
 
   private static boolean hasSAW(Context ctxt, String pkg) {
     SharedPreferences prefs=
@@ -52,7 +50,7 @@ class SAWDetector {
         new HashSet<String>());
 
     if (whitelist.contains(pkg)) {
-      return (false);
+      return false;
     }
 
     PackageManager pm=ctxt.getPackageManager();
@@ -77,7 +75,18 @@ class SAWDetector {
 
       main.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
-      NotificationCompat.Builder b=new NotificationCompat.Builder(ctxt);
+      NotificationManager mgr=
+        (NotificationManager)ctxt.getSystemService(
+          Context.NOTIFICATION_SERVICE);
+
+      if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+        mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+        mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+          "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+      }
+
+      NotificationCompat.Builder b=
+        new NotificationCompat.Builder(ctxt, CHANNEL_WHATEVER);
       String text=String.format(ctxt.getString(R.string.msg_requested), operation,pkg);
 
       b.setAutoCancel(true)
@@ -97,14 +106,11 @@ class SAWDetector {
           ctxt.getString(R.string.msg_settings),
           PendingIntent.getActivity(ctxt, 0, main, 0));
 
-      NotificationManager mgr=
-        (NotificationManager)ctxt.getSystemService(
-          Context.NOTIFICATION_SERVICE);
-
       mgr.notify(NOTIFY_ID, b.build());
     }
   }
 
+  @TargetApi(Build.VERSION_CODES.O)
   static void seeSAW(Context ctxt) {
     SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(ctxt);
     int sequence=prefs.getInt(PREF_SEQUENCE, 0);
@@ -124,29 +130,23 @@ class SAWDetector {
     }
   }
 
+  @TargetApi(Build.VERSION_CODES.O)
   static void scheduleJobs(Context ctxt) {
-    if (iCanHazO()) {
-      SAWDetector.seeSAW(ctxt);
+    SAWDetector.seeSAW(ctxt);
 
-      ComponentName cn=new ComponentName(ctxt, PollingService.class);
-      JobInfo.Builder b=new JobInfo.Builder(JOB_ID, cn)
-        .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
-        .setPeriodic(15 * 60 * 1000, 60000)
-        .setPersisted(true)
-        .setRequiresCharging(false)
-        .setRequiresDeviceIdle(false);
+    ComponentName cn=new ComponentName(ctxt, PollingService.class);
+    JobInfo.Builder b=new JobInfo.Builder(JOB_ID, cn)
+      .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
+      .setPeriodic(15 * 60 * 1000, 60000)
+      .setPersisted(true)
+      .setRequiresCharging(false)
+      .setRequiresDeviceIdle(false);
 
-      ctxt.getSystemService(JobScheduler.class).schedule(b.build());
-    }
+    ctxt.getSystemService(JobScheduler.class).schedule(b.build());
   }
 
+  @TargetApi(Build.VERSION_CODES.O)
   static void cancelJobs(Context ctxt) {
-    if (iCanHazO()) {
-      ctxt.getSystemService(JobScheduler.class).cancelAll();
-    }
-  }
-
-  private static boolean iCanHazO() {
-    return(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O);
+    ctxt.getSystemService(JobScheduler.class).cancelAll();
   }
 }

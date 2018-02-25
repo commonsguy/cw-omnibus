@@ -42,6 +42,6 @@ public class WhitelistReceiver extends BroadcastReceiver {
       (NotificationManager)ctxt.getSystemService(
         Context.NOTIFICATION_SERVICE);
 
-    mgr.cancel(PackageReceiver.NOTIFY_ID);
+    mgr.cancel(SAWDetector.NOTIFY_ID);
   }
 }

@@ -14,14 +14,14 @@
 
 package com.commonsware.android.sawmonitor;
 
-import android.content.ComponentName;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,8 +29,10 @@ import java.util.List;
 import static android.Manifest.permission.SYSTEM_ALERT_WINDOW;
 
 public class SettingsFragment extends PreferenceFragment
-  implements Preference.OnPreferenceChangeListener {
+  implements SharedPreferences.OnSharedPreferenceChangeListener {
   private PackageManager pm;
+  private SwitchPreference enabled;
+  private SharedPreferences prefs;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -38,27 +40,33 @@ public class SettingsFragment extends PreferenceFragment
     addPreferencesFromResource(R.xml.settings);
     pm=getActivity().getPackageManager();
 
-    SwitchPreference enabled=(SwitchPreference)findPreference("enabled");
-
-    enabled.setOnPreferenceChangeListener(this);
+    enabled=(SwitchPreference)findPreference(MonitorApp.PREF_ENABLED);
 
     populateWhitelist((MultiSelectListPreference)findPreference("whitelist"));
   }
 
   @Override
-  public boolean onPreferenceChange(Preference preference,
-                                    Object newValue) {
-    Boolean state=(Boolean)newValue;
-    ComponentName cn=
-      new ComponentName(getActivity(), PackageReceiver.class);
-    int componentState=state ?
-      PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
-      PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+  public void onStart() {
+    super.onStart();
 
-    pm.setComponentEnabledSetting(cn, componentState,
-      PackageManager.DONT_KILL_APP);
+    prefs=PreferenceManager.getDefaultSharedPreferences(getActivity());
+    prefs.registerOnSharedPreferenceChangeListener(this);
+    syncEnabledStates();
+  }
 
-    return(true);
+  @Override
+  public void onStop() {
+    super.onStop();
+
+    prefs.unregisterOnSharedPreferenceChangeListener(this);
+  }
+
+  @Override
+  public void onSharedPreferenceChanged(SharedPreferences prefs,
+                                        String s) {
+    if (MonitorApp.PREF_ENABLED.equals(s)) {
+      syncEnabledStates();
+    }
   }
 
   void populateWhitelist(MultiSelectListPreference whitelist) {
@@ -98,5 +106,9 @@ public class SettingsFragment extends PreferenceFragment
     whitelist
       .setEntryValues(packageNames
         .toArray(new String[packageNames.size()]));
+  }
+
+  void syncEnabledStates() {
+    enabled.setChecked(prefs.getBoolean(MonitorApp.PREF_ENABLED, false));
   }
 }

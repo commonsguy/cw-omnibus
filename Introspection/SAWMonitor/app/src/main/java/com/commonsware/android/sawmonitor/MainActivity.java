@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2016 CommonsWare, LLC
+ Copyright (c) 2016-2018 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -16,7 +16,6 @@ package com.commonsware.android.sawmonitor;
 
 import android.app.Activity;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.os.Bundle;
 
 public class MainActivity extends Activity {
@@ -27,7 +26,7 @@ public class MainActivity extends Activity {
     NotificationManager mgr=
       (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
-    mgr.cancel(PackageReceiver.NOTIFY_ID);
+    mgr.cancel(SAWDetector.NOTIFY_ID);
 
     if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
       getFragmentManager().beginTransaction()

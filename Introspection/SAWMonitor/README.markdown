@@ -1,5 +1,5 @@
 This sample Android app demonstrates
-dynamic preferences, including a dynamic `ListPreference`, in the context of showing how to monitor for app installs.
+monitoring for app installs and updates, including dealing with changes to this introduced in Android 8.0.
 
 This app is covered in 
 [the chapter on advanced preferences](https://commonsware.com/Android/previews/advanced-preferences)

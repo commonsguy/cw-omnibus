@@ -14,12 +14,15 @@
 
 package com.commonsware.android.sawmonitor;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
+@TargetApi(Build.VERSION_CODES.N)
 public class ToggleTileService extends TileService {
   private SharedPreferences prefs;
 
@@ -34,14 +37,12 @@ public class ToggleTileService extends TileService {
   public void onClick() {
     super.onClick();
 
-    boolean isEnabled=
-      getPrefs()
-        .getBoolean(SettingsFragment.PREF_ENABLED, false);
+    boolean isEnabled=getPrefs().getBoolean(MonitorApp.PREF_ENABLED, false);
 
     getPrefs()
       .edit()
-      .putBoolean(SettingsFragment.PREF_ENABLED, !isEnabled)
-      .commit();
+      .putBoolean(MonitorApp.PREF_ENABLED, !isEnabled)
+      .apply();
     updateTile();
   }
 
@@ -49,16 +50,12 @@ public class ToggleTileService extends TileService {
     Tile tile=getQsTile();
 
     if (tile!=null) {
-      boolean isEnabled=
-        getPrefs()
-          .getBoolean(SettingsFragment.PREF_ENABLED, false);
-      int state=isEnabled ?
-        Tile.STATE_ACTIVE :
-        Tile.STATE_INACTIVE;
+      boolean isEnabled=getPrefs().getBoolean(MonitorApp.PREF_ENABLED, false);
+      int state=isEnabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
 
       tile.setIcon(Icon.createWithResource(this,
         R.drawable.ic_new_releases_24dp));
-      tile.setLabel(getString(R.string.app_name_short));
+      tile.setLabel(getString(R.string.app_name));
       tile.setState(state);
       tile.updateTile();
     }

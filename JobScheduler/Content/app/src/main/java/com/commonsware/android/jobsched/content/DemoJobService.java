@@ -15,6 +15,7 @@
 package com.commonsware.android.jobsched.content;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -22,10 +23,12 @@ import android.app.job.JobScheduler;
 import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import static android.provider.ContactsContract.Contacts.CONTENT_URI;
 
 public class DemoJobService extends JobService {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static final int ME_MYSELF_AND_I=3493;
   private static final int NOTIFY_ID=2343;
 
@@ -46,15 +49,21 @@ public class DemoJobService extends JobService {
 
   @Override
   public boolean onStartJob(JobParameters params) {
+    NotificationManager mgr=
+      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     NotificationCompat.Builder b=
-      new NotificationCompat.Builder(this)
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER)
         .setAutoCancel(true)
         .setDefaults(Notification.DEFAULT_ALL)
         .setContentTitle("You added a contact!")
         .setSmallIcon(android.R.drawable.stat_notify_more);
-
-    NotificationManager mgr=
-      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
     mgr.notify(NOTIFY_ID, b.build());
 

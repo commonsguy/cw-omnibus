@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    pager=(RecyclerView)findViewById(R.id.pager);
+    pager=findViewById(R.id.pager);
     layoutManager=
       new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     pager.setLayoutManager(layoutManager);

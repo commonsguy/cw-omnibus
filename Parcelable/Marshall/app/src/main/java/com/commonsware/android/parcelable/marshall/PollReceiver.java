@@ -20,13 +20,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 public class PollReceiver extends BroadcastReceiver {
   private static final String EXTRA_THINGY=
     "heyYouCanNameYourExtrasWhateverYouWant";
-  private static final int PERIOD=15000; // 15 seconds
-  private static final int INITIAL_DELAY=1000; // 1 second
+  private static final int PERIOD=60000; // 1 minute
+  private static final int INITIAL_DELAY=5000; // 5 seconds
 
   @Override
   public void onReceive(Context ctxt, Intent i) {
@@ -35,7 +34,7 @@ public class PollReceiver extends BroadcastReceiver {
         Thingy.CREATOR);
 
     if (i.getAction() == null) {
-      WakefulIntentService.sendWakefulWork(ctxt, ScheduledService.class);
+      ScheduledService.enqueueWork(ctxt);
     }
     else {
       scheduleAlarms(ctxt);

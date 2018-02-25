@@ -27,11 +27,13 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
 import com.evernote.android.job.util.support.PersistableBundleCompat;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class MainActivity extends Activity
+public class MainActivity extends AbstractPermissionActivity
     implements CompoundButton.OnCheckedChangeListener {
   private static final long[] PERIODS={
       60000,
@@ -47,11 +49,22 @@ public class MainActivity extends Activity
   private AlarmManager alarms=null;
   private int unifiedJobId=-1;
 
+  @Override
+  protected String[] getDesiredPermissions() {
+    return(new String[]{WRITE_EXTERNAL_STORAGE});
+  }
+
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_sorry, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
+
   @SuppressWarnings("ResourceType")
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
+  public void onReady(Bundle savedInstanceState) {
     setContentView(R.layout.main);
     type=(Spinner)findViewById(R.id.type);
 
@@ -152,7 +165,6 @@ public class MainActivity extends Activity
 
       b
         .setPeriodic(getPeriod())
-        .setPersisted(false)
         .setRequiresCharging(false)
         .setRequiresDeviceIdle(true);
 

@@ -39,11 +39,11 @@ public class MainActivity extends Activity  {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    pager=(ViewPager)findViewById(R.id.pager);
+    pager=findViewById(R.id.pager);
     pager.setAdapter(
       new SampleAdapter(this, getFragmentManager()));
 
-    MaterialTabs tabs=(MaterialTabs)findViewById(R.id.tabs);
+    MaterialTabs tabs=findViewById(R.id.tabs);
     tabs.setViewPager(pager);
   }
 
@@ -82,7 +82,7 @@ public class MainActivity extends Activity  {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId()==R.id.backup) {
-      startService(new Intent(this, BackupService.class));
+      BackupService.enqueueWork(this);
 
       return(true);
     }

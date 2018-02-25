@@ -22,7 +22,9 @@
       </intent-filter>
     </activity>
 
-    <service android:name=".DemoScheduledService" />
+    <service
+      android:name=".DemoScheduledService"
+      android:permission="android.permission.BIND_JOB_SERVICE" />
     <service
       android:name=".DemoJobService"
       android:permission="android.permission.BIND_JOB_SERVICE" />

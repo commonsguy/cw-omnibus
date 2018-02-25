@@ -7,10 +7,10 @@ dependencies {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 27
         applicationId "com.commonsware.android.job.dispatcher"
     }

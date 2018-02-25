@@ -15,60 +15,56 @@
 package com.commonsware.android.parcelable.marshall;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.app.NotificationCompat;
-import java.util.Random;
-import com.commonsware.android.parcelable.marshall.RandomEvent;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.NoSubscriberEvent;
-import org.greenrobot.eventbus.Subscribe;
+import java.util.Random;
 
-public class ScheduledService extends WakefulIntentService {
+public class ScheduledService extends JobIntentService {
   private static int NOTIFY_ID=1337;
+  private static final int UNIQUE_JOB_ID=1337;
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private Random rng=new Random();
 
-  public ScheduledService() {
-    super("ScheduledService");
-  }
-  
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    
-    EventBus.getDefault().register(this);
+  static void enqueueWork(Context ctxt) {
+    enqueueWork(ctxt, ScheduledService.class, UNIQUE_JOB_ID,
+      new Intent(ctxt, ScheduledService.class));
   }
 
   @Override
-  protected void doWakefulWork(Intent intent) {
-    EventBus.getDefault().post(new RandomEvent(rng.nextInt()));
-  }
+  public void onHandleWork(Intent i) {
+    RandomEvent randomEvent=new RandomEvent(rng.nextInt());
 
-  @Override
-  public void onDestroy() {
-    EventBus.getDefault().unregister(this);
-
-    super.onDestroy();
-  }
-
-  @Subscribe
-  public void onNoSubscriber(NoSubscriberEvent event) {
-    RandomEvent randomEvent=(RandomEvent)event.originalEvent;
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
-    Intent ui=new Intent(this, EventDemoActivity.class);
-
-    b.setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND)
-     .setContentTitle(getString(R.string.notif_title))
-     .setContentText(Integer.toHexString(randomEvent.value))
-     .setSmallIcon(android.R.drawable.stat_notify_more)
-     .setTicker(getString(R.string.notif_title))
-     .setContentIntent(PendingIntent.getActivity(this, 0, ui, 0));
-
-    NotificationManager mgr=
+    if (EventBus.getDefault().hasSubscriberForEvent(randomEvent.getClass())) {
+      EventBus.getDefault().post(randomEvent);
+    }
+    else {
+      NotificationManager mgr=
         (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
-    mgr.notify(NOTIFY_ID, b.build());
+      if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+        mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+        mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+          "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+      }
+
+      NotificationCompat.Builder b=new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
+      Intent ui=new Intent(this, EventDemoActivity.class);
+
+      b.setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND)
+        .setContentTitle(getString(R.string.notif_title))
+        .setContentText(Integer.toHexString(randomEvent.value))
+        .setSmallIcon(android.R.drawable.stat_notify_more)
+        .setTicker(getString(R.string.notif_title))
+        .setContentIntent(PendingIntent.getActivity(this, 0, ui, 0));
+
+      mgr.notify(NOTIFY_ID, b.build());
+    }
   }
 }

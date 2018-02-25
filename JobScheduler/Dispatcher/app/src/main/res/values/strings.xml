@@ -6,5 +6,6 @@
   <string name="period_label">Period:</string>
   <string name="download_label">Download File:</string>
   <string name="scheduled_label">Scheduled:</string>
+  <string name="msg_sorry">Sorry, but we need permission to continue!</string>
 
 </resources>

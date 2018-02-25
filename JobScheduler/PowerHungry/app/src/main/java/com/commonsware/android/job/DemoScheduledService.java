@@ -14,17 +14,20 @@
 
 package com.commonsware.android.job;
 
-import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.JobIntentService;
 import android.util.Log;
 
-public class DemoScheduledService extends IntentService {
-  public DemoScheduledService() {
-    super("DemoScheduledService");
+public class DemoScheduledService extends JobIntentService {
+  private static final int UNIQUE_JOB_ID=23433;
+
+  static void enqueueWork(Context ctxt, Intent i) {
+    enqueueWork(ctxt, DemoScheduledService.class, UNIQUE_JOB_ID, i);
   }
 
   @Override
-  protected void onHandleIntent(Intent i) {
+  public void onHandleWork(Intent i) {
     Log.d(getClass().getSimpleName(), "scheduled work begins");
 
     if (i.getBooleanExtra(PollReceiver.EXTRA_IS_DOWNLOAD, false)) {
@@ -33,6 +36,5 @@ public class DemoScheduledService extends IntentService {
     }
 
     Log.d(getClass().getSimpleName(), "scheduled work ends");
-    PollReceiver.completeWakefulIntent(i);
   }
 }

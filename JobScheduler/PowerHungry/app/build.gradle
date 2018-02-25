@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    implementation 'com.android.support:support-compat:25.3.1'
-    implementation 'com.android.support:support-core-utils:25.3.1'
+    implementation 'com.android.support:support-compat:27.0.2'
+    implementation 'com.android.support:support-core-utils:27.0.2'
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 27
     }
 }

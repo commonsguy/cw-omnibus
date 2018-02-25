@@ -28,7 +28,9 @@
       </intent-filter>
     </receiver>
 
-    <service android:name="ScheduledService"/>
+    <service
+      android:name="ScheduledService"
+      android:permission="android.permission.BIND_JOB_SERVICE" />
   </application>
 
 </manifest>

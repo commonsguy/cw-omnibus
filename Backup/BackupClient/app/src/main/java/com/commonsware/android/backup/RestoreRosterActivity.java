@@ -14,17 +14,17 @@
 
 package com.commonsware.android.backup;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-public class RestoreRosterActivity extends Activity {
+public class RestoreRosterActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager()
+    if (getSupportFragmentManager()
       .findFragmentById(android.R.id.content)==null) {
-      getFragmentManager().beginTransaction()
+      getSupportFragmentManager().beginTransaction()
         .add(android.R.id.content,
           new RestoreRosterFragment()).commit();
     }

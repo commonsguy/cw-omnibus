@@ -29,11 +29,7 @@ public class RestoreProgressActivity extends Activity {
     setContentView(R.layout.progress);
 
     if (savedInstanceState==null) {
-      Intent i=
-        new Intent(this, RestoreService.class)
-          .setData(getIntent().getData());
-
-      startService(i);
+      RestoreService.enqueueWork(this);
     }
   }
 

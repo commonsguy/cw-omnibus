@@ -15,25 +15,31 @@
 package com.commonsware.android.eventbus.lbm;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import java.util.Calendar;
 import java.util.Random;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 
-public class ScheduledService extends WakefulIntentService {
+public class ScheduledService extends JobIntentService {
   private static int NOTIFY_ID=1337;
+  private static final int UNIQUE_JOB_ID=1337;
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private Random rng=new Random();
 
-  public ScheduledService() {
-    super("ScheduledService");
+  static void enqueueWork(Context ctxt) {
+    enqueueWork(ctxt, ScheduledService.class, UNIQUE_JOB_ID,
+      new Intent(ctxt, ScheduledService.class));
   }
 
   @Override
-  protected void doWakefulWork(Intent intent) {
+  public void onHandleWork(Intent i) {
     Intent event=new Intent(EventLogFragment.ACTION_EVENT);
     long now=Calendar.getInstance().getTimeInMillis();
     int random=rng.nextInt();
@@ -42,7 +48,16 @@ public class ScheduledService extends WakefulIntentService {
     event.putExtra(EventLogFragment.EXTRA_TIME, now);
 
     if (!LocalBroadcastManager.getInstance(this).sendBroadcast(event)) {
-      NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+      NotificationManager mgr=
+        (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+      if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+        mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+        mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+          "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+      }
+
+      NotificationCompat.Builder b=new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
       Intent ui=new Intent(this, EventDemoActivity.class);
 
       b.setAutoCancel(true).setDefaults(Notification.DEFAULT_SOUND)
@@ -52,9 +67,6 @@ public class ScheduledService extends WakefulIntentService {
        .setTicker(getString(R.string.notif_title))
        .setContentIntent(PendingIntent.getActivity(this, 0, ui, 0));
       
-      NotificationManager mgr=
-          (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-
       mgr.notify(NOTIFY_ID, b.build());
     }
   }

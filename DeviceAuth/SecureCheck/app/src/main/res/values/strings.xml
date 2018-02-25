@@ -1,0 +1,6 @@
+<resources>
+  <string name="app_name">Secure Check</string>
+  <string name="label_device">isDeviceSecure()</string>
+  <string name="label_keyguard">isKeyguardSecure()</string>
+  <string name="menu_authenticate">Authenticate</string>
+</resources>

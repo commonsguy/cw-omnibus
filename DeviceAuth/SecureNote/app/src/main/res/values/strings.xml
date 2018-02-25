@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">SecureNote</string>
+  <string name="hint">Type something!</string>
+  <string name="saved">Saved!</string>
+  <string name="sorry">Sorry, we could not save your encrypted note!</string>
+  <string name="insecure">You do not have a secure keyguard!</string>
+  <string name="menu_save">Save</string>
+</resources>

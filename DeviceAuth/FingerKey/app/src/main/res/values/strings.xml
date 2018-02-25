@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">Finger Key</string>
+  <string name="msg_not_available">Fingerprints are not available</string>
+  <string name="msg_failed">INTRUDER ALERT</string>
+  <string name="msg_match">Passphrases matched!</string>
+  <string name="msg_not_possible">Ummm... this should not be possible</string>
+  <string name="msg_mismatch">Passphrases did not match!</string>
+</resources>

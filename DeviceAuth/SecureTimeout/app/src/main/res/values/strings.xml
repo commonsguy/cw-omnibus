@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">Secure Timeout</string>
+  <string name="label_device">isDeviceSecure()</string>
+  <string name="label_keyguard">isKeyguardSecure()</string>
+  <string name="menu_authenticate">Authenticate</string>
+  <string name="menu_hw">Hardware Check</string>
+</resources>

@@ -12,15 +12,17 @@
  https://commonsware.com/Android
  */
 
-
 package com.commonsware.android.webserver.websockets;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -31,6 +33,7 @@ import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
+import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -42,9 +45,9 @@ import java.util.Enumeration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import de.greenrobot.event.EventBus;
 
 public class WebServerService extends Service implements Runnable {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private AsyncHttpServer server;
   final private ArrayList<WebSocket> sockets=new ArrayList<WebSocket>();
   final private ScheduledExecutorService timer=
@@ -123,8 +126,17 @@ public class WebServerService extends Service implements Runnable {
   }
 
   private void foregroundify() {
+    NotificationManager mgr=
+      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     NotificationCompat.Builder b=
-      new NotificationCompat.Builder(this);
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
     Intent iActivity=new Intent(this, MainActivity.class);
     PendingIntent piActivity=
       PendingIntent.getActivity(this, 0, iActivity, 0);

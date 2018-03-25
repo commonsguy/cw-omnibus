@@ -23,7 +23,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends ListActivity {
   private MenuItem record, stop;
@@ -37,7 +39,7 @@ public class MainActivity extends ListActivity {
   protected void onResume() {
     super.onResume();
 
-    EventBus.getDefault().registerSticky(this);
+    EventBus.getDefault().register(this);
   }
 
   @Override
@@ -58,7 +60,7 @@ public class MainActivity extends ListActivity {
       EventBus.getDefault().getStickyEvent(WebServerService.ServerStartedEvent.class);
 
     if (event!=null) {
-      onEventMainThread(event);
+      onServerStarted(event);
     }
 
     return(super.onCreateOptionsMenu(menu));
@@ -84,7 +86,8 @@ public class MainActivity extends ListActivity {
       Uri.parse(getListAdapter().getItem(position).toString())));
   }
 
-  public void onEventMainThread(WebServerService.ServerStartedEvent event) {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void onServerStarted(WebServerService.ServerStartedEvent event) {
     if (record!=null) {
       record.setVisible(false);
       stop.setVisible(true);
@@ -94,7 +97,8 @@ public class MainActivity extends ListActivity {
     }
   }
 
-  public void onEventMainThread(WebServerService.ServerStoppedEvent event) {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void onServerStopped(WebServerService.ServerStoppedEvent event) {
     if (record!=null) {
       record.setVisible(true);
       stop.setVisible(false);

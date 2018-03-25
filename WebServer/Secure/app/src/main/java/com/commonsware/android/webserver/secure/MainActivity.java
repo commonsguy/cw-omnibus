@@ -24,7 +24,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends ListActivity {
   private MenuItem record, stop;
@@ -38,7 +40,7 @@ public class MainActivity extends ListActivity {
   protected void onResume() {
     super.onResume();
 
-    EventBus.getDefault().registerSticky(this);
+    EventBus.getDefault().register(this);
   }
 
   @Override
@@ -59,7 +61,7 @@ public class MainActivity extends ListActivity {
       EventBus.getDefault().getStickyEvent(WebServerService.ServerStartedEvent.class);
 
     if (event!=null) {
-      onEventMainThread(event);
+      handleStartEvent(event);
     }
 
     return(super.onCreateOptionsMenu(menu));
@@ -85,17 +87,15 @@ public class MainActivity extends ListActivity {
       Uri.parse(getListAdapter().getItem(position).toString())));
   }
 
-  public void onEventMainThread(WebServerService.ServerStartedEvent event) {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void onServerStarted(WebServerService.ServerStartedEvent event) {
     if (record!=null) {
-      record.setVisible(false);
-      stop.setVisible(true);
-
-      setListAdapter(new ArrayAdapter<String>(this,
-        android.R.layout.simple_list_item_1, event.getUrls()));
+      handleStartEvent(event);
     }
   }
 
-  public void onEventMainThread(WebServerService.ServerStoppedEvent event) {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void onServerStopped(WebServerService.ServerStoppedEvent event) {
     if (record!=null) {
       record.setVisible(true);
       stop.setVisible(false);
@@ -103,8 +103,17 @@ public class MainActivity extends ListActivity {
     }
   }
 
-  public void onEventMainThread(WebServerService.ServerStartRejectedEvent event) {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void onServerStartRejected(WebServerService.ServerStartRejectedEvent event) {
     Toast.makeText(this, "Sorry, but you cannot run the Web server now",
       Toast.LENGTH_LONG).show();
+  }
+
+  private void handleStartEvent(WebServerService.ServerStartedEvent event) {
+    record.setVisible(false);
+    stop.setVisible(true);
+
+    setListAdapter(new ArrayAdapter<String>(this,
+      android.R.layout.simple_list_item_1, event.getUrls()));
   }
 }

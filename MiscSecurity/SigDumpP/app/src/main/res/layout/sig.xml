@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:shrinkColumns="1"
+	android:stretchColumns="1">
+
+	<TableRow>
+
+		<TextView
+			android:layout_gravity="center"
+			android:layout_margin="4dp"
+			android:text="@string/subject"
+			android:textStyle="bold"/>
+
+		<TextView android:id="@+id/subject"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			android:layout_gravity="center"
+			android:layout_margin="4dp"
+			android:text="@string/issuer"
+			android:textStyle="bold"/>
+
+		<TextView android:id="@+id/issuer"/>
+	</TableRow>
+
+	<TableRow>
+
+		<TextView
+			android:layout_gravity="center"
+			android:layout_margin="4dp"
+			android:text="@string/valid_between"
+			android:textStyle="bold"/>
+
+		<TextView android:id="@+id/valid"/>
+	</TableRow>
+
+</TableLayout>

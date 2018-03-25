@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">Finger Dialog</string>
+  <string name="msg_not_available">Fingerprints are not available</string>
+  <string name="msg_failed">INTRUDER ALERT</string>
+  <string name="msg_authenticated">Authenticated!</string>
+  <string name="msg_not_possible">Ummm... this should not be possible</string>
+</resources>

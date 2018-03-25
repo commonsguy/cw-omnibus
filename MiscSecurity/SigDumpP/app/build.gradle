@@ -1,0 +1,17 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+	implementation 'com.android.support:support-v13:27.1.0'
+}
+
+android {
+	compileSdkVersion 'android-P'
+	buildToolsVersion '27.0.3'
+
+	defaultConfig {
+		minSdkVersion 'P'
+		targetSdkVersion 'P'
+		versionCode 1
+		versionName "1.0"
+	}
+}

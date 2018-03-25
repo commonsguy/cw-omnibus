@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 'android-P'
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        minSdkVersion 'P'
+        targetSdkVersion 'P'
+        applicationId 'com.commonsware.android.acra.strictmode'
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "ACRA_URL", '"http://10.0.2.2:4567/reports"'
+            buildConfigField "boolean", "ACRA_INSTALL", 'true'
+        }
+
+        release {
+            buildConfigField "String", "ACRA_URL", '"http://10.0.2.2:4567/reports"'
+            buildConfigField "boolean", "ACRA_INSTALL", 'true'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+def acraVersion='5.1.1'
+
+dependencies {
+    implementation "ch.acra:acra-http:$acraVersion"
+}

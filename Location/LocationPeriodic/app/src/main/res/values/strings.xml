@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Fused Periodic Demo</string>
+  <string name="error">Error fetching weather: %s</string>
+  <string name="icon">Forecast Icon</string>
+  <string name="msg_no_perm">Sorry! This demo cannot run without permission!</string>
+  <string name="legal">Legal Notices</string>
+  <string name="temp">Temperature: %1$d%2$s</string>
+  <string name="msg_nws">The National Weather Service is having a bad day</string>
+  <string name="msg_not_avail">Sorry, but we cannot continue without locations being available</string>
+</resources>

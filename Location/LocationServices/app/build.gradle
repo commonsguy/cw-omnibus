@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    implementation 'com.google.android.gms:play-services-location:11.8.0'
+    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+}
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        applicationId 'com.commonsware.android.weather2.fused'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}

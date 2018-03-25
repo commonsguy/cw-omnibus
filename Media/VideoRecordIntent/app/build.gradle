@@ -13,5 +13,5 @@ repositories {
 
 dependencies {
     implementation 'com.android.support:support-v13:23.4.0'
-    implementation 'com.commonsware.cwac:provider:0.4.0'
+    implementation 'com.commonsware.cwac:provider:0.5.3'
 }

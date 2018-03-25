@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-  implementation 'com.android.support:design:22.2.1'
+  implementation 'com.android.support:design:27.0.1'
 }
 
 android {
-  compileSdkVersion 22
+  compileSdkVersion 27
   buildToolsVersion '26.0.2'
 
 	defaultConfig {
     minSdkVersion 15
-		targetSdkVersion 18
+		targetSdkVersion 27
 	}
 }

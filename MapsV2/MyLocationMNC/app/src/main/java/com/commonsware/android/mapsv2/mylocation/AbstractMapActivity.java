@@ -14,7 +14,6 @@
 
 package com.commonsware.android.mapsv2.mylocation;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -23,13 +22,14 @@ import android.content.Intent;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-public class AbstractMapActivity extends Activity {
+public class AbstractMapActivity extends FragmentActivity {
   static final String TAG_ERROR_DIALOG_FRAGMENT="errorDialog";
 
   @Override

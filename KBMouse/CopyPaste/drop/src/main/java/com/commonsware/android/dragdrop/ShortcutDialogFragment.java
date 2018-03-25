@@ -17,9 +17,9 @@ package com.commonsware.android.dragdrop;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ShortcutDialogFragment extends DialogFragment {

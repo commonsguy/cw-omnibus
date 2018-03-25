@@ -16,7 +16,6 @@ package com.commonsware.android.kbmouse.hotkeys;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ClipData;
 import android.content.ContentUris;
@@ -29,6 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,7 +47,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends FragmentActivity implements
   LoaderManager.LoaderCallbacks<Cursor>, View.OnDragListener {
   private static final String STATE_IN_PERMISSION="inPermission";
   private static final int REQUEST_PERMS=137;
@@ -240,7 +240,7 @@ public class MainActivity extends Activity implements
       else if (keyCode==KeyEvent.KEYCODE_SLASH &&
         event.isMetaPressed() &&
         Build.VERSION.SDK_INT<Build.VERSION_CODES.N) {
-        new ShortcutDialogFragment().show(getFragmentManager(),
+        new ShortcutDialogFragment().show(getSupportFragmentManager(),
           "shortcuts");
 
         return(true);

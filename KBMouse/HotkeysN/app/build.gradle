@@ -1,17 +1,18 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    implementation 'com.android.support:recyclerview-v7:24.1.1'
+    implementation 'com.android.support:support-fragment:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.commonsware.android.kbmouse.hotkeys.n"
         minSdkVersion 23
-        targetSdkVersion 24
+        targetSdkVersion 27
     }
 }

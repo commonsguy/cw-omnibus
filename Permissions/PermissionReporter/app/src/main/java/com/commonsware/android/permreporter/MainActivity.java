@@ -14,7 +14,7 @@
 
 package com.commonsware.android.permreporter;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionGroupInfo;
@@ -32,7 +32,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends Activity  {
+public class MainActivity extends FragmentActivity  {
   private Observable<PermissionRoster> observable;
   private Disposable sub;
 
@@ -41,10 +41,10 @@ public class MainActivity extends Activity  {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    final ViewPager pager=(ViewPager)findViewById(R.id.pager);
-    final MaterialTabs tabs=(MaterialTabs)findViewById(R.id.tabs);
+    final ViewPager pager=findViewById(R.id.pager);
+    final MaterialTabs tabs=findViewById(R.id.tabs);
 
-    observable=(Observable<PermissionRoster>)getLastNonConfigurationInstance();
+    observable=(Observable<PermissionRoster>)getLastCustomNonConfigurationInstance();
 
     if (observable==null) {
       observable=Observable
@@ -58,7 +58,7 @@ public class MainActivity extends Activity  {
         @Override
         public void accept(PermissionRoster roster) throws Exception {
           pager.setAdapter(new PermissionTabAdapter(MainActivity.this,
-            getFragmentManager(), roster));
+            getSupportFragmentManager(), roster));
           tabs.setViewPager(pager);
         }
       }, new Consumer<Throwable>() {
@@ -73,7 +73,7 @@ public class MainActivity extends Activity  {
       });
   }
 
-  public Object onRetainNonConfigurationInstance() {
+  public Object onRetainCustomNonConfigurationInstance() {
     return(observable);
   }
 

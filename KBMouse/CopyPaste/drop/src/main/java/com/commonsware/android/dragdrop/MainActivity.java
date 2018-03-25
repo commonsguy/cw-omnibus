@@ -14,13 +14,13 @@
 
 package com.commonsware.android.dragdrop;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -30,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends FragmentActivity implements
   View.OnDragListener {
   private static final String STATE_IMAGE_URI=
     BuildConfig.APPLICATION_ID+".IMAGE_URI";
@@ -108,7 +108,7 @@ public class MainActivity extends Activity implements
       event.isAltPressed() &&
       event.getRepeatCount()==0 &&
       Build.VERSION.SDK_INT<=Build.VERSION_CODES.M) {
-      new ShortcutDialogFragment().show(getFragmentManager(),
+      new ShortcutDialogFragment().show(getSupportFragmentManager(),
         "shortcuts");
 
       return(true);

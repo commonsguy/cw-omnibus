@@ -14,8 +14,8 @@
 
 package com.commonsware.android.signature.dump;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,14 +63,14 @@ public class SignatureFragment extends Fragment {
       return;
     }
 
-    TextView tv=(TextView)getView().findViewById(R.id.subject);
+    TextView tv=getView().findViewById(R.id.subject);
 
     tv.setText(c.getSubjectDN().toString());
 
-    tv=(TextView)getView().findViewById(R.id.issuer);
+    tv=getView().findViewById(R.id.issuer);
     tv.setText(c.getIssuerDN().toString());
 
-    tv=(TextView)getView().findViewById(R.id.valid);
+    tv=getView().findViewById(R.id.valid);
     tv.setText(fmt.format(c.getNotBefore()) + " to "
         + fmt.format(c.getNotAfter()));
   }

@@ -7,18 +7,21 @@ repositories {
 dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
-    implementation 'com.android.support:recyclerview-v7:24.1.1'
-    implementation 'com.android.support:cardview-v7:24.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.0'
+    implementation("com.android.support:support-v4:27.1.0") {
+        exclude group: 'com.android.support', module: 'support-media-compat'
+    } // for https://issuetracker.google.com/issues/64909326
     implementation 'com.github.SilenceDut:ExpandableLayout:1.2.0'
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         applicationId "com.commonsware.android.databind.expandable"

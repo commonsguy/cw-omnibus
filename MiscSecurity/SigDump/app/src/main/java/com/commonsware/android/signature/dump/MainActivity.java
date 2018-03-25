@@ -14,7 +14,7 @@
 
 package com.commonsware.android.signature.dump;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends FragmentActivity implements
     PackagesFragment.Contract {
   private PackageManager mgr=null;
   private SignatureFragment sigDisplay=null;
@@ -40,9 +40,9 @@ public class MainActivity extends Activity implements
 
     mgr=getPackageManager();
     sigDisplay=
-        (SignatureFragment)getFragmentManager().findFragmentById(R.id.log);
+        (SignatureFragment)getSupportFragmentManager().findFragmentById(R.id.log);
 
-    panes=(SlidingPaneLayout)findViewById(R.id.panes);
+    panes=findViewById(R.id.panes);
     panes.openPane();
   }
 

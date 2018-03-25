@@ -24,7 +24,7 @@ class PageController extends RecyclerView.ViewHolder {
   PageController(View itemView) {
     super(itemView);
 
-    editor=(EditText)itemView.findViewById(R.id.editor);
+    editor=itemView.findViewById(R.id.editor);
   }
 
   void setText(String text) {

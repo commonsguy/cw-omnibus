@@ -25,8 +25,8 @@ import com.google.android.gms.maps.GoogleMap.OnCameraMoveCanceledListener;
 import com.google.android.gms.maps.GoogleMap.OnCameraMoveListener;
 import com.google.android.gms.maps.GoogleMap.OnCameraMoveStartedListener;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -48,8 +48,8 @@ public class MainActivity extends AbstractMapActivity implements
     if (readyToGo()) {
       setContentView(R.layout.activity_main);
 
-      MapFragment mapFrag=
-          (MapFragment)getFragmentManager().findFragmentById(R.id.map);
+      SupportMapFragment mapFrag=
+          (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
 
       if (savedInstanceState == null) {
         needsInit=true;

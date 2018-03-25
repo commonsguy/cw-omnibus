@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+  implementation 'com.android.support:support-fragment:27.1.0'
+  debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+  releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '26.0.2'
+  compileSdkVersion 27
+  buildToolsVersion '27.0.3'
 
-	  defaultConfig {
-        minSdkVersion 15
-		    targetSdkVersion 24
-    }
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 27
+  }
 }

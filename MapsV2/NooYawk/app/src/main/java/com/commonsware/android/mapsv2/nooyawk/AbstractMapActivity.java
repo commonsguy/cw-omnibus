@@ -14,7 +14,7 @@
 
 package com.commonsware.android.mapsv2.nooyawk;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-abstract public class AbstractMapActivity extends Activity {
+abstract public class AbstractMapActivity extends FragmentActivity {
   static final String TAG_ERROR_DIALOG_FRAGMENT="errorDialog";
 
   protected boolean readyToGo() {

@@ -14,12 +14,12 @@
 
 package com.commonsware.android.profile.device;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.os.UserManager;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
       setContentView(R.layout.activity_main);
 
       RestrictionsFragment f=
-          (RestrictionsFragment)getFragmentManager().findFragmentById(R.id.contents);
+          (RestrictionsFragment)getSupportFragmentManager().findFragmentById(R.id.contents);
 
       f.showRestrictions(restrictions);
     }

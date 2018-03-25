@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
     adapter=new PageAdapter(pager, getLayoutInflater());
     pager.setAdapter(adapter);
     pager.setHasFixedSize(true);
-    tabs=(TabLayout)findViewById(R.id.tabs);
+    tabs=findViewById(R.id.tabs);
 
     if (savedInstanceState==null) {
       for (int i=0; i<adapter.getItemCount(); i++) {

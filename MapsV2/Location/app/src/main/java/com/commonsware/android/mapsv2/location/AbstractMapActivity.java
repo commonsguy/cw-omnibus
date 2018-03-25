@@ -14,41 +14,20 @@
 
 package com.commonsware.android.mapsv2.location;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-public class AbstractMapActivity extends Activity {
+public class AbstractMapActivity extends FragmentActivity {
   static final String TAG_ERROR_DIALOG_FRAGMENT="errorDialog";
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.activity_main, menu);
-
-    return(super.onCreateOptionsMenu(menu));
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.legal) {
-      startActivity(new Intent(this, LegalNoticesActivity.class));
-
-      return(true);
-    }
-
-    return super.onOptionsItemSelected(item);
-  }
 
   protected boolean readyToGo() {
     GoogleApiAvailability checker=

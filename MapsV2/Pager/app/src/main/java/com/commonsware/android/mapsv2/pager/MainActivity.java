@@ -26,13 +26,13 @@ public class MainActivity extends AbstractMapActivity {
     if (readyToGo()) {
       setContentView(R.layout.activity_main);
 
-      ViewPager pager=(ViewPager)findViewById(R.id.pager);
+      ViewPager pager=findViewById(R.id.pager);
 
       pager.setAdapter(buildAdapter());
     }
   }
 
   private PagerAdapter buildAdapter() {
-    return(new MapPageAdapter(this, getFragmentManager()));
+    return(new MapPageAdapter(this, getSupportFragmentManager()));
   }
 }

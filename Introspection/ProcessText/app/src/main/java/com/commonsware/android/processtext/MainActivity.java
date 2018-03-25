@@ -19,14 +19,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-public class MainActivity extends Activity
+public class MainActivity extends FragmentActivity
   implements QuestionsFragment.Contract {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
       String search=null;
 
       if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
@@ -40,7 +41,7 @@ public class MainActivity extends Activity
         }
       }
 
-      getFragmentManager()
+      getSupportFragmentManager()
         .beginTransaction()
         .add(android.R.id.content,
           QuestionsFragment.newInstance(search))

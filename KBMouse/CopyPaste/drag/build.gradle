@@ -1,26 +1,5 @@
 apply plugin: 'com.android.application'
 
-dependencies {
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:support-compat:25.3.1'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-}
-
-android {
-    compileSdkVersion 24
-    buildToolsVersion '26.0.2'
-
-    defaultConfig {
-        applicationId "com.commonsware.android.dragdrop.dragcopy"
-        minSdkVersion 24
-        targetSdkVersion 24
-    }
-
-    aaptOptions {
-        noCompress 'jpg'
-    }
-}
-
 repositories {
     maven {
         url "https://s3.amazonaws.com/repo.commonsware.com"
@@ -28,6 +7,23 @@ repositories {
 }
 
 dependencies {
-    compile 'com.commonsware.cwac:provider:0.4.0'
+    compile 'com.android.support:recyclerview-v7:27.1.0'
+    compile 'com.android.support:support-fragment:27.1.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.commonsware.cwac:provider:0.5.3'
 }
 
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        applicationId "com.commonsware.android.dragdrop.dragcopy"
+        minSdkVersion 24
+        targetSdkVersion 27
+    }
+
+    aaptOptions {
+        noCompress 'jpg'
+    }
+}

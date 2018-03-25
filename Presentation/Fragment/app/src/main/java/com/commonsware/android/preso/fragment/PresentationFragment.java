@@ -15,10 +15,10 @@
 package com.commonsware.android.preso.fragment;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.Presentation;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.Display;
 
 abstract public class PresentationFragment extends DialogFragment {
@@ -49,7 +49,7 @@ abstract public class PresentationFragment extends DialogFragment {
     return(display);
   }
 
-  protected Context getContext() {
+  public Context getContext() {
     if (preso != null) {
       return(preso.getContext());
     }

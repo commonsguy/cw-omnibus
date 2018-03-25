@@ -14,19 +14,26 @@
 
 package com.commonsware.android.mapsv2.location;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.LocationSource;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -34,30 +41,33 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AbstractMapActivity implements
     OnMapReadyCallback, OnInfoWindowClickListener, LocationSource,
     LocationListener {
+  private static final String STATE_IN_PERMISSION="inPermission";
+  private static final String STATE_AUTO_FOLLOW="autoFollow";
+  private static final int REQUEST_PERMS=1337;
+  private boolean isInPermission=false;
   private OnLocationChangedListener mapLocationListener=null;
   private LocationManager locMgr=null;
   private Criteria crit=new Criteria();
   private boolean needsInit=false;
   private GoogleMap map=null;
+  private boolean autoFollow=true;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  protected void onCreate(Bundle state) {
+    super.onCreate(state);
 
-    if (readyToGo()) {
-      setContentView(R.layout.activity_main);
-
-      MapFragment mapFrag=
-          (MapFragment)getFragmentManager().findFragmentById(R.id.map);
-
-      if (savedInstanceState == null) {
-        needsInit=true;
-      }
-
-      mapFrag.getMapAsync(this);
+    if (state==null) {
+      needsInit=true;
     }
+    else {
+      isInPermission=state.getBoolean(STATE_IN_PERMISSION, false);
+      autoFollow=state.getBoolean(STATE_AUTO_FOLLOW, true);
+    }
+
+    onCreateForRealz(canGetLocation());
   }
 
+  @SuppressLint("MissingPermission")
   @Override
   public void onMapReady(final GoogleMap map) {
     this.map=map;
@@ -85,34 +95,70 @@ public class MainActivity extends AbstractMapActivity implements
     map.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
     map.setOnInfoWindowClickListener(this);
 
+    map.setMyLocationEnabled(true);
     locMgr=(LocationManager)getSystemService(LOCATION_SERVICE);
     crit.setAccuracy(Criteria.ACCURACY_FINE);
-    locMgr.requestLocationUpdates(0L, 0.0f, crit, this, null);
-
-    map.setLocationSource(this);
-    map.setMyLocationEnabled(true);
-    map.getUiSettings().setMyLocationButtonEnabled(false);
+    follow();
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
 
-    if (locMgr!=null) {
-      locMgr.requestLocationUpdates(0L, 0.0f, crit, this, null);
-    }
+    outState.putBoolean(STATE_IN_PERMISSION, isInPermission);
+    outState.putBoolean(STATE_AUTO_FOLLOW, autoFollow  );
+  }
 
-    if (map!=null) {
-      map.setLocationSource(this);
+  @Override
+  public void onRequestPermissionsResult(int requestCode,
+                                         String[] permissions,
+                                         int[] grantResults) {
+    isInPermission=false;
+
+    if (requestCode==REQUEST_PERMS) {
+      if (canGetLocation()) {
+        onCreateForRealz(true);
+      }
+      else {
+        finish(); // denied permission, so we're done
+      }
     }
   }
 
   @Override
-  public void onPause() {
+  public void onStart() {
+    super.onStart();
+
+    follow();
+  }
+
+  @Override
+  public void onStop() {
     map.setLocationSource(null);
     locMgr.removeUpdates(this);
 
-    super.onPause();
+    super.onStop();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.actions, menu);
+    menu.findItem(R.id.follow).setChecked(autoFollow);
+
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId()==R.id.follow) {
+      item.setChecked(!item.isChecked());
+      autoFollow=item.isChecked();
+      follow();
+
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
   }
 
   @Override
@@ -163,5 +209,47 @@ public class MainActivity extends AbstractMapActivity implements
     map.addMarker(new MarkerOptions().position(new LatLng(lat, lon))
                                      .title(getString(title))
                                      .snippet(getString(snippet)));
+  }
+
+  private void onCreateForRealz(boolean canGetLocation) {
+    if (canGetLocation) {
+      if (readyToGo()) {
+        setContentView(R.layout.activity_main);
+
+        SupportMapFragment mapFrag=
+          (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+
+        mapFrag.getMapAsync(this);
+      }
+    }
+    else if (!isInPermission) {
+      isInPermission=true;
+
+      ActivityCompat.requestPermissions(this,
+        new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+        REQUEST_PERMS);
+    }
+  }
+
+  private boolean canGetLocation() {
+    return(ContextCompat.checkSelfPermission(this,
+      Manifest.permission.ACCESS_FINE_LOCATION)==
+      PackageManager.PERMISSION_GRANTED);
+  }
+
+  @SuppressLint("MissingPermission")
+  private void follow() {
+    if (map!=null && locMgr!=null) {
+      if (autoFollow) {
+        locMgr.requestLocationUpdates(0L, 0.0f, crit, this, null);
+        map.setLocationSource(this);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+      }
+      else {
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.setLocationSource(null);
+        locMgr.removeUpdates(this);
+      }
+    }
   }
 }

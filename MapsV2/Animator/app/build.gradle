@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-maps:11.6.2'
-	  implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'com.google.android.gms:play-services-maps:11.8.0'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 }
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14

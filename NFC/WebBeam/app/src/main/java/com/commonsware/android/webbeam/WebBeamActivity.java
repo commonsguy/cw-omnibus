@@ -14,7 +14,6 @@
 
 package com.commonsware.android.webbeam;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -23,9 +22,10 @@ import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentActivity;
 import java.nio.charset.Charset;
 
-public class WebBeamActivity extends Activity implements
+public class WebBeamActivity extends FragmentActivity implements
     CreateNdefMessageCallback {
   private static final String MIME_TYPE=
       "application/vnd.commonsware.sample.webbeam";
@@ -37,12 +37,12 @@ public class WebBeamActivity extends Activity implements
     super.onCreate(savedInstanceState);
 
     beamFragment=
-        (BeamFragment)getFragmentManager().findFragmentById(android.R.id.content);
+        (BeamFragment)getSupportFragmentManager().findFragmentById(android.R.id.content);
 
     if (beamFragment == null) {
       beamFragment=new BeamFragment();
 
-      getFragmentManager().beginTransaction()
+      getSupportFragmentManager().beginTransaction()
                                  .add(android.R.id.content, beamFragment)
                                  .commit();
     }

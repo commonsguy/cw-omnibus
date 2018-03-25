@@ -21,7 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebViewFragment;
 
 public class BeamFragment extends WebViewFragment {
   @SuppressLint("SetJavaScriptEnabled")

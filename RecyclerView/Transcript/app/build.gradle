@@ -8,17 +8,17 @@ repositories {
 
 dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'com.android.support:support-v13:25.1.0'
-    implementation 'com.android.support:recyclerview-v7:25.1.0'
+    implementation 'com.android.support:support-v13:27.0.2'
+    implementation 'com.android.support:recyclerview-v7:27.0.2'
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+  compileSdkVersion 27
+  buildToolsVersion '27.0.3'
 
 	defaultConfig {
       minSdkVersion 21
-		  targetSdkVersion 25
+		  targetSdkVersion 27
       applicationId 'com.commonsware.android.rv.transcript'
 	}
 }

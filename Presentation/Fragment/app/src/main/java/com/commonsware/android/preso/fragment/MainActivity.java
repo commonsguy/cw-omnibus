@@ -14,18 +14,18 @@
 
 package com.commonsware.android.preso.fragment;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.media.MediaRouter;
 import android.media.MediaRouter.RouteInfo;
 import android.media.MediaRouter.SimpleCallback;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
   MediaRouter router=null;
   PresentationFragment preso=null;
   SimpleCallback cb=null;
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
 
     inline=findViewById(R.id.preso);
-    prose=(TextView)findViewById(R.id.prose);
+    prose=findViewById(R.id.prose);
   }
 
   @Override
@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
     if (switchToInline) {
       inline.setVisibility(View.VISIBLE);
       prose.setText(R.string.primary);
-      getFragmentManager().beginTransaction()
+      getSupportFragmentManager().beginTransaction()
                           .add(R.id.preso, buildPreso(null)).commit();
     }
 
@@ -113,13 +113,13 @@ public class MainActivity extends Activity {
       inline.setVisibility(View.GONE);
       prose.setText(R.string.secondary);
 
-      Fragment f=getFragmentManager().findFragmentById(R.id.preso);
+      Fragment f=getSupportFragmentManager().findFragmentById(R.id.preso);
 
-      getFragmentManager().beginTransaction().remove(f).commit();
+      getSupportFragmentManager().beginTransaction().remove(f).commit();
     }
 
     preso=buildPreso(route.getPresentationDisplay());
-    preso.show(getFragmentManager(), "preso");
+    preso.show(getSupportFragmentManager(), "preso");
   }
 
   private PresentationFragment buildPreso(Display display) {

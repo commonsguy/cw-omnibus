@@ -17,5 +17,6 @@
 	<string name="downtown_club">The Downtown Club</string>
 	<string name="heisman_trophy">Original home of the Heisman Trophy</string>
   <string name="icon">CommonsWare logo</string>
-	
+  <string name="menu_follow">Auto-Follow</string>
+
 </resources>

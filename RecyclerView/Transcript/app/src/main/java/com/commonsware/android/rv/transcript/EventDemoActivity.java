@@ -14,21 +14,22 @@
 
 package com.commonsware.android.rv.transcript;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.support.v4.app.FragmentActivity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.os.Bundle;
 
-public class EventDemoActivity extends Activity {
+public class EventDemoActivity extends FragmentActivity {
   private static final int JOB_ID=1337;
 
-  @Override
+  @Override @SuppressLint("MissingPermission")
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+      getSupportFragmentManager().beginTransaction()
                           .add(android.R.id.content,
                                new EventLogFragment()).commit();
 

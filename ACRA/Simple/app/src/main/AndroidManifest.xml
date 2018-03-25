@@ -7,10 +7,6 @@
 
   <uses-permission android:name="android.permission.INTERNET" />
 
-  <uses-sdk
-    android:minSdkVersion="21"
-    android:targetSdkVersion="21" />
-
   <application
     android:name=".ACRAApplication"
     android:icon="@drawable/ic_launcher"

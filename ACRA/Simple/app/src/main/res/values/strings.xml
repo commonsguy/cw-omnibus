@@ -15,5 +15,6 @@ if you would like follow-up on this issue!</string>
   <string name="msg_acra_notify_ticker">Oops! We crashed!</string>
   <string name="msg_acra_notify_title">Something went \"kaboom!\"</string>
   <string name="msg_acra_notify_text">Tap here to let us know what went wrong</string>
+  <string name="channel">whatever</string>
 
 </resources>

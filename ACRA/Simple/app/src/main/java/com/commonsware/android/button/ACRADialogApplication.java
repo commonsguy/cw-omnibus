@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2015 CommonsWare, LLC
+ Copyright (c) 2015-2018 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -15,25 +15,31 @@
 package com.commonsware.android.button;
 
 import android.app.Application;
+import android.content.Context;
 import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
+import org.acra.annotation.AcraCore;
+import org.acra.annotation.AcraDialog;
+import org.acra.annotation.AcraHttpSender;
+import org.acra.data.StringFormat;
 
-@ReportsCrashes(
-  formUri=BuildConfig.ACRA_URL,
-  mode = ReportingInteractionMode.DIALOG,
-  resToastText = R.string.msg_acra_toast,
-  resDialogText = R.string.msg_acra_dialog,
-  resDialogCommentPrompt = R.string.msg_acra_comment_prompt,
-  resDialogEmailPrompt = R.string.msg_acra_email_prompt,
-  resDialogTheme = R.style.AppTheme_Dialog,
-  httpMethod=org.acra.sender.HttpSender.Method.PUT,
-  reportType=org.acra.sender.HttpSender.Type.JSON
+@AcraCore(
+  buildConfigClass = BuildConfig.class,
+  reportFormat=StringFormat.JSON
+)
+@AcraDialog(
+  resText = R.string.msg_acra_dialog,
+  resCommentPrompt = R.string.msg_acra_comment_prompt,
+  resEmailPrompt = R.string.msg_acra_email_prompt,
+  resTheme = R.style.AppTheme_Dialog
+)
+@AcraHttpSender(
+  uri=BuildConfig.ACRA_URL,
+  httpMethod=org.acra.sender.HttpSender.Method.PUT
 )
 public class ACRADialogApplication extends Application {
   @Override
-  public void onCreate() {
-    super.onCreate();
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
 
     if (BuildConfig.ACRA_INSTALL) {
       ACRA.init(this);

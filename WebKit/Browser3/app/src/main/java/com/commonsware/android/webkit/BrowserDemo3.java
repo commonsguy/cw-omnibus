@@ -42,7 +42,7 @@ public class BrowserDemo3 extends Activity {
                                            | DateUtils.FORMAT_SHOW_TIME)
             + "</a></body></html>";
 
-    browser.loadData(page, "text/html", "UTF-8");
+    browser.loadData(page, "text/html; charset=UTF-8", null);
   }
 
   private class Callback extends WebViewClient {

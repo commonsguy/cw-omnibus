@@ -38,7 +38,6 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
@@ -61,7 +60,6 @@ public class IntentTests {
     onView(withId(R.id.pick)).perform(click());
 
     intended(allOf(
-      toPackage("com.google.android.contacts"),
       hasAction(Intent.ACTION_PICK),
       hasData(ContactsContract.Contacts.CONTENT_URI)));
 
@@ -79,7 +77,6 @@ public class IntentTests {
     onView(withId(R.id.pick)).perform(click());
 
     intended(allOf(
-      toPackage("com.google.android.contacts"),
       hasAction(Intent.ACTION_PICK),
       hasData(ContactsContract.Contacts.CONTENT_URI)));
 

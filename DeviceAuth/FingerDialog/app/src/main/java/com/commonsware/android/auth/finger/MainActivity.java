@@ -18,7 +18,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.hardware.fingerprint.FingerprintDialog;
+import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.provider.Settings;
@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
   private ImageButton button;
   private Drawable on;
   private Drawable off;
-  private FingerprintDialog dialog;
+  private BiometricPrompt prompt;
   private CancellationSignal signal=new CancellationSignal();
 
   @Override
@@ -39,13 +39,13 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    dialog=new FingerprintDialog.Builder()
+    prompt=new BiometricPrompt.Builder(this)
       .setTitle("This is the title")
       .setDescription("This is the description")
       .setNegativeButton("Ick!", getMainExecutor(),
         (dialogInterface, i) -> button.setImageDrawable(off))
       .setSubtitle("This is the subtitle")
-      .build(this);
+      .build();
 
     off=DrawableCompat.wrap(VectorDrawableCompat.create(getResources(),
       R.drawable.ic_fingerprint_black_24dp, null));
@@ -63,20 +63,20 @@ public class MainActivity extends Activity {
   private void authenticate() {
     if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
       button.setImageDrawable(on);
-      dialog.authenticate(signal, getMainExecutor(), authCallback);
+      prompt.authenticate(signal, getMainExecutor(), authCallback);
     }
     else {
       Toast.makeText(this, R.string.msg_not_available, Toast.LENGTH_LONG).show();
     }
   }
 
-  private final FingerprintDialog.AuthenticationCallback authCallback=
-    new FingerprintDialog.AuthenticationCallback() {
+  private final BiometricPrompt.AuthenticationCallback authCallback=
+    new BiometricPrompt.AuthenticationCallback() {
     @Override
     public void onAuthenticationError(int errorCode, CharSequence errString) {
       button.setImageDrawable(off);
 
-      if (errorCode==FingerprintDialog.FINGERPRINT_ERROR_NO_FINGERPRINTS) {
+      if (errorCode==BiometricPrompt.BIOMETRIC_ERROR_NO_BIOMETRICS) {
         startActivity(new Intent(Settings.ACTION_FINGERPRINT_ENROLL));
       }
       else {
@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onAuthenticationSucceeded(FingerprintDialog.AuthenticationResult result) {
+    public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
       Toast.makeText(MainActivity.this, R.string.msg_authenticated, Toast.LENGTH_LONG).show();
       button.setImageDrawable(off);
     }

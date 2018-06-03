@@ -14,20 +14,19 @@
 
 package com.commonsware.android.hurl;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import de.greenrobot.event.EventBus;
+import android.support.v4.app.FragmentActivity;
 
-public class MainActivity extends Activity
+public class MainActivity extends FragmentActivity
   implements QuestionsFragment.Contract {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+      getSupportFragmentManager().beginTransaction()
                           .add(android.R.id.content,
                                new QuestionsFragment()).commit();
     }

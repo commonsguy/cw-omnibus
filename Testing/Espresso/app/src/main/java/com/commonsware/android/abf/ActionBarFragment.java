@@ -14,11 +14,14 @@
 
 package com.commonsware.android.abf;
 
-import android.support.v4.app.ListFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ListFragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 
@@ -32,11 +35,17 @@ public class ActionBarFragment extends ListFragment {
   private ArrayAdapter<String> adapter=null;
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
     setHasOptionsMenu(true);
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view,
+                            @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
     if (adapter == null) {
       initAdapter();
@@ -61,16 +70,14 @@ public class ActionBarFragment extends ListFragment {
   }
 
   private void initAdapter() {
-    words=new ArrayList<String>();
+    words=new ArrayList<>();
 
     for (String s : items) {
       words.add(s);
     }
 
-    adapter=
-        new ArrayAdapter<String>(getActivity(),
-                                 android.R.layout.simple_list_item_1,
-                                 words);
+    adapter=new ArrayAdapter<>(getActivity(),
+      android.R.layout.simple_list_item_1, words);
 
     setListAdapter(adapter);
   }

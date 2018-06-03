@@ -17,7 +17,6 @@ package com.commonsware.android.vector;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import io.karim.MaterialTabs;
 
 public class MainActivity extends Activity {
   private SampleAdapter adapter;
@@ -28,11 +27,8 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    pager=(ViewPager)findViewById(R.id.pager);
+    pager=findViewById(R.id.pager);
     adapter=new SampleAdapter(this, getFragmentManager());
     pager.setAdapter(adapter);
-
-    MaterialTabs tabs=(MaterialTabs)findViewById(R.id.tabs);
-    tabs.setViewPager(pager);
   }
 }

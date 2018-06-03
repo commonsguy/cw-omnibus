@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
@@ -40,10 +42,17 @@ public class EventLogFragment extends ListFragment {
   private EventLogAdapter adapter=null;
 
   @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view,
+                            @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
     getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
 
     if (adapter == null) {

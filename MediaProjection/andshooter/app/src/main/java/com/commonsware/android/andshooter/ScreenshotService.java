@@ -15,6 +15,8 @@
 package com.commonsware.android.andshooter;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -25,6 +27,7 @@ import android.media.MediaScannerConnection;
 import android.media.ToneGenerator;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -36,6 +39,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 public class ScreenshotService extends Service {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static final int NOTIFY_ID=9906;
   static final String EXTRA_RESULT_CODE="resultCode";
   static final String EXTRA_RESULT_INTENT="resultIntent";
@@ -77,7 +81,7 @@ public class ScreenshotService extends Service {
       resultCode=i.getIntExtra(EXTRA_RESULT_CODE, 1337);
       resultData=i.getParcelableExtra(EXTRA_RESULT_INTENT);
       foregroundify();
-   }
+    }
     else if (ACTION_RECORD.equals(i.getAction())) {
       if (resultData!=null) {
         startCapture();
@@ -177,8 +181,17 @@ public class ScreenshotService extends Service {
   }
 
   private void foregroundify() {
+    NotificationManager mgr=
+      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     NotificationCompat.Builder b=
-      new NotificationCompat.Builder(this);
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true)
       .setDefaults(Notification.DEFAULT_ALL);

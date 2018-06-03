@@ -1,22 +1,18 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    implementation 'io.karim:materialtabs:2.0.2'
-    implementation 'com.android.support:support-v13:23.2.0'
-    implementation 'com.android.support:support-vector-drawable:23.2.0'
+    implementation 'com.android.support:support-v13:27.1.1'
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 27
         generatedDensities=[]
-    }
-
-    aaptOptions {
-        additionalParameters "--no-version-vectors"
+        vectorDrawables.useSupportLibrary = true
     }
 }

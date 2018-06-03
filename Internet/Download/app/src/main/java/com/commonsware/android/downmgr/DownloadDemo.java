@@ -44,8 +44,8 @@ public class DownloadDemo extends AbstractPermissionActivity {
                                 .penaltyDeath()
                                 .build());
     
-    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
+      getSupportFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new DownloadFragment()).commit();
     }

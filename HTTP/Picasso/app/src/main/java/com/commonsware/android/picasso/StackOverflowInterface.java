@@ -1,5 +1,5 @@
 /***
-  Copyright (c) 2013 CommonsWare, LLC
+  Copyright (c) 2013-2016 CommonsWare, LLC
   Licensed under the Apache License, Version 2.0 (the "License"); you may not
   use this file except in compliance with the License. You may obtain a copy
   of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,11 +14,11 @@
 
 package com.commonsware.android.picasso;
 
-import retrofit.Callback;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface StackOverflowInterface {
   @GET("/2.1/questions?order=desc&sort=creation&site=stackoverflow")
-  void questions(@Query("tagged") String tags, Callback<SOQuestions> cb);
+  Call<SOQuestions> questions(@Query("tagged") String tags);
 }

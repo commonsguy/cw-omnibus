@@ -14,7 +14,7 @@
 
 package com.commonsware.android.databind.basic;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;

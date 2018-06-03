@@ -52,8 +52,7 @@ public class TILTest {
 
   @Test
   public void til() {
-    onView(allOf(withParent(withTILHint("URL")),
-      Matchers.<View>instanceOf(TextInputEditText.class)))
+    onView(withTILHint("URL"))
       .perform(typeText(URL), closeSoftKeyboard());
 
     Instrumentation.ActivityResult result=
@@ -72,17 +71,17 @@ public class TILTest {
   }
 
   private static class TILHintMatcher
-    extends BoundedMatcher<View, TextInputLayout> {
+    extends BoundedMatcher<View, TextInputEditText> {
     private final Matcher<CharSequence> textMatcher;
 
     TILHintMatcher(Matcher<CharSequence> textMatcher) {
-      super(TextInputLayout.class);
+      super(TextInputEditText.class);
 
       this.textMatcher=textMatcher;
     }
 
     @Override
-    protected boolean matchesSafely(TextInputLayout item) {
+    protected boolean matchesSafely(TextInputEditText item) {
       return(textMatcher.matches(item.getHint()));
     }
 

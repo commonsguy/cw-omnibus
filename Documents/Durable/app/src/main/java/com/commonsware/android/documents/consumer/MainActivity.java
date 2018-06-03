@@ -14,10 +14,10 @@
 
 package com.commonsware.android.documents.consumer;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getFragmentManager().findFragmentById(android.R.id.content) == null) {

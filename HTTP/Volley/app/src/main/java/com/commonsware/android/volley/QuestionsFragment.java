@@ -14,8 +14,8 @@
 
 package com.commonsware.android.volley;
 
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -83,7 +83,7 @@ public class QuestionsFragment extends ListFragment implements
     public View getView(int position, View convertView, ViewGroup parent) {
       View row=super.getView(position, convertView, parent);
       Item item=getItem(position);
-      ImageView icon=(ImageView)row.findViewById(R.id.icon);
+      ImageView icon=row.findViewById(R.id.icon);
 
       VolleyManager
         .get(getActivity())
@@ -91,7 +91,7 @@ public class QuestionsFragment extends ListFragment implements
           R.drawable.owner_placeholder,
           R.drawable.owner_error);
 
-      TextView title=(TextView)row.findViewById(R.id.title);
+      TextView title=row.findViewById(R.id.title);
 
       title.setText(Html.fromHtml(getItem(position).title));
 

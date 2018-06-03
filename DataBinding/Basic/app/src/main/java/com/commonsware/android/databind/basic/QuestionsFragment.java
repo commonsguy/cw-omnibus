@@ -14,7 +14,7 @@
 
 package com.commonsware.android.databind.basic;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;

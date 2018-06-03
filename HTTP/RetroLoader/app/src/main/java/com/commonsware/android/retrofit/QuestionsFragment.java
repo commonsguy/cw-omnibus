@@ -14,10 +14,10 @@
 
 package com.commonsware.android.retrofit;
 
-import android.app.ListFragment;
-import android.app.LoaderManager;
-import android.content.Loader;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +70,7 @@ public class QuestionsFragment extends ListFragment implements
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       View row=super.getView(position, convertView, parent);
-      TextView title=(TextView)row.findViewById(android.R.id.text1);
+      TextView title=row.findViewById(android.R.id.text1);
 
       title.setText(Html.fromHtml(getItem(position).title));
 

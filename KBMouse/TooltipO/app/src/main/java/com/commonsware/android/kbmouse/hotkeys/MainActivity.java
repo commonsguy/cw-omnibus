@@ -15,34 +15,30 @@
 package com.commonsware.android.kbmouse.hotkeys;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.LoaderManager;
 import android.content.ClipData;
 import android.content.ContentUris;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.DragEvent;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.VideoView;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends FragmentActivity implements
   LoaderManager.LoaderCallbacks<Cursor>, View.OnDragListener {
   private static final String STATE_IN_PERMISSION="inPermission";
   private static final int REQUEST_PERMS=137;
@@ -57,13 +53,13 @@ public class MainActivity extends Activity implements
     super.onCreate(state);
     setContentView(R.layout.main);
 
-    player=(VideoView)findViewById(R.id.player);
+    player=findViewById(R.id.player);
 
     if (player!=null) {
       player.setOnDragListener(this);
     }
 
-    thumbnailLarge=(ImageView)findViewById(R.id.thumbnail_large);
+    thumbnailLarge=findViewById(R.id.thumbnail_large);
 
     if (thumbnailLarge!=null) {
       thumbnailLarge.setOnDragListener(this);
@@ -122,10 +118,10 @@ public class MainActivity extends Activity implements
 
   @Override
   public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-    return (new CursorLoader(this,
+    return new CursorLoader(this,
       MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
       null, null, null,
-      MediaStore.Video.Media.TITLE));
+      MediaStore.Video.Media.TITLE);
   }
 
   @Override
@@ -212,7 +208,7 @@ public class MainActivity extends Activity implements
 
   private RecyclerView getRecyclerView() {
     if (videoList==null) {
-      videoList=(RecyclerView)findViewById(R.id.video_list);
+      videoList=findViewById(R.id.video_list);
     }
 
     return(videoList);
@@ -236,7 +232,7 @@ public class MainActivity extends Activity implements
   }
 
   private void loadVideos() {
-    getLoaderManager().initLoader(0, null, this);
+    getSupportLoaderManager().initLoader(0, null, this);
   }
 
   private void playVideo(Uri videoUri) {

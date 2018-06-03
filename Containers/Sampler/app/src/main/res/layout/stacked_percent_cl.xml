@@ -5,39 +5,25 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <android.support.constraint.Guideline
-    android:id="@+id/guideline_50"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintGuide_percent=".50" />
-
-  <android.support.constraint.Guideline
-    android:id="@+id/guideline_80"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintGuide_percent=".80" />
-
-  <Button
+  <Button android:id="@+id/fifty"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:text="@string/fifty_percent"
 
-    app:layout_constraintBottom_toTopOf="@id/guideline_50"
+    app:layout_constraintHeight_percent="0.50"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-  <Button
+  <Button android:id="@+id/thirty"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:text="@string/thirty_percent"
 
-    app:layout_constraintBottom_toTopOf="@id/guideline_80"
+    app:layout_constraintHeight_percent="0.30"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@id/guideline_50" />
+    app:layout_constraintTop_toBottomOf="@id/fifty" />
 
   <Button
     android:layout_width="0dp"
@@ -47,6 +33,6 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@id/guideline_80" />
+    app:layout_constraintTop_toBottomOf="@id/thirty" />
 
 </android.support.constraint.ConstraintLayout>

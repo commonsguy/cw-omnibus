@@ -30,48 +30,48 @@ public class PicassoDiagnosticActivity extends Activity {
 
     StatsSnapshot ss=Picasso.with(this).getSnapshot();
 
-    TextView tv=(TextView)findViewById(R.id.last_updated_value);
+    TextView tv=findViewById(R.id.last_updated_value);
 
     tv.setText(DateUtils.formatDateTime(this, ss.timeStamp,
                                         DateUtils.FORMAT_SHOW_TIME));
 
-    tv=(TextView)findViewById(R.id.avg_download_size_value);
+    tv=findViewById(R.id.avg_download_size_value);
     tv.setText(Long.toString(ss.averageDownloadSize));
 
-    tv=(TextView)findViewById(R.id.avg_orig_size_value);
+    tv=findViewById(R.id.avg_orig_size_value);
     tv.setText(Long.toString(ss.averageOriginalBitmapSize));
 
-    tv=(TextView)findViewById(R.id.avg_xform_size_value);
+    tv=findViewById(R.id.avg_xform_size_value);
     tv.setText(Long.toString(ss.averageTransformedBitmapSize));
 
-    tv=(TextView)findViewById(R.id.cache_hits_value);
+    tv=findViewById(R.id.cache_hits_value);
     tv.setText(Long.toString(ss.cacheHits));
 
-    tv=(TextView)findViewById(R.id.cache_misses_value);
+    tv=findViewById(R.id.cache_misses_value);
     tv.setText(Long.toString(ss.cacheMisses));
 
-    tv=(TextView)findViewById(R.id.download_count_value);
+    tv=findViewById(R.id.download_count_value);
     tv.setText(Long.toString(ss.downloadCount));
 
-    tv=(TextView)findViewById(R.id.max_size_value);
+    tv=findViewById(R.id.max_size_value);
     tv.setText(Long.toString(ss.maxSize));
 
-    tv=(TextView)findViewById(R.id.orig_bitmap_count_value);
+    tv=findViewById(R.id.orig_bitmap_count_value);
     tv.setText(Long.toString(ss.originalBitmapCount));
 
-    tv=(TextView)findViewById(R.id.size_value);
+    tv=findViewById(R.id.size_value);
     tv.setText(Long.toString(ss.size));
 
-    tv=(TextView)findViewById(R.id.total_dl_size_value);
+    tv=findViewById(R.id.total_dl_size_value);
     tv.setText(Long.toString(ss.totalDownloadSize));
 
-    tv=(TextView)findViewById(R.id.total_orig_size_value);
+    tv=findViewById(R.id.total_orig_size_value);
     tv.setText(Long.toString(ss.totalOriginalBitmapSize));
 
-    tv=(TextView)findViewById(R.id.total_xform_size_value);
+    tv=findViewById(R.id.total_xform_size_value);
     tv.setText(Long.toString(ss.totalTransformedBitmapSize));
 
-    tv=(TextView)findViewById(R.id.xform_count_value);
+    tv=findViewById(R.id.xform_count_value);
     tv.setText(Long.toString(ss.transformedBitmapCount));
   }
 }

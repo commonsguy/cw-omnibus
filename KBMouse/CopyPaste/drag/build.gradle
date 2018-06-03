@@ -7,10 +7,10 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:27.1.0'
-    compile 'com.android.support:support-fragment:27.1.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.commonsware.cwac:provider:0.5.3'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:support-fragment:27.1.1'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.commonsware.cwac:provider:0.5.3'
 }
 
 android {

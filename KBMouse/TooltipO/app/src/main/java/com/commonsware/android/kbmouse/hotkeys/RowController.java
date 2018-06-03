@@ -37,8 +37,8 @@ class RowController extends RecyclerView.ViewHolder
   RowController(View row) {
     super(row);
 
-    title=(TextView)row.findViewById(android.R.id.text1);
-    thumbnail=(ImageView)row.findViewById(R.id.thumbnail);
+    title=row.findViewById(android.R.id.text1);
+    thumbnail=row.findViewById(R.id.thumbnail);
 
     row.setOnClickListener(this);
     row.setOnLongClickListener(this);
@@ -57,7 +57,7 @@ class RowController extends RecyclerView.ViewHolder
     ClipData clip=ClipData.newRawUri(title.getText(), videoUri);
     View.DragShadowBuilder shadow=new View.DragShadowBuilder(thumbnail);
 
-    itemView.startDrag(clip, shadow, null, 0);
+    itemView.startDragAndDrop(clip, shadow, null, 0);
 
     return(true);
   }

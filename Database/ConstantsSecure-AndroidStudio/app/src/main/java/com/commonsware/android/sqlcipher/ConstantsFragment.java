@@ -15,7 +15,7 @@
 package com.commonsware.android.sqlcipher;
 
 import android.app.AlertDialog;
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;

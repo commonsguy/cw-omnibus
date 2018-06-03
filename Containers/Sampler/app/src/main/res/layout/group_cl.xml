@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <ImageButton
+    android:id="@+id/compassButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:src="@drawable/ic_location_searching_black_24dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView android:id="@+id/northeast"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/northeast"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    app:layout_constraintCircle="@id/compassButton"
+    app:layout_constraintCircleAngle="45"
+    app:layout_constraintCircleRadius="@dimen/radius" />
+
+  <TextView android:id="@+id/east"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/east"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    app:layout_constraintCircle="@id/compassButton"
+    app:layout_constraintCircleAngle="90"
+    app:layout_constraintCircleRadius="@dimen/radius" />
+
+  <TextView android:id="@+id/southeast"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/southeast"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    app:layout_constraintCircle="@id/compassButton"
+    app:layout_constraintCircleAngle="135"
+    app:layout_constraintCircleRadius="@dimen/radius" />
+
+  <TextView android:id="@+id/south"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/south"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    app:layout_constraintCircle="@id/compassButton"
+    app:layout_constraintCircleAngle="180"
+    app:layout_constraintCircleRadius="@dimen/radius" />
+
+  <TextView android:id="@+id/southwest"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/southwest"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    app:layout_constraintCircle="@id/compassButton"
+    app:layout_constraintCircleAngle="225"
+    app:layout_constraintCircleRadius="@dimen/radius" />
+
+  <TextView android:id="@+id/west"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/west"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    app:layout_constraintCircle="@id/compassButton"
+    app:layout_constraintCircleAngle="270"
+    app:layout_constraintCircleRadius="@dimen/radius" />
+
+  <TextView android:id="@+id/northwest"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/northwest"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    app:layout_constraintCircle="@id/compassButton"
+    app:layout_constraintCircleAngle="315"
+    app:layout_constraintCircleRadius="@dimen/radius" />
+
+  <TextView android:id="@+id/north"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/north"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    app:layout_constraintCircle="@id/compassButton"
+    app:layout_constraintCircleAngle="0"
+    app:layout_constraintCircleRadius="@dimen/radius" />
+
+  <android.support.constraint.Group android:id="@+id/directions"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    app:constraint_referenced_ids="north,northeast,east,southeast,south,southwest,west,northwest"/>
+</android.support.constraint.ConstraintLayout>

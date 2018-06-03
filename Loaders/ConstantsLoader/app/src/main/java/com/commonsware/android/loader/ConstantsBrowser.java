@@ -15,24 +15,20 @@
 package com.commonsware.android.loader;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.app.LoaderManager;
 import android.content.ContentValues;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
-import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.ContextMenu;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
 
-public class ConstantsBrowser extends ListActivity
+public class ConstantsBrowser extends RecyclerViewActivity
   implements LoaderManager.LoaderCallbacks<Cursor> {
   private static final int ADD_ID = Menu.FIRST+1;
   private static final int DELETE_ID = Menu.FIRST+3;
@@ -53,7 +49,7 @@ public class ConstantsBrowser extends ListActivity
     
     setListAdapter(adapter);
     registerForContextMenu(getListView());
-    getLoaderManager().initLoader(0, null, this);
+    getSupportLoaderManager().initLoader(0, null, this);
   }
   
   @Override
@@ -70,28 +66,6 @@ public class ConstantsBrowser extends ListActivity
     switch (item.getItemId()) {
       case ADD_ID:
         add();
-        return(true);
-    }
-
-    return(super.onOptionsItemSelected(item));
-  }
-  
-  @Override
-  public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-    menu.add(Menu.NONE, DELETE_ID, Menu.NONE, "Delete")
-        .setIcon(R.drawable.delete)
-        .setAlphabeticShortcut('d');
-  }
-
-  @Override
-  public boolean onContextItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case DELETE_ID:
-        AdapterView.AdapterContextMenuInfo info=
-          (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-
-        delete(info.id);
         return(true);
     }
 
@@ -135,29 +109,7 @@ public class ConstantsBrowser extends ListActivity
       })
       .show();
   }
-  
-  private void delete(final long rowId) {
-    if (rowId>0) {
-      new AlertDialog.Builder(this)
-        .setTitle(R.string.delete_title)
-        .setPositiveButton(R.string.ok,
-                            new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog,
-                                int whichButton) {
-            processDelete(rowId);
-          }
-        })
-        .setNegativeButton(R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog,
-                                int whichButton) {
-          // ignore, just dismiss
-          }
-        })
-        .show();
-    }
-  }
-  
+
   private void processAdd(DialogWrapper wrapper) {
     ContentValues values=new ContentValues(2);
     
@@ -167,22 +119,15 @@ public class ConstantsBrowser extends ListActivity
     getContentResolver().insert(Provider.Constants.CONTENT_URI,
                                   values);
   }
-  
-  private void processDelete(long rowId) {
-    String[] args={String.valueOf(rowId)};
-    
-    getContentResolver().delete(Provider.Constants.CONTENT_URI,
-                                Provider.Constants._ID+"=?", args);
-  }
-  
+
   class DialogWrapper {
     EditText titleField=null;
-    EditText valueField=null;
-    View base=null;
+    EditText valueField;
+    View base;
     
     DialogWrapper(View base) {
       this.base=base;
-      valueField=(EditText)base.findViewById(R.id.value);
+      valueField=base.findViewById(R.id.value);
     }
     
     String getTitle() {
@@ -190,13 +135,12 @@ public class ConstantsBrowser extends ListActivity
     }
     
     float getValue() {
-      return(new Float(getValueField().getText().toString())
-                                                  .floatValue());
+      return(Float.valueOf(getValueField().getText().toString()));
     }
     
     private EditText getTitleField() {
       if (titleField==null) {
-        titleField=(EditText)base.findViewById(R.id.title);
+        titleField=base.findViewById(R.id.title);
       }
       
       return(titleField);
@@ -204,7 +148,7 @@ public class ConstantsBrowser extends ListActivity
     
     private EditText getValueField() {
       if (valueField==null) {
-        valueField=(EditText)base.findViewById(R.id.value);
+        valueField=base.findViewById(R.id.value);
       }
       
       return(valueField);

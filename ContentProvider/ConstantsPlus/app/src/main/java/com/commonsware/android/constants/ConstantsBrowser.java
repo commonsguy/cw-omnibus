@@ -14,16 +14,16 @@
 
 package com.commonsware.android.constants;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-public class ConstantsBrowser extends Activity {
+public class ConstantsBrowser extends FragmentActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content)==null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content)==null) {
+      getSupportFragmentManager().beginTransaction()
                                  .add(android.R.id.content,
                                       new ConstantsFragment()).commit();
     }

@@ -55,6 +55,6 @@ public class AppWidget extends AppWidgetProvider {
     updateViews.setOnClickPendingIntent(R.id.right_die, pi);
     updateViews.setOnClickPendingIntent(R.id.background, pi);
     
-    return(updateViews);
+    return updateViews;
   }
 }

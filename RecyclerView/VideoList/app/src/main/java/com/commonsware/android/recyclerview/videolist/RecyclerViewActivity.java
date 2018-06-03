@@ -14,10 +14,10 @@
 
 package com.commonsware.android.recyclerview.videolist;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 
-public class RecyclerViewActivity extends Activity {
+public class RecyclerViewActivity extends FragmentActivity {
   private RecyclerView rv=null;
 
   public void setAdapter(RecyclerView.Adapter adapter) {

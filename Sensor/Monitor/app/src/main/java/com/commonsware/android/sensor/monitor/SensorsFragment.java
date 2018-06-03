@@ -27,8 +27,8 @@ public class SensorsFragment extends
   private SensorListAdapter adapter=null;
 
   @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+  public void onViewCreated(View view, Bundle state) {
+    super.onViewCreated(view, state);
 
     adapter=new SensorListAdapter(this);
     getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);

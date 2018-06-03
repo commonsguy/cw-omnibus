@@ -16,6 +16,7 @@ package com.commonsware.android.preso.slides;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import static com.commonsware.android.preso.slides.ControlReceiver.EXTRA_STOP;
 
 public class MainActivity extends Activity
   implements TabLayout.OnTabSelectedListener, DisplayManager.DisplayListener {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static final int PI_NEXT=1234;
   private static final int PI_PREVIOUS=PI_NEXT+1;
   private static final int PI_STOP=PI_NEXT+2;
@@ -166,8 +168,17 @@ public class MainActivity extends Activity
   }
 
   private void showNotification() {
+    NotificationManager mgr=
+      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     NotificationCompat.Builder b=
-      new NotificationCompat.Builder(this)
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER)
         .setOngoing(true)
         .setContentTitle("Presentation!")
         .setSmallIcon(android.R.drawable.stat_notify_more)
@@ -177,9 +188,6 @@ public class MainActivity extends Activity
           getString(R.string.action_next), buildNextPendingIntent())
         .addAction(android.R.drawable.ic_media_pause,
           getString(R.string.action_stop), buildStopPendingIntent());
-
-    NotificationManager mgr=
-      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
     mgr.notify(1337, b.build());
   }

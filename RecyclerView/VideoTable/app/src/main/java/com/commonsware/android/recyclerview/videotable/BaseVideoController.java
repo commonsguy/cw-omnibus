@@ -24,7 +24,7 @@ import android.view.View;
 
 abstract class BaseVideoController extends RecyclerView.ViewHolder
     implements View.OnClickListener {
-  private Uri videoUri=null;
+  protected Uri videoUri=null;
   private String videoMimeType=null;
 
   BaseVideoController(View cell) {

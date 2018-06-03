@@ -1,25 +1,25 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    androidTestImplementation 'com.android.support:support-annotations:25.0.3'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:2.2.2'
-    implementation 'com.android.support:design:25.0.3'
+  implementation 'com.android.support:design:27.1.1'
+  androidTestImplementation 'com.android.support:support-annotations:27.1.1'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.1'
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '26.0.2'
+  compileSdkVersion 27
+  buildToolsVersion '27.0.3'
 
-	defaultConfig {
-        minSdkVersion 15
-		targetSdkVersion 18
-        testApplicationId "com.commonsware.android.design.til.test"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments disableAnalytics: 'true'
-	}
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 27
+    testApplicationId "com.commonsware.android.design.til.test"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunnerArguments disableAnalytics: 'true'
+  }
 
-    packagingOptions {
-        exclude 'LICENSE.txt'
-    }
+  packagingOptions {
+    exclude 'LICENSE.txt'
+  }
 }

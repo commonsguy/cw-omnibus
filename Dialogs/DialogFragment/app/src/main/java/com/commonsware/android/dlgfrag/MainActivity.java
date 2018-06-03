@@ -14,11 +14,11 @@
 
 package com.commonsware.android.dlgfrag;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -26,6 +26,6 @@ public class MainActivity extends Activity {
   }
 
   public void showMe(View v) {
-    new SampleDialogFragment().show(getFragmentManager(), "sample");
+    new SampleDialogFragment().show(getSupportFragmentManager(), "sample");
   }
 }

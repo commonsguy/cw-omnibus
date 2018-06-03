@@ -27,8 +27,8 @@ public class PackagesFragment extends
   private PackageListAdapter adapter=null;
 
   @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+  public void onViewCreated(View view, Bundle state) {
+    super.onViewCreated(view, state);
 
     adapter=new PackageListAdapter(this);
     getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);

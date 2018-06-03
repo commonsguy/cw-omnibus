@@ -12,4 +12,5 @@ android {
 
 dependencies {
 	implementation 'com.android.support:support-compat:27.1.0'
+	implementation 'com.android.support:support-fragment:27.1.0'
 }

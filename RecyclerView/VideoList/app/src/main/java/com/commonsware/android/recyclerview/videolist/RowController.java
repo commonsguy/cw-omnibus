@@ -35,8 +35,8 @@ class RowController extends RecyclerView.ViewHolder
   RowController(View row) {
     super(row);
 
-    title=(TextView)row.findViewById(android.R.id.text1);
-    thumbnail=(ImageView)row.findViewById(R.id.thumbnail);
+    title=row.findViewById(android.R.id.text1);
+    thumbnail=row.findViewById(R.id.thumbnail);
 
     row.setOnClickListener(this);
   }
@@ -64,7 +64,6 @@ class RowController extends RecyclerView.ViewHolder
       .placeholder(R.drawable.ic_media_video_poster)
       .into(thumbnail);
 
-    int uriColumn=row.getColumnIndex(MediaStore.Video.Media.DATA);
     int mimeTypeColumn=
         row.getColumnIndex(MediaStore.Video.Media.MIME_TYPE);
 

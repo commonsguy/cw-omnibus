@@ -16,22 +16,32 @@ package com.commonsware.android.webbeam;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class BeamFragment extends WebViewFragment {
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    setHasOptionsMenu(true);
+  }
+
   @SuppressLint("SetJavaScriptEnabled")
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onViewCreated(@NonNull View view,
+                            @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
     getWebView().setWebViewClient(new BeamClient());
     getWebView().getSettings().setJavaScriptEnabled(true);
-    loadUrl("http://google.com");
-    setHasOptionsMenu(true);
+    loadUrl("https://google.com");
   }
 
   @Override

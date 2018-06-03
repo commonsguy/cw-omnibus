@@ -14,13 +14,10 @@
 
 package com.commonsware.android.video.browse;
 
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v17.leanback.app.BrowseFragment;
+import android.support.v17.leanback.app.BrowseSupportFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
@@ -29,10 +26,13 @@ import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.View;
 import java.util.ArrayList;
 
-public class VideosFragment extends BrowseFragment
+public class VideosFragment extends BrowseSupportFragment
     implements OnItemViewClickedListener,
     LoaderManager.LoaderCallbacks<Cursor> {
   private ArrayList<Video> videos=new ArrayList<Video>();
@@ -68,7 +68,7 @@ public class VideosFragment extends BrowseFragment
   public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
     mapCursorToModels(c);
 
-    setHeadersState(BrowseFragment.HEADERS_ENABLED);
+    setHeadersState(BrowseSupportFragment.HEADERS_ENABLED);
     setTitle(getString(R.string.app_name));
 
     ArrayObjectAdapter rows=new ArrayObjectAdapter(new ListRowPresenter());
@@ -79,7 +79,7 @@ public class VideosFragment extends BrowseFragment
       listRowAdapter.add(v);
     }
 
-    HeaderItem header=new HeaderItem(0, "Videos", null);
+    HeaderItem header=new HeaderItem(0, "Videos");
 
     rows.add(new ListRow(header, listRowAdapter));
     setAdapter(rows);

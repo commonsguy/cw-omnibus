@@ -32,7 +32,7 @@ public class RotationBundleDemo extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    viewButton=(Button)findViewById(R.id.view);
+    viewButton=findViewById(R.id.view);
   }
 
   @Override

@@ -14,26 +14,28 @@
 
 package com.commonsware.android.containers.sampler;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    ViewPager pager=(ViewPager)findViewById(R.id.pager);
+    ViewPager pager=findViewById(R.id.pager);
 
-    pager.setAdapter(new SampleAdapter(getFragmentManager()));
+    pager.setAdapter(new SampleAdapter(getSupportFragmentManager()));
   }
 
   private class SampleAdapter extends FragmentPagerAdapter {
@@ -93,6 +95,25 @@ public class MainActivity extends Activity {
                              Bundle savedInstanceState) {
       return(inflater.inflate(getArguments().getInt(ARG_LAYOUT),
         container, false));
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+      View compassButton=view.findViewById(R.id.compassButton);
+
+      if (compassButton!=null) {
+        compassButton.setOnClickListener(v -> {
+          View group=view.findViewById(R.id.directions);
+
+          if (group.getVisibility()==View.VISIBLE) {
+            group.setVisibility(View.GONE);
+          }
+          else {
+            group.setVisibility(View.VISIBLE);
+          }
+        });
+      }
     }
   }
 }

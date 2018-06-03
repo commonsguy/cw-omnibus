@@ -15,6 +15,7 @@
 package com.commonsware.android.mapsv2.pager;
 
 import android.os.Bundle;
+import android.view.View;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,13 +24,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class PageMapFragment extends SupportMapFragment implements
-    OnMapReadyCallback {
+public class PageMapFragment extends SupportMapFragment implements OnMapReadyCallback {
   private boolean needsInit=false;
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
     if (savedInstanceState == null) {
       needsInit=true;

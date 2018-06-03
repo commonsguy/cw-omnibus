@@ -17,7 +17,6 @@ package com.commonsware.android.fileseditor;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
-import io.karim.MaterialTabs;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AbstractPermissionActivity  {
@@ -38,11 +37,8 @@ public class MainActivity extends AbstractPermissionActivity  {
   protected void onReady(Bundle savedInstanceState) {
     setContentView(R.layout.main);
 
-    ViewPager pager=(ViewPager)findViewById(R.id.pager);
+    ViewPager pager=findViewById(R.id.pager);
 
-    pager.setAdapter(new SampleAdapter(this, getFragmentManager()));
-
-    MaterialTabs tabs=(MaterialTabs)findViewById(R.id.tabs);
-    tabs.setViewPager(pager);
+    pager.setAdapter(new SampleAdapter(this, getSupportFragmentManager()));
   }
 }

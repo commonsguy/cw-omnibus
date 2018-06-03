@@ -34,7 +34,7 @@ public class RotationDIYDemo extends Activity {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.main);
-    viewButton=(Button)findViewById(R.id.view);
+    viewButton=findViewById(R.id.view);
     viewButton.setEnabled(contact != null);
   }
 
@@ -53,7 +53,7 @@ public class RotationDIYDemo extends Activity {
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
 
-    LinearLayout container=(LinearLayout)findViewById(R.id.container);
+    LinearLayout container=findViewById(R.id.container);
 
     if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
       container.setOrientation(LinearLayout.HORIZONTAL);

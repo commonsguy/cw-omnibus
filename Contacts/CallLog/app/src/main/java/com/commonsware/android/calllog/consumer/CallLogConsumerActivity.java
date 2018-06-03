@@ -15,25 +15,29 @@
 package com.commonsware.android.calllog.consumer;
 
 import android.Manifest;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.CallLog;
+import android.support.annotation.NonNull;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.SimpleCursorAdapter;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class CallLogConsumerActivity extends AbstractPermissionActivity implements
-    LoaderManager.LoaderCallbacks<Cursor>,
-    SimpleCursorAdapter.ViewBinder {
+    LoaderManager.LoaderCallbacks<Cursor> {
   private static final String[] PERMS={Manifest.permission.READ_CALL_LOG};
   private static final String[] PROJECTION=new String[] {
-      CallLog.Calls._ID, CallLog.Calls.NUMBER, CallLog.Calls.DATE };
-  private SimpleCursorAdapter adapter=null;
+      CallLog.Calls.NUMBER, CallLog.Calls.DATE };
+  private RVCursorAdapter adapter;
 
   @Override
   protected String[] getDesiredPermissions() {
@@ -50,14 +54,16 @@ public class CallLogConsumerActivity extends AbstractPermissionActivity implemen
 
   @Override
   public void onReady() {
-    adapter=
-        new SimpleCursorAdapter(this, R.layout.row, null, new String[] {
-            CallLog.Calls.NUMBER, CallLog.Calls.DATE }, new int[] {
-            R.id.number, R.id.date }, 0);
+    adapter=new RVCursorAdapter(getLayoutInflater());
 
-    adapter.setViewBinder(this);
-    setListAdapter(adapter);
-    getLoaderManager().initLoader(0, null, this);
+    RecyclerView rv=getRecyclerView();
+
+    setLayoutManager(new LinearLayoutManager(this));
+    rv.addItemDecoration(new DividerItemDecoration(this,
+      DividerItemDecoration.VERTICAL));
+    rv.setAdapter(adapter);
+
+    getSupportLoaderManager().initLoader(0, null, this);
   }
 
   @Override
@@ -69,26 +75,68 @@ public class CallLogConsumerActivity extends AbstractPermissionActivity implemen
 
   @Override
   public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-    adapter.swapCursor(cursor);
+    adapter.changeCursor(cursor);
   }
 
   @Override
   public void onLoaderReset(Loader<Cursor> loader) {
-    adapter.swapCursor(null);
+    adapter.changeCursor(null);
   }
 
-  @Override
-  public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-    if (columnIndex==2) {
-      long time=cursor.getLong(columnIndex);
-      String formattedTime=DateUtils.formatDateTime(this, time,
-                              DateUtils.FORMAT_ABBREV_RELATIVE);
+  private static class RVCursorAdapter extends RecyclerView.Adapter<RowHolder> {
+    private Cursor cursor;
+    private final LayoutInflater inflater;
 
-      ((TextView)view).setText(formattedTime);
-
-      return(true);
+    private RVCursorAdapter(LayoutInflater inflater) {
+      this.inflater=inflater;
     }
 
-    return(false);
+    @NonNull
+    @Override
+    public RowHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                        int viewType) {
+      View row=inflater.inflate(R.layout.row, parent, false);
+
+      return new RowHolder(row);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RowHolder holder,
+                                 int position) {
+      cursor.moveToPosition(position);
+      holder.bind(cursor);
+    }
+
+    @Override
+    public int getItemCount() {
+      return cursor==null ? 0 : cursor.getCount();
+    }
+
+    private void changeCursor(Cursor cursor) {
+      if (this.cursor!=null) this.cursor.close();
+      this.cursor=cursor;
+      notifyDataSetChanged();
+    }
+  }
+
+  private static class RowHolder extends RecyclerView.ViewHolder {
+    private final TextView date;
+    private final TextView number;
+
+    RowHolder(View itemView) {
+      super(itemView);
+      date=itemView.findViewById(R.id.date);
+      number=itemView.findViewById(R.id.number);
+    }
+
+    public void bind(Cursor cursor) {
+      number.setText(cursor.getString(0));
+
+      long time=cursor.getLong(1);
+      String formattedTime=DateUtils.formatDateTime(date.getContext(), time,
+        DateUtils.FORMAT_ABBREV_RELATIVE);
+
+      date.setText(formattedTime);
+    }
   }
 }

@@ -22,7 +22,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import com.google.gson.Gson;
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 class LoadThread extends Thread {
   static final String SO_URL=

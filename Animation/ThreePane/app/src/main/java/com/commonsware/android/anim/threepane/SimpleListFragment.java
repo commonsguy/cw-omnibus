@@ -40,8 +40,8 @@ public class SimpleListFragment extends ListFragment {
   }
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onViewCreated(View v, Bundle savedInstanceState) {
+    super.onViewCreated(v, savedInstanceState);
 
     getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     setContents(getArguments().getStringArrayList(KEY_CONTENTS));

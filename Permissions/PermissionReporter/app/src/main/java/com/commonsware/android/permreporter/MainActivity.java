@@ -14,16 +14,15 @@
 
 package com.commonsware.android.permreporter;
 
-import android.support.v4.app.FragmentActivity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.Toast;
-import io.karim.MaterialTabs;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -42,7 +41,6 @@ public class MainActivity extends FragmentActivity  {
     setContentView(R.layout.main);
 
     final ViewPager pager=findViewById(R.id.pager);
-    final MaterialTabs tabs=findViewById(R.id.tabs);
 
     observable=(Observable<PermissionRoster>)getLastCustomNonConfigurationInstance();
 
@@ -59,7 +57,6 @@ public class MainActivity extends FragmentActivity  {
         public void accept(PermissionRoster roster) throws Exception {
           pager.setAdapter(new PermissionTabAdapter(MainActivity.this,
             getSupportFragmentManager(), roster));
-          tabs.setViewPager(pager);
         }
       }, new Consumer<Throwable>() {
         @Override

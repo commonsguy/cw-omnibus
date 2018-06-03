@@ -14,10 +14,13 @@
 
 package com.commonsware.android.retrofit;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.os.OperationCanceledException;
-import retrofit.RestAdapter;
+import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
+import java.io.IOException;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QuestionsLoader extends AsyncTaskLoader<SOQuestions> {
   final private StackOverflowInterface so;
@@ -26,11 +29,12 @@ public class QuestionsLoader extends AsyncTaskLoader<SOQuestions> {
   public QuestionsLoader(Context context) {
     super(context);
 
-    RestAdapter restAdapter=
-      new RestAdapter.Builder().setEndpoint("https://api.stackexchange.com")
+    Retrofit retrofit=
+      new Retrofit.Builder()
+        .baseUrl("https://api.stackexchange.com")
+        .addConverterFactory(GsonConverterFactory.create())
         .build();
-
-    so=restAdapter.create(StackOverflowInterface.class);
+    so=retrofit.create(StackOverflowInterface.class);
   }
 
   @Override
@@ -51,7 +55,13 @@ public class QuestionsLoader extends AsyncTaskLoader<SOQuestions> {
       throw new OperationCanceledException();
     }
 
-    return(so.questions("android"));
+    try {
+      return(so.questions("android").execute().body());
+    }
+    catch (IOException e) {
+      Log.e(getClass().getSimpleName(), "Exception loading questions", e);
+      throw new OperationCanceledException();
+    }
   }
 
   @Override

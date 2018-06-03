@@ -14,9 +14,9 @@
 
 package com.commonsware.android.assist.no;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +56,7 @@ public class EditorFragment extends Fragment {
       result=inflater.inflate(R.layout.editor, container, false);
     }
 
-    EditText editor=(EditText)result.findViewById(R.id.editor);
+    EditText editor=result.findViewById(R.id.editor);
 
     editor.setHint(getTitle(getActivity(), position));
 

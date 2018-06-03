@@ -4,10 +4,6 @@
 	android:versionCode="1"
 	android:versionName="1.0.0">
 
-	<uses-sdk
-		android:minSdkVersion="5"
-		android:targetSdkVersion="11"/>
-
 	<supports-screens
 		android:anyDensity="true"
 		android:largeScreens="true"

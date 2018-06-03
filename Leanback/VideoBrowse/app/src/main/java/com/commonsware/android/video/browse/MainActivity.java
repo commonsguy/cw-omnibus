@@ -14,16 +14,30 @@
 
 package com.commonsware.android.video.browse;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
+import android.widget.Toast;
 import java.io.File;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AbstractPermissionActivity {
+  private static final String[] PERMS={READ_EXTERNAL_STORAGE};
+
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  protected String[] getDesiredPermissions() {
+    return PERMS;
+  }
+
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_no_perm, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
+
+  @Override
+  public void onReady() {
     setContentView(R.layout.main);
   }
 

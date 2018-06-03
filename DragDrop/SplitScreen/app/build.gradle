@@ -13,7 +13,7 @@ dependencies {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.commonsware.android.dragdrop.splitscreen"

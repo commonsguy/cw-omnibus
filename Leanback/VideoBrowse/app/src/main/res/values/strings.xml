@@ -2,4 +2,5 @@
 <resources>
   <string name="app_name">Video Browse Demo</string>
   <string name="thumbnail">thumbnail</string>
+  <string name="msg_no_perm">Sorry! This demo cannot run without permission!</string>
 </resources>

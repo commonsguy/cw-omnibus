@@ -16,7 +16,6 @@ package com.commonsware.android.abf.test;
 
 import android.widget.ListView;
 import com.commonsware.android.abf.ActionBarFragmentActivity;
-import com.commonsware.android.abf.BuildConfig;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,15 +23,15 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk=JELLY_BEAN)
+@Config(sdk=LOLLIPOP)
 public class DemoActivityTest {
   private ListView list=null;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     ActionBarFragmentActivity activity=
       Robolectric.setupActivity(ActionBarFragmentActivity.class);
 

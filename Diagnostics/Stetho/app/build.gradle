@@ -1,23 +1,21 @@
 apply plugin: 'com.android.application'
 
 dependencies {
+    implementation "com.android.support:support-fragment:27.1.0"
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
-    debugCompile('com.facebook.stetho:stetho-okhttp3:1.4.2') {
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-    }
-    debugCompile 'com.android.support:support-compat:25.2.0'
+    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
         applicationId "com.commonsware.android.stetho"
     }
 }

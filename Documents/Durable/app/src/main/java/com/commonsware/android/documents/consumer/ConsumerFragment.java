@@ -16,10 +16,10 @@ package com.commonsware.android.documents.consumer;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,7 +53,7 @@ public class ConsumerFragment extends Fragment {
         (ScrollView)inflater.inflate(R.layout.activity_main, container,
                                      false);
 
-    transcript=(TextView)scroll.findViewById(R.id.transcript);
+    transcript=scroll.findViewById(R.id.transcript);
 
     return(scroll);
   }

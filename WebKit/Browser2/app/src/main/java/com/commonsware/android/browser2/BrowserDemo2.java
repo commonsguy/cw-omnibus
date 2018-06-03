@@ -25,9 +25,9 @@ public class BrowserDemo2 extends Activity {
   public void onCreate(Bundle state) {
     super.onCreate(state);
     setContentView(R.layout.main);
-    browser=(WebView)findViewById(R.id.webkit);
+    browser=findViewById(R.id.webkit);
     
     browser.loadData("<html><body>Hello, world!</body></html>",
-                      "text/html", "UTF-8");
+      "text/html; charset=UTF-8", null);
   }
 }

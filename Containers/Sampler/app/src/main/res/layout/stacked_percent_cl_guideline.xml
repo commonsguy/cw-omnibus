@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <android.support.constraint.Guideline
+    android:id="@+id/guideline_50"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent=".50" />
+
+  <android.support.constraint.Guideline
+    android:id="@+id/guideline_80"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent=".80" />
+
+  <Button
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:text="@string/fifty_percent"
+
+    app:layout_constraintBottom_toTopOf="@id/guideline_50"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <Button
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:text="@string/thirty_percent"
+
+    app:layout_constraintBottom_toTopOf="@id/guideline_80"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@id/guideline_50" />
+
+  <Button
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:text="@string/twenty_percent"
+
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@id/guideline_80" />
+
+</android.support.constraint.ConstraintLayout>

@@ -16,11 +16,10 @@ package com.commonsware.android.okhttp3.progress;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import java.io.File;
@@ -33,6 +32,7 @@ import okio.BufferedSink;
 import okio.Okio;
 
 public class Downloader extends IntentService {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static int NOTIFY_ID=1337;
   private static int FOREGROUND_ID=1338;
 
@@ -45,6 +45,12 @@ public class Downloader extends IntentService {
   @Override
   public void onHandleIntent(Intent i) {
     mgr=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
 
     try {
       String filename=i.getData().getLastPathSegment();
@@ -103,39 +109,31 @@ public class Downloader extends IntentService {
       Request request=
         new Request.Builder().url(i.getData().toString()).build();
       Response response=client.newCall(request).execute();
-      String contentType=response.header("Content-type");
       BufferedSink sink=Okio.buffer(Okio.sink(new File(output.getPath())));
 
       sink.writeAll(response.body().source());
       sink.close();
 
       stopForeground(true);
-      raiseNotification(contentType, output, null);
+      raiseNotification(null);
     }
     catch (IOException e2) {
       stopForeground(true);
-      raiseNotification(null, null, e2);
+      raiseNotification(e2);
     }
   }
 
-  private void raiseNotification(String contentType, File output,
-                                 Exception e) {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+  private void raiseNotification(Exception e) {
+    NotificationCompat.Builder b=
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
      .setWhen(System.currentTimeMillis());
 
     if (e == null) {
       b.setContentTitle(getString(R.string.download_complete))
-       .setContentText(getString(R.string.fun))
        .setSmallIcon(android.R.drawable.stat_sys_download_done)
        .setTicker(getString(R.string.download_complete));
-
-      Intent outbound=new Intent(Intent.ACTION_VIEW);
-
-      outbound.setDataAndType(Uri.fromFile(output), contentType);
-
-      b.setContentIntent(PendingIntent.getActivity(this, 0, outbound, 0));
     }
     else {
       b.setContentTitle(getString(R.string.exception))
@@ -149,12 +147,13 @@ public class Downloader extends IntentService {
 
   private NotificationCompat.Builder buildForeground(
     String filename) {
-    NotificationCompat.Builder b=new NotificationCompat.Builder(this);
+    NotificationCompat.Builder b=
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setContentTitle(getString(R.string.downloading))
      .setContentText(filename)
      .setSmallIcon(android.R.drawable.stat_sys_download)
-     .setTicker(getString(R.string.downloading))
+     .setOnlyAlertOnce(true)
      .setOngoing(true);
 
     return(b);

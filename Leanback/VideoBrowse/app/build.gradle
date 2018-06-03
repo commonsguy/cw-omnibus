@@ -2,14 +2,16 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.android.support:leanback-v17:21.0.3'
+    implementation 'com.android.support:leanback-v17:27.1.1'
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 27
         applicationId "com.commonsware.android.video.browse"
     }
 }

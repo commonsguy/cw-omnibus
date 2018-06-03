@@ -14,18 +14,24 @@
 
 package com.commonsware.android.hurl;
 
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ListFragment;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
-import de.greenrobot.event.EventBus;
 
 public class QuestionsFragment extends ListFragment {
+  private boolean loadRequested=false;
+
   public interface Contract {
     void onQuestion(Item question);
   }
@@ -35,7 +41,17 @@ public class QuestionsFragment extends ListFragment {
     super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
-    new LoadThread().start();
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view,
+                            @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    if (!loadRequested) {
+      loadRequested=true;
+      new LoadThread().start();
+    }
   }
 
   @Override
@@ -57,7 +73,8 @@ public class QuestionsFragment extends ListFragment {
     ((Contract)getActivity()).onQuestion(item);
   }
 
-  public void onEventMainThread(QuestionsLoadedEvent event) {
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void onQuestionsLoaded(QuestionsLoadedEvent event) {
     setListAdapter(new ItemsAdapter(event.questions.items));
   }
 
@@ -69,7 +86,7 @@ public class QuestionsFragment extends ListFragment {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       View row=super.getView(position, convertView, parent);
-      TextView title=(TextView)row.findViewById(android.R.id.text1);
+      TextView title=row.findViewById(android.R.id.text1);
 
       title.setText(Html.fromHtml(getItem(position).title));
 

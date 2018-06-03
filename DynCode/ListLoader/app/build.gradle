@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 24
+        targetSdkVersion 27
         buildConfigField "String", "EXTENSION_URL", '"'+EXTENSION_URL+'"'
     }
 }
@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     implementation 'com.commonsware.cwac:security:0.8.0'
-    implementation 'com.commonsware.cwac:netsecurity:0.2.0'
-    compile project(':api')
-    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.commonsware.cwac:netsecurity:0.4.4'
+    implementation project(':api')
+    api 'de.greenrobot:eventbus:2.4.0'
 }

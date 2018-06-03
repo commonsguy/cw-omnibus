@@ -45,7 +45,7 @@ public class MainActivity extends FragmentActivity implements
     super.onCreate(state);
     setContentView(R.layout.main);
 
-    iv=(ImageView)findViewById(R.id.asset);
+    iv=findViewById(R.id.asset);
 
     Picasso.with(this)
       .load("file:///android_asset/FreedomTower-Morning.jpg")

@@ -1,8 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+    }
 }
 
 repositories {
@@ -12,6 +17,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v13:23.4.0'
+    implementation 'com.android.support:support-v13:27.1.1'
     implementation 'com.commonsware.cwac:provider:0.5.3'
 }

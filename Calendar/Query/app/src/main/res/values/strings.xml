@@ -3,5 +3,6 @@
 
 	<string name="hello">Hello World, CalendarQueryActivity!</string>
 	<string name="app_name">CalendarQuery</string>
+	<string name="msg_no_perm">Sorry! This demo cannot run without permission!</string>
 
 </resources>

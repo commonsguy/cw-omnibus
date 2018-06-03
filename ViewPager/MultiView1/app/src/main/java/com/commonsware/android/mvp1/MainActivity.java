@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    pager=(ViewPager)findViewById(R.id.pager);
+    pager=findViewById(R.id.pager);
     pager.setAdapter(new SampleAdapter());
     pager.setOffscreenPageLimit(6);
   }
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
     public Object instantiateItem(ViewGroup container, int position) {
       View page=
           getLayoutInflater().inflate(R.layout.page, container, false);
-      TextView tv=(TextView)page.findViewById(R.id.text);
+      TextView tv=page.findViewById(R.id.text);
       int blue=position * 25;
 
       final String msg=

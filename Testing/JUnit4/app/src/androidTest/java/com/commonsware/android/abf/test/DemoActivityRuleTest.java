@@ -32,7 +32,7 @@ public class DemoActivityRuleTest {
 
   @Before
   public void init() {
-    list=(ListView)main.getActivity().findViewById(android.R.id.list);
+    list=main.getActivity().findViewById(android.R.id.list);
   }
 
   @Test

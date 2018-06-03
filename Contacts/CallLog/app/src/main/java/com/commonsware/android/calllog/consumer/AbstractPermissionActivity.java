@@ -14,7 +14,6 @@
 
 package com.commonsware.android.calllog.consumer;
 
-import android.app.ListActivity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -22,7 +21,7 @@ import android.support.v4.content.ContextCompat;
 import java.util.ArrayList;
 
 abstract public class AbstractPermissionActivity
-  extends ListActivity {
+  extends RecyclerViewActivity {
   abstract protected String[] getDesiredPermissions();
   abstract protected void onPermissionDenied();
   abstract protected void onReady();

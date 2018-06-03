@@ -15,18 +15,18 @@
 package com.commonsware.android.dragdrop;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.LoaderManager;
 import android.content.ClipData;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.DragEvent;
@@ -36,7 +36,7 @@ import android.widget.ImageView;
 import android.widget.VideoView;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends Activity implements
+public class MainActivity extends FragmentActivity implements
   LoaderManager.LoaderCallbacks<Cursor>, View.OnDragListener {
   private static final String STATE_IN_PERMISSION="inPermission";
   private static final int REQUEST_PERMS=137;
@@ -50,13 +50,13 @@ public class MainActivity extends Activity implements
     super.onCreate(state);
     setContentView(R.layout.main);
 
-    player=(VideoView)findViewById(R.id.player);
+    player=findViewById(R.id.player);
 
     if (player!=null) {
       player.setOnDragListener(this);
     }
 
-    thumbnailLarge=(ImageView)findViewById(R.id.thumbnail_large);
+    thumbnailLarge=findViewById(R.id.thumbnail_large);
 
     if (thumbnailLarge!=null) {
       thumbnailLarge.setOnDragListener(this);
@@ -209,7 +209,7 @@ public class MainActivity extends Activity implements
   }
 
   private void loadVideos() {
-    getLoaderManager().initLoader(0, null, this);
+    getSupportLoaderManager().initLoader(0, null, this);
   }
 
   private class VideoAdapter extends RecyclerView.Adapter<RowController> {

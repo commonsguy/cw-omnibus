@@ -27,7 +27,6 @@ import android.widget.Toast;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import io.karim.MaterialTabs;
 
 public class MainActivity extends Activity  {
   private static final String PREF_LAST_VISITED="lastVisited";
@@ -42,9 +41,6 @@ public class MainActivity extends Activity  {
     pager=findViewById(R.id.pager);
     pager.setAdapter(
       new SampleAdapter(this, getFragmentManager()));
-
-    MaterialTabs tabs=findViewById(R.id.tabs);
-    tabs.setViewPager(pager);
   }
 
   @Override

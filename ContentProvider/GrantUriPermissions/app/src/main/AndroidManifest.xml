@@ -5,10 +5,6 @@
 	android:versionCode="1"
 	android:versionName="1.0">
 
-	<uses-sdk
-		android:minSdkVersion="9"
-		android:targetSdkVersion="11"/>
-
 	<supports-screens
 		android:largeScreens="true"
 		android:normalScreens="true"
@@ -33,8 +29,7 @@
 			android:name="FileProvider"
 			android:authorities="com.commonsware.android.cp.files"
 			android:exported="false"
-			android:grantUriPermissions="false"
-			tools:ignore="ExportedContentProvider">
+			android:grantUriPermissions="false">
 			<grant-uri-permission android:path="/test.pdf"/>
 		</provider>
 	</application>

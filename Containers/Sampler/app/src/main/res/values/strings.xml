@@ -17,4 +17,13 @@
 	<string name="big">I AM BIG</string>
 	<string name="small">I am small</string>
   <string name="btn_other">Other Button!</string>
+  <string name="northeast">NE</string>
+  <string name="east">E</string>
+	<string name="southeast">SE</string>
+	<string name="south">S</string>
+	<string name="southwest">SW</string>
+	<string name="west">W</string>
+	<string name="northwest">NW</string>
+	<string name="north">N</string>
+	<string name="jabberwocky">\'Twas brillig, and the slithy toves, Did gyre and gimble in the wabe; All mimsy were the borogoves, And the mome raths outgrabe.</string>
 </resources>

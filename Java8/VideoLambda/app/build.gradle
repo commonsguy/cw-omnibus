@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:support-fragment:27.1.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         applicationId 'com.commonsware.android.lambda.video'
     }
 

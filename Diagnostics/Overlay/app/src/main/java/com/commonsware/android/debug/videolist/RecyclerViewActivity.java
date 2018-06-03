@@ -14,19 +14,19 @@
 
 package com.commonsware.android.debug.videolist;
 
-import android.app.Activity;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 
-public class RecyclerViewActivity extends Activity {
+public class RecyclerViewActivity extends FragmentActivity {
   private RecyclerView rv=null;
 
   public void setAdapter(RecyclerView.Adapter adapter) {
     boolean canDrawOverlays=
         (Build.VERSION.SDK_INT<=Build.VERSION_CODES.LOLLIPOP_MR1);
 
-    if (!canDrawOverlays) {
+    if (!canDrawOverlays && Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
       canDrawOverlays=Settings.canDrawOverlays(this);
     }
 

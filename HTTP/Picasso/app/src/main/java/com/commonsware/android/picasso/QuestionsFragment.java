@@ -14,11 +14,12 @@
 
 package com.commonsware.android.picasso;
 
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ListFragment;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -28,35 +29,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import java.util.List;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QuestionsFragment extends ListFragment implements
-    Callback<SOQuestions> {
+  Callback<SOQuestions> {
   public interface Contract {
     void onQuestion(Item question);
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=
-        super.onCreateView(inflater, container, savedInstanceState);
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
+  }
 
-    RestAdapter restAdapter=
-        new RestAdapter.Builder().setEndpoint("https://api.stackexchange.com")
-                                 .build();
+  @Override
+  public void onViewCreated(@NonNull View view,
+                            @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    Retrofit retrofit=
+      new Retrofit.Builder()
+        .baseUrl("https://api.stackexchange.com")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
     StackOverflowInterface so=
-        restAdapter.create(StackOverflowInterface.class);
+      retrofit.create(StackOverflowInterface.class);
 
-    so.questions("android", this);
-
-    return(result);
+    so.questions("android").enqueue(this);
   }
 
   @Override
@@ -67,16 +72,17 @@ public class QuestionsFragment extends ListFragment implements
   }
 
   @Override
-  public void failure(RetrofitError exception) {
-    Toast.makeText(getActivity(), exception.getMessage(),
-                   Toast.LENGTH_LONG).show();
-    Log.e(getClass().getSimpleName(),
-          "Exception from Retrofit request to StackOverflow", exception);
+  public void onResponse(Call<SOQuestions> call,
+                         Response<SOQuestions> response) {
+    setListAdapter(new ItemsAdapter(response.body().items));
   }
 
   @Override
-  public void success(SOQuestions questions, Response response) {
-    setListAdapter(new ItemsAdapter(questions.items));
+  public void onFailure(Call<SOQuestions> call, Throwable t) {
+    Toast.makeText(getActivity(), t.getMessage(),
+      Toast.LENGTH_LONG).show();
+    Log.e(getClass().getSimpleName(),
+      "Exception from Retrofit request to StackOverflow", t);
   }
 
   class ItemsAdapter extends ArrayAdapter<Item> {
@@ -88,14 +94,14 @@ public class QuestionsFragment extends ListFragment implements
     public View getView(int position, View convertView, ViewGroup parent) {
       View row=super.getView(position, convertView, parent);
       Item item=getItem(position);
-      ImageView icon=(ImageView)row.findViewById(R.id.icon);
+      ImageView icon=row.findViewById(R.id.icon);
 
       Picasso.with(getActivity()).load(item.owner.profileImage)
              .fit().centerCrop()
              .placeholder(R.drawable.owner_placeholder)
              .error(R.drawable.owner_error).into(icon);
 
-      TextView title=(TextView)row.findViewById(R.id.title);
+      TextView title=row.findViewById(R.id.title);
 
       title.setText(Html.fromHtml(getItem(position).title));
 

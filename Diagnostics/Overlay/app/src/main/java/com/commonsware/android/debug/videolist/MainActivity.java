@@ -14,24 +14,40 @@
 
 package com.commonsware.android.debug.videolist;
 
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
+import android.Manifest;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-public class MainActivity extends RecyclerViewActivity implements
+public class MainActivity extends AbstractPermissionActivity implements
     LoaderManager.LoaderCallbacks<Cursor> {
-  @Override
-  public void onCreate(Bundle state) {
-    super.onCreate(state);
+  private static final String[] PERMS={Manifest.permission.READ_EXTERNAL_STORAGE};
 
-    getLoaderManager().initLoader(0, null, this);
+  @Override
+  protected String[] getDesiredPermissions() {
+    return(PERMS);
+  }
+
+  @Override
+  protected void onPermissionDenied() {
+    Toast
+      .makeText(this, R.string.msg_no_perm, Toast.LENGTH_LONG)
+      .show();
+    finish();
+  }
+
+  @Override
+  public void onReady() {
+
+    getSupportLoaderManager().initLoader(0, null, this);
 
     setLayoutManager(new LinearLayoutManager(this));
     setAdapter(new VideoAdapter());

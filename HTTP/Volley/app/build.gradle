@@ -2,16 +2,16 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation 'com.android.volley:volley:1.0.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
-    implementation 'com.android.support:support-v4:25.1.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.android.support:support-fragment:27.1.0'
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
     }
 }

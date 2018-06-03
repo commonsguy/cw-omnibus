@@ -35,13 +35,8 @@ class VideoThumbnailController extends BaseVideoController {
   void bindModel(Cursor row) {
     super.bindModel(row);
 
-    Uri video=
-        ContentUris.withAppendedId(
-          MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-          row.getInt(row.getColumnIndex(MediaStore.Video.Media._ID)));
-
     Picasso.with(thumbnail.getContext())
-      .load(video.toString())
+      .load(videoUri.toString())
       .fit().centerCrop()
       .placeholder(R.drawable.ic_media_video_poster)
       .into(thumbnail);

@@ -14,11 +14,12 @@
 
 package com.commonsware.android.retrofit;
 
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ListFragment;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -39,13 +40,16 @@ public class QuestionsFragment extends ListFragment implements
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-    View result=
-        super.onCreateView(inflater, container, savedInstanceState);
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view,
+                            @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
     Retrofit retrofit=
       new Retrofit.Builder()
@@ -56,8 +60,6 @@ public class QuestionsFragment extends ListFragment implements
       retrofit.create(StackOverflowInterface.class);
 
     so.questions("android").enqueue(this);
-
-    return(result);
   }
 
   @Override
@@ -89,7 +91,7 @@ public class QuestionsFragment extends ListFragment implements
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       View row=super.getView(position, convertView, parent);
-      TextView title=(TextView)row.findViewById(android.R.id.text1);
+      TextView title=row.findViewById(android.R.id.text1);
 
       title.setText(Html.fromHtml(getItem(position).title));
 

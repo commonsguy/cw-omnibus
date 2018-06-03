@@ -1,10 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '26.0.2'
+  compileSdkVersion 27
+  buildToolsVersion '27.0.3'
 
-	defaultConfig {
-		targetSdkVersion 17
-	}
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 27
+  }
+}
+
+dependencies {
+  implementation "com.android.support:support-fragment:27.1.1"
 }

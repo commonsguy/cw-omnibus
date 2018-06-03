@@ -7,12 +7,14 @@
     <item>Bottom-then-Top: ConstraintLayout</item>
     <item>Stacked Percent: LinearLayout</item>
     <item>Stacked Percent: ConstraintLayout</item>
+    <item>Stacked Percent: ConstraintLayout Guideline</item>
     <item>URL Dialog: LinearLayout</item>
     <item>URL Dialog: RelativeLayout</item>
     <item>URL Dialog: TableLayout</item>
     <item>URL Dialog: ConstraintLayout</item>
     <item>Form: TableLayout</item>
     <item>Form: LinearLayout</item>
+    <item>Form: ConstraintLayout</item>
     <item>Overlap: RelativeLayout</item>
     <item>Center: RelativeLayout</item>
     <item>Center: ConstraintLayout</item>
@@ -23,6 +25,10 @@
     <item>Center Align: LinearLayout</item>
     <item>Center Align: ConstraintLayout</item>
     <item>Chains: ConstraintLayout</item>
+    <item>Circular Constraints</item>
+    <item>ConstraintLayout Groups</item>
+    <item>ConstraintLayout Child Sizes</item>
+    <item>ConstraintLayout Size</item>
   </string-array>
   <array name="layouts">
     <item>@layout/no_container</item>
@@ -31,12 +37,14 @@
     <item>@layout/bottom_then_top_cl</item>
     <item>@layout/stacked_percent_ll</item>
     <item>@layout/stacked_percent_cl</item>
+    <item>@layout/stacked_percent_cl_guideline</item>
     <item>@layout/url_dialog_ll</item>
     <item>@layout/url_dialog_rl</item>
     <item>@layout/url_dialog_tl</item>
     <item>@layout/url_dialog_cl</item>
     <item>@layout/form_tl</item>
     <item>@layout/form_ll</item>
+    <item>@layout/form_cl</item>
     <item>@layout/overlap_rl</item>
     <item>@layout/center_rl</item>
     <item>@layout/center_cl</item>
@@ -47,5 +55,9 @@
     <item>@layout/center_align_ll</item>
     <item>@layout/center_align_cl</item>
     <item>@layout/chains_cl</item>
+    <item>@layout/circle_cl</item>
+    <item>@layout/group_cl</item>
+    <item>@layout/childsize_cl</item>
+    <item>@layout/size_cl</item>
   </array>
 </resources>

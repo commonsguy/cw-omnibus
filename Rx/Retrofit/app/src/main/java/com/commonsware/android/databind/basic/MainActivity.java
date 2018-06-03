@@ -14,12 +14,10 @@
 
 package com.commonsware.android.databind.basic;
 
-import android.support.v4.app.FragmentActivity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-public class MainActivity extends FragmentActivity implements QuestionsFragment.Contract {
+public class MainActivity extends FragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -29,11 +27,5 @@ public class MainActivity extends FragmentActivity implements QuestionsFragment.
                           .add(android.R.id.content,
                                new QuestionsFragment()).commit();
     }
-  }
-
-  @Override
-  public void onQuestionClicked(Question question) {
-    startActivity(new Intent(Intent.ACTION_VIEW,
-      Uri.parse(question.link)));
   }
 }

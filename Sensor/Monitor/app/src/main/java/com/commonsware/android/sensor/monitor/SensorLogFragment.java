@@ -33,8 +33,8 @@ public class SensorLogFragment extends ListFragment implements
   private boolean isXYZ=false;
 
   @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+  public void onViewCreated(View view, Bundle state) {
+    super.onViewCreated(view, state);
 
     getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
   }

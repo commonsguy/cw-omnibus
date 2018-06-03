@@ -15,11 +15,10 @@
 package com.commonsware.android.assist.mo;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.assist.AssistContent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
@@ -27,9 +26,8 @@ import android.view.MenuItem;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.security.SecureRandom;
-import io.karim.MaterialTabs;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
   private SampleAdapter adapter;
   private ViewPager pager;
 
@@ -38,12 +36,9 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    pager=(ViewPager)findViewById(R.id.pager);
-    adapter=new SampleAdapter(this, getFragmentManager());
+    pager=findViewById(R.id.pager);
+    adapter=new SampleAdapter(this, getSupportFragmentManager());
     pager.setAdapter(adapter);
-
-    MaterialTabs tabs=(MaterialTabs)findViewById(R.id.tabs);
-    tabs.setViewPager(pager);
   }
 
   @Override

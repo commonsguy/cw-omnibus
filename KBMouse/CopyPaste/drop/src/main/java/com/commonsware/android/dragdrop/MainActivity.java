@@ -42,7 +42,7 @@ public class MainActivity extends FragmentActivity implements
     super.onCreate(state);
     setContentView(R.layout.main);
 
-    image=(ImageView)findViewById(R.id.thumbnail_large);
+    image=findViewById(R.id.thumbnail_large);
     image.setOnDragListener(this);
 
     if (state!=null) {

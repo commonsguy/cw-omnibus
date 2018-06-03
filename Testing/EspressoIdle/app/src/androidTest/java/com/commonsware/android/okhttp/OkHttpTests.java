@@ -15,6 +15,7 @@
 package com.commonsware.android.okhttp;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
@@ -65,14 +66,14 @@ public class OkHttpTests {
       OkHttp3IdlingResource.create("okhttp3",
         main.getActivity().getOkHttpClient());
 
-    Espresso.registerIdlingResources(idleWild);
+    IdlingRegistry.getInstance().register(idleWild);
 
     try {
       onView(withId(android.R.id.list))
         .check(new AdapterCountAssertion(100));
     }
     finally {
-      Espresso.unregisterIdlingResources(idleWild);
+      IdlingRegistry.getInstance().unregister(idleWild);
     }
   }
 

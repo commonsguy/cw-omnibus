@@ -7,10 +7,15 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.commonsware.cwac:presentation:0.4.+'
+    implementation 'com.commonsware.cwac:presentation:0.5.1'
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 27
+    }
 }

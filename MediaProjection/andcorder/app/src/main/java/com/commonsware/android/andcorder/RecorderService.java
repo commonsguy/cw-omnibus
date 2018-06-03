@@ -15,16 +15,19 @@
 package com.commonsware.android.andcorder;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 public class RecorderService extends Service {
+  private static final String CHANNEL_WHATEVER="channel_whatever";
   private static final int NOTIFY_ID=9906;
   static final String EXTRA_RESULT_CODE="resultCode";
   static final String EXTRA_RESULT_INTENT="resultIntent";
@@ -92,8 +95,17 @@ public class RecorderService extends Service {
   }
 
   private void foregroundify(boolean showRecord) {
+    NotificationManager mgr=
+      (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
+      mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
+      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+    }
+
     NotificationCompat.Builder b=
-      new NotificationCompat.Builder(this);
+      new NotificationCompat.Builder(this, CHANNEL_WHATEVER);
 
     b.setAutoCancel(true)
       .setDefaults(Notification.DEFAULT_ALL);
@@ -115,8 +127,6 @@ public class RecorderService extends Service {
       getString(R.string.notify_shutdown), buildPendingIntent(ACTION_SHUTDOWN));
 
     if (isForeground) {
-      NotificationManager mgr=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-
       mgr.notify(NOTIFY_ID, b.build());
     }
     else {

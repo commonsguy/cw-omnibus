@@ -14,18 +14,22 @@
 
 package com.commonsware.android.abf;
 
-import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ListFragment;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ActionBarFragment extends ListFragment
   implements TextView.OnEditorActionListener {
@@ -38,14 +42,23 @@ public class ActionBarFragment extends ListFragment
   private ArrayAdapter<String> adapter=null;
 
   @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setRetainInstance(true);
     setHasOptionsMenu(true);
+  }
 
-    if (adapter == null) {
+  @Override
+  public void onViewCreated(@NonNull View view,
+                            @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    if (adapter==null) {
       initAdapter();
+    }
+    else {
+      setListAdapter(adapter);
     }
   }
 
@@ -69,16 +82,14 @@ public class ActionBarFragment extends ListFragment
   }
 
   private void initAdapter() {
-    words=new ArrayList<String>();
+    words=new ArrayList<>();
 
-    for (String s : items) {
-      words.add(s);
-    }
+    Collections.addAll(words, items);
 
     adapter=
-        new ArrayAdapter<String>(getActivity(),
-                                 android.R.layout.simple_list_item_1,
-                                 words);
+      new ArrayAdapter<>(getActivity(),
+        android.R.layout.simple_list_item_1,
+        words);
 
     setListAdapter(adapter);
   }
@@ -101,8 +112,8 @@ public class ActionBarFragment extends ListFragment
 
   private void configureActionItem(Menu menu) {
     EditText add=
-        (EditText)menu.findItem(R.id.add).getActionView()
-            .findViewById(R.id.title);
+      menu.findItem(R.id.add).getActionView()
+          .findViewById(R.id.title);
 
     add.setOnEditorActionListener(this);
   }

@@ -14,12 +14,12 @@
 
 package com.commonsware.android.fts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-public class MainActivity extends Activity implements QuestionsFragment.Contract {
+public class MainActivity extends FragmentActivity implements QuestionsFragment.Contract {
   private static final String MODEL="model";
   private ModelFragment model=null;
 
@@ -27,17 +27,17 @@ public class MainActivity extends Activity implements QuestionsFragment.Contract
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
-      getFragmentManager().beginTransaction()
+    if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+      getSupportFragmentManager().beginTransaction()
                           .add(android.R.id.content,
                                new QuestionsFragment()).commit();
     }
 
-    model=(ModelFragment)getFragmentManager().findFragmentByTag(MODEL);
+    model=(ModelFragment)getSupportFragmentManager().findFragmentByTag(MODEL);
 
     if (model==null) {
       model=new ModelFragment();
-      getFragmentManager().beginTransaction().add(model, MODEL).commit();
+      getSupportFragmentManager().beginTransaction().add(model, MODEL).commit();
     }
   }
 

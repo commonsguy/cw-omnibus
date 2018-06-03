@@ -26,9 +26,9 @@ public class ColorMixerDemo extends Activity {
     super.onCreate(state);
     setContentView(R.layout.main);
     
-    color=(TextView)findViewById(R.id.color);
+    color=findViewById(R.id.color);
     
-    ColorMixer mixer=(ColorMixer)findViewById(R.id.mixer);
+    ColorMixer mixer=findViewById(R.id.mixer);
     
     mixer.setOnColorChangedListener(onColorChange);
   }

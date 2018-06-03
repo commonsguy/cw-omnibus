@@ -34,8 +34,8 @@ public class EventLogFragment extends ListFragment {
   private EventLogAdapter adapter=null;
 
   @Override
-  public void onActivityCreated(Bundle state) {
-    super.onActivityCreated(state);
+  public void onViewCreated(View view, Bundle state) {
+    super.onViewCreated(view, state);
 
     setRetainInstance(true);
     getListView().setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);

@@ -14,9 +14,9 @@
 
 package com.commonsware.android.fileseditor;
 
-import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +60,7 @@ public class EditorFragment extends Fragment {
                            Bundle savedInstanceState) {
     View result=inflater.inflate(R.layout.editor, container, false);
 
-    editor=(EditText)result.findViewById(R.id.editor);
+    editor=result.findViewById(R.id.editor);
 
     return(result);
   }

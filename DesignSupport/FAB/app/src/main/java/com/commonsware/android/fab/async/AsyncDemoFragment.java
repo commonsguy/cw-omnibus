@@ -61,7 +61,7 @@ public class AsyncDemoFragment extends ListFragment implements View.OnClickListe
     getListView().setScrollbarFadingEnabled(false);
     setListAdapter(adapter);
 
-    FloatingActionButton fab=(FloatingActionButton)v.findViewById(R.id.refresh);
+    FloatingActionButton fab=v.findViewById(R.id.refresh);
 
     fab.setOnClickListener(this);
   }

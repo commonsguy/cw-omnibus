@@ -14,14 +14,14 @@
 
 package com.commonsware.android.tablayout;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.commonsware.cwac.crossport.design.widget.TabLayout;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
   private SampleAdapter adapter;
   private TabLayout tabs;
   private ViewPager pager;
@@ -31,11 +31,11 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    pager=(ViewPager)findViewById(R.id.pager);
-    adapter=new SampleAdapter(this, getFragmentManager());
+    pager=findViewById(R.id.pager);
+    adapter=new SampleAdapter(this, getSupportFragmentManager());
     pager.setAdapter(adapter);
 
-    tabs=(TabLayout)findViewById(R.id.tabs);
+    tabs=findViewById(R.id.tabs);
     tabs.setupWithViewPager(pager);
     tabs.setTabMode(TabLayout.MODE_FIXED);
   }

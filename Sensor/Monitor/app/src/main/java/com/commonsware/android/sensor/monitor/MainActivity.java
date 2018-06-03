@@ -37,9 +37,11 @@ public class MainActivity extends FragmentActivity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
 
     mgr=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
+
+    setContentView(R.layout.activity_main);
+
     log=
         (SensorLogFragment)getSupportFragmentManager().findFragmentById(R.id.log);
 
@@ -66,8 +68,8 @@ public class MainActivity extends FragmentActivity implements
   @Override
   public List<Sensor> getSensorList() {
     List<Sensor> unfiltered=
-        new ArrayList<Sensor>(mgr.getSensorList(Sensor.TYPE_ALL));
-    List<Sensor> result=new ArrayList<Sensor>();
+      new ArrayList<>(mgr.getSensorList(Sensor.TYPE_ALL));
+    List<Sensor> result=new ArrayList<>();
 
     for (Sensor s : unfiltered) {
       if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT

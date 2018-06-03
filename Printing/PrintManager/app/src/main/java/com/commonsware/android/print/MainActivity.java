@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
-    prose=(EditText)findViewById(R.id.prose);
+    prose=findViewById(R.id.prose);
     mgr=(PrintManager)getSystemService(PRINT_SERVICE);
   }
 
@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
 
     print.loadData(tmpl.execute(new TpsReportContext(prose.getText()
                                                           .toString())),
-                   "text/html", "UTF-8");
+                   "text/html; charset=UTF-8", null);
   }
 
   private WebView prepPrintWebView(final String name) {

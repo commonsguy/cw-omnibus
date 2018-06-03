@@ -14,11 +14,18 @@
 
 package com.commonsware.android.rx;
 
-import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import io.reactivex.Observable;
@@ -27,14 +34,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RxDemoFragment extends ListFragment {
+public class RxDemoFragment extends Fragment {
   private static final String[] ITEMS= { "lorem", "ipsum", "dolor",
       "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi",
       "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam",
       "vel", "erat", "placerat", "ante", "porttitor", "sodales",
       "pellentesque", "augue", "purus" };
   private ArrayList<String> model=new ArrayList<>();
-  private ArrayAdapter<String> adapter;
+  private RVArrayAdapter adapter;
   private Disposable sub=null;
 
   @Override
@@ -43,8 +50,7 @@ public class RxDemoFragment extends ListFragment {
 
     setRetainInstance(true);
 
-    adapter=new ArrayAdapter<>(getActivity(),
-      android.R.layout.simple_list_item_1, model);
+    adapter=new RVArrayAdapter(model, getLayoutInflater());
 
     Observable<String> observable=Observable
       .create(source())
@@ -71,12 +77,24 @@ public class RxDemoFragment extends ListFragment {
     });
   }
 
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater,
+                           @Nullable ViewGroup container,
+                           @Nullable Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.main, container, false);
+  }
+
   @Override
   public void onViewCreated(View v, Bundle savedInstanceState) {
     super.onViewCreated(v, savedInstanceState);
 
-    getListView().setScrollbarFadingEnabled(false);
-    setListAdapter(adapter);
+    RecyclerView rv=v.findViewById(android.R.id.list);
+
+    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+    rv.addItemDecoration(new DividerItemDecoration(getActivity(),
+      DividerItemDecoration.VERTICAL));
+    rv.setAdapter(adapter);
   }
 
   @Override
@@ -86,5 +104,54 @@ public class RxDemoFragment extends ListFragment {
     }
 
     super.onDestroy();
+  }
+
+  private static class RVArrayAdapter extends RecyclerView.Adapter<RowHolder> {
+    private final ArrayList<String> words;
+    private final LayoutInflater inflater;
+
+    private RVArrayAdapter(ArrayList<String> words,
+                           LayoutInflater inflater) {
+      this.words=words;
+      this.inflater=inflater;
+    }
+
+    @NonNull
+    @Override
+    public RowHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                        int viewType) {
+      View row=inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+
+      return new RowHolder(row);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RowHolder holder,
+                                 int position) {
+      holder.bind(words.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+      return words.size();
+    }
+
+    private void add(String word) {
+      words.add(word);
+      notifyItemInserted(words.size()-1);
+    }
+  }
+
+  private static class RowHolder extends RecyclerView.ViewHolder {
+    private final TextView title;
+
+    RowHolder(View itemView) {
+      super(itemView);
+      title=itemView.findViewById(android.R.id.text1);
+    }
+
+    public void bind(String text) {
+      title.setText(text);
+    }
   }
 }

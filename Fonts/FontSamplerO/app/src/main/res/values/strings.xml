@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Font Sampler O</string>
+  <string name="label_sans">sans:</string>
+  <string name="hello_world">Hello, world!</string>
+  <string name="label_serif">serif:</string>
+  <string name="label_monospace">monospace:</string>
+  <string name="label_custom">Custom Static:</string>
+  <string name="label_custom_dynamic">Custom Dynamic:</string>
+</resources>

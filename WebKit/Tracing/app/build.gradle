@@ -1,0 +1,12 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 'android-P'
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        minSdkVersion 'P'
+        targetSdkVersion 'P'
+        applicationId 'com.commonsware.android.webkit.tracing'
+    }
+}

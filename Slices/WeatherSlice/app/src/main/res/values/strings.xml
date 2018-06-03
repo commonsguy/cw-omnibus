@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">Weather Slice</string>
+  <string name="header_title">NYC Weather</string>
+  <string name="downloading">Downloading forecast</string>
+</resources>

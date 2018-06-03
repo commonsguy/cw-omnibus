@@ -1,0 +1,18 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 'android-P'
+
+  defaultConfig {
+    applicationId "com.commonsware.android.slice.sampler"
+    minSdkVersion 21
+    targetSdkVersion 27
+    versionCode 1
+    versionName "1.0"
+  }
+}
+
+dependencies {
+  implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+  implementation 'androidx.slice:slice-builders:1.0.0-alpha1'
+}

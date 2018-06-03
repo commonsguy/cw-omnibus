@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<manifest package="com.commonsware.android.browser1"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <supports-screens
+    android:anyDensity="true"
+    android:largeScreens="true"
+    android:normalScreens="true"
+    android:smallScreens="true" />
+
+  <uses-permission android:name="android.permission.INTERNET" />
+
+  <application android:icon="@drawable/ic_launcher">
+    <activity
+      android:name=".BrowserDemo1"
+      android:label="BrowserDemo1">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+  </application>
+
+</manifest>

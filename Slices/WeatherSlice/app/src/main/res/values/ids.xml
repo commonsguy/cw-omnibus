@@ -1,0 +1,4 @@
+<resources>
+  <item type="id" name="toggle" />
+  <item type="id" name="range" />
+</resources>

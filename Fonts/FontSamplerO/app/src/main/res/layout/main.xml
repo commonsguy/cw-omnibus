@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:stretchColumns="1">
+
+  <TableRow>
+
+    <TextView
+      android:layout_marginRight="4dip"
+      android:text="@string/label_sans"
+      android:textSize="20sp" />
+
+    <TextView
+      android:id="@+id/sans"
+      android:text="@string/hello_world"
+      android:textSize="20sp"
+      android:typeface="sans" />
+  </TableRow>
+
+  <TableRow>
+
+    <TextView
+      android:layout_marginRight="4dip"
+      android:text="@string/label_serif"
+      android:textSize="20sp" />
+
+    <TextView
+      android:id="@+id/serif"
+      android:text="@string/hello_world"
+      android:textSize="20sp"
+      android:typeface="serif" />
+  </TableRow>
+
+  <TableRow>
+
+    <TextView
+      android:layout_marginRight="4dip"
+      android:text="@string/label_monospace"
+      android:textSize="20sp" />
+
+    <TextView
+      android:id="@+id/monospace"
+      android:text="@string/hello_world"
+      android:textSize="20sp"
+      android:typeface="monospace" />
+  </TableRow>
+
+  <TableRow>
+
+    <TextView
+      android:layout_marginRight="4dip"
+      android:text="@string/label_custom"
+      android:textSize="20sp" />
+
+    <TextView
+      android:id="@+id/custom"
+      android:text="@string/hello_world"
+      android:fontFamily="@font/handmade_typewriter.ttf"
+      android:textSize="20sp" />
+  </TableRow>
+
+  <TableRow>
+
+    <TextView
+      android:layout_marginRight="4dip"
+      android:text="@string/label_custom_dynamic"
+      android:textSize="20sp" />
+
+    <TextView
+      android:id="@+id/single_dynamic"
+      android:text="@string/hello_world"
+      android:textSize="20sp" />
+  </TableRow>
+</TableLayout>

@@ -78,6 +78,7 @@ class PopupAdapter implements InfoWindowAdapter {
         icon.setVisibility(View.GONE);
       }
       else {
+        icon.setVisibility(View.VISIBLE);
         Picasso.with(ctxt).load(image).resize(iconWidth, iconHeight)
                .centerCrop().noFade()
                .placeholder(R.drawable.placeholder)

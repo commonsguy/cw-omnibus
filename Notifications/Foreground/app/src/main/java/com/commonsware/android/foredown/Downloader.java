@@ -50,8 +50,14 @@ public class Downloader extends IntentService {
 
     if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O &&
       mgr.getNotificationChannel(CHANNEL_WHATEVER)==null) {
-      mgr.createNotificationChannel(new NotificationChannel(CHANNEL_WHATEVER,
-        "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+
+      NotificationChannel c=new NotificationChannel(CHANNEL_WHATEVER,
+        "Whatever", NotificationManager.IMPORTANCE_DEFAULT);
+
+      c.enableLights(true);
+      c.setLightColor(0xFFFF0000);
+
+      mgr.createNotificationChannel(c);
     }
 
     String filename=i.getData().getLastPathSegment();

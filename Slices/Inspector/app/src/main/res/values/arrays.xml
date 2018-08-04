@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="tabs">
+    <item>Shortcut</item>
+    <item>Small</item>
+    <item>Large</item>
+    <item>Graph</item>
+  </string-array>
+</resources>

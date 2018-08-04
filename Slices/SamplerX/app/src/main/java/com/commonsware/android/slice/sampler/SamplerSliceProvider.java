@@ -46,15 +46,15 @@ public class SamplerSliceProvider extends SliceProvider {
         R.drawable.ic_looks_two_black_24dp));
 
     builder
-      .setHeader(buildHeader(builder, ctxt))
-      .addRow(buildSimpleRow(builder, ctxt))
-      .addInputRange(buildRangeRow(builder, ctxt));
+      .setHeader(buildHeader(ctxt))
+      .addRow(buildSimpleRow(ctxt))
+      .addInputRange(buildRangeRow(ctxt));
 
     return builder.build();
   }
 
-  ListBuilder.HeaderBuilder buildHeader(ListBuilder builder, Context ctxt) {
-    return new ListBuilder.HeaderBuilder(builder)
+  ListBuilder.HeaderBuilder buildHeader(Context ctxt) {
+    return new ListBuilder.HeaderBuilder()
       .setTitle("Header Title")
       .setSubtitle("This is the subtitle")
       .setSummary("This is the summary", false)
@@ -62,19 +62,17 @@ public class SamplerSliceProvider extends SliceProvider {
         R.drawable.ic_looks_one_black_24dp));
   }
 
-  RowBuilder buildSimpleRow(ListBuilder builder, Context ctxt) {
-    return new RowBuilder(builder)
-      .setTitleItem(buildIcon(ctxt, R.drawable.ic_looks_3_black_24dp),
-        ListBuilder.ICON_IMAGE)
+  RowBuilder buildSimpleRow(Context ctxt) {
+    return new RowBuilder()
       .setTitle("Simple Row Title")
       .setSubtitle("This is the subtitle")
       .setPrimaryAction(buildIconAction(ctxt, "Simple Row Primary Action",
         R.drawable.ic_looks_4_black_24dp))
-      .addEndItem(buildPlainAction(ctxt, "Simple Row End Item", R.id.toggle));
+      .addEndItem(buildToggleAction(ctxt, "Simple Row End Item", R.id.toggle));
   }
 
-  ListBuilder.InputRangeBuilder buildRangeRow(ListBuilder builder, Context ctxt) {
-    return new ListBuilder.InputRangeBuilder(builder)
+  ListBuilder.InputRangeBuilder buildRangeRow(Context ctxt) {
+    return new ListBuilder.InputRangeBuilder()
       .setTitle("Range Title")
       .setSubtitle("This is the subtitle")
       .setMax(10)
@@ -85,12 +83,12 @@ public class SamplerSliceProvider extends SliceProvider {
   }
 
   SliceAction buildIconAction(Context ctxt, String msg, @DrawableRes int iconRes) {
-    return new SliceAction(buildActionPI(ctxt, msg, iconRes),
-      buildIcon(ctxt, iconRes), msg);
+    return SliceAction.create(buildActionPI(ctxt, msg, iconRes),
+      buildIcon(ctxt, iconRes), ListBuilder.ICON_IMAGE, msg);
   }
 
-  SliceAction buildPlainAction(Context ctxt, String msg, int id) {
-    return new SliceAction(buildActionPI(ctxt, msg, id), msg, false);
+  SliceAction buildToggleAction(Context ctxt, String msg, int id) {
+    return SliceAction.createToggle(buildActionPI(ctxt, msg, id), msg, false);
   }
 
   PendingIntent buildActionPI(Context ctxt, String msg, int id) {

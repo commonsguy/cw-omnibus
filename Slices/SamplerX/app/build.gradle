@@ -13,6 +13,6 @@ android {
 }
 
 dependencies {
-  implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-  implementation 'androidx.slice:slice-builders:1.0.0-alpha1'
+  implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+  implementation 'androidx.slice:slice-builders:1.0.0-beta01'
 }

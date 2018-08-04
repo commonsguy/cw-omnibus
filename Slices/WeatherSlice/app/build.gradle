@@ -21,10 +21,10 @@ android {
 }
 
 dependencies {
-  implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-  implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-  implementation 'androidx.annotation:annotation:1.0.0-alpha1'
-  implementation 'androidx.slice:slice-builders:1.0.0-alpha1'
+  implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+  implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+  implementation 'androidx.annotation:annotation:1.0.0-beta01'
+  implementation 'androidx.slice:slice-builders:1.0.0-beta01'
   implementation 'com.squareup.picasso:picasso:2.5.2'
   implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
   implementation 'com.squareup.okhttp3:okhttp:3.10.0'

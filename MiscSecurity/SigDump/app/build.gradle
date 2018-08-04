@@ -1,7 +1,10 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-	implementation 'com.android.support:support-v13:27.1.0'
+	implementation 'com.android.support:support-fragment:27.1.1'
+	implementation 'com.android.support:recyclerview-v7:27.1.1'
+  implementation 'com.android.support:support-compat:27.1.1'
+	implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 }
 
 android {
@@ -14,4 +17,12 @@ android {
 		versionCode 1
 		versionName "1.0"
 	}
+
+  dataBinding {
+    enabled = true
+  }
+  compileOptions {
+    targetCompatibility 1.8
+    sourceCompatibility 1.8
+  }
 }

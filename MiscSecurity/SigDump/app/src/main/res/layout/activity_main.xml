@@ -1,19 +1,119 @@
-<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/panes"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+<layout>
 
-	<fragment
-		android:id="@+id/sensors"
-		android:name="com.commonsware.android.signature.dump.PackagesFragment"
-		android:layout_width="300sp"
-		android:layout_height="match_parent"/>
+  <data>
 
-	<fragment
-		android:id="@+id/log"
-		android:name="com.commonsware.android.signature.dump.SignatureFragment"
-		android:layout_width="400dp"
-		android:layout_height="match_parent"
-		android:layout_weight="1"/>
+    <variable
+      name="model"
+      type="com.commonsware.android.signature.dump.MainActivity.DetailModel" />
+  </data>
 
-</android.support.v4.widget.SlidingPaneLayout>
+  <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/packages"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_margin="4dp"
+      android:background="#11000000"
+      app:layout_constraintBottom_toTopOf="@id/selected"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/selected"
+      android:text="@{model.selected}"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toTopOf="@id/top_row"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Barrier
+      android:id="@+id/column"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:barrierDirection="end"
+      app:constraint_referenced_ids="subject_caption,issuer_caption,valid_caption" />
+
+    <android.support.constraint.Barrier
+      android:id="@+id/top_row"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:barrierDirection="top"
+      app:constraint_referenced_ids="subject_caption,subject" />
+
+    <TextView
+      android:id="@+id/subject_caption"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      android:text="@string/subject"
+      app:layout_constraintBottom_toTopOf="@id/middle_row"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+      android:id="@+id/subject"
+      android:text="@{model.sigModel.subject}"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      app:layout_constraintBottom_toTopOf="@id/middle_row"
+      app:layout_constraintStart_toStartOf="@id/column" />
+
+    <android.support.constraint.Barrier
+      android:id="@+id/middle_row"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:barrierDirection="top"
+      app:constraint_referenced_ids="issuer_caption,issuer" />
+
+    <TextView
+      android:id="@+id/issuer_caption"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      android:text="@string/issuer"
+      app:layout_constraintBottom_toTopOf="@id/bottom_row"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+      android:id="@+id/issuer"
+      android:text="@{model.sigModel.issuer}"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      app:layout_constraintBottom_toTopOf="@id/bottom_row"
+      app:layout_constraintStart_toStartOf="@id/column" />
+
+    <android.support.constraint.Barrier
+      android:id="@+id/bottom_row"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:barrierDirection="top"
+      app:constraint_referenced_ids="valid_caption,valid" />
+
+    <TextView
+      android:id="@+id/valid_caption"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      android:text="@string/valid_between"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+      android:id="@+id/valid"
+      android:text="@{model.sigModel.validDates}"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="@id/column" />
+
+  </android.support.constraint.ConstraintLayout>
+</layout>

@@ -14,11 +14,11 @@
    
 package com.commonsware.android.animator.obj;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.animation.ValueAnimator;
 
 public class MainActivity extends Activity {
   private static final String[] items= { "lorem", "ipsum", "dolor",
@@ -34,9 +34,10 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    word=(TextView)findViewById(R.id.word);
+    word=findViewById(R.id.word);
     
-    ValueAnimator positionAnim = ObjectAnimator.ofInt(this, "wordPosition", 0, 24);
+    ValueAnimator
+      positionAnim = ObjectAnimator.ofInt(this, "wordPosition", 0, 25);
     positionAnim.setDuration(12500);
     positionAnim.setRepeatCount(ValueAnimator.INFINITE);
     positionAnim.setRepeatMode(ValueAnimator.RESTART);

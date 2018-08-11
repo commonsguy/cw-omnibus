@@ -1,3 +1,0 @@
-include ':app', ':webserver'
-
-project(':webserver').projectDir=new File('../../WebServer/Reusable/webserver')

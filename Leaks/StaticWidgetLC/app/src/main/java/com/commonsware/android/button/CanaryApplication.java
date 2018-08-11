@@ -22,6 +22,13 @@ public class CanaryApplication extends Application {
   public void onCreate() {
     super.onCreate();
 
+    if (LeakCanary.isInAnalyzerProcess(this)) {
+      // LeakCanary is processing a heap dump here; please do not disturb!
+      return;
+    }
+
     LeakCanary.install(this);
+
+    // do your normal initialization work here
   }
 }

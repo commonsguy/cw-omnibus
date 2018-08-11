@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-  implementation 'com.android.support:support-v4:27.1.0'
-  implementation 'com.google.android.gms:play-services-maps:11.8.0'
+  implementation 'com.android.support:support-v4:27.1.1'
+  implementation 'com.google.android.gms:play-services-maps:15.0.1'
 }
 
 android {

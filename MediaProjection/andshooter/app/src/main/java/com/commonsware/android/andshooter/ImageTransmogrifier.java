@@ -37,7 +37,7 @@ public class ImageTransmogrifier implements ImageReader.OnImageAvailableListener
     Display display=svc.getWindowManager().getDefaultDisplay();
     Point size=new Point();
 
-    display.getSize(size);
+    display.getRealSize(size);
 
     int width=size.x;
     int height=size.y;
@@ -79,10 +79,7 @@ public class ImageTransmogrifier implements ImageReader.OnImageAvailableListener
       }
 
       latestBitmap.copyPixelsFromBuffer(buffer);
-
-      if (image != null) {
-        image.close();
-      }
+      image.close();
 
       ByteArrayOutputStream baos=new ByteArrayOutputStream();
       Bitmap cropped=Bitmap.createBitmap(latestBitmap, 0, 0,

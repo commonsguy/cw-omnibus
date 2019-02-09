@@ -18,30 +18,24 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 import com.github.clans.fab.FloatingActionButton;
 import io.fotoapparat.Fotoapparat;
 import io.fotoapparat.parameter.ScaleType;
-import io.fotoapparat.photo.BitmapPhoto;
-import io.fotoapparat.result.PendingResult;
 import io.fotoapparat.result.PhotoResult;
+import io.fotoapparat.selector.FlashSelectorsKt;
+import io.fotoapparat.selector.FocusModeSelectorsKt;
+import io.fotoapparat.selector.LensPositionSelectorsKt;
+import io.fotoapparat.selector.ResolutionSelectorsKt;
+import io.fotoapparat.selector.SelectorsKt;
 import io.fotoapparat.view.CameraView;
-import static io.fotoapparat.parameter.selector.FlashSelectors.autoFlash;
-import static io.fotoapparat.parameter.selector.FlashSelectors.autoRedEye;
-import static io.fotoapparat.parameter.selector.FocusModeSelectors.autoFocus;
-import static io.fotoapparat.parameter.selector.FocusModeSelectors.continuousFocus;
-import static io.fotoapparat.parameter.selector.FocusModeSelectors.fixed;
-import static io.fotoapparat.parameter.selector.LensPositionSelectors.back;
-import static io.fotoapparat.parameter.selector.Selectors.firstAvailable;
-import static io.fotoapparat.parameter.selector.SizeSelectors.biggestSize;
+import kotlin.Unit;
 
 public class CameraActivity extends Activity {
-  private CameraView camera;
   private FloatingActionButton fab;
   private Fotoapparat fotoapparat;
 
   public static void takePhoto(Activity requester, int requestCode) {
-    Intent i=new Intent(requester, CameraActivity.class);
+    Intent i = new Intent(requester, CameraActivity.class);
 
     requester.startActivityForResult(i, requestCode);
   }
@@ -51,24 +45,22 @@ public class CameraActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.camera);
 
-    camera=findViewById(R.id.camera);
-    fab=findViewById(R.id.fab);
+    CameraView camera = findViewById(R.id.camera);
 
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        takePhoto();
-      }
-    });
+    fab = findViewById(R.id.fab);
+    fab.setOnClickListener(view -> takePhoto());
 
-    fotoapparat=Fotoapparat
+    fotoapparat = Fotoapparat
       .with(this)
       .into(camera)
-      .previewScaleType(ScaleType.CENTER_CROP)
-      .photoSize(biggestSize())
-      .lensPosition(back())
-      .focusMode(firstAvailable(continuousFocus(), autoFocus(), fixed()))
-      .flash(firstAvailable(autoRedEye(), autoFlash()))
+      .previewScaleType(ScaleType.CenterCrop)
+      .photoResolution(ResolutionSelectorsKt.highestResolution())
+      .lensPosition(LensPositionSelectorsKt.back())
+      .focusMode(SelectorsKt.firstAvailable(
+        FocusModeSelectorsKt.continuousFocusPicture(),
+        FocusModeSelectorsKt.autoFocus(), FocusModeSelectorsKt.fixed()))
+      .flash(SelectorsKt.firstAvailable(FlashSelectorsKt.autoRedEye(),
+        FlashSelectorsKt.autoFlash()))
       .build();
   }
 
@@ -87,16 +79,15 @@ public class CameraActivity extends Activity {
   private void takePhoto() {
     fab.setEnabled(false);
 
-    PhotoResult result=fotoapparat.takePicture();
+    PhotoResult result = fotoapparat.takePicture();
 
-    result.toBitmap().whenAvailable(new PendingResult.Callback<BitmapPhoto>() {
-      @Override
-      public void onResult(BitmapPhoto bitmapPhoto) {
-        // TODO: do something with picture
+    result.toBitmap().whenAvailable(bitmapPhoto -> {
+      // TODO: do something with picture
 
-        setResult(RESULT_OK);
-        finish();
-      }
+      setResult(RESULT_OK);
+      finish();
+
+      return Unit.INSTANCE;
     });
   }
 }
